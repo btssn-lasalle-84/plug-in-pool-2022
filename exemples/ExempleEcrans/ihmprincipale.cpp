@@ -25,6 +25,13 @@ IHMPrincipale::IHMPrincipale(QWidget* parent) :
     ui->setupUi(this);
     qDebug() << Q_FUNC_INFO;
 
+    retourEcran2 = new ImageBouton(":precedent.png");
+    ui->layoutBas->addWidget(retourEcran2);
+    connect(retourEcran2,
+            SIGNAL(clicked()),
+            this,
+            SLOT(afficherEcranPrecedent()));
+
 #ifdef TEST_IHMPRINCIPALE
     fixerRaccourcisClavier();
 #endif

@@ -11,6 +11,7 @@
  */
 
 #include <QtWidgets>
+#include "ImageBouton.h"
 
 /**
  * @def TEST_IHMPRINCIPALE
@@ -47,6 +48,7 @@ class IHMPrincipale : public QMainWindow
   private:
     Ui::IHMPrincipale* ui;  //!< la fenêtre graphique associée à cette classe
     int nbChangementsEcran; //!< pour compter le nombre de changements d'écrans
+    ImageBouton* retourEcran2;
 
     /**
      * @enum Ecran
