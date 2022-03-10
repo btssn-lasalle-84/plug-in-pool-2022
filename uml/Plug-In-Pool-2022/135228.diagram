@@ -1,0 +1,96 @@
+format 224
+
+activitycanvas 128060 activity_ref 128188 // Naviguer dans l'application
+  
+  xyzwh 45 63 2000 605 759
+end
+activityactioncanvas 128188 activityaction_ref 128316 // activity action Nouvelle rencontre
+  
+  show_opaque_action_definition default
+  xyzwh 401 279 2005 100 60
+end
+activityactioncanvas 128316 activityaction_ref 128060 // activity action Page d'accueil
+  
+  show_opaque_action_definition default
+  xyzwh 264 169 2005 100 60
+end
+activityactioncanvas 128444 activityaction_ref 128444 // activity action Fin de rencontre
+  
+  show_opaque_action_definition default
+  xyzwh 251 570 2010 100 60
+end
+activityactioncanvas 128572 activityaction_ref 128188 // activity action Créer un joueur
+  
+  show_opaque_action_definition default
+  xyzwh 109 276 2015 100 60
+end
+activityactioncanvas 128700 activityaction_ref 128700 // activity action Rencontre en cours
+  
+  show_opaque_action_definition default
+  xyzwh 402 420 2020 100 60
+end
+activityactioncanvas 130876 activityaction_ref 135228 // activity action Historique des rencontres
+  
+  show_opaque_action_definition default
+  xyzwh 477 81 2005 103 72
+end
+flowcanvas 128828 flow_ref 136636 // <flow>
+  
+  from ref 128572 z 2016 to point 254 276
+  line 128956 z 2016 to ref 128316
+   write_horizontally default
+end
+flowcanvas 129084 flow_ref 136764 // <flow>
+  
+  from ref 128316 z 2016 to point 209 232
+  line 129212 z 2016 to ref 128572
+   write_horizontally default
+end
+flowcanvas 129340 flow_ref 136892 // <flow>
+  
+  from ref 128316 z 2006 to point 346 268
+  line 129468 z 2006 to ref 128188
+   write_horizontally default
+end
+flowcanvas 129852 flow_ref 137148 // <flow>
+  
+  from ref 128188 z 2006 to point 402 231
+  line 129980 z 2006 to ref 128316
+   write_horizontally default
+end
+flowcanvas 130108 flow_ref 137276 // <flow>
+  
+  from ref 128188 z 2021 to ref 128700
+   write_horizontally default
+end
+flowcanvas 130236 flow_ref 137404 // <flow>
+  
+  from ref 128700 z 2021 to point 411 550
+  line 130620 z 2021 to ref 128444
+   write_horizontally default
+end
+flowcanvas 130364 flow_ref 137532 // <flow>
+  
+  from ref 128444 z 2021 to point 343 492
+  line 130492 z 2021 to ref 128700
+   write_horizontally default
+end
+flowcanvas 130748 flow_ref 137660 // <flow>
+  
+  from ref 128444 z 2011 to ref 128316
+   write_horizontally default
+end
+flowcanvas 131004 flow_ref 137788 // <flow>
+  
+  from ref 128316 z 2006 to point 395 126
+  line 131132 z 2006 to point 395 127
+  line 131516 z 2006 to ref 130876
+   write_horizontally default
+end
+flowcanvas 131260 flow_ref 137916 // <flow>
+  
+  from ref 130876 z 2006 to point 443 188
+  line 131388 z 2006 to ref 128316
+   write_horizontally default
+end
+end
