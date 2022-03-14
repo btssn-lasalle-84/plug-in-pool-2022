@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="plug-in-pool.png">images/plug-in-pool.png</file>
+    </qresource>
+</RCC>
