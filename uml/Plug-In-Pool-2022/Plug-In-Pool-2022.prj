@@ -1,7 +1,7 @@
 format 224
 "Plug-In-Pool-2022"
-  revision 7
-  modified_by 60 "pmeras"
+  revision 8
+  modified_by 23 "tv"
 
 
   
@@ -67,7 +67,7 @@ format 224
      end
     usecasediagram 128060 "Diagramme des cas d'utilisation "
       usecasediagramsettings draw_all_relations no end
-      size A4
+      size A0
     end
 
     class 128060 "Joueur"
@@ -369,7 +369,7 @@ format 224
       activitydiagram 135228 "Navigation des pages de l'application"
 	activitydiagramsettings draw_all_relations no
 	 end
-	size A4
+	size A0
       end
 
       activityaction 128316 "Nouvelle rencontre"
@@ -527,7 +527,7 @@ format 224
      end
     sequencediagram 141756 "Diagramme de séquence système"
       sequencediagramsettings end
-      overlapping_bars size A4
+      overlapping_bars size A0
     end
 
     class 134972 "Joueur"

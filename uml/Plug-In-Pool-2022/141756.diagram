@@ -7,7 +7,7 @@ classinstancecanvas 128828 classinstance_ref 128444 //
   xyz 305.8 164.2 2005 life_line_z 4025
 end
 fragment 129852 "opt"
-  xyzwh 29.8 237.8 1995 338 72
+  xyzwh 29.8 237.8 1995 338 91
 end
 fragment 130364 "sd Jouer une rencontre"
   xyzwh 9.1 136.8 1980 387 944
@@ -16,24 +16,24 @@ fragment 130492 "loop"
   xyzwh 24.9 433.5 1985 340 424
 end
 textcanvas 131004 "[Rencontre en cours]"
-  xyzwh 76.1 438.9 2025 141 15
+  xyzwh 76 438 2025 141 15
 fragment 131132 "loop"
   xyzwh 33 468.6 1990 324 271
 end
 textcanvas 131260 "[Pour chaque joueur]"
-  xyzwh 86.5 472.1 2030 137 15
+  xyzwh 86 472 2030 137 15
 fragment 131388 "alt"
   xyzwh 40.8 500.6 1995 309 229
   separator 5087
 end
 textcanvas 131900 "[faute]"
-  xyzwh 46.1 526.3 2035 41 15
+  xyzwh 46 526 2035 41 15
 textcanvas 132028 "[faute]"
-  xyzwh 683.4 1241.4 2035 41 15
+  xyzwh 683 1241 2035 41 15
 textcanvas 132156 "[joueurSuivant]"
-  xyzwh 49.5 624.5 2035 101 17
+  xyzwh 49 624 2035 101 17
 textcanvas 132284 "[faute]"
-  xyzwh 686 1344.8 2035 41 15
+  xyzwh 686 1344 2035 41 15
 fragment 134844 "opt"
   xyzwh 26.8 899.8 1995 337 152
 end
@@ -41,52 +41,52 @@ fragment 134972 "opt"
   xyzwh 33.1 746.1 1995 324 106
 end
 durationcanvas 128956 classinstance_ref 128700 // :Joueur
-  xyzwh 58 256.6 2010 11 43
+  xyzwh 82 256 2010 11 43
 end
 durationcanvas 129084 classinstance_ref 128828 // :Système
-  xyzwh 334 256.6 2010 11 43
+  xyzwh 366 256 2010 11 43
 end
 durationcanvas 129340 classinstance_ref 128700 // :Joueur
-  xyzwh 58 330.2 2010 11 40
+  xyzwh 82 330 2010 11 40
 end
 durationcanvas 129468 classinstance_ref 128828 // :Système
-  xyzwh 334 330.2 2010 11 40
+  xyzwh 366 330 2010 11 40
 end
 durationcanvas 130620 classinstance_ref 128700 // :Joueur
-  xyzwh 58 380.8 2010 11 42
+  xyzwh 82 380 2010 11 42
 end
 durationcanvas 130748 classinstance_ref 128828 // :Système
-  xyzwh 334 380 2010 11 41
+  xyzwh 366 380 2010 11 41
 end
 durationcanvas 132412 classinstance_ref 128700 // :Joueur
-  xyzwh 58 553 2010 11 36
+  xyzwh 82 553 2010 11 36
 end
 durationcanvas 132540 classinstance_ref 128828 // :Système
-  xyzwh 334 555.6 2010 11 25
+  xyzwh 366 555 2010 11 25
 end
 durationcanvas 132796 classinstance_ref 128700 // :Joueur
-  xyzwh 58 645.8 2010 11 42
+  xyzwh 82 645 2010 11 42
 end
 durationcanvas 132924 classinstance_ref 128828 // :Système
-  xyzwh 334 645.8 2010 11 32
+  xyzwh 366 645 2010 11 32
 end
 durationcanvas 134076 classinstance_ref 128700 // :Joueur
-  xyzwh 58 928.8 4035 11 47
+  xyzwh 82 928 4035 11 47
 end
 durationcanvas 134204 classinstance_ref 128828 // :Système
-  xyzwh 334 931.2 4035 11 37
+  xyzwh 366 931 4035 11 37
 end
 durationcanvas 134460 classinstance_ref 128700 // :Joueur
-  xyzwh 58 999 4035 11 44
+  xyzwh 82 999 4035 11 44
 end
 durationcanvas 134588 classinstance_ref 128828 // :Système
-  xyzwh 334 999.8 4035 11 34
+  xyzwh 366 999 4035 11 34
 end
 durationcanvas 135100 classinstance_ref 128700 // :Joueur
-  xyzwh 58 770.2 2010 11 40
+  xyzwh 82 770 2010 11 40
 end
 durationcanvas 135228 classinstance_ref 128828 // :Système
-  xyzwh 334 770.6 2010 11 25
+  xyzwh 366 770 2010 11 25
 end
 msg 129212 synchronous
   from durationcanvas_ref 128956
