@@ -22,6 +22,7 @@ end
 activityactioncanvas 128572 activityaction_ref 128188 // activity action Créer un joueur
   
   show_opaque_action_definition default
+  color verylightorange
   xyzwh 109 276 2015 100 60
 end
 activityactioncanvas 128700 activityaction_ref 128700 // activity action Rencontre en cours
