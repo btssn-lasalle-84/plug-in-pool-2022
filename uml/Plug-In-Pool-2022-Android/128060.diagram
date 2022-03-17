@@ -37,16 +37,30 @@ simplerelationcanvas 129596 simplerelation_ref 135484
   from ref 128316 z 3006 stereotype "<<include>>" xyz 351 394 3000 to ref 128444
 end
 simplerelationcanvas 129724 simplerelation_ref 135612
+<<<<<<< HEAD:uml/Plug-In-Pool-2022-Android/128060.diagram
   from ref 128444 z 3006 stereotype "<<include>>" xyz 485 328 3000 to ref 128700
+=======
+  from ref 128444 z 3006 stereotype "<<include>>" xyz 351 268 3000 to ref 128700
+>>>>>>> 484b2dc77e3e57ed8dee6375753e73c6b145ea42:uml/Plug-In-Pool-2022/128060.diagram
 end
 simplerelationcanvas 129852 simplerelation_ref 135740
   from ref 128444 z 3006 stereotype "<<include>>" xyz 486 394 3000 to ref 128572
 end
 simplerelationcanvas 129980 simplerelation_ref 135868
+<<<<<<< HEAD:uml/Plug-In-Pool-2022-Android/128060.diagram
   from ref 128828 z 3006 stereotype "<<extend>>" xyz 352 539 3000 to ref 128316
 end
 simplerelationcanvas 130236 simplerelation_ref 136124
   from ref 129212 z 3006 stereotype "<<extend>>" xyz 463 852 3000 to ref 129084
+=======
+  from ref 128828 z 3006 stereotype "<<extend>>" xyz 349 537 3000 to ref 128316
+end
+simplerelationcanvas 130108 simplerelation_ref 135996
+  from ref 128956 z 3006 stereotype "<<extend>>" xyz 458 539 3000 to ref 128316
+end
+simplerelationcanvas 130236 simplerelation_ref 136124
+  from ref 129212 z 3006 stereotype "<<extend>>" xyz 447 852 3000 to ref 129084
+>>>>>>> 484b2dc77e3e57ed8dee6375753e73c6b145ea42:uml/Plug-In-Pool-2022/128060.diagram
 end
 line 130748 ----
   from ref 128956 z 3006 to ref 128188
