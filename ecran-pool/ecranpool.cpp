@@ -28,6 +28,10 @@ EcranPool::EcranPool(QWidget* parent) :
     creerRaccourcisClavier();
 #endif
 
+    horloge = new QTimer(this);
+    connect(horloge, SIGNAL(timeout()), this, SLOT(afficherHeure()));
+    horloge->start(500);
+
     afficherEcran(EcranPool::Accueil);
 
 #ifdef PLEIN_ECRAN
@@ -46,6 +50,13 @@ EcranPool::~EcranPool()
 {
     delete ui;
     qDebug() << Q_FUNC_INFO;
+}
+
+void EcranPool::afficherHeure()
+{
+    qDebug() << Q_FUNC_INFO;
+    QDateTime maintenant = QDateTime::currentDateTime();
+    ui->labelHorodatage->setText(maintenant.toString("hh:mm"));
 }
 
 /**
