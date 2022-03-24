@@ -1,0 +1,44 @@
+format 224
+
+activityactioncanvas 128130 activityaction_ref 128002 // activity action Ecran d'accueil
+  
+  show_opaque_action_definition default
+  xyzwh 314 95 2000 101 61
+end
+activityactioncanvas 128258 activityaction_ref 128130 // activity action Ecran partie en cours
+  
+  show_opaque_action_definition default
+  xyzwh 315 212 2000 101 61
+end
+activityactioncanvas 128386 activityaction_ref 128258 // activity action Ecran fin de la rencontre
+  
+  show_opaque_action_definition default
+  xyzwh 314 329 2005 101 61
+end
+textcanvas 130306 "Application relance une partie"
+  xyzwh 520 276 2011 76 58
+flowcanvas 128514 flow_ref 128002 // <flow>
+  
+  from ref 128130 z 2001 to ref 128258
+   write_horizontally default
+end
+flowcanvas 128642 flow_ref 128130 // <flow>
+  
+  from ref 128258 z 2006 to ref 128386
+   write_horizontally default
+end
+flowcanvas 129410 flow_ref 128386 // <flow>
+  
+  from ref 128386 z 2006 to point 215 358
+  line 129538 z 2006 to point 215 123
+  line 129666 z 2006 to ref 128130
+   write_horizontally default
+end
+flowcanvas 129794 flow_ref 128514 // <flow>
+  
+  from ref 128386 z 2006 to point 510 357
+  line 129922 z 2006 to point 511 239
+  line 130050 z 2006 to ref 128258
+   write_horizontally default
+end
+end

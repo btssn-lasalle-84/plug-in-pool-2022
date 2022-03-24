@@ -1,0 +1,43 @@
+format 224
+
+classcanvas 128002 class_ref 134658 // Ecran_POOL
+  classdiagramsettings show_members_full_definition yes show_members_visibility yes member_max_width 0 end
+  xyzwh 403 236 2000 275 39
+end
+classcanvas 128258 class_ref 141314 // GestionPool
+  classdiagramsettings member_max_width 0 end
+  xyzwh 123 236 2000 185 39
+end
+classcanvas 128642 class_ref 147842 // CommunicationBluetooth
+  classdiagramsettings member_max_width 0 end
+  xyz 84 379 2000
+end
+classcanvas 128898 class_ref 147970 // Joueur
+  classdiagramsettings member_max_width 0 end
+  xyz 487 352 2000
+end
+classcanvas 129026 class_ref 148098 // Partie
+  classdiagramsettings member_max_width 0 end
+  xyz 328 343 2000
+end
+relationcanvas 128514 relation_ref 128130 // <association>
+  from ref 128258 z 2001 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128770 relation_ref 134658 // <association>
+  from ref 128258 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129154 relation_ref 134786 // <association>
+  from ref 129026 z 2001 to ref 128898
+  no_role_a role_b_pos 390 343 3000
+  multiplicity_a_pos 468 376 3000 no_multiplicity_b
+end
+relationcanvas 129282 relation_ref 134914 // <association>
+  from ref 128258 z 2001 to ref 129026
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end
