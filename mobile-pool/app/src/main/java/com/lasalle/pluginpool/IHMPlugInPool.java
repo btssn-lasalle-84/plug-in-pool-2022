@@ -8,9 +8,12 @@ package com.lasalle.pluginpool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
+import android.view.View;
 
 /**
  * @class IHMPlugInPool
@@ -39,6 +42,7 @@ public class IHMPlugInPool extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate()");
+        initialiserRessourcesIHM();
     }
 
     /**
@@ -49,8 +53,6 @@ public class IHMPlugInPool extends AppCompatActivity
     {
         super.onStart();
         Log.d(TAG, "onStart()");
-
-        initialiserRessourcesIHM();
     }
 
     /**
@@ -98,8 +100,18 @@ public class IHMPlugInPool extends AppCompatActivity
      */
     private void initialiserRessourcesIHM()
     {
-        boutonHistoriqueRencontre = findViewById(R.id.boutonHistoriqueRencontre);
-        boutonCreerJoueur = findViewById(R.id.boutonCreerJoueur);
-        boutonNouvelleRencontre = findViewById(R.id.boutonNouvelleRencontre);
+        boutonHistoriqueRencontre = (Button)findViewById(R.id.boutonHistoriqueRencontre);
+        boutonCreerJoueur = (Button)findViewById(R.id.boutonCreerJoueur);
+        boutonNouvelleRencontre = (Button)findViewById(R.id.boutonNouvelleRencontre);
+
+        boutonNouvelleRencontre.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMPlugInPool.this, IHMNouvelleRencontre.class);
+                startActivity(intent);
+            }
+        });
     }
 }

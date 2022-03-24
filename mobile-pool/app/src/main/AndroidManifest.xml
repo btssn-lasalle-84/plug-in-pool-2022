@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlugInPool">
         <activity
+            android:name=".IHMNouvelleRencontre"
+            android:exported="false" />
+        <activity
             android:name=".IHMPlugInPool"
             android:exported="true"
             android:theme="@style/Theme.PlugInPool.NoActionBar">
