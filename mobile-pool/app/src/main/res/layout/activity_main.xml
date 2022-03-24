@@ -8,16 +8,33 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="800dp"
+        android:id="@+id/layoutBasDePage"
+        android:layout_width="0dp"
         android:layout_height="260dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/boutonHistoriqueRencontre"
-            android:layout_width="650dp"
+            android:id="@+id/boutonNouvelleRencontre"
+            android:layout_width="0dp"
             android:layout_height="80dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginBottom="34dp"
+            android:text="@string/nouvelle_rencontre"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/boutonCreerJoueur"
+            app:layout_constraintTop_toBottomOf="@+id/boutonHistoriqueRencontre"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/boutonHistoriqueRencontre"
+            android:layout_width="0dp"
+            android:layout_height="83dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginEnd="80dp"
             android:text="@string/historique_des_rencontres"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,26 +45,64 @@
 
         <Button
             android:id="@+id/boutonCreerJoueur"
-            android:layout_width="300dp"
+            android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_marginBottom="28dp"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="34dp"
             android:text="@string/cr_er_un_joueur"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/boutonNouvelleRencontre"
-            app:layout_constraintHorizontal_bias="0.609"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/boutonHistoriqueRencontre" />
 
-        <Button
-            android:id="@+id/boutonNouvelleRencontre"
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="72dp"
-            android:layout_marginBottom="28dp"
-            android:text="@string/nouvelle_rencontre"
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHautDePage"
+        android:layout_width="0dp"
+        android:layout_height="205dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textPlugInPool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:layout_marginBottom="96dp"
+            android:text="Plug In Pool"
+            android:textSize="96sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/boutonHistoriqueRencontre" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutCorpsDePage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layoutBasDePage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHautDePage">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
