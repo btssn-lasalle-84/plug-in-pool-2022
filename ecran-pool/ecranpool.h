@@ -47,6 +47,7 @@ class EcranPool : public QMainWindow
   private:
     Ui::EcranPool* ui; //!< la fenêtre graphique associée à cette classe
     QTimer *horloge;
+    //QTimer *chronometre;
 
     /**
      * @enum Ecran
@@ -67,6 +68,8 @@ class EcranPool : public QMainWindow
 
   public slots:
     void afficherHeure();
+    //void getDuration();
+    //void afficherChronometre();
     void afficherEcran(EcranPool::Ecran ecran);
     void afficherEcranPrecedent();
     void afficherEcranSuivant();

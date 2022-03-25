@@ -32,6 +32,10 @@ EcranPool::EcranPool(QWidget* parent) :
     connect(horloge, SIGNAL(timeout()), this, SLOT(afficherHeure()));
     horloge->start(500);
 
+   /* chronometre = new QTimer(this);
+    connect(chronometre, SIGNAL(timeout()), this, SLOT(afficherChronometre()));
+    chronometre->start(500);*/
+
     afficherEcran(EcranPool::Accueil);
 
 #ifdef PLEIN_ECRAN
@@ -58,6 +62,14 @@ void EcranPool::afficherHeure()
     QDateTime maintenant = QDateTime::currentDateTime();
     ui->labelHorodatage->setText(maintenant.toString("hh:mm"));
 }
+
+/*void EcranPool::afficherChronometre()
+{
+    qDebug() << Q_FUNC_INFO;
+    QElapsedTimer tempsEcoule;
+    tempsEcoule.start();
+    qDebug() << tempsEcoule.elapsed();
+}*/
 
 /**
  * @brief Méthode qui permet d'afficher un numéro d'écran de la pile
