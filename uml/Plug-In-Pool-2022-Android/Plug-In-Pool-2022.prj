@@ -1,7 +1,7 @@
 format 224
 "Plug-In-Pool-2022"
-  revision 8
-  modified_by 60 "pmeras"
+  revision 9
+  modified_by 63 "pmeras"
 
 
   
@@ -569,9 +569,14 @@ format 224
       relations
         end
     end
+
+    sequencediagram 128063 "Déroulement rencontre"
+      sequencediagramsettings end
+      overlapping_bars size A4
+    end
   end
 
-  classview 134588 "Digramme de classes d'analyse"
+  classview 134588 "Diagramme de classes d'analyse"
     
     classdiagramsettings member_max_width 0 end
     

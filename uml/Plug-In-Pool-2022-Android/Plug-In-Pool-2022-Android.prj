@@ -1,7 +1,7 @@
 format 224
 "Plug-In-Pool-2022"
   revision 8
-  modified_by 23 "tv"
+  modified_by 60 "pmeras"
 
 
   
@@ -67,7 +67,7 @@ format 224
      end
     usecasediagram 128060 "Diagramme des cas d'utilisation "
       usecasediagramsettings draw_all_relations no end
-      size A0
+      size A4
     end
 
     class 128060 "Joueur"
@@ -369,7 +369,7 @@ format 224
       activitydiagram 135228 "Navigation des pages de l'application"
 	activitydiagramsettings draw_all_relations no
 	 end
-	size A0
+	size A4
       end
 
       activityaction 128316 "Nouvelle rencontre"
@@ -527,7 +527,7 @@ format 224
      end
     sequencediagram 141756 "Diagramme de séquence système"
       sequencediagramsettings end
-      overlapping_bars size A0
+      overlapping_bars size A4
     end
 
     class 134972 "Joueur"
@@ -568,6 +568,268 @@ format 224
         end
       relations
         end
+    end
+  end
+
+  classview 134588 "Digramme de classes d'analyse"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    classdiagram 148412 "Diagramme de classes d'analyse"
+      classdiagramsettings draw_all_relations no show_members_full_definition yes show_members_visibility yes member_max_width 0 end
+      size A4
+    end
+
+    class 141628 "rencontre"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128060 // Manches (<composition>)
+	relation 128060 *---
+	  a role_name "Manches" multiplicity "1..*" private
+	    classrelation_ref 128060 // Manches (<composition>)
+	  b role_name "" private
+	    classrelation_ref 128188 // <composition>
+      end
+
+      classrelation 128700 // <association>
+	relation_ref 128316 // <association>
+      end
+
+      classrelation 128956 // <association>
+	relation_ref 128444 // <association>
+      end
+
+      classrelation 129084 // Joueurs (<composition>)
+	relation 128572 *---
+	  a role_name "Joueurs" multiplicity "2" private
+	    classrelation_ref 129084 // Joueurs (<composition>)
+	  b role_name "" private
+	    classrelation_ref 129212 // <composition>
+      end
+
+      attribute 128828 "nbManchesGagnantes"
+	private explicit_type "uint"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128956 "etatRencontre"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129084 "horodatage"
+	private explicit_type "date"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129212 "joueurs"
+	private explicit_type "list"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129340 "manches"
+	private explicit_type "list"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 141756 "manche"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128188 // <composition>
+	relation_ref 128060 // <composition>
+      end
+
+      classrelation 128316 // Joueurs (<composition>)
+	relation 128188 *---
+	  a role_name "Joueurs" multiplicity "2" private
+	    classrelation_ref 128316 // Joueurs (<composition>)
+	  b role_name "" private
+	    classrelation_ref 128444 // <composition>
+      end
+
+      attribute 128316 "pointsJoueur1"
+	private explicit_type "uint"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128444 "pointsJoueurs2"
+	private explicit_type "unint"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128572 "debut"
+	private explicit_type "heure"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128700 "fin"
+	private explicit_type "heure"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 141884 "Joueurs"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128444 // <composition>
+	relation_ref 128188 // <composition>
+      end
+
+      classrelation 129212 // <composition>
+	relation_ref 128572 // <composition>
+      end
+
+      attribute 128060 "nom"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128188 "prenom"
+	private explicit_type "string"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+    end
+
+    class 142012 "IHM_POOL"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128828 // affiche_rencontre (<association>)
+	relation 128444 ----
+	  a role_name "affiche_rencontre" private
+	    classrelation_ref 128828 // affiche_rencontre (<association>)
+	  b role_name "" private
+	    classrelation_ref 128956 // <association>
+      end
+    end
+
+    class 142140 "detection_POOL"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      classrelation 128572 // detection_billes (<association>)
+	relation 128316 ----
+	  a role_name "detection_billes" private
+	    classrelation_ref 128572 // detection_billes (<association>)
+	  b role_name "" private
+	    classrelation_ref 128700 // <association>
+      end
     end
   end
 end

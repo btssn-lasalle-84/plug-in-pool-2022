@@ -4,93 +4,42 @@ classinstancecanvas 128700 classinstance_ref 128316 //
   drawing_mode actor  xyz 21.3 34.4 3990 life_line_z 10060
 end
 classinstancecanvas 128828 classinstance_ref 128444 // 
-  xyz 293.9 35.9 1985 life_line_z 8055
+  xyz 288.9 35.9 1985 life_line_z 8055
 end
 fragment 129852 "opt"
   xyzwh 21.6 89.6 3980 338 72
 end
 fragment 130364 "sd Jouer une rencontre"
-  xyzwh 10.8 11.1 1960 368 957
+  xyzwh 10.8 7.1 1955 354 398
 end
-fragment 130492 "loop"
-  xyzwh 23.8 330.5 1950 337 424
-end
-textcanvas 131004 "[Rencontre en cours]"
-  xyzwh 82.5 335 4010 138 15
-fragment 131132 "loop"
-  xyzwh 29.4 361.4 1945 324 379
-end
-textcanvas 131260 "[Pour chaque joueur]"
-  xyzwh 86 366 4015 139 15
-fragment 131388 "alt"
-  xyzwh 34.2 474 1975 312 255
-  separator 5087
-end
-textcanvas 131900 "[faute]"
-  xyzwh 47 501.5 4020 43 15
 textcanvas 132028 "[faute]"
   xyzwh 683 1241 2035 41 15
-textcanvas 132156 "[joueurSuivant]"
-  xyzwh 46 614 4020 99 15
 textcanvas 132284 "[faute]"
   xyzwh 686 1344 2035 41 15
 fragment 134844 "opt"
-  xyzwh 19.7 856.3 1955 349 105
+  xyzwh 14.7 318.3 1960 343 79
 end
-fragment 134972 "opt"
-  xyzwh 23.5 757.9 1950 337 84
+fragment 137276 "ref"
+  refer sequencediagram_ref 128063 // Déroulement rencontre
+  xyzwh 15.5 243.5 1960 343 69
 end
-fragment 135484 "ref"
-  xyzwh 34 396 4010 313 71
-end
-fragment 137276 "loop"
-  xyzwh 17.5 243.5 1955 350 607
-end
-textcanvas 137404 "[Tant que les joueurs veulent rejouer]"
-  xyzwh 72 248 10085 223 15
-textcanvas 138684 "Récupérer les infos de la rencontre"
-  xyzwh 73.5 425 6035 232 15
 durationcanvas 136124 classinstance_ref 128700 // :Joueur
-  xyzwh 42 108 6020 11 43
+  xyzwh 42 107 6020 11 44
 end
 durationcanvas 136252 classinstance_ref 128828 // :Système
-  xyzwh 324 109 4015 11 25
+  xyzwh 319 107 4015 11 27
 end
 durationcanvas 136508 classinstance_ref 128700 // :Joueur
-  xyzwh 42 197 10070 11 40
+  xyzwh 42 189 10070 11 42
 end
 durationcanvas 136636 classinstance_ref 128828 // :Système
-  xyzwh 324 197 4015 11 25
-end
-durationcanvas 136892 classinstance_ref 128700 // :Joueur
-  xyzwh 42 287 10070 11 40
-end
-durationcanvas 137020 classinstance_ref 128828 // :Système
-  xyzwh 324 287 8065 11 25
-end
-durationcanvas 137532 classinstance_ref 128700 // :Joueur
-  xyzwh 42 538 10070 11 40
-end
-durationcanvas 137660 classinstance_ref 128828 // :Système
-  xyzwh 324 537 8065 11 25
-end
-durationcanvas 137916 classinstance_ref 128700 // :Joueur
-  xyzwh 42 666 10070 11 40
-end
-durationcanvas 138044 classinstance_ref 128828 // :Système
-  xyzwh 324 666 8065 11 25
-end
-durationcanvas 138300 classinstance_ref 128700 // :Joueur
-  xyzwh 42 790 10070 11 40
-end
-durationcanvas 138428 classinstance_ref 128828 // :Système
-  xyzwh 324 790 8065 11 25
+  xyzwh 319 182 4015 11 40
 end
 durationcanvas 138812 classinstance_ref 128700 // :Joueur
-  xyzwh 42 897.5 10070 11 40
+  xyzwh 42 346.4 10070 11 27
 end
 durationcanvas 138940 classinstance_ref 128828 // :Système
-  xyzwh 324 898 8065 11 25
+  xyzwh 319 347.9 8065 11 27
 end
 msg 136380 synchronous
   from durationcanvas_ref 136124
@@ -101,37 +50,13 @@ msg 136380 synchronous
 msg 136764 synchronous
   from durationcanvas_ref 136508
   to durationcanvas_ref 136636
-  yz 195 6025 explicitmsg "creerNouvelleRencontre()"
+  yz 189 6025 explicitmsg "creerNouvelleRencontre()"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 96 182
-msg 137148 synchronous
-  from durationcanvas_ref 136892
-  to durationcanvas_ref 137020
-  yz 285 10075 explicitmsg "lancerRencontre()"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 121 272
-msg 137788 synchronous
-  from durationcanvas_ref 137532
-  to durationcanvas_ref 137660
-  yz 536 10075 explicitmsg "faute(Joueur)"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 136 522
-msg 138172 synchronous
-  from durationcanvas_ref 137916
-  to durationcanvas_ref 138044
-  yz 664 10075 explicitmsg "joueurSuivant()"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 158 651
-msg 138556 synchronous
-  from durationcanvas_ref 138300
-  to durationcanvas_ref 138428
-  yz 788 10075 explicitmsg "quitterRencontre()"
-  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 129 775
+  label_xy 111 179
 msg 139068 synchronous
   from durationcanvas_ref 138812
   to durationcanvas_ref 138940
-  yz 896 10075 explicitmsg "enregistrerRencontre()"
+  yz 347.9 10075 explicitmsg "enregistrerRencontre()"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 114 883
+  label_xy 110 332
 end
