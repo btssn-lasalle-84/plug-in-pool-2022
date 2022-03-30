@@ -1,0 +1,43 @@
+format 224
+
+classcanvas 128060 class_ref 141628 // rencontre
+  classdiagramsettings member_max_width 0 end
+  xyz 257 328 2000
+end
+classcanvas 128188 class_ref 141756 // manche
+  classdiagramsettings member_max_width 0 end
+  xyz 611 336 2000
+end
+classcanvas 128444 class_ref 141884 // Joueurs
+  classdiagramsettings show_members_full_definition yes show_members_visibility yes show_members_stereotype yes member_max_width 0 end
+  xyzwh 608 218 2000 149 67
+end
+classcanvas 128700 class_ref 142012 // IHM_POOL
+  classdiagramsettings member_max_width 0 end
+  xyz 43 510 2000
+end
+classcanvas 128828 class_ref 142140 // detection_POOL
+  classdiagramsettings member_max_width 0 end
+  xyz 4 366 2000
+end
+relationcanvas 128316 relation_ref 128060 // <composition>
+  from ref 128060 z 2001 to ref 128188
+  role_a_pos 540 366 3000 no_role_b
+  multiplicity_a_pos 579 393 3000 no_multiplicity_b
+end
+relationcanvas 128956 relation_ref 128316 // <association>
+  from ref 128828 z 2001 to ref 128060
+  role_a_pos 145 366 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129084 relation_ref 128444 // <association>
+  from ref 128700 z 2001 to ref 128060
+  role_a_pos 140 499 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129212 relation_ref 128572 // <composition>
+  from ref 128060 z 2001 to ref 128444
+  role_a_pos 545 256 3000 no_role_b
+  multiplicity_a_pos 589 283 3000 no_multiplicity_b
+end
+end
