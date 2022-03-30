@@ -1,8 +1,8 @@
 package com.lasalle.pluginpool;
 
 /**
- * @file IHMPlugInPool.java
- * @brief Déclaration de la classe IHMPlugInPool
+ * @file IHMNouvelleRencontre.java
+ * @brief Déclaration de la classe IHMNouvelleRencontre
  * @author MERAS Pierre
  */
 
@@ -11,27 +11,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
 import android.view.View;
+import android.widget.Button;
 
 /**
- * @class IHMPlugInPool
- * @brief L'activité principale
+ * @class IHMNouvelleRencontre
+ * @brief L'activité pour une nouvelle rencontre
  */
-public class IHMPlugInPool extends AppCompatActivity
+
+public class IHMNouvelleRencontre extends AppCompatActivity
 {
     /**
      * Constantes
      */
-    private static final String TAG = "_IHMPlugInPool_";  //!< TAG pour les logs
+    private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
 
     /**
      * Ressources IHM
      */
-    private Button boutonHistoriqueRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
-    private Button boutonCreerJoueur;//!< Le bouton permettant de créer un joueur
-    private Button boutonNouvelleRencontre;//!< Le bouton permettant de démarrer une nouvelle rencontre
+    private Button boutonLancerRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -40,9 +38,9 @@ public class IHMPlugInPool extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ihm_nouvelle_rencontre);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHM();
+        initialiserRessourcesIHMNouvelleRencontre();
     }
 
     /**
@@ -98,20 +96,18 @@ public class IHMPlugInPool extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
-    private void initialiserRessourcesIHM()
+    private void initialiserRessourcesIHMNouvelleRencontre()
     {
-        boutonHistoriqueRencontre = (Button)findViewById(R.id.boutonHistoriqueRencontre);
-        boutonCreerJoueur = (Button)findViewById(R.id.boutonCreerJoueur);
-        boutonNouvelleRencontre = (Button)findViewById(R.id.boutonNouvelleRencontre);
+        boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
 
-        boutonNouvelleRencontre.setOnClickListener(
-        new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(IHMPlugInPool.this, IHMNouvelleRencontre.class);
-                startActivity(intent);
-            }
-        });
+        boutonLancerRencontre.setOnClickListener(
+                new View.OnClickListener()
+                {
+                    public void onClick(View v)
+                    {
+                        /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                        startActivity(intent);*/
+                    }
+                });
     }
 }

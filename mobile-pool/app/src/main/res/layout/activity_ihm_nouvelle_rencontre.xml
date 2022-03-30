@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pageAccueil"
+    android:id="@+id/pageNouvelleRencontre"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/degrade_fond_ecran"
-    tools:context=".IHMPlugInPool">
+    tools:context=".IHMNouvelleRencontre">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutBasDePage"
@@ -17,46 +17,18 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/boutonNouvelleRencontre"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginBottom="34dp"
-            android:text="@string/nouvelle_rencontre"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/boutonCreerJoueur"
-            app:layout_constraintTop_toBottomOf="@+id/boutonHistoriqueRencontre"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/boutonHistoriqueRencontre"
+            android:id="@+id/boutonLancerRencontre"
             android:layout_width="0dp"
             android:layout_height="83dp"
             android:layout_marginStart="80dp"
             android:layout_marginEnd="80dp"
-            android:text="@string/historique_des_rencontres"
+            android:text="@string/lancer_la_rencontre"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.222" />
-
-        <Button
-            android:id="@+id/boutonCreerJoueur"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="80dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginBottom="34dp"
-            android:text="@string/cr_er_un_joueur"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/boutonNouvelleRencontre"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/boutonHistoriqueRencontre" />
+            app:layout_constraintVertical_bias="0.502" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

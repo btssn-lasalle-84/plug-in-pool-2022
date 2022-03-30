@@ -3,4 +3,5 @@
     <string name="historique_des_rencontres">Historique des rencontres</string>
     <string name="cr_er_un_joueur">Créer un joueur</string>
     <string name="nouvelle_rencontre">Nouvelle rencontre</string>
+    <string name="lancer_la_rencontre">Lancer la rencontre</string>
 </resources>
