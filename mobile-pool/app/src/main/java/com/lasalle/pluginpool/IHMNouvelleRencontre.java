@@ -105,8 +105,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 {
                     public void onClick(View v)
                     {
-                        Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                        startActivity(intent);
+                        /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                        startActivity(intent);*/
                     }
                 });
     }
