@@ -70,12 +70,6 @@ flowcanvas 130236 flow_ref 137404 // <flow>
   line 130620 z 2021 to ref 128444
    write_horizontally default
 end
-flowcanvas 130364 flow_ref 137532 // <flow>
-  
-  from ref 128444 z 2021 to point 343 492
-  line 130492 z 2021 to ref 128700
-   write_horizontally default
-end
 flowcanvas 130748 flow_ref 137660 // <flow>
   
   from ref 128444 z 2011 to ref 128316

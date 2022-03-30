@@ -570,13 +570,13 @@ format 224
         end
     end
 
-    sequencediagram 128063 "Déroulement rencontre"
+    sequencediagram 128191 "Déroulement rencontre"
       sequencediagramsettings end
-      overlapping_bars size A4
+      overlapping_bars size A3
     end
   end
 
-  classview 134588 "Diagramme de classes d'analyse"
+  classview 134588 "Digramme de classes d'analyse"
     
     classdiagramsettings member_max_width 0 end
     
