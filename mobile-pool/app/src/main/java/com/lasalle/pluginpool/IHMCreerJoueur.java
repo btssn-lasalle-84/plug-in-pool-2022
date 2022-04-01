@@ -1,37 +1,37 @@
 package com.lasalle.pluginpool;
 
 /**
- * @file IHMPlugInPool.java
- * @brief Déclaration de la classe IHMPlugInPool
+ * @file IHMNouvelleRencontre.java
+ * @brief Déclaration de la classe IHMNouvelleRencontre
  * @author MERAS Pierre
  */
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.Toast;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 /**
- * @class IHMPlugInPool
- * @brief L'activité principale
+ * @class IHMCreerJoueur
+ * @brief L'activité pour créer un joueur
  */
-public class IHMPlugInPool extends AppCompatActivity
+
+public class IHMCreerJoueur extends AppCompatActivity
 {
     /**
      * Constantes
      */
-    private static final String TAG = "_IHMPlugInPool_";  //!< TAG pour les logs
+    private static final String TAG = "_IHMCreerJoueur_";  //!< TAG pour les logs
 
     /**
      * Ressources IHM
      */
-    private Button boutonHistoriqueRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
-    private Button boutonCreerJoueur;//!< Le bouton permettant de créer un joueur
-    private Button boutonNouvelleRencontre;//!< Le bouton permettant de démarrer une nouvelle rencontre
+    private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
+    private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
+    private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -40,9 +40,9 @@ public class IHMPlugInPool extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ihm_creer_joueur);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHM();
+        initialiserRessourcesIHMCreerJoueur();
     }
 
     /**
@@ -98,30 +98,19 @@ public class IHMPlugInPool extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
-    private void initialiserRessourcesIHM()
+    private void initialiserRessourcesIHMCreerJoueur()
     {
-        boutonHistoriqueRencontre = (Button)findViewById(R.id.boutonHistoriqueRencontre);
-        boutonCreerJoueur = (Button)findViewById(R.id.boutonCreerJoueur);
-        boutonNouvelleRencontre = (Button)findViewById(R.id.boutonNouvelleRencontre);
+        boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
+        editTextNomJoueur = (TextView)findViewById(R.id.editTextNomJoueur);
+        exitTextPrenomJoueur = (TextView)findViewById(R.id.editTextPrenomJoueur);
 
-        boutonNouvelleRencontre.setOnClickListener(
-        new View.OnClickListener()
-        {
-            public void onClick(View v)
+        boutonValiderCreationJoueur.setOnClickListener(
+            new View.OnClickListener()
             {
-                Intent intent = new Intent(IHMPlugInPool.this, IHMNouvelleRencontre.class);
-                startActivity(intent);
-            }
-        });
-
-        boutonCreerJoueur.setOnClickListener(
-                new View.OnClickListener()
+                public void onClick(View v)
                 {
-                    public void onClick(View v)
-                    {
-                        Intent intent = new Intent(IHMPlugInPool.this, IHMCreerJoueur.class);
-                        startActivity(intent);
-                    }
-                });
+                    /*Enregister le nouveau joueur*/
+                }
+            });
     }
 }
