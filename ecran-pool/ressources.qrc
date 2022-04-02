@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file alias="plug-in-pool.png">images/plug-in-pool.png</file>
-        <file>../../../Téléchargements/8ball.png</file>
     </qresource>
 </RCC>

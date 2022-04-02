@@ -28,9 +28,8 @@ EcranPool::EcranPool(QWidget* parent) :
     creerRaccourcisClavier();
 #endif
 
-    horloge = new QTimer(this);
-    connect(horloge, SIGNAL(timeout()), this, SLOT(afficherHeure()));
-    horloge->start(500);
+    demarrerHorloge();
+    demarrerChronometre();
 
     afficherEcran(EcranPool::Accueil);
 
@@ -57,6 +56,15 @@ void EcranPool::afficherHeure()
     qDebug() << Q_FUNC_INFO;
     QDateTime maintenant = QDateTime::currentDateTime();
     ui->labelHorodatage->setText(maintenant.toString("hh:mm"));
+}
+
+void EcranPool::afficherChronometre()
+{
+    QTime tempsChronometre(0, 0);
+    tempsChronometre = tempsChronometre.addMSecs(tempsEcoule.elapsed());
+    qDebug() << Q_FUNC_INFO << tempsEcoule.elapsed()
+             << tempsChronometre.toString("hh:mm:ss");
+    ui->labelChronometre->setText(tempsChronometre.toString("hh:mm:ss"));
 }
 
 /**
@@ -144,3 +152,18 @@ void EcranPool::creerRaccourcisClavier()
             SLOT(afficherEcranPrecedent()));
 }
 #endif
+
+void EcranPool::demarrerHorloge()
+{
+    horloge = new QTimer(this);
+    connect(horloge, SIGNAL(timeout()), this, SLOT(afficherHeure()));
+    horloge->start(500);
+}
+
+void EcranPool::demarrerChronometre()
+{
+    chronometre = new QTimer(this);
+    connect(chronometre, SIGNAL(timeout()), this, SLOT(afficherChronometre()));
+    chronometre->start(500);
+    tempsEcoule.start();
+}
