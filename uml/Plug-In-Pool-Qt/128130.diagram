@@ -1,0 +1,55 @@
+format 224
+
+classinstance 128002 class_ref 134658 // Ecran_POOL
+  name ""   xyz 466.2 60.8 2010 life_line_z 4020
+fragment 128642 "loop"
+  xyzwh 791.8 48.8 2005 366 528
+end
+textcanvas 128770 "[Application allumée]"
+  xyzwh 843 56 2010 155 22
+classinstance 128898 class_ref 128002 // Mobile_POOL
+  drawing_mode class  name ""   xyz 188.6 65.7 2005 life_line_z 4020
+fragment 129026 "dss"
+  xyzwh 136.9 18.3 2000 452 3760
+end
+fragment 129538 "alt"
+  xyzwh 208 329 2010 336 434
+  separator 5000
+end
+textcanvas 129666 "[Mode kiosque]"
+  xyzwh 844 124 4030 123 15
+textcanvas 130690 "[Partie lancée]"
+  xyzwh 845 340 4030 123 15
+durationcanvas 131586 classinstance_ref 128898 // :Mobile_POOL
+  xyzwh 236 445 4030 11 40
+end
+durationcanvas 131714 classinstance_ref 128002 // :Ecran_POOL
+  xyzwh 511 445 4030 11 40
+end
+durationcanvas 131970 classinstance_ref 128898 // :Mobile_POOL
+  xyzwh 236 168 4030 11 48
+end
+durationcanvas 132098 classinstance_ref 128002 // :Ecran_POOL
+  xyzwh 511 168 4030 11 33
+end
+durationcanvas 132354 classinstance_ref 128002 // :Ecran_POOL
+  xyzwh 511 107.8 4030 11 40
+end
+msg 131842 synchronous
+  from durationcanvas_ref 131586
+  to durationcanvas_ref 131714
+  yz 445 4035 explicitmsg "Envoi les données"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 319 430
+msg 132226 synchronous
+  from durationcanvas_ref 131970
+  to durationcanvas_ref 132098
+  yz 168 4035 explicitmsg "demande de connexion"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 303 153
+reflexivemsg 132482 synchronous
+  to durationcanvas_ref 132354
+  yz 107 4035 explicitmsg "Afficher l'écran d'accueil"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 524 94
+end
