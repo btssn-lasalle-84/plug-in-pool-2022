@@ -280,7 +280,7 @@ border: 2px solid #52D681;
               </property>
               <property name="maximumSize">
                <size>
-                <width>200</width>
+                <width>250</width>
                 <height>100</height>
                </size>
               </property>
@@ -292,7 +292,8 @@ border: 2px solid #52D681;
               <property name="styleSheet">
                <string notr="true">background-color: rgb(239, 239, 239);
 border-radius: 25px;
-border: 2px solid #52D681;</string>
+border: 2px solid #52D681;
+</string>
               </property>
               <property name="frameShadow">
                <enum>QFrame::Sunken</enum>
@@ -308,6 +309,9 @@ border: 2px solid #52D681;</string>
               </property>
               <property name="wordWrap">
                <bool>false</bool>
+              </property>
+              <property name="margin">
+               <number>0</number>
               </property>
              </widget>
             </item>
