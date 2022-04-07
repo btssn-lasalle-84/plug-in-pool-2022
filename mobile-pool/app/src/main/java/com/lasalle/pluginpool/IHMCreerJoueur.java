@@ -1,8 +1,8 @@
 package com.lasalle.pluginpool;
 
 /**
- * @file IHMNouvelleRencontre.java
- * @brief Déclaration de la classe IHMNouvelleRencontre
+ * @file IHMCreerJoueur.java
+ * @brief Déclaration de la classe IHMCreerJoueur
  * @author MERAS Pierre
  */
 
@@ -109,7 +109,7 @@ public class IHMCreerJoueur extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    /*Enregister le nouveau joueur*/
+                    /*Enregistrer le nouveau joueur*/
                 }
             });
     }
