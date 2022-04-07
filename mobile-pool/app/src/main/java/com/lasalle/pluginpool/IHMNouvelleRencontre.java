@@ -101,13 +101,13 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
 
         boutonLancerRencontre.setOnClickListener(
-                new View.OnClickListener()
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
                 {
-                    public void onClick(View v)
-                    {
-                        /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                        startActivity(intent);*/
-                    }
-                });
+                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                    startActivity(intent);*/
+                }
+            });
     }
 }
