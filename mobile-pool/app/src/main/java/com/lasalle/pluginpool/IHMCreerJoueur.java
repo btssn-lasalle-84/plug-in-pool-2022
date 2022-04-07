@@ -109,7 +109,7 @@ public class IHMCreerJoueur extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    /*Enregister le nouveau joueur*/
+                    /*Enregistrer le nouveau joueur*/
                 }
             });
     }
