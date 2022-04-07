@@ -40,9 +40,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ihm_nouvelle_rencontre);
+        setContentView(R.layout.activity_ihm_rencontre_en_cours);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHMRencontreEncours();
+        initialiserRessourcesIHMRencontreEnCours();
     }
 
     /**
@@ -98,7 +98,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
-    private void initialiserRessourcesIHMRencontreEncours()
+    private void initialiserRessourcesIHMRencontreEnCours()
     {
         boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
         boutonFaute = (Button)findViewById(R.id.boutonFaute);
