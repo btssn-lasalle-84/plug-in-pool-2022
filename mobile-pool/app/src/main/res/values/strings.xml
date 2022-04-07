@@ -7,4 +7,5 @@
     <string name="nomJoueur">Nom</string>
     <string name="prenomJoueur">Prénom</string>
     <string name="listeJoueurs"><u>Liste des joueurs :</u></string>
+    <string name="historiqueRencontres"><u>Historique des rencontres :</u></string>
 </resources>
