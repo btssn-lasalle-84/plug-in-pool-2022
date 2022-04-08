@@ -1,8 +1,8 @@
 package com.lasalle.pluginpool;
 
 /**
- * @file IHMNouvelleRencontre.java
- * @brief Déclaration de la classe IHMNouvelleRencontre
+ * @file IHMRencontreEnCours.java
+ * @brief Déclaration de la classe IHMRencontreEnCours
  * @author MERAS Pierre
  */
 
@@ -15,21 +15,23 @@ import android.view.View;
 import android.widget.Button;
 
 /**
- * @class IHMNouvelleRencontre
- * @brief L'activité pour une nouvelle rencontre
+ * @class IHMRencontreEnCours
+ * @brief L'activité pour une rencontre en cours
  */
 
-public class IHMNouvelleRencontre extends AppCompatActivity
+public class IHMRencontreEnCours extends AppCompatActivity
 {
     /**
      * Constantes
      */
-    private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
+    private static final String TAG = "_IHMRencontreEnCours_";  //!< TAG pour les logs
 
     /**
      * Ressources IHM
      */
-    private Button boutonLancerRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
+    private Button boutonQuitterRencontre;//!< Le bouton permettant d'arreter la rencontre
+    private Button boutonFaute;//!< Le bouton permettant de signaler une faute lors du tour du joueur
+    private Button boutonJoueurSuivant;//!< Le bouton permettant de passer la main au joueur suivant
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -38,9 +40,9 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ihm_nouvelle_rencontre);
+        setContentView(R.layout.activity_ihm_rencontre_en_cours);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHMNouvelleRencontre();
+        initialiserRessourcesIHMRencontreEnCours();
     }
 
     /**
@@ -96,17 +98,37 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
-    private void initialiserRessourcesIHMNouvelleRencontre()
+    private void initialiserRessourcesIHMRencontreEnCours()
     {
-        boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
+        boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
+        boutonFaute = (Button)findViewById(R.id.boutonFaute);
+        boutonJoueurSuivant = (Button)findViewById(R.id.boutonJoueurSuivant);
 
-        boutonLancerRencontre.setOnClickListener(
+        boutonQuitterRencontre.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                    Intent intent = new Intent(IHMRencontreEnCours.this, IHMNouvelleRencontre.class);
                     startActivity(intent);
+                }
+            });
+
+        boutonFaute.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Signalement d'une faute*/
+                }
+            });
+
+        boutonJoueurSuivant.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Passage au joueur suivant*/
                 }
             });
     }
