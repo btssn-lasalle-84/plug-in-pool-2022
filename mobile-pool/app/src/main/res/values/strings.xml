@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PlugInPool</string>
+    <string name="app_name">Plug In Pool</string>
     <string name="historique_des_rencontres">Historique des rencontres</string>
     <string name="cr_er_un_joueur">Créer un joueur</string>
     <string name="nouvelle_rencontre">Nouvelle rencontre</string>
@@ -7,4 +7,9 @@
     <string name="nomJoueur">Nom</string>
     <string name="prenomJoueur">Prénom</string>
     <string name="listeJoueurs"><u>Liste des joueurs :</u></string>
+    <string name="joueurSuivant">Joueur suivant</string>
+    <string name="quitterRencontre">Quitter</string>
+    <string name="faute">Faute</string>
+    <string name="Joueurs"><u>Joueurs :</u></string>
+    <string name="Scores"><u>Scores :</u></string>
 </resources>
