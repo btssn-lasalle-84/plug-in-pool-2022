@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlugInPool">
         <activity
+            android:name=".IHMHistoriqueDesRencontres"
+            android:exported="false"
+            android:theme="@style/Theme.PlugInPool.NoActionBar" />
+        <activity
             android:name=".IHMFinDeRencontre"
             android:exported="false"
             android:theme="@style/Theme.PlugInPool.NoActionBar" />

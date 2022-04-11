@@ -7,6 +7,7 @@
     <string name="nomJoueur">Nom</string>
     <string name="prenomJoueur">Prénom</string>
     <string name="listeJoueurs"><u>Liste des joueurs :</u></string>
+    <string name="historiqueRencontres"><u>Historique des rencontres :</u></string>
     <string name="rejouer">Rejouer</string>
     <string name="enregistrerLaRencontre">Enregistrer la rencontre</string>
     <string name="resumeDeLaRencontre"><u>Résumé de la rencontre :</u></string>
