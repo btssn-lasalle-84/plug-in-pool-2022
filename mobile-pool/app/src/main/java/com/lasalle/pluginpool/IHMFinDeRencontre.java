@@ -1,8 +1,8 @@
 package com.lasalle.pluginpool;
 
 /**
- * @file IHMCreerJoueur.java
- * @brief Déclaration de la classe IHMCreerJoueur
+ * @file IHMFinDeRencontre.java
+ * @brief Déclaration de la classe IHMFinDeRencontre
  * @author MERAS Pierre
  */
 
@@ -12,26 +12,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
- * @class IHMCreerJoueur
- * @brief L'activité pour créer un joueur
+ * @class IHMFinDeRencontre
+ * @brief L'activité de fin de rencontre
  */
 
-public class IHMCreerJoueur extends AppCompatActivity
+public class IHMFinDeRencontre extends AppCompatActivity
 {
     /**
      * Constantes
      */
-    private static final String TAG = "_IHMCreerJoueur_";  //!< TAG pour les logs
+    private static final String TAG = "_IHMFinDeRencontre_";  //!< TAG pour les logs
 
     /**
      * Ressources IHM
      */
-    private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
-    private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
-    private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
+    private Button boutonEnregistrerRencontre;//!< Le bouton permettant l'enregistrement des données de la rencontre'
+    private Button boutonRejouer;//!< Le bouton permettant de rejouer une rencontre avec les mêmes paramètres'
+
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -40,9 +39,9 @@ public class IHMCreerJoueur extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ihm_creer_joueur);
+        setContentView(R.layout.activity_ihm_fin_de_rencontre);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHMCreerJoueur();
+        initialiserRessourcesIHMFinDeRencontre();
     }
 
     /**
@@ -98,18 +97,27 @@ public class IHMCreerJoueur extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
-    private void initialiserRessourcesIHMCreerJoueur()
+    private void initialiserRessourcesIHMFinDeRencontre()
     {
-        boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
-        editTextNomJoueur = (TextView)findViewById(R.id.editTextNomJoueur);
-        exitTextPrenomJoueur = (TextView)findViewById(R.id.editTextPrenomJoueur);
+        boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
+        boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
 
-        boutonValiderCreationJoueur.setOnClickListener(
+        boutonEnregistrerRencontre.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    /*Enregistrer le nouveau joueur*/
+                    /*Enregistrer la rencontre*/
+                }
+            });
+
+        boutonRejouer.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                    startActivity(intent);*/
                 }
             });
     }

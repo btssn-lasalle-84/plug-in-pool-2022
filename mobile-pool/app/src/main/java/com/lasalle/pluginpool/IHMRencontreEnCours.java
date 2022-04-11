@@ -1,37 +1,37 @@
 package com.lasalle.pluginpool;
 
 /**
- * @file IHMCreerJoueur.java
- * @brief Déclaration de la classe IHMCreerJoueur
+ * @file IHMRencontreEnCours.java
+ * @brief Déclaration de la classe IHMRencontreEnCours
  * @author MERAS Pierre
  */
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
- * @class IHMCreerJoueur
- * @brief L'activité pour créer un joueur
+ * @class IHMRencontreEnCours
+ * @brief L'activité pour une rencontre en cours
  */
 
-public class IHMCreerJoueur extends AppCompatActivity
+public class IHMRencontreEnCours extends AppCompatActivity
 {
     /**
      * Constantes
      */
-    private static final String TAG = "_IHMCreerJoueur_";  //!< TAG pour les logs
+    private static final String TAG = "_IHMRencontreEnCours_";  //!< TAG pour les logs
 
     /**
      * Ressources IHM
      */
-    private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
-    private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
-    private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
+    private Button boutonQuitterRencontre;//!< Le bouton permettant d'arreter la rencontre
+    private Button boutonFaute;//!< Le bouton permettant de signaler une faute lors du tour du joueur
+    private Button boutonJoueurSuivant;//!< Le bouton permettant de passer la main au joueur suivant
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -40,9 +40,9 @@ public class IHMCreerJoueur extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ihm_creer_joueur);
+        setContentView(R.layout.activity_ihm_rencontre_en_cours);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHMCreerJoueur();
+        initialiserRessourcesIHMRencontreEnCours();
     }
 
     /**
@@ -98,18 +98,37 @@ public class IHMCreerJoueur extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
-    private void initialiserRessourcesIHMCreerJoueur()
+    private void initialiserRessourcesIHMRencontreEnCours()
     {
-        boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
-        editTextNomJoueur = (TextView)findViewById(R.id.editTextNomJoueur);
-        exitTextPrenomJoueur = (TextView)findViewById(R.id.editTextPrenomJoueur);
+        boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
+        boutonFaute = (Button)findViewById(R.id.boutonFaute);
+        boutonJoueurSuivant = (Button)findViewById(R.id.boutonJoueurSuivant);
 
-        boutonValiderCreationJoueur.setOnClickListener(
+        boutonQuitterRencontre.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    /*Enregistrer le nouveau joueur*/
+                    Intent intent = new Intent(IHMRencontreEnCours.this, IHMNouvelleRencontre.class);
+                    startActivity(intent);
+                }
+            });
+
+        boutonFaute.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Signalement d'une faute*/
+                }
+            });
+
+        boutonJoueurSuivant.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Passage au joueur suivant*/
                 }
             });
     }
