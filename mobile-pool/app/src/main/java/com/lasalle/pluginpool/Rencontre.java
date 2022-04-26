@@ -8,6 +8,8 @@ package com.lasalle.pluginpool;
 
 import android.os.Build;
 
+import androidx.annotation.RequiresApi;
+
 import java.time.*;
 
 /**
@@ -27,11 +29,12 @@ public class Rencontre
     /**
      * @brief Constructeur
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Rencontre(int nbManchesGagnantes, int etatRencontre)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.etatRencontre = etatRencontre;
-        this.horodatage = LocalDateTime.now(ZoneId.of("Europe/Paris"));
+        this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
     }
 
     /**
