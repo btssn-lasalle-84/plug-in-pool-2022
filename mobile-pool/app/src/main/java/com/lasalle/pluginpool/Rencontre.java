@@ -26,6 +26,7 @@ public class Rencontre
     private int nbManchesGagnantes;
     private int etatRencontre;
     private LocalDateTime horodatage;
+    private Vector<Manche> manches;
     private Joueur joueur1;
     private Joueur joueur2;
 
