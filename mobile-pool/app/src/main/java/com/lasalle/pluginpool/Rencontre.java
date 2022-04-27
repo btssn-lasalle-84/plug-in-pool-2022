@@ -38,8 +38,8 @@ public class Rencontre
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.etatRencontre = etatRencontre;
         this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
-        this.joueur1 = new Joueur("","");
-        this.joueur2 = new Joueur("","");
+        this.joueur1 = joueur1;
+        this.joueur2 = joueur2;
     }
 
     /**
