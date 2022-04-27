@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
 
+import java.util.Vector;
+
 /**
  * @class IHMPlugInPool
  * @brief L'activité principale
@@ -25,6 +27,11 @@ public class IHMPlugInPool extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMPlugInPool_";  //!< TAG pour les logs
+
+    /**
+     * Attributs
+     */
+    private BaseDeDonnees baseDeDonnees = null;
 
     /**
      * Ressources IHM
@@ -42,6 +49,11 @@ public class IHMPlugInPool extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate()");
+
+        baseDeDonnees = new BaseDeDonnees(this);
+        // Test BDD
+        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
         initialiserRessourcesIHM();
     }
 
