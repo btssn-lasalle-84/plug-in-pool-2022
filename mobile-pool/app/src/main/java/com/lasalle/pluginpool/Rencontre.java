@@ -11,6 +11,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.*;
+import java.util.Vector;
 
 /**
  * @class Rencontre
@@ -25,16 +26,20 @@ public class Rencontre
     private int nbManchesGagnantes;
     private int etatRencontre;
     private LocalDateTime horodatage;
+    private Joueur joueur1;
+    private Joueur joueur2;
 
     /**
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Rencontre(int nbManchesGagnantes, int etatRencontre)
+    public Rencontre(int nbManchesGagnantes, int etatRencontre, Joueur joueur1, Joueur joueur2)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.etatRencontre = etatRencontre;
         this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
+        this.joueur1 = new Joueur("","");
+        this.joueur2 = new Joueur("","");
     }
 
     /**
