@@ -11,6 +11,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import java.time.*;
+import java.util.Vector;
 
 /**
  * @class Rencontre
@@ -25,6 +26,7 @@ public class Rencontre
     private int nbManchesGagnantes;
     private int etatRencontre;
     private LocalDateTime horodatage;
+    private Vector<Manche> manches;
 
     /**
      * @brief Constructeur
