@@ -8,10 +8,10 @@ package com.lasalle.pluginpool;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
-import android.os.Bundle;
+import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 import android.widget.Toast;
+import java.util.Set;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,6 +37,7 @@ public class Communication
     /**
      * @brief Constructeur
      */
+    @SuppressLint("MissingPermission")
     public Communication(AppCompatActivity ihm)
     {
         this.ihm = ihm;
@@ -63,6 +64,13 @@ public class Communication
                 Toast.makeText(this.ihm.getApplicationContext(), "Bluetooth activé", Toast.LENGTH_SHORT).show();
             }
             Log.d(TAG, "Etat bluetooth : " + bluetoothAdapter.isEnabled());
+        }
+        Set<BluetoothDevice> devices;
+
+        devices = bluetoothAdapter.getBondedDevices();
+        for (BluetoothDevice blueDevice : devices)
+        {
+            Toast.makeText(this.ihm.getApplicationContext(), "Device = " + blueDevice.getName(), Toast.LENGTH_SHORT).show();
         }
     }
 }
