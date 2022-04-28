@@ -32,6 +32,7 @@ public class IHMPlugInPool extends AppCompatActivity
      * Attributs
      */
     private BaseDeDonnees baseDeDonnees = null;
+    private Communication communication = null;
 
     /**
      * Ressources IHM
@@ -53,6 +54,8 @@ public class IHMPlugInPool extends AppCompatActivity
         baseDeDonnees = new BaseDeDonnees(this);
         // Test BDD
         Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
+        communication = new Communication(this);
 
         initialiserRessourcesIHM();
     }
