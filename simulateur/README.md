@@ -16,11 +16,11 @@ Un tir prend entre 1 et 4 secondes. Le joueur a 1 chance sur 2 d'empocher une bi
 
 ## Fonctionnement
 
-Pour l'instant, le simulateur démarre à la réception d'une trame : `$START\r\n`
+Pour l'instant, le simulateur démarre à la réception d'une trame : `$PLUG;START;\r\n`
 
 Quand le simulateur affiche "loupé" ou "faute !", il faut appuyer sur le bouton SUIVANT (SW2).
 
-La partie peut être arrêtée avec une trame `$STOP\r\n` ou annulée avec une trame `$RESET\r\n`.
+La partie peut être arrêtée avec une trame `$PLUG;STOP;\r\n` ou annulée avec une trame `$PLUG;RESET;\r\n`.
 
 ## Écran OLED
 
@@ -49,6 +49,37 @@ upload_speed = 115200
 monitor_port = /dev/ttyUSB0
 monitor_speed = 115200
 ```
+
+## Exemples d'échange
+
+Démarrage d'une partie :
+
+```
+$PLUG;START;
+$PLUG;ACK;
+```
+
+Puis :
+
+```
+$PLUG;EMPOCHE;R;B;
+$PLUG;EMPOCHE;R;F;
+$PLUG;EMPOCHE;R;B;
+
+$PLUG;NEXT;
+$PLUG;FAUTE;B;E;
+
+$PLUG;NEXT;
+$PLUG;NEXT;
+$PLUG;EMPOCHE;J;E;
+$PLUG;EMPOCHE;J;B;
+$PLUG;FAUTE;R;E;
+```
+
+A la fin de cette série de trames, le score est le suivant :
+
+- Joueur ROUGE : 4 bille(s)  OOOOXXX
+- Joueur JAUNE : 5 bille(s)  OOOOOXX
 
 ## Auteur
 

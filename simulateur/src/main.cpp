@@ -24,7 +24,7 @@
 #define BROCHE_I2C_SCL      22      //!< Broche SCL
 
 // Protocole (cf. Google Drive)
-#define EN_TETE_TRAME           "$"
+#define EN_TETE_TRAME           "$PLUG"
 #define DELIMITEUR_CHAMP        ";"
 #define DELIMITEURS_FIN         "\r\n"
 #define DELIMITEUR_DATAS        ';'
@@ -55,9 +55,10 @@ BluetoothSerial ESPBluetooth;
  */
 enum TypeTrame
 {
-    Inconnu = -1,
-    START, PAUSE, PLAY, STOP, RESET, CONFIG, EMPOCHE, FAUTE, NEXT, ACK, ERREUR,
-    NB_TRAMES
+  Inconnu = -1,
+  //START, PAUSE, PLAY, STOP, RESET, CONFIG, EMPOCHE, FAUTE, NEXT, ACK, ERREUR,
+  START, STOP, RESET, CONFIG, EMPOCHE, FAUTE, NEXT, ACK, ERREUR,
+  NB_TRAMES
 };
 
 /**
@@ -66,10 +67,10 @@ enum TypeTrame
  */
 enum EtatPartie
 {
-    Finie = 0,
-    EnCours,
-    EnPause,
-    Terminee
+  Finie = 0,
+  EnCours,
+  EnPause,
+  Terminee
 };
 
 /**
@@ -78,19 +79,22 @@ enum EtatPartie
  */
 enum CouleurBille
 {
-    NOIRE = -1,
-    ROUGE = 0,
-    JAUNE = 1,
-    NbCouleurs
+  BLANCHE = -2,
+  NOIRE = -1,
+  ROUGE = 0,
+  JAUNE = 1,
+  NbCouleurs
 };
 
-const String nomsTrame[TypeTrame::NB_TRAMES] = { "START", "PAUSE", "PLAY", "STOP", "RESET", "CONFIG", "EMPOCHE", "FAUTE", "NEXT", "ACK", "ERREUR" }; //!< nom des trames dans le protocole
+//const String nomsTrame[TypeTrame::NB_TRAMES] = { "START", "PAUSE", "PLAY", "STOP", "RESET", "CONFIG", "EMPOCHE", "FAUTE", "NEXT", "ACK", "ERREUR" }; //!< nom des trames dans le protocole
+const String nomsTrame[TypeTrame::NB_TRAMES] = { "START", "STOP", "RESET", "CONFIG", "EMPOCHE", "FAUTE", "NEXT", "ACK", "ERREUR" }; //!< nom des trames dans le protocole
 EtatPartie etatPartie = Finie; //!< l'état de la partie
 int nbBilles[CouleurBille::NbCouleurs] = { NB_BILLES_ROUGE, NB_BILLES_JAUNE }; //!< le nombre de billes à empocher pour chaque couleur
 CouleurBille joueurCourant = CouleurBille::NOIRE; //!< la couleur du joueur qui tire
 bool etatJoueur[CouleurBille::NbCouleurs] = { false, false }; //!< le joueur a joué ou pas
 bool joueurGagnant[CouleurBille::NbCouleurs] = { false, false }; //!< le joueur a gagné ou pas
 const String codeCouleur[CouleurBille::NbCouleurs] = { "R", "J" }; //!< code de couleur de la bille empochée
+const String codePoche[NB_POCHES] = { "A", "B", "C", "D", "E", "F" }; //!< code des poches
 //String typePartie;
 bool refresh = false; //!< demande rafraichissement de l'écran OLED
 bool antiRebond = false; //!< anti-rebond
@@ -135,8 +139,8 @@ void envoyerTrameAcquittement()
 {
   char trameEnvoi[64];
 
-  //Format : $ACK\r\n
-  sprintf((char *)trameEnvoi, "%s%s\r\n", entete.c_str(), nomsTrame[TypeTrame::ACK].c_str());
+  //Format : $PLUG;ACK;\r\n
+  sprintf((char *)trameEnvoi, "%s;%s;\r\n", entete.c_str(), nomsTrame[TypeTrame::ACK].c_str());
 
   ESPBluetooth.write((uint8_t*)trameEnvoi, strlen((char *)trameEnvoi));
   #ifdef DEBUG
@@ -155,8 +159,8 @@ void envoyerTrameErreur(int code)
 {
   char trameEnvoi[64];
 
-  //Format : $ERREUR;{CODE}\r\n
-  sprintf((char *)trameEnvoi, "%s%s;%d\r\n", entete.c_str(), nomsTrame[TypeTrame::ERREUR].c_str(), code);
+  //Format : $PLUG;ERREUR;{CODE};\r\n
+  sprintf((char *)trameEnvoi, "%s;%s;%d;\r\n", entete.c_str(), nomsTrame[TypeTrame::ERREUR].c_str(), code);
 
   ESPBluetooth.write((uint8_t*)trameEnvoi, strlen((char *)trameEnvoi));
   #ifdef DEBUG
@@ -175,8 +179,8 @@ void envoyerTrameEmpoche(int numeroPoche, CouleurBille couleurBille)
 {
   char trameEnvoi[64];
 
-  //Format : $EMPOCHE;{NUMERO};{COULEUR}\r\n
-  sprintf((char *)trameEnvoi, "%s%s;%d;%s\r\n", entete.c_str(), nomsTrame[TypeTrame::EMPOCHE].c_str(), numeroPoche, codeCouleur[(int)couleurBille].c_str());
+  //Format : $PLUG;EMPOCHE;{COULEUR};{NUMERO};\r\n
+  sprintf((char *)trameEnvoi, "%s;%s;%s;%s;\r\n", entete.c_str(), nomsTrame[TypeTrame::EMPOCHE].c_str(), codeCouleur[(int)couleurBille].c_str(), codePoche[numeroPoche].c_str());
 
   ESPBluetooth.write((uint8_t*)trameEnvoi, strlen((char *)trameEnvoi));
   #ifdef DEBUG
@@ -195,8 +199,8 @@ void envoyerTrameNext()
 {
   char trameEnvoi[64];
 
-  //Format : $NEXT\r\n
-  sprintf((char *)trameEnvoi, "%s%s\r\n", entete.c_str(), nomsTrame[TypeTrame::NEXT].c_str());
+  //Format : $PLUG;NEXT;\r\n
+  sprintf((char *)trameEnvoi, "%s;%s;\r\n", entete.c_str(), nomsTrame[TypeTrame::NEXT].c_str());
 
   ESPBluetooth.write((uint8_t*)trameEnvoi, strlen((char *)trameEnvoi));
   #ifdef DEBUG
@@ -211,12 +215,23 @@ void envoyerTrameNext()
  * @brief Envoie une trame FAUTE via le Bluetooth
  *
  */
-void envoyerTrameFaute(CouleurBille couleurBille)
+void envoyerTrameFaute(int numeroPoche, CouleurBille couleurBille)
 {
   char trameEnvoi[64];
 
-  //Format : $FAUTE;{COULEUR}\r\n
-  sprintf((char *)trameEnvoi, "%s%s;%s\r\n", entete.c_str(), nomsTrame[TypeTrame::FAUTE].c_str(), codeCouleur[(int)couleurBille].c_str());
+  //Format : $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
+  switch(couleurBille)
+  {
+    case CouleurBille::BLANCHE:
+      sprintf((char *)trameEnvoi, "%s;%s;B;%s;\r\n", entete.c_str(), nomsTrame[TypeTrame::FAUTE].c_str(), codePoche[numeroPoche].c_str());
+      break;
+    case CouleurBille::NOIRE:
+      sprintf((char *)trameEnvoi, "%s;%s;N;%s;\r\n", entete.c_str(), nomsTrame[TypeTrame::FAUTE].c_str(), codePoche[numeroPoche].c_str());
+      break;
+    default:
+      sprintf((char *)trameEnvoi, "%s;%s;%s;%s;\r\n", entete.c_str(), nomsTrame[TypeTrame::FAUTE].c_str(), codeCouleur[(int)couleurBille].c_str(), codePoche[numeroPoche].c_str());
+      break;
+  }
 
   ESPBluetooth.write((uint8_t*)trameEnvoi, strlen((char *)trameEnvoi));
   #ifdef DEBUG
@@ -430,7 +445,8 @@ bool simulerTir()
   }
   else // faute : empochage d'une mauvaise bille
   {
-    envoyerTrameFaute(joueurCourant);
+    tir = random(0, NB_POCHES) + 1; // entre 1 et NB_POCHES
+    envoyerTrameFaute(tir, (CouleurBille)random((long)CouleurBille::BLANCHE, (long)CouleurBille::NbCouleurs));
     afficherTir(tir);
   }
 
@@ -545,7 +561,7 @@ TypeTrame verifierTrame(String &trame)
   for(int i=0;i<TypeTrame::NB_TRAMES;i++)
   {
     //Format : ${TYPE}\r\n
-    format = entete + nomsTrame[i] + delimiteurFin;
+    format = entete + separateur + nomsTrame[i] + separateur + delimiteurFin;
     #ifdef DEBUG_VERIFICATION
     Serial.print("Verification trame : ");
     Serial.print(format);
@@ -755,7 +771,7 @@ void loop()
         else
           envoyerTrameErreur(ERREUR_TRAME_ETAT);
         break;
-      case TypeTrame::PAUSE:
+      /*case TypeTrame::PAUSE:
         if(etatPartie == EnCours)
         {
           envoyerTrameAcquittement();
@@ -768,8 +784,8 @@ void loop()
         }
         else
           envoyerTrameErreur(ERREUR_TRAME_ETAT);
-        break;
-      case TypeTrame::PLAY:
+        break;*/
+      /*case TypeTrame::PLAY:
         if(etatPartie == EnPause)
         {
           envoyerTrameAcquittement();
@@ -782,7 +798,7 @@ void loop()
         }
         else
           envoyerTrameErreur(ERREUR_TRAME_ETAT);
-        break;
+        break;*/
       case TypeTrame::STOP:
         if(etatPartie > Finie)
         {
