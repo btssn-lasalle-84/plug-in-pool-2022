@@ -12,6 +12,7 @@ import android.bluetooth.BluetoothDevice;
 import android.util.Log;
 import android.widget.Toast;
 import java.util.Set;
+import android.content.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @brief Classe permettant d'utiliser le bluetooth
  */
 
+@SuppressLint("MissingPermission")
 public class Communication
 {
     /**
@@ -43,6 +45,10 @@ public class Communication
         this.ihm = ihm;
         initialiser();
     }
+
+    /**
+     * @brief Méthode à l'initialisation de la connexion bluetooth
+     */
 
     @SuppressLint("MissingPermission")
     private void initialiser()
