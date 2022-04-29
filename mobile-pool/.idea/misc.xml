@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/bord_arrondis.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/bords_arrondis.xml" value="0.2955" />
         <entry key="app/src/main/res/drawable/bords_ronds.xml" value="0.3285" />
+        <entry key="app/src/main/res/drawable/bords_ronds_verts.xml" value="0.211" />
         <entry key="app/src/main/res/drawable/boutons_arrondis.xml" value="0.334" />
         <entry key="app/src/main/res/drawable/boutons_ronds.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/degrade_fond_ecran.xml" value="0.34" />

@@ -1,9 +1,8 @@
 package com.lasalle.pluginpool;
 
-import java.util.logging.Handler;
-
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
+import android.os.Handler;
 
 public class PeripheriqueBluetooth
 {
@@ -13,7 +12,7 @@ public class PeripheriqueBluetooth
     private BluetoothDevice device = null;
 
     @SuppressLint("MissingPermission")
-    public PeripheriqueBluetooth(BluetoothDevice device, Handler handler)
+    public PeripheriqueBluetooth(BluetoothDevice device, android.os.Handler handler)
     {
         if(device != null)
         {
@@ -27,7 +26,7 @@ public class PeripheriqueBluetooth
             this.device = null;
             this.nom = "Aucun";
             this.adresse = "";
-            this.handler = handler;
+            this.handler = null;
         }
 
         // TODO
