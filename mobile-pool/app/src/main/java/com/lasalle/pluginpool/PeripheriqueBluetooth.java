@@ -1,20 +1,56 @@
 package com.lasalle.pluginpool;
 
+/**
+ * @file PeripheriqueBluetooth.java
+ * @brief Déclaration de la classe PeripheriqueBluetooth
+ * @author MERAS Pierre
+ */
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
+import android.os.Message;
 
-public class PeripheriqueBluetooth
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
+
+/**
+ * @class PeripheriqueBluetooth
+ * @brief Classe permettant de créer des périphériques bluetooth
+ */
+
+public class PeripheriqueBluetooth extends Thread
 {
+    /**
+     * Constantes
+     */
+    private static final String TAG = "_PeripheriqueBluetooth_";  //!< TAG pour les logs
+    public final static int CODE_CONNEXION = 0;
+    public final static int CODE_RECEPTION = 1;
+    public final static int CODE_DECONNEXION = 2;
+
+    /**
+     * Variables
+     */
     private String nom;
     private String adresse;
     private Handler handler = null;
     private BluetoothDevice device = null;
+    private BluetoothSocket socket = null;
+    private InputStream receiveStream = null;
+    private OutputStream sendStream = null;
+    private TReception tReception;
 
+    /**
+     * @brief Constructeur
+     */
     @SuppressLint("MissingPermission")
     public PeripheriqueBluetooth(BluetoothDevice device, android.os.Handler handler)
     {
-        if(device != null)
+        if (device != null)
         {
             this.device = device;
             this.nom = device.getName();
@@ -26,11 +62,30 @@ public class PeripheriqueBluetooth
             this.device = null;
             this.nom = "Aucun";
             this.adresse = "";
-            this.handler = null;
+            this.handler = handler;
         }
 
-        // TODO
+        try
+        {
+            socket = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+            receiveStream = socket.getInputStream();
+            sendStream = socket.getOutputStream();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            socket = null;
+        }
+
+        if (socket != null)
+        {
+            tReception = new TReception(handler, socket);
+        }
     }
+
+    /**
+     * @brief Accesseurs
+     */
 
     public String getNom()
     {
@@ -42,36 +97,102 @@ public class PeripheriqueBluetooth
         return adresse;
     }
 
-    public boolean estConnecte()
-    {
-        // TODO
-
-        return false;
-    }
+    /**
+     * @brief Mutateurs
+     */
 
     public void setNom(String nom)
     {
         this.nom = nom;
     }
 
-    public String toString()
+    /**
+     * @brief Gérer l'état de la connexion
+     */
+
+    public boolean estConnecte()
     {
-        return "\nNom : " + nom + "\nAdresse : " + adresse;
+        if(socket == null)
+            return false;
+        else
+            return true;
     }
+
 
     public void envoyer(String data)
     {
-        // TODO
+        if(socket == null)
+            return;
+
+        new Thread()
+        {
+            @Override public void run()
+            {
+                try
+                {
+                    if(socket.isConnected())
+                    {
+                        sendStream.write(data.getBytes());
+                        sendStream.flush();
+                    }
+                }
+                catch (IOException e)
+                {
+                    System.out.println("<Socket> error send");
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public void connecter()
     {
-        // TODO
+        new Thread()
+        {
+            @SuppressLint("MissingPermission")
+            @Override public void run()
+            {
+                try
+                {
+                    socket.connect();
+
+                    Message message = Message.obtain();
+                    message.arg1 = CODE_CONNEXION;
+                    handler.sendMessage(message);
+
+                    tReception.start();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("<Socket> error connect");
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public boolean deconnecter()
     {
-        // TODO
-        return false;
+        try
+        {
+            tReception.arreter();
+            socket.close();
+            return true;
+        }
+        catch (IOException e)
+        {
+            System.out.println("<Socket> error close");
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * @brief Renvoie l'objet sous forme de chaîne de caractères
+     */
+
+    public String toString()
+    {
+        return "\nNom : " + nom + "\nAdresse : " + adresse;
     }
 }

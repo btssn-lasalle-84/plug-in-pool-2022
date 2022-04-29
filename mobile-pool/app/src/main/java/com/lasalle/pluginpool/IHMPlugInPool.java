@@ -16,14 +16,10 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Toast;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.Set;
 import java.util.Vector;
 
