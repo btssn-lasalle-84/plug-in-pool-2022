@@ -11,6 +11,9 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +24,6 @@ import java.util.UUID;
  * @class PeripheriqueBluetooth
  * @brief Classe permettant de créer des périphériques bluetooth
  */
-
 public class PeripheriqueBluetooth extends Thread
 {
     /**
@@ -35,6 +37,7 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * Variables
      */
+    private AppCompatActivity ihm;
     private String nom;
     private String adresse;
     private Handler handler = null;
@@ -45,8 +48,9 @@ public class PeripheriqueBluetooth extends Thread
     private TReception tReception;
 
     /**
-     * @brief Constructeur
+     * @brief Constructeurs
      */
+
     @SuppressLint("MissingPermission")
     public PeripheriqueBluetooth(BluetoothDevice device, android.os.Handler handler)
     {
@@ -86,7 +90,6 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * @brief Accesseurs
      */
-
     public String getNom()
     {
         return nom;
@@ -100,16 +103,14 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * @brief Mutateurs
      */
-
     public void setNom(String nom)
     {
         this.nom = nom;
     }
 
     /**
-     * @brief Gérer l'état de la connexion
+     * @brief Récuperer l'état de la connexion
      */
-
     public boolean estConnecte()
     {
         if(socket == null)
@@ -118,7 +119,9 @@ public class PeripheriqueBluetooth extends Thread
             return true;
     }
 
-
+    /**
+     * @brief Envoie des données sur la connexion bluetooth
+     */
     public void envoyer(String data)
     {
         if(socket == null)
@@ -132,6 +135,7 @@ public class PeripheriqueBluetooth extends Thread
                 {
                     if(socket.isConnected())
                     {
+                        Log.d(TAG, "envoyer() : " + data);
                         sendStream.write(data.getBytes());
                         sendStream.flush();
                     }
@@ -145,6 +149,9 @@ public class PeripheriqueBluetooth extends Thread
         }.start();
     }
 
+    /**
+     * @brief Débute la connexion bluetooth
+     */
     public void connecter()
     {
         new Thread()
@@ -171,6 +178,9 @@ public class PeripheriqueBluetooth extends Thread
         }.start();
     }
 
+    /**
+     * @brief Met fin à la connexion bluetooth
+     */
     public boolean deconnecter()
     {
         try
@@ -190,7 +200,6 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * @brief Renvoie l'objet sous forme de chaîne de caractères
      */
-
     public String toString()
     {
         return "\nNom : " + nom + "\nAdresse : " + adresse;

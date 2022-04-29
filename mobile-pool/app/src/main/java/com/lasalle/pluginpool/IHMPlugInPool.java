@@ -39,6 +39,7 @@ public class IHMPlugInPool extends AppCompatActivity
      * Attributs
      */
     private BaseDeDonnees baseDeDonnees = null;
+    private BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
     /**
      * Ressources IHM
@@ -154,7 +155,6 @@ public class IHMPlugInPool extends AppCompatActivity
     @SuppressLint("MissingPermission")
     private void initialiserRessourcesBluetooth()
     {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Log.d(TAG, "initialiserRessourcesBluetooth()");
 
         if(bluetoothAdapter == null)

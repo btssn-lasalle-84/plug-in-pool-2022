@@ -6,8 +6,6 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.os.Message;

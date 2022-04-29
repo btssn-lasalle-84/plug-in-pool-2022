@@ -8,11 +8,18 @@ package com.lasalle.pluginpool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @class IHMNouvelleRencontre
@@ -25,6 +32,10 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
+
+    /**
+     * Attributs
+     */
 
     /**
      * Ressources IHM
@@ -101,13 +112,23 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
 
         boutonLancerRencontre.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                    startActivity(intent);
-                }
-            });
+                initialiserRessourcesBluetooth();
+                Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initialiserRessourcesBluetooth()
+    {
+        Handler handler = new Handler();
+        BluetoothDevice device = null;
+        Log.d(TAG,"initialiserRessourcesIHMNouvelleRencontre()");
+        PeripheriqueBluetooth connexionBluetooth = new PeripheriqueBluetooth(device, handler);
+        connexionBluetooth.start();
     }
 }
