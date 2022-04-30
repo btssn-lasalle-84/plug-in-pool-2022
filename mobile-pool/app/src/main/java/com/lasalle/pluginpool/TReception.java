@@ -59,6 +59,7 @@ public class TReception extends Thread
 
     @Override public void run()
     {
+        Log.d(TAG, "Démarrage réception bluetooth");
         BufferedReader reception = new BufferedReader(new InputStreamReader(receiveStream));
         while(!fini)
         {
@@ -73,7 +74,7 @@ public class TReception extends Thread
                 {
                     Log.d(TAG, "run() trame : " + trame);
                     Message message = Message.obtain();
-                    message.what = PeripheriqueBluetooth.CODE_RECEPTION;
+                    message.what = PeripheriqueBluetooth.CODE_RECEPTION_TRAME;
                     message.obj = trame;
                     handlerUI.sendMessage(message);
                 }
@@ -91,6 +92,7 @@ public class TReception extends Thread
                 e.printStackTrace();
             }
         }
+        Log.d(TAG, "Arrêt réception bluetooth");
     }
 
     public void arreter()

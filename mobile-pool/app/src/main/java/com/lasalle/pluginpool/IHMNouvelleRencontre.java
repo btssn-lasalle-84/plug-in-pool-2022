@@ -6,6 +6,7 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
@@ -14,6 +15,7 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     /**
      * Attributs
      */
+    PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private Handler handler = null;
 
     /**
      * Ressources IHM
@@ -51,6 +55,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_nouvelle_rencontre);
         Log.d(TAG, "onCreate()");
+        gererHandler();
+        initialiserRessourcesBluetooth();
         initialiserRessourcesIHMNouvelleRencontre();
     }
 
@@ -92,6 +98,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     {
         super.onStop();
         Log.d(TAG, "onStop()");
+        peripheriqueBluetooth.deconnecter();
     }
 
     /**
@@ -125,10 +132,44 @@ public class IHMNouvelleRencontre extends AppCompatActivity
 
     private void initialiserRessourcesBluetooth()
     {
-        Handler handler = new Handler();
-        BluetoothDevice device = null;
         Log.d(TAG,"initialiserRessourcesIHMNouvelleRencontre()");
-        PeripheriqueBluetooth connexionBluetooth = new PeripheriqueBluetooth(device, handler);
-        connexionBluetooth.start();
+        peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
+        if(peripheriqueBluetooth.rechercherTable("pool-1"))
+        {
+            peripheriqueBluetooth.connecter();
+        }
+    }
+
+    private void gererHandler()
+    {
+        this.handler = new Handler(this.getMainLooper())
+        {
+            @Override
+            public void handleMessage(@NonNull Message message)
+            {
+                Log.d(TAG, "[Handler] id du message = " + message.what);
+                Log.d(TAG, "[Handler] contenu du message = " + message.obj.toString());
+
+                switch (message.what)
+                {
+                    case PeripheriqueBluetooth.CODE_CREATION_SOCKET:
+                        Log.d(TAG, "[Handler] CREATION_SOCKET = " + message.obj.toString());
+                        break;
+                    case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
+                        Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
+                        peripheriqueBluetooth.envoyer("$PLUG;START;\r\n");
+                        break;
+                    case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
+                        Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
+                        break;
+                    case PeripheriqueBluetooth.CODE_RECEPTION_TRAME:
+                        Log.d(TAG, "[Handler] RECEPTION_TRAME = " + message.obj.toString());
+                        /**
+                         * @todo Traiter les trames reçues
+                         */
+                        break;
+                }
+            }
+        };
     }
 }
