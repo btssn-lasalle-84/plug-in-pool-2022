@@ -14,8 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -137,6 +135,11 @@ public class PeripheriqueBluetooth extends Thread
     public String getAdresse()
     {
         return adresse;
+    }
+
+    public BluetoothSocket getSocket()
+    {
+        return this.socket;
     }
 
     /**

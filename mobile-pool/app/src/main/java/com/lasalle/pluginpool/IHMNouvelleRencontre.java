@@ -8,10 +8,6 @@ package com.lasalle.pluginpool;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,9 +15,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * @class IHMNouvelleRencontre
@@ -34,6 +27,14 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
+    private static final String trameArreter = "$PLUG;STOP;\r\n";
+    private static final String trameCommencer = "$PLUG;START;\r\n";
+    private static final String trameAnnuler = "$PLUG;RESET;\r\n";
+    private static final String trameAcquitemment = "$PLUG;ACK;\r\n";
+
+    private static final String empoche = "EMPOCHE";
+    private static final String faute = "FAUTE";
+    private static final String suivant = "NEXT";
 
     /**
      * Attributs
@@ -157,19 +158,41 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                         break;
                     case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
-                        peripheriqueBluetooth.envoyer("$PLUG;START;\r\n");
+                        peripheriqueBluetooth.envoyer(trameCommencer);
                         break;
                     case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
                         break;
                     case PeripheriqueBluetooth.CODE_RECEPTION_TRAME:
                         Log.d(TAG, "[Handler] RECEPTION_TRAME = " + message.obj.toString());
-                        /**
-                         * @todo Traiter les trames reçues
-                         */
+                        gererMessage(message.obj.toString());
                         break;
                 }
             }
         };
+    }
+
+    private void gererMessage(String message)
+    {
+        String[] messageDecoupe = message.split(";");
+        for (int i = 0; i < messageDecoupe.length; i++)
+        {
+            Log.d(TAG, "gererMessage() = " + messageDecoupe[i]);
+        }
+
+        switch (messageDecoupe[1])
+        {
+            case empoche:
+                Log.d(TAG, "gererMessage() : cas empoche");
+                
+                break;
+            case faute:
+                Log.d(TAG, "gererMessage() = cas faute");
+                break;
+            case suivant:
+                Log.d(TAG, "gererMessage() = cas suivant");
+                break;
+        }
+
     }
 }
