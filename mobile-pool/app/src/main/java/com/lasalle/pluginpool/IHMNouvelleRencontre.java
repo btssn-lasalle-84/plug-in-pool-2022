@@ -27,14 +27,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
-    private static final String trameArreter = "$PLUG;STOP;\r\n";
-    private static final String trameCommencer = "$PLUG;START;\r\n";
-    private static final String trameAnnuler = "$PLUG;RESET;\r\n";
-    private static final String trameAcquitemment = "$PLUG;ACK;\r\n";
-
-    private static final String empoche = "EMPOCHE";
-    private static final String faute = "FAUTE";
-    private static final String suivant = "NEXT";
 
     /**
      * Attributs
@@ -158,7 +150,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                         break;
                     case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
-                        peripheriqueBluetooth.envoyer(trameCommencer);
+                        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
                         break;
                     case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
@@ -182,17 +174,15 @@ public class IHMNouvelleRencontre extends AppCompatActivity
 
         switch (messageDecoupe[1])
         {
-            case empoche:
+            case Protocole.EMPOCHE:
                 Log.d(TAG, "gererMessage() : cas empoche");
-                
                 break;
-            case faute:
+            case Protocole.FAUTE:
                 Log.d(TAG, "gererMessage() = cas faute");
                 break;
-            case suivant:
+            case Protocole.SUIVANT:
                 Log.d(TAG, "gererMessage() = cas suivant");
                 break;
         }
-
     }
 }
