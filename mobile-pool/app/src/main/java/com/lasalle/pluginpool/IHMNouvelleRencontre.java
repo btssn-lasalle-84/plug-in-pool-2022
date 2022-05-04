@@ -33,6 +33,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      */
     PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
+    String[] messageDecoupe = null;
 
     /**
      * Ressources IHM
@@ -123,6 +124,9 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         });
     }
 
+    /**
+     * @brief Initialise les ressources bluetooth
+     */
     private void initialiserRessourcesBluetooth()
     {
         Log.d(TAG,"initialiserRessourcesIHMNouvelleRencontre()");
@@ -133,6 +137,9 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         }
     }
 
+    /**
+     * @brief Gère le handler pour la communication
+     */
     private void gererHandler()
     {
         this.handler = new Handler(this.getMainLooper())
@@ -164,24 +171,32 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         };
     }
 
+    /**
+     * @brief Gère le message reçu pour détecter une mauvaise trame
+     */
     private void gererMessage(String message)
     {
-        String[] messageDecoupe = message.split(";");
-        for (int i = 0; i < messageDecoupe.length; i++)
+        messageDecoupe = message.split(Protocole.delimiteurChamp);
+
+        if(!messageDecoupe[0].equals(Protocole.delimiteurDebut) && !messageDecoupe[messageDecoupe.length].equals(Protocole.delimiteurFin))
         {
-            Log.d(TAG, "gererMessage() = " + messageDecoupe[i]);
+            Log.d(TAG, "[Erreur] : " + Protocole.CODE_ERREUR_TRAME_NONSUPPORTEE);
+            return;
+        }
+        else if(!messageDecoupe[0].equals(Protocole.delimiteurDebut))
+        {
+            Log.d(TAG, "[Erreur] : " + Protocole.CODE_ERREUR_TRAME_INCONNUE);
+            return;
         }
 
-        switch (messageDecoupe[1])
+        switch (messageDecoupe[0])
         {
             case Protocole.EMPOCHE:
-                Log.d(TAG, "gererMessage() : cas empoche");
-                break;
             case Protocole.FAUTE:
-                Log.d(TAG, "gererMessage() = cas faute");
+                Log.d(TAG, "Joueur = " + messageDecoupe[2] + "Blouse = " + messageDecoupe[3]);
                 break;
             case Protocole.SUIVANT:
-                Log.d(TAG, "gererMessage() = cas suivant");
+                Log.d(TAG, "gererMessage() = suivant");
                 break;
         }
     }
