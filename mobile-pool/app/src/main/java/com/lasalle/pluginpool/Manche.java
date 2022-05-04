@@ -36,13 +36,12 @@ public class Manche
         this.pointsJoueur1 = pointsJoueur1;
         this.pointsJoueur2 = pointsJoueur2;
         this.debut = LocalDateTime.now(ZoneId.systemDefault());
-        this.fin = LocalDateTime.now(ZoneId.systemDefault()); /*a changer*/
+        this.fin = null;
     }
 
     /**
      * @brief Accesseurs
      */
-
     public int getPointsJoueur1()
     {
         return this.pointsJoueur1;
@@ -66,7 +65,6 @@ public class Manche
     /**
      * @brief Mutateurs
      */
-
     public void setPointsJoueur1(int pointsJoueur1)
     {
         this.pointsJoueur1 = pointsJoueur1;
