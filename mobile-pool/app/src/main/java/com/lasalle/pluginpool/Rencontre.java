@@ -27,26 +27,65 @@ public class Rencontre
     private int etatRencontre;
     private LocalDateTime horodatage;
     private Vector<Manche> manches;
-    private Joueur joueur1;
-    private Joueur joueur2;
+    private Vector<Joueur> joueurs;
 
     /**
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Rencontre(int nbManchesGagnantes, int etatRencontre, Joueur joueur1, Joueur joueur2)
+    public Rencontre(int nbManchesGagnantes, int etatRencontre, Vector<Joueur> joueurs)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.etatRencontre = etatRencontre;
         this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
-        this.joueur1 = joueur1;
-        this.joueur2 = joueur2;
+        this.joueurs = new Vector<>(joueurs);
+    }
+
+    /**
+     * @brief Initialise les ressources de la rencontre
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void initialiserRencontre()
+    {
+        /**
+         * @todo Changer les getJoueurs() et getNbManchesGagnates() avec les valeurs de l'ihm
+         */
+        Vector<Joueur> joueurs = getJoueurs();
+        int nbManchesGagnantes = getNbManchesGagnantes();
+        int etatRencontre = 0; /* En cours */
+        Rencontre rencontre = new Rencontre(nbManchesGagnantes, etatRencontre, joueurs);
+    }
+
+    /**
+     * @brief Gère le déroulement de la rencontre
+     */
+    public void jouerRencontre()
+    {
+        int nbManches = 0;
+        while(nbManches < nbManchesGagnantes)
+        {
+            while(etatRencontre != 1) /* n'est pas finie */
+            {
+                for(Joueur joueur : joueurs)
+                {
+                    /**
+                     * @todo Récuperer les données de la rencontre
+                     */
+                    /**
+                     * @todo Tester les données récupérées via bluetooth
+                     */
+                }
+                /**
+                 * @todo Tester si un joueur a gagné la partie
+                 */
+            }
+        }
+
     }
 
     /**
      * @brief Accesseurs
      */
-
     public int getEtatRencontre()
     {
         return this.etatRencontre;
@@ -62,20 +101,14 @@ public class Rencontre
         return this.horodatage;
     }
 
-    public Joueur getJoueur1()
+    public Vector<Joueur> getJoueurs()
     {
-        return this.joueur1;
-    }
-
-    public Joueur getJoueur2()
-    {
-        return this.joueur2;
+        return joueurs;
     }
 
     /**
      * @brief Mutateurs
      */
-
     public void setEtatRencontre(int etatRencontre)
     {
         this.etatRencontre = etatRencontre;
@@ -89,15 +122,5 @@ public class Rencontre
     public void setHorodatage(LocalDateTime horodatage)
     {
         this.horodatage = horodatage;
-    }
-
-    public void setJoueur1(Joueur joueur1)
-    {
-        this.joueur1 = joueur1;
-    }
-
-    public void setJoueur2(Joueur joueur2)
-    {
-        this.joueur2 = joueur2;
     }
 }
