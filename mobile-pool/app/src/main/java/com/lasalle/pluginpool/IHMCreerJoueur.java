@@ -12,7 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Vector;
 
 /**
  * @class IHMCreerJoueur
@@ -25,6 +28,11 @@ public class IHMCreerJoueur extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMCreerJoueur_";  //!< TAG pour les logs
+
+    /**
+     * Attributs
+     */
+    private BaseDeDonnees baseDeDonnees = null;
 
     /**
      * Ressources IHM
@@ -42,6 +50,12 @@ public class IHMCreerJoueur extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_creer_joueur);
         Log.d(TAG, "onCreate()");
+
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+        // Test BDD
+        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
         initialiserRessourcesIHMCreerJoueur();
     }
 
@@ -101,16 +115,34 @@ public class IHMCreerJoueur extends AppCompatActivity
     private void initialiserRessourcesIHMCreerJoueur()
     {
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
-        editTextNomJoueur = (TextView)findViewById(R.id.editTextNomJoueur);
-        exitTextPrenomJoueur = (TextView)findViewById(R.id.editTextPrenomJoueur);
+        editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
+        exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
 
         boutonValiderCreationJoueur.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    /*Enregistrer le nouveau joueur*/
+                    creerJoueur();
                 }
+
+
             });
+    }
+    private void creerJoueur()
+    {
+        String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase();
+        String prenomJoueur = exitTextPrenomJoueur.getText().toString();
+        Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        baseDeDonnees.ouvrir();
+        baseDeDonnees.insererJoueur(nouveauJoueur);
+
+        //Test bdd
+        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
+        for(Joueur joueur : joueurs)
+        {
+            Log.d(TAG, "Nom : " + joueur.getNom() + " Joueur : " + joueur.getPrenom());
+        }
     }
 }

@@ -51,7 +51,7 @@ public class BaseDeDonnees
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idRencontre, idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (NULL,";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
-    private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES (";
+    private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
 
     /**
      * @brief Constructeur de la classe BaseDeDonnees
@@ -65,7 +65,7 @@ public class BaseDeDonnees
     /**
      * @brief Ouvre un accés à la base de données
      */
-    private void ouvrir()
+    protected void ouvrir()
     {
         Log.d(TAG, "ouvrir()");
         if (bdd == null)

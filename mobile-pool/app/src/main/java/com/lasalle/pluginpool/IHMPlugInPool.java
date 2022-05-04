@@ -29,11 +29,6 @@ public class IHMPlugInPool extends AppCompatActivity
     private static final String TAG = "_IHMPlugInPool_";  //!< TAG pour les logs
 
     /**
-     * Attributs
-     */
-    private BaseDeDonnees baseDeDonnees = null;
-
-    /**
      * Ressources IHM
      */
     private Button boutonHistoriqueRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
@@ -49,11 +44,6 @@ public class IHMPlugInPool extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate()");
-
-        baseDeDonnees = new BaseDeDonnees(this);
-        // Test BDD
-        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
-
         initialiserRessourcesIHM();
     }
 
@@ -127,13 +117,13 @@ public class IHMPlugInPool extends AppCompatActivity
         });
 
         boutonCreerJoueur.setOnClickListener(
-                new View.OnClickListener()
-                {
-                    public void onClick(View v)
-                    {
-                        Intent intent = new Intent(IHMPlugInPool.this, IHMCreerJoueur.class);
-                        startActivity(intent);
-                    }
-                });
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMPlugInPool.this, IHMCreerJoueur.class);
+                startActivity(intent);
+            }
+        });
     }
 }
