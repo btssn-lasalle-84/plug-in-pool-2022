@@ -6,8 +6,6 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import android.os.Build;
-
 /**
  * @class Joueur
  * @brief Classe pour un Joueur
@@ -20,6 +18,9 @@ public class Joueur
      */
     private String nom;
     private String prenom;
+    private int nbBillesEmpochees = 0;
+    private int nbBillesTouchees = 0;
+    private int nbFautes = 0;
 
     /**
      * @brief Constructeur
@@ -33,7 +34,6 @@ public class Joueur
     /**
      * @brief Accesseurs
      */
-
     public  String getNom()
     {
         return this.nom;
@@ -47,7 +47,6 @@ public class Joueur
     /**
      * @brief Mutateurs
      */
-
     public void setNom(String nom)
     {
         this.nom = nom;
