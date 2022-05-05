@@ -11,10 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -40,6 +47,7 @@ public class IHMCreerJoueur extends AppCompatActivity
     private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
     private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
     private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
+    private ListView listeJoueurs;//!< La liste permettant l'affichage des joueurs
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -114,9 +122,13 @@ public class IHMCreerJoueur extends AppCompatActivity
      */
     private void initialiserRessourcesIHMCreerJoueur()
     {
+        Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
         editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
         exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
+        listeJoueurs = (ListView)findViewById(R.id.listeJoueurs);
+
+        listerJoueurs();
 
         boutonValiderCreationJoueur.setOnClickListener(
             new View.OnClickListener()
@@ -125,8 +137,6 @@ public class IHMCreerJoueur extends AppCompatActivity
                 {
                     creerJoueur();
                 }
-
-
             });
     }
     private void creerJoueur()
@@ -136,13 +146,21 @@ public class IHMCreerJoueur extends AppCompatActivity
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
         baseDeDonnees.ouvrir();
         baseDeDonnees.insererJoueur(nouveauJoueur);
+    }
 
-        //Test bdd
-        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+    private void listerJoueurs()
+    {
+        Log.d(TAG, "listerJoueurs()");
+        List<Joueur> joueurs = baseDeDonnees.getJoueurs();
+        List<String> nomsJoueurs = new ArrayList<String>();
 
-        for(Joueur joueur : joueurs)
+        for(int i = 0; i < joueurs.size(); ++i)
         {
-            Log.d(TAG, "Nom : " + joueur.getNom() + " Joueur : " + joueur.getPrenom());
+            Joueur joueur = joueurs.get(i);
+            nomsJoueurs.add(joueur.getNom() + " " + joueur.getPrenom());
         }
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nomsJoueurs);
+        listeJoueurs.setAdapter(adapter);
     }
 }
