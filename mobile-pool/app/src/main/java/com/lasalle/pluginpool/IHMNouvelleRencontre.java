@@ -6,10 +6,12 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +29,12 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
 
     /**
+     * Attributs
+     */
+    PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private Handler handler = null;
+
+    /**
      * Ressources IHM
      */
     private Button boutonLancerRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
@@ -40,6 +48,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_nouvelle_rencontre);
         Log.d(TAG, "onCreate()");
+        gererHandler();
+        initialiserRessourcesBluetooth();
         initialiserRessourcesIHMNouvelleRencontre();
     }
 
@@ -81,6 +91,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     {
         super.onStop();
         Log.d(TAG, "onStop()");
+        peripheriqueBluetooth.deconnecter();
     }
 
     /**
@@ -101,13 +112,107 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
 
         boutonLancerRencontre.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
+                initialiserRessourcesBluetooth();
+                Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * @brief Initialise les ressources bluetooth
+     */
+    private void initialiserRessourcesBluetooth()
+    {
+        Log.d(TAG,"initialiserRessourcesIHMNouvelleRencontre()");
+        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
+        if(peripheriqueBluetooth.rechercherTable("pool-1"))
+        {
+            peripheriqueBluetooth.connecter();
+        }
+    }
+
+    /**
+     * @brief Gère le handler pour la communication
+     */
+    private void gererHandler()
+    {
+        this.handler = new Handler(this.getMainLooper())
+        {
+            @Override
+            public void handleMessage(@NonNull Message message)
+            {
+                Log.d(TAG, "[Handler] id du message = " + message.what);
+                Log.d(TAG, "[Handler] contenu du message = " + message.obj.toString());
+
+                switch (message.what)
                 {
-                    Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                    startActivity(intent);
+                    case PeripheriqueBluetooth.CODE_CREATION_SOCKET:
+                        Log.d(TAG, "[Handler] CREATION_SOCKET = " + message.obj.toString());
+                        break;
+                    case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
+                        Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
+                        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+                        break;
+                    case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
+                        Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
+                        break;
+                    case PeripheriqueBluetooth.CODE_RECEPTION_TRAME:
+                        Log.d(TAG, "[Handler] RECEPTION_TRAME = " + message.obj.toString());
+                        gererMessage(message.obj.toString());
+                        break;
                 }
-            });
+            }
+        };
+    }
+
+    /**
+     * @brief Gère le message reçu pour détecter une mauvaise trame
+     */
+    private void gererMessage(String message)
+    {
+        // format général : $PLUG;{TYPE};{DONNEES;}\r\n
+        // debug
+        String[] champs = message.split(Protocole.delimiteurChamp);
+        for(int i = 0; i < champs.length; i++)
+        {
+            Log.v(TAG, "[gererMessage] champs[" + i + "] = " + champs[i]);
+        }
+
+        // vérification
+        if(!champs[Protocole.CHAMP_ENTETE_TRAME].equals(Protocole.delimiteurDebut))
+        {
+            Log.d(TAG, "[gererMessage]  Erreur : en tête invalide !");
+            return;
+        }
+
+        switch (champs[Protocole.CHAMP_TYPE_TRAME])
+        {
+            case Protocole.EMPOCHE:
+                // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
+                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + "-> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                break;
+            case Protocole.FAUTE:
+                // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
+                Log.d(TAG, "Trame FAUTE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                break;
+            case Protocole.SUIVANT:
+                //
+                Log.d(TAG, "Trame NEXT");
+                break;
+            case Protocole.ACK:
+                //
+                Log.d(TAG, "Trame ACK");
+                break;
+            case Protocole.ERREUR:
+                //
+                Log.d(TAG, "Trame ERREUR");
+                peripheriqueBluetooth.envoyer(Protocole.trameArreter);
+                break;
+        }
     }
 }
