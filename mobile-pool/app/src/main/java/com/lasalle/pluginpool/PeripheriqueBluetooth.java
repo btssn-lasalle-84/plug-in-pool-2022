@@ -38,6 +38,7 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * Variables
      */
+    private static PeripheriqueBluetooth peripheriqueBluetooth = null;
     private String nom;
     private String adresse;
     private Handler handler = null;
@@ -52,13 +53,31 @@ public class PeripheriqueBluetooth extends Thread
      * @brief Constructeurs
      */
     @SuppressLint("MissingPermission")
-    public PeripheriqueBluetooth(android.os.Handler handler)
+    private PeripheriqueBluetooth(android.os.Handler handler)
     {
         activerBluetooth();
 
         this.device = null;
         this.nom = "";
         this.adresse = "";
+        this.handler = handler;
+    }
+
+    public static PeripheriqueBluetooth getInstance(Handler handler)
+    {
+        if (peripheriqueBluetooth == null)
+        {
+            peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
+        }
+        else
+        {
+            peripheriqueBluetooth.setHandler(handler);
+        }
+        return peripheriqueBluetooth;
+    }
+
+    public void setHandler(Handler handler)
+    {
         this.handler = handler;
     }
 

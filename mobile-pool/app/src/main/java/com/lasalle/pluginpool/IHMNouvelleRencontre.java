@@ -130,7 +130,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void initialiserRessourcesBluetooth()
     {
         Log.d(TAG,"initialiserRessourcesIHMNouvelleRencontre()");
-        peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
+        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
         if(peripheriqueBluetooth.rechercherTable("pool-1"))
         {
             peripheriqueBluetooth.connecter();
