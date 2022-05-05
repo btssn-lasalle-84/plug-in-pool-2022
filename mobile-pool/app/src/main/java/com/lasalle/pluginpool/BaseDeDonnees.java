@@ -46,7 +46,7 @@ public class BaseDeDonnees
     private static final int INDEX_DEBUT = 4;
     private static final int INDEX_FIN = 5;
 
-    private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idManche, idMatch, pointsJoueur1, pointsJoueur2, debut) VALUES (NULL,";
+    private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, debut) VALUES (NULL,";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idRencontre, idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (NULL,";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
@@ -99,7 +99,7 @@ public class BaseDeDonnees
     }
 
     /**
-     * @brief Permet d'effectuer une requete pour récupérer toutes les joueurs
+     * @brief Permet d'effectuer une requete de type SELECT pour récupérer tous les joueurs
      * @return Les objets joueurs récupérés
      */
     public Vector<Joueur> getJoueurs()
@@ -136,7 +136,18 @@ public class BaseDeDonnees
      */
     public void terminerManche(int idManche)
     {
+        ouvrir();
         String requete = DEBUT_REQUETE_TERMINER_MANCHE + Integer.toString(idManche);
+        bdd.execSQL(requete);
+    }
+
+    /**
+     * @brief Permet d'effectuer une requete SQL de type INSERT, UPDATE ou DELETE
+     * @param requete La requete SQL
+     */
+    public void executerRequete(String requete)
+    {
+        ouvrir();
         bdd.execSQL(requete);
     }
 }

@@ -22,4 +22,8 @@
     <style name="Theme.PlugInPool.BoutonBlanc">
         <item name="colorAccent">@color/white</item>
     </style>
+
+    <style name="Theme.PlugInPool.BoutonRond">
+        <item name="colorAccent">@color/red</item>
+    </style>
 </resources>

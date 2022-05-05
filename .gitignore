@@ -6,3 +6,4 @@
 *.lock
 *.session
 idl_includes
+*.user
