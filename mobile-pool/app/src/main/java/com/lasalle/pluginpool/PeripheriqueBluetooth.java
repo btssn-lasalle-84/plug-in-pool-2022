@@ -67,10 +67,12 @@ public class PeripheriqueBluetooth extends Thread
     {
         if (peripheriqueBluetooth == null)
         {
+            Log.d(TAG,"Création PeripheriqueBluetooth");
             peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
         }
         else
         {
+            Log.d(TAG,"Change le handler");
             peripheriqueBluetooth.setHandler(handler);
         }
         return peripheriqueBluetooth;
