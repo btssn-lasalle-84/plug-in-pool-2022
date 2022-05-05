@@ -8,6 +8,8 @@ package com.lasalle.pluginpool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -139,6 +141,10 @@ public class IHMCreerJoueur extends AppCompatActivity
                 }
             });
     }
+
+    /**
+     * @brief Méthode pour créer un joueur
+     */
     private void creerJoueur()
     {
         String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase();
@@ -146,8 +152,12 @@ public class IHMCreerJoueur extends AppCompatActivity
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
         baseDeDonnees.ouvrir();
         baseDeDonnees.insererJoueur(nouveauJoueur);
+        listerJoueurs();
     }
 
+    /**
+     * @brief Méthode pour lister les joueurs
+     */
     private void listerJoueurs()
     {
         Log.d(TAG, "listerJoueurs()");
@@ -162,5 +172,30 @@ public class IHMCreerJoueur extends AppCompatActivity
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nomsJoueurs);
         listeJoueurs.setAdapter(adapter);
+
+        listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                final int itemSelection = position;
+                new AlertDialog.Builder(IHMCreerJoueur.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setTitle("Suppression")
+                    .setMessage("Êtes-vous sûr de vouloir supprimer ce joueur ?")
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int j)
+                        {
+                            nomsJoueurs.remove(itemSelection);
+                            baseDeDonnees.supprimerJoueur(joueurs.get(itemSelection));
+                            adapter.notifyDataSetChanged();
+                            Log.d(TAG, "Joueur supprimé");
+                        }
+                    }).setNegativeButton("Retour", null).show();
+                return true;
+            }
+        });
     }
 }

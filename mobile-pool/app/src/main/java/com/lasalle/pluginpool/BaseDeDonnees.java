@@ -52,6 +52,7 @@ public class BaseDeDonnees
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
+    private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
 
     /**
      * @brief Constructeur de la classe BaseDeDonnees
@@ -128,6 +129,15 @@ public class BaseDeDonnees
     {
         ouvrir();
         bdd.execSQL(DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')");
+    }
+    /**
+     * @brief Permet d'effectuer une requete pour supprimer un joueur
+     * @param joueur Le joueur à supprimer
+     */
+    public void supprimerJoueur(Joueur joueur)
+    {
+        ouvrir();
+        bdd.execSQL(DEBUT_REQUETE_SUPPRESSION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "'");
     }
 
     /**
