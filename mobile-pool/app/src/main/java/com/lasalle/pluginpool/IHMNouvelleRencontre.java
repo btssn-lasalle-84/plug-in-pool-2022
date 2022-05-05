@@ -33,7 +33,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      */
     PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
-    String[] messageDecoupe = null;
 
     /**
      * Ressources IHM
@@ -176,27 +175,43 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      */
     private void gererMessage(String message)
     {
-        messageDecoupe = message.split(Protocole.delimiteurChamp);
-
-        if(!messageDecoupe[0].equals(Protocole.delimiteurDebut) && !messageDecoupe[messageDecoupe.length].equals(Protocole.delimiteurFin))
+        // format général : $PLUG;{TYPE};{DONNEES;}\r\n
+        // debug
+        String[] champs = message.split(Protocole.delimiteurChamp);
+        for(int i = 0; i < champs.length; i++)
         {
-            Log.d(TAG, "[Erreur] : " + Protocole.CODE_ERREUR_TRAME_NONSUPPORTEE);
-            return;
-        }
-        else if(!messageDecoupe[0].equals(Protocole.delimiteurDebut))
-        {
-            Log.d(TAG, "[Erreur] : " + Protocole.CODE_ERREUR_TRAME_INCONNUE);
-            return;
+            Log.v(TAG, "[gererMessage] champs[" + i + "] = " + champs[i]);
         }
 
-        switch (messageDecoupe[0])
+        // vérification
+        if(!champs[Protocole.CHAMP_ENTETE_TRAME].equals(Protocole.delimiteurDebut))
+        {
+            Log.d(TAG, "[gererMessage]  Erreur : en tête invalide !");
+            return;
+        }
+
+        switch (champs[Protocole.CHAMP_TYPE_TRAME])
         {
             case Protocole.EMPOCHE:
+                // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
+                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + "-> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                break;
             case Protocole.FAUTE:
-                Log.d(TAG, "Joueur = " + messageDecoupe[2] + "Blouse = " + messageDecoupe[3]);
+                // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
+                Log.d(TAG, "Trame FAUTE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
                 break;
             case Protocole.SUIVANT:
-                Log.d(TAG, "gererMessage() = suivant");
+                //
+                Log.d(TAG, "Trame NEXT");
+                break;
+            case Protocole.ACK:
+                //
+                Log.d(TAG, "Trame ACK");
+                break;
+            case Protocole.ERREUR:
+                //
+                Log.d(TAG, "Trame ERREUR");
+                peripheriqueBluetooth.envoyer(Protocole.trameArreter);
                 break;
         }
     }
