@@ -12,6 +12,11 @@ package com.lasalle.pluginpool;
  */
 public class Protocole
 {
+    /**
+     * @todo gérer le numéro de table
+     */
+    public static final String nomTable = "pool-1";
+
     public static final String delimiteurDebut = "$PLUG";
     public static final String delimiteurChamp = ";";
     public static final String delimiteurFin = "\r\n";

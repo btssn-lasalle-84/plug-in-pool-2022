@@ -21,7 +21,12 @@ import java.util.Vector;
 public class Rencontre
 {
     /**
-     * Variables
+     * Constantes
+     */
+    private static final int RENCONTRE_ENCOURS = 0;
+    private static final int RENCONTRE_FINIE = 1;
+    /**
+     * Attributs
      */
     private int nbManchesGagnantes;
     private int etatRencontre;
@@ -33,10 +38,10 @@ public class Rencontre
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Rencontre(int nbManchesGagnantes, int etatRencontre, Vector<Joueur> joueurs)
+    public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
-        this.etatRencontre = etatRencontre;
+        this.etatRencontre = RENCONTRE_ENCOURS;
         this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
         this.joueurs = new Vector<>(joueurs);
     }
@@ -50,10 +55,7 @@ public class Rencontre
         /**
          * @todo Changer les getJoueurs() et getNbManchesGagnates() avec les valeurs de l'ihm
          */
-        Vector<Joueur> joueurs = getJoueurs();
-        int nbManchesGagnantes = getNbManchesGagnantes();
-        int etatRencontre = 0; /* En cours */
-        Rencontre rencontre = new Rencontre(nbManchesGagnantes, etatRencontre, joueurs);
+        //etatRencontre = RENCONTRE_ENCOURS;
     }
 
     /**
@@ -62,25 +64,13 @@ public class Rencontre
     public void jouerRencontre()
     {
         int nbManches = 0;
-        while(nbManches < nbManchesGagnantes)
+        if(etatRencontre == RENCONTRE_ENCOURS)
         {
-            while(etatRencontre != 1) /* n'est pas finie */
+            if(nbManches < nbManchesGagnantes)
             {
-                for(Joueur joueur : joueurs)
-                {
-                    /**
-                     * @todo Récuperer les données de la rencontre
-                     */
-                    /**
-                     * @todo Tester les données récupérées via bluetooth
-                     */
-                }
-                /**
-                 * @todo Tester si un joueur a gagné la partie
-                 */
+
             }
         }
-
     }
 
     /**
