@@ -13,15 +13,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -133,13 +132,13 @@ public class IHMCreerJoueur extends AppCompatActivity
         listerJoueurs();
 
         boutonValiderCreationJoueur.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    creerJoueur();
-                }
-            });
+                creerJoueur();
+            }
+        });
     }
 
     /**
@@ -147,9 +146,15 @@ public class IHMCreerJoueur extends AppCompatActivity
      */
     private void creerJoueur()
     {
+        Log.d(TAG, "creerJoueur()");
         String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase();
         String prenomJoueur = exitTextPrenomJoueur.getText().toString();
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
+        {
+            Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();
+            return;
+        }
         baseDeDonnees.ouvrir();
         baseDeDonnees.insererJoueur(nouveauJoueur);
         listerJoueurs();
@@ -173,6 +178,9 @@ public class IHMCreerJoueur extends AppCompatActivity
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nomsJoueurs);
         listeJoueurs.setAdapter(adapter);
 
+        /**
+         * @brief Suppresion d'un joueur
+         */
         listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
