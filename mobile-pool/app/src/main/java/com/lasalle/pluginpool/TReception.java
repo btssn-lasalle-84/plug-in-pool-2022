@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @class TReception
@@ -37,6 +38,7 @@ public class TReception extends Thread
     OutputStream sendStream = null;
     BluetoothSocket socket = null;
     private boolean fini;
+    private final ReentrantLock mutex = new ReentrantLock();
 
     /**
      * @brief Constructeur
@@ -57,6 +59,13 @@ public class TReception extends Thread
         }
     }
 
+    public void setHandlerUI(Handler h)
+    {
+        mutex.lock();
+        this.handlerUI = h;
+        mutex.unlock();
+    }
+
     @Override public void run()
     {
         Log.d(TAG, "Démarrage réception bluetooth");
@@ -73,10 +82,15 @@ public class TReception extends Thread
                 if(trame.length() > 0)
                 {
                     Log.d(TAG, "run() trame : " + trame);
-                    Message message = Message.obtain();
-                    message.what = PeripheriqueBluetooth.CODE_RECEPTION_TRAME;
-                    message.obj = trame;
-                    handlerUI.sendMessage(message);
+                    mutex.lock();
+                    if(handlerUI != null)
+                    {
+                        Message message = Message.obtain();
+                        message.what = PeripheriqueBluetooth.CODE_RECEPTION_TRAME;
+                        message.obj = trame;
+                        handlerUI.sendMessage(message);
+                    }
+                    mutex.unlock();
                 }
             }
             catch (IOException e)

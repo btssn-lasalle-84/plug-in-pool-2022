@@ -11,6 +11,7 @@ import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.Serializable;
 import java.time.*;
 import java.util.Vector;
 
@@ -19,7 +20,7 @@ import java.util.Vector;
  * @brief Classe pour une rencontre
  */
 
-public class Rencontre
+public class Rencontre implements Serializable
 {
     /**
      * Constantes
@@ -32,11 +33,9 @@ public class Rencontre
     private int nbManchesGagnantes;
     private int nbManches;
     private int etatRencontre;
-    private LocalDateTime horodatage;
+    //private LocalDateTime horodatage;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
-    private BaseDeDonnees baseDeDonnees = null;
-    private Handler handler;
 
     /**
      * @brief Constructeur
@@ -47,8 +46,8 @@ public class Rencontre
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
-        this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
-        this.joueurs = new Vector<>(joueurs);
+        //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
+        this.joueurs = joueurs;
     }
 
     /**
@@ -96,14 +95,18 @@ public class Rencontre
         return this.nbManchesGagnantes;
     }
 
-    public LocalDateTime getHorodatage()
+    /*public LocalDateTime getHorodatage()
     {
         return this.horodatage;
-    }
+    }*/
 
     public Vector<Joueur> getJoueurs()
     {
         return joueurs;
+    }
+    public void setJoueurs(Vector<Joueur> joueurs)
+    {
+        this.joueurs = joueurs;
     }
 
     /**
@@ -119,8 +122,8 @@ public class Rencontre
         this.nbManchesGagnantes = nbManchesGagnantes;
     }
 
-    public void setHorodatage(LocalDateTime horodatage)
+    /*public void setHorodatage(LocalDateTime horodatage)
     {
         this.horodatage = horodatage;
-    }
+    }*/
 }

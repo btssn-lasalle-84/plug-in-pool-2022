@@ -6,12 +6,14 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import java.io.Serializable;
+
 /**
  * @class Joueur
  * @brief Classe pour un Joueur
  */
 
-public class Joueur
+public class Joueur implements Serializable
 {
     /**
      * Variables

@@ -47,7 +47,7 @@ public class PeripheriqueBluetooth extends Thread
     private BluetoothSocket socket = null;
     private InputStream receiveStream = null;
     private OutputStream sendStream = null;
-    private TReception tReception;
+    private TReception tReception = null;
 
     /**
      * @brief Constructeurs
@@ -81,6 +81,8 @@ public class PeripheriqueBluetooth extends Thread
     public void setHandler(Handler handler)
     {
         this.handler = handler;
+        if(tReception != null)
+            tReception.setHandlerUI(handler);
     }
 
     @SuppressLint("MissingPermission")
@@ -138,10 +140,13 @@ public class PeripheriqueBluetooth extends Thread
         if (socket != null)
         {
             tReception = new TReception(handler, socket);
-            Message message = new Message();
-            message.what = CODE_CREATION_SOCKET;
-            message.obj = this.nom;
-            handler.sendMessage(message);
+            if(handler != null)
+            {
+                Message message = new Message();
+                message.what = CODE_CREATION_SOCKET;
+                message.obj = this.nom;
+                handler.sendMessage(message);
+            }
         }
     }
 
@@ -229,10 +234,13 @@ public class PeripheriqueBluetooth extends Thread
                     Log.d(TAG, "Connexion bluetooth");
                     socket.connect();
 
-                    Message message = new Message();
-                    message.what = CODE_CONNEXION_SOCKET;
-                    message.obj = nom;
-                    handler.sendMessage(message);
+                    if(handler != null)
+                    {
+                        Message message = new Message();
+                        message.what = CODE_CONNEXION_SOCKET;
+                        message.obj = nom;
+                        handler.sendMessage(message);
+                    }
 
                     tReception.start();
                 }
@@ -262,10 +270,13 @@ public class PeripheriqueBluetooth extends Thread
                 {
                     tReception.arreter();
                     socket.close();
-                    Message message = new Message();
-                    message.what = CODE_DECONNEXION_SOCKET;
-                    message.obj = nom;
-                    handler.sendMessage(message);
+                    if(handler != null)
+                    {
+                        Message message = new Message();
+                        message.what = CODE_DECONNEXION_SOCKET;
+                        message.obj = nom;
+                        handler.sendMessage(message);
+                    }
                 }
                 catch (IOException e)
                 {

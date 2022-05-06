@@ -7,6 +7,7 @@ package com.lasalle.pluginpool;
  */
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,10 +21,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * @class IHMNouvelleRencontre
@@ -36,6 +39,9 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
+    public static final String ID_INTENT_RENCONTRE = "Rencontre"; //!< Identifiant de données dans l'Intent
+    public static final int NB_JOUEURS = 2; //!< Le nombre de joueurs pour une rencontre
+    public static final int NB_MANCHES_GAGNANTES = 5; //!< Le nombre de manches gagnantes par défaut
 
     /**
      * Attributs
@@ -43,16 +49,20 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private BaseDeDonnees baseDeDonnees = null;
     private Handler handler = null;
+    private Rencontre rencontre = null;
 
     /**
      * Ressources IHM
      */
-    private Button boutonLancerRencontre;//!< Le bouton permettant d'accèder à l'historique des rencontres
+    private Button boutonLancerRencontre;//!< Le bouton de lancement
     private ListView listeJoueurs;
+    private List<Joueur> joueurs;
+    private Vector<Joueur> joueursRencontre;
 
     /**
      * @brief Méthode appelée à la création de l'activité
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -102,7 +112,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     {
         super.onStop();
         Log.d(TAG, "onStop()");
-        //peripheriqueBluetooth.deconnecter();
     }
 
     /**
@@ -118,23 +127,65 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initialiserRessourcesIHMNouvelleRencontre()
     {
+        Log.d(TAG, "initialiserRessourcesIHMNouvelleRencontre()");
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
+        // Il faut être connecté à la table et avoir deux joueurs sélectionnés
         boutonLancerRencontre.setEnabled(false);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueursParametres);
         ouvrirBaseDeDonnees();
         listerJoueurs();
+        initialiserRencontre();
         boutonLancerRencontre.setOnClickListener(
         new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                initialiserRessourcesBluetooth();
-                Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                ajouterJoueursSelectionnes();
+
+                final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                // passage de données entre activités
+                intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * @brief Ajoute les joueurs sélectionnés pour cette rencontre
+     */
+    private void ajouterJoueursSelectionnes()
+    {
+        //Log.d(TAG, "[ajouterJoueursSelectionnes] listeJoueurs : " + listeJoueurs.getCount());
+        //Log.d(TAG, "[ajouterJoueursSelectionnes] joueurs : " + joueurs.size());
+        for (int i = 0; i < listeJoueurs.getCount(); i++)
+        {
+            if (listeJoueurs.isItemChecked(i))
+            {
+                //Log.d(TAG, "[ajouterJoueursSelectionnes] joueur selectionné : " + i);
+                if(joueurs.get(i) != null)
+                {
+                    Log.d(TAG, "[ajouterJoueursSelectionnes] Joueur : " + joueurs.get(i).getPrenom() + " " + joueurs.get(i).getNom());
+                    joueursRencontre.add(new Joueur(joueurs.get(i).getNom(), joueurs.get(i).getPrenom()));
+                }
+            }
+        }
+        rencontre.setJoueurs(joueursRencontre);
+    }
+
+    /**
+     * @brief Initialise un objet Rencontre
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void initialiserRencontre()
+    {
+        joueursRencontre = new Vector<Joueur>();
+        /**
+         * @todo Récupérer le nombre de manches gagnantes pour cette rencontre
+         */
+        rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
     }
 
     /**
@@ -180,7 +231,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                         break;
                     case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
-                        boutonLancerRencontre.setEnabled(true);
+                        if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
+                            boutonLancerRencontre.setEnabled(true);
                         break;
                     case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
@@ -200,7 +252,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void listerJoueurs()
     {
         Log.d(TAG, "listerJoueurs()");
-        List<Joueur> joueurs = baseDeDonnees.getJoueurs();
+        joueurs = baseDeDonnees.getJoueurs();
         List<String> nomsJoueurs = new ArrayList<String>();
 
         for(int i = 0; i < joueurs.size(); ++i)
@@ -219,7 +271,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                if(listeJoueurs.getCheckedItemCount() > 2)
+                if(listeJoueurs.getCheckedItemCount() > NB_JOUEURS)
                 {
                     Toast.makeText(IHMNouvelleRencontre.this, "2 Joueurs maximum !", Toast.LENGTH_SHORT).show();
                     listeJoueurs.setItemChecked(i, false);
@@ -229,6 +281,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                     CheckedTextView v = (CheckedTextView)view;
                     boolean estCochee = v.isChecked();
                     listeJoueurs.setItemChecked(i, estCochee);
+                    if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
+                        boutonLancerRencontre.setEnabled(true);
                 }
             }
         });

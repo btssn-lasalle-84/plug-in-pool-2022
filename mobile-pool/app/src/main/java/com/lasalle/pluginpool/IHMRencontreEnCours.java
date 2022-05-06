@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Vector;
+
 /**
  * @class IHMRencontreEnCours
  * @brief L'activité pour une rencontre en cours
@@ -53,10 +55,16 @@ public class IHMRencontreEnCours extends AppCompatActivity
         setContentView(R.layout.activity_ihm_rencontre_en_cours);
         Log.d(TAG, "onCreate()");
 
+        // récupération de données
+        rencontre = (Rencontre) getIntent().getSerializableExtra(IHMNouvelleRencontre.ID_INTENT_RENCONTRE);
+        // Exemple : les joueurs de cette rencontre
+        Vector<Joueur> joueurs = rencontre.getJoueurs();
+        for (int i = 0; i < joueurs.size(); i++)
+        {
+            Log.d(TAG, "[onCreate] Joueur : " + joueurs.get(i).getPrenom() + " " + joueurs.get(i).getNom());
+        }
+
         initialiserRessourcesIHMRencontreEnCours();
-
-        //rencontre = new Rencontre(joueurs, nbManchesGagnantes);
-
         gererHandler();
         initialiserRessourcesBluetooth();
     }

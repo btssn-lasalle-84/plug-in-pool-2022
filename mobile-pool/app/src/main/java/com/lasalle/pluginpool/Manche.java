@@ -10,6 +10,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.Serializable;
 import java.time.*;
 
 /**
@@ -17,7 +18,7 @@ import java.time.*;
  * @brief Classe pour une Manche
  */
 
-public class Manche
+public class Manche implements Serializable
 {
     /**
      * Variables
