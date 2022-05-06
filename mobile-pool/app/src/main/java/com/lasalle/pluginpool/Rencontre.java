@@ -7,6 +7,7 @@ package com.lasalle.pluginpool;
  */
 
 import android.os.Build;
+import android.os.Handler;
 
 import androidx.annotation.RequiresApi;
 
@@ -29,10 +30,13 @@ public class Rencontre
      * Attributs
      */
     private int nbManchesGagnantes;
+    private int nbManches;
     private int etatRencontre;
     private LocalDateTime horodatage;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
+    private BaseDeDonnees baseDeDonnees = null;
+    private Handler handler;
 
     /**
      * @brief Constructeur
@@ -41,6 +45,7 @@ public class Rencontre
     public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
+        this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
         this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
         this.joueurs = new Vector<>(joueurs);
@@ -60,13 +65,18 @@ public class Rencontre
 
     /**
      * @brief Gère le déroulement de la rencontre
+     * @param couleur
+     * @param blouse
      */
-    public void jouerRencontre()
+    public void jouerRencontre(String couleur, String blouse)
     {
-        int nbManches = 0;
         if(etatRencontre == RENCONTRE_ENCOURS)
         {
             if(nbManches < nbManchesGagnantes)
+            {
+
+            }
+            else
             {
 
             }
