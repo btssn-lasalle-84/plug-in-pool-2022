@@ -8,11 +8,13 @@ package com.lasalle.pluginpool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -60,10 +62,7 @@ public class IHMCreerJoueur extends AppCompatActivity
         setContentView(R.layout.activity_ihm_creer_joueur);
         Log.d(TAG, "onCreate()");
 
-        baseDeDonnees = new BaseDeDonnees(this);
-        baseDeDonnees.ouvrir();
-        // Test BDD
-        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+        ouvrirBaseDeDonnees();
 
         initialiserRessourcesIHMCreerJoueur();
     }
@@ -119,6 +118,15 @@ public class IHMCreerJoueur extends AppCompatActivity
     }
 
     /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+    }
+
+    /**
      * @brief Initialise les ressources graphiques de l'activité
      */
     private void initialiserRessourcesIHMCreerJoueur()
@@ -136,6 +144,8 @@ public class IHMCreerJoueur extends AppCompatActivity
         {
             public void onClick(View v)
             {
+                boutonValiderCreationJoueur.requestFocus();
+                cacherClavier(getActivity());
                 creerJoueur();
             }
         });
@@ -147,15 +157,15 @@ public class IHMCreerJoueur extends AppCompatActivity
     private void creerJoueur()
     {
         Log.d(TAG, "creerJoueur()");
-        String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase();
-        String prenomJoueur = exitTextPrenomJoueur.getText().toString();
+        String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
+        String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
         if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
         {
             Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();
             return;
         }
-        baseDeDonnees.ouvrir();
+
         baseDeDonnees.insererJoueur(nouveauJoueur);
         listerJoueurs();
     }
@@ -205,5 +215,29 @@ public class IHMCreerJoueur extends AppCompatActivity
                 return true;
             }
         });
+
+        editTextNomJoueur.setText("");
+        exitTextPrenomJoueur.setText("");
+    }
+
+    public static void cacherClavier(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        /*
+         Voir aussi :
+         //Hide:
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        //Show
+        //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+         */
+    }
+
+    private Activity getActivity()
+    {
+        return this;
     }
 }

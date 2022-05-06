@@ -73,7 +73,7 @@
                     android:id="@+id/textNomJoueur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/nomJoueur" />
+                    android:text="Nom :" />
 
                 <EditText
                     android:id="@+id/editTextNomJoueur"
@@ -87,7 +87,7 @@
                     android:id="@+id/textPrenomJoueur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/prenomJoueur" />
+                    android:text="Prénom :" />
 
                 <EditText
                     android:id="@+id/editTextPrenomJoueur"
