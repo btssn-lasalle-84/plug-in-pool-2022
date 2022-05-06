@@ -65,7 +65,7 @@ public class BaseDeDonnees
     /**
      * @brief Ouvre un accés à la base de données
      */
-    private void ouvrir()
+    protected void ouvrir()
     {
         Log.d(TAG, "ouvrir()");
         if (bdd == null)
