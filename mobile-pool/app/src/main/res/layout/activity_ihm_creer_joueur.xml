@@ -73,7 +73,7 @@
                     android:id="@+id/textNomJoueur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/nomJoueur" />
+                    android:text="Nom :" />
 
                 <EditText
                     android:id="@+id/editTextNomJoueur"
@@ -87,7 +87,7 @@
                     android:id="@+id/textPrenomJoueur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/prenomJoueur" />
+                    android:text="Prénom :" />
 
                 <EditText
                     android:id="@+id/editTextPrenomJoueur"
@@ -106,35 +106,39 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="50dp"
-                android:layout_marginBottom="60dp"
                 android:background="@drawable/boutons_arrondis"
                 android:text="Valider"
-                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-            <ScrollView
-                android:id="@+id/scrollView2"
+            <TextView
+                android:id="@+id/textListeJoueurs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginTop="50dp"
+                android:text="@string/listeJoueurs"
+                app:layout_constraintBottom_toTopOf="@+id/listeJoueurs"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/boutonValiderCreationJoueur" />
+
+            <ListView
+                android:id="@+id/listeJoueurs"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="0dp"
-
                 android:layout_marginEnd="50dp"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/boutonValiderCreationJoueur">
-
-                <TextView
-                    android:id="@+id/textListeJoueurs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/listeJoueurs" />
-            </ScrollView>
+                app:layout_constraintTop_toBottomOf="@+id/textListeJoueurs"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

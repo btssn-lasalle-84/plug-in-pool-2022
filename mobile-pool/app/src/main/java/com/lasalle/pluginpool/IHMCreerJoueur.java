@@ -8,11 +8,24 @@ package com.lasalle.pluginpool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @class IHMCreerJoueur
@@ -27,11 +40,17 @@ public class IHMCreerJoueur extends AppCompatActivity
     private static final String TAG = "_IHMCreerJoueur_";  //!< TAG pour les logs
 
     /**
+     * Attributs
+     */
+    private BaseDeDonnees baseDeDonnees = null;
+
+    /**
      * Ressources IHM
      */
     private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
     private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
     private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
+    private ListView listeJoueurs;//!< La liste permettant l'affichage des joueurs
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -42,6 +61,9 @@ public class IHMCreerJoueur extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_creer_joueur);
         Log.d(TAG, "onCreate()");
+
+        ouvrirBaseDeDonnees();
+
         initialiserRessourcesIHMCreerJoueur();
     }
 
@@ -96,21 +118,126 @@ public class IHMCreerJoueur extends AppCompatActivity
     }
 
     /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+    }
+
+    /**
      * @brief Initialise les ressources graphiques de l'activité
      */
     private void initialiserRessourcesIHMCreerJoueur()
     {
+        Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
-        editTextNomJoueur = (TextView)findViewById(R.id.editTextNomJoueur);
-        exitTextPrenomJoueur = (TextView)findViewById(R.id.editTextPrenomJoueur);
+        editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
+        exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
+        listeJoueurs = (ListView)findViewById(R.id.listeJoueurs);
+
+        listerJoueurs();
 
         boutonValiderCreationJoueur.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    /*Enregistrer le nouveau joueur*/
-                }
-            });
+                boutonValiderCreationJoueur.requestFocus();
+                cacherClavier(getActivity());
+                creerJoueur();
+            }
+        });
+    }
+
+    /**
+     * @brief Méthode pour créer un joueur
+     */
+    private void creerJoueur()
+    {
+        Log.d(TAG, "creerJoueur()");
+        String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
+        String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
+        Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
+        {
+            Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        baseDeDonnees.insererJoueur(nouveauJoueur);
+        listerJoueurs();
+    }
+
+    /**
+     * @brief Méthode pour lister les joueurs
+     */
+    private void listerJoueurs()
+    {
+        Log.d(TAG, "listerJoueurs()");
+        List<Joueur> joueurs = baseDeDonnees.getJoueurs();
+        List<String> nomsJoueurs = new ArrayList<String>();
+
+        for(int i = 0; i < joueurs.size(); ++i)
+        {
+            Joueur joueur = joueurs.get(i);
+            nomsJoueurs.add(joueur.getNom() + " " + joueur.getPrenom());
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nomsJoueurs);
+        listeJoueurs.setAdapter(adapter);
+
+        /**
+         * @brief Suppresion d'un joueur
+         */
+        listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                final int itemSelection = position;
+                new AlertDialog.Builder(IHMCreerJoueur.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setTitle("Suppression")
+                    .setMessage("Êtes-vous sûr de vouloir supprimer ce joueur ?")
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int j)
+                        {
+                            nomsJoueurs.remove(itemSelection);
+                            baseDeDonnees.supprimerJoueur(joueurs.get(itemSelection));
+                            adapter.notifyDataSetChanged();
+                            Log.d(TAG, "Joueur supprimé");
+                        }
+                    }).setNegativeButton("Retour", null).show();
+                return true;
+            }
+        });
+
+        editTextNomJoueur.setText("");
+        exitTextPrenomJoueur.setText("");
+    }
+
+    public static void cacherClavier(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        /*
+         Voir aussi :
+         //Hide:
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        //Show
+        //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+         */
+    }
+
+    private Activity getActivity()
+    {
+        return this;
     }
 }

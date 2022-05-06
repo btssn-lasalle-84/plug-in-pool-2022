@@ -58,11 +58,6 @@ public class IHMPlugInPool extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate()");
-
-        baseDeDonnees = new BaseDeDonnees(this);
-        // Test BDD
-        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
-
         initialiserRessourcesIHM();
         initialiserRessourcesBluetooth();
     }
