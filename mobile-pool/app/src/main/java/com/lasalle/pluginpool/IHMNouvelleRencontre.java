@@ -6,9 +6,6 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +17,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -218,11 +219,17 @@ public class IHMNouvelleRencontre extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                CheckedTextView v = (CheckedTextView)view;
-                boolean estCochee = v.isChecked();
-                listeJoueurs.setItemChecked(i, estCochee);
-                Joueur joueur = joueurs.get(i);
-                Log.d(TAG, "listerJoueurs() : " + joueur.getNom() + " " + joueur.getPrenom());
+                if(listeJoueurs.getCheckedItemCount() > 2)
+                {
+                    Toast.makeText(IHMNouvelleRencontre.this, "2 Joueurs maximum !", Toast.LENGTH_SHORT).show();
+                    listeJoueurs.setItemChecked(i, false);
+                }
+                else
+                {
+                    CheckedTextView v = (CheckedTextView)view;
+                    boolean estCochee = v.isChecked();
+                    listeJoueurs.setItemChecked(i, estCochee);
+                }
             }
         });
     }
