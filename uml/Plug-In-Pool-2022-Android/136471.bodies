@@ -1,0 +1,71 @@
+class TReception
+!!!148503.java!!!	TReception(inout h : Handler, inout socket : BluetoothSocket)
+        this.handlerUI = h;
+        this.fini = false;
+        this.socket = socket;
+        try
+        {
+            this.receiveStream = socket.getInputStream();
+            this.sendStream = socket.getOutputStream();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+!!!148631.java!!!	setHandlerUI(inout h : Handler) : void
+        mutex.lock();
+        this.handlerUI = h;
+        mutex.unlock();
+!!!148759.java!!!	run() : void
+        Log.d(TAG, "Démarrage réception bluetooth");
+        BufferedReader reception = new BufferedReader(new InputStreamReader(receiveStream));
+        while(!fini)
+        {
+            try
+            {
+                String trame = "";
+                if(reception.ready())
+                {
+                    trame = reception.readLine();;
+                }
+                if(trame.length() > 0)
+                {
+                    Log.d(TAG, "run() trame : " + trame);
+                    mutex.lock();
+                    if(handlerUI != null)
+                    {
+                        Message message = Message.obtain();
+                        message.what = PeripheriqueBluetooth.CODE_RECEPTION_TRAME;
+                        message.obj = trame;
+                        handlerUI.sendMessage(message);
+                    }
+                    mutex.unlock();
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            try
+            {
+                Thread.sleep(250);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "Arrêt réception bluetooth");
+!!!148887.java!!!	arreter() : void
+        if(!fini)
+        {
+            fini = true;
+        }
+        try
+        {
+            Thread.sleep(250);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }

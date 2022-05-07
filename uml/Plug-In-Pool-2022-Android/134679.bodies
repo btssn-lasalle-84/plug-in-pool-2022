@@ -1,0 +1,33 @@
+class SQLite
+!!!147863.java!!!	SQLite(inout context : Context)
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+!!!147991.java!!!	onCreate(inout db : SQLiteDatabase) : void
+        Log.d(TAG, "onCreate() path = " + db.getPath());
+        creerTables(db);
+        insererDonneesInitiales(db);
+!!!148119.java!!!	onUpgrade(inout db : SQLiteDatabase, in oldVersion : int, in newVersion : int) : void
+        Log.d(TAG, "onUpgrade()");
+        db.execSQL("DROP TABLE IF EXISTS Manche;");
+        db.execSQL("DROP TABLE IF EXISTS Rencontre;");
+        db.execSQL("DROP TABLE IF EXISTS Joueur;");
+        onCreate(db);
+!!!148247.java!!!	creerTables(inout db : SQLiteDatabase) : void
+        Log.d(TAG, "creerTables()");
+        db.execSQL(CREATE_TABLE_JOUEUR);
+        db.execSQL(CREATE_TABLE_RENCONTRE);
+        db.execSQL(CREATE_TABLE_MANCHE);
+!!!148375.java!!!	insererDonneesInitiales(inout db : SQLiteDatabase) : void
+        Log.d(TAG, "insererDonneesInitiales()");
+        // Tests
+        db.execSQL(INSERT_TABLE_JOUEUR_1);
+        db.execSQL(INSERT_TABLE_JOUEUR_2);
+        db.execSQL(INSERT_TABLE_JOUEUR_3);
+        db.execSQL(INSERT_TABLE_JOUEUR_4);
+        db.execSQL(INSERT_TABLE_JOUEUR_5);
+        db.execSQL(INSERT_TABLE_JOUEUR_6);
+        db.execSQL(INSERT_TABLE_JOUEUR_7);
+        db.execSQL(INSERT_TABLE_JOUEUR_8);
+        db.execSQL(INSERT_TABLE_RENCONTRE_1);
+        db.execSQL(INSERT_TABLE_MANCHE_1);
+        db.execSQL(INSERT_TABLE_MANCHE_2);
+        db.execSQL(INSERT_TABLE_MANCHE_3);

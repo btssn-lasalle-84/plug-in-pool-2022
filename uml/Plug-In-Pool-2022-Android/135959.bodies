@@ -1,0 +1,144 @@
+class IHMRencontreEnCours
+!!!141719.java!!!	onCreate(inout savedInstanceState : Bundle) : void
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ihm_rencontre_en_cours);
+        Log.d(TAG, "onCreate()");
+
+        // récupération de données
+        rencontre = (Rencontre) getIntent().getSerializableExtra(IHMNouvelleRencontre.ID_INTENT_RENCONTRE);
+        // Exemple : les joueurs de cette rencontre
+        Vector<Joueur> joueurs = rencontre.getJoueurs();
+        for (int i = 0; i < joueurs.size(); i++)
+        {
+            Log.d(TAG, "[onCreate] Joueur : " + joueurs.get(i).getPrenom() + " " + joueurs.get(i).getNom());
+        }
+
+        initialiserRessourcesIHMRencontreEnCours();
+        gererHandler();
+        initialiserRessourcesBluetooth();
+!!!141847.java!!!	initialiserRessourcesBluetooth() : void
+        Log.d(TAG,"initialiserRessourcesBluetooth()");
+        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
+        Log.d(TAG,"[initialiserRessourcesBluetooth] connecte = " + peripheriqueBluetooth.estConnecte());
+        if(!peripheriqueBluetooth.estConnecte())
+            peripheriqueBluetooth.connecter();
+        else
+            peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+!!!141975.java!!!	onStart() : void
+        super.onStart();
+        Log.d(TAG, "onStart()");
+!!!142103.java!!!	onResume() : void
+        super.onResume();
+        Log.d(TAG, "onResume()");
+!!!142231.java!!!	onPause() : void
+        super.onPause();
+        Log.d(TAG, "onPause()");
+!!!142359.java!!!	onStop() : void
+        super.onStop();
+        Log.d(TAG, "onStop()");
+!!!142487.java!!!	onDestroy() : void
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+!!!142615.java!!!	initialiserRessourcesIHMRencontreEnCours() : void
+        boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
+        boutonFaute = (Button)findViewById(R.id.boutonFaute);
+        boutonJoueurSuivant = (Button)findViewById(R.id.boutonJoueurSuivant);
+
+        boutonQuitterRencontre.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    // ou : peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
+                    peripheriqueBluetooth.envoyer(Protocole.trameArreter);
+                    Intent intent = new Intent(IHMRencontreEnCours.this, IHMNouvelleRencontre.class);
+                    startActivity(intent);
+                }
+            });
+
+        boutonFaute.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Signalement d'une faute*/
+                }
+            });
+
+        boutonJoueurSuivant.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Passage au joueur suivant*/
+                }
+            });
+!!!142743.java!!!	gererHandler() : void
+        this.handler = new Handler(this.getMainLooper())
+        {
+            @Override
+            public void handleMessage(@NonNull Message message)
+            {
+                Log.d(TAG, "[Handler] id du message = " + message.what);
+                Log.d(TAG, "[Handler] contenu du message = " + message.obj.toString());
+
+                switch (message.what)
+                {
+                    case PeripheriqueBluetooth.CODE_CREATION_SOCKET:
+                        Log.d(TAG, "[Handler] CREATION_SOCKET = " + message.obj.toString());
+                        break;
+                    case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
+                        Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
+                        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+                        break;
+                    case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
+                        Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
+                        break;
+                    case PeripheriqueBluetooth.CODE_RECEPTION_TRAME:
+                        Log.d(TAG, "[Handler] RECEPTION_TRAME = " + message.obj.toString());
+                        gererMessage(message.obj.toString());
+                        break;
+                }
+            }
+        };
+!!!142871.java!!!	gererMessage(in message : String) : void
+        // format général : $PLUG;{TYPE};{DONNEES;}\r\n
+        // debug
+        String[] champs = message.split(Protocole.delimiteurChamp);
+        for(int i = 0; i < champs.length; i++)
+        {
+            Log.v(TAG, "[gererMessage] champs[" + i + "] = " + champs[i]);
+        }
+
+        // vérification
+        if(!champs[Protocole.CHAMP_ENTETE_TRAME].equals(Protocole.delimiteurDebut))
+        {
+            Log.d(TAG, "[gererMessage]  Erreur : en tête invalide !");
+            return;
+        }
+
+        switch (champs[Protocole.CHAMP_TYPE_TRAME])
+        {
+            case Protocole.EMPOCHE:
+                // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
+                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + "-> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                rencontre.jouerRencontre(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                break;
+            case Protocole.FAUTE:
+                // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
+                Log.d(TAG, "Trame FAUTE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                break;
+            case Protocole.SUIVANT:
+                //
+                Log.d(TAG, "Trame NEXT");
+                break;
+            case Protocole.ACK:
+                //
+                Log.d(TAG, "Trame ACK");
+                break;
+            case Protocole.ERREUR:
+                //
+                Log.d(TAG, "Trame ERREUR");
+                peripheriqueBluetooth.envoyer(Protocole.trameArreter);
+                break;
+        }

@@ -1,0 +1,119 @@
+class IHMCreerJoueur
+!!!135703.java!!!	onCreate(inout savedInstanceState : Bundle) : void
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ihm_creer_joueur);
+        Log.d(TAG, "onCreate()");
+
+        ouvrirBaseDeDonnees();
+
+        initialiserRessourcesIHMCreerJoueur();
+!!!135831.java!!!	onStart() : void
+        super.onStart();
+        Log.d(TAG, "onStart()");
+!!!135959.java!!!	onResume() : void
+        super.onResume();
+        Log.d(TAG, "onResume()");
+!!!136087.java!!!	onPause() : void
+        super.onPause();
+        Log.d(TAG, "onPause()");
+!!!136215.java!!!	onStop() : void
+        super.onStop();
+        Log.d(TAG, "onStop()");
+!!!136343.java!!!	onDestroy() : void
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+!!!136471.java!!!	ouvrirBaseDeDonnees() : void
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+!!!136599.java!!!	initialiserRessourcesIHMCreerJoueur() : void
+        Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
+        boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
+        editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
+        exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
+        listeJoueurs = (ListView)findViewById(R.id.listeJoueurs);
+
+        listerJoueurs();
+
+        boutonValiderCreationJoueur.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                boutonValiderCreationJoueur.requestFocus();
+                cacherClavier(getActivity());
+                creerJoueur();
+            }
+        });
+!!!136727.java!!!	creerJoueur() : void
+        Log.d(TAG, "creerJoueur()");
+        String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
+        String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
+        Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
+        {
+            Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        baseDeDonnees.insererJoueur(nouveauJoueur);
+        listerJoueurs();
+!!!136855.java!!!	listerJoueurs() : void
+        Log.d(TAG, "listerJoueurs()");
+        List<Joueur> joueurs = baseDeDonnees.getJoueurs();
+        List<String> nomsJoueurs = new ArrayList<String>();
+
+        for(int i = 0; i < joueurs.size(); ++i)
+        {
+            Joueur joueur = joueurs.get(i);
+            nomsJoueurs.add(joueur.getNom() + " " + joueur.getPrenom());
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, nomsJoueurs);
+        listeJoueurs.setAdapter(adapter);
+
+        /**
+         * @brief Suppresion d'un joueur
+         */
+        listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                final int itemSelection = position;
+                new AlertDialog.Builder(IHMCreerJoueur.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setTitle("Suppression")
+                    .setMessage("Êtes-vous sûr de vouloir supprimer ce joueur ?")
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int j)
+                        {
+                            nomsJoueurs.remove(itemSelection);
+                            baseDeDonnees.supprimerJoueur(joueurs.get(itemSelection));
+                            adapter.notifyDataSetChanged();
+                            Log.d(TAG, "Joueur supprimé");
+                        }
+                    }).setNegativeButton("Retour", null).show();
+                return true;
+            }
+        });
+
+        editTextNomJoueur.setText("");
+        exitTextPrenomJoueur.setText("");
+!!!136983.java!!!	cacherClavier(inout activity : Activity) : void
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        /*
+         Voir aussi :
+         //Hide:
+        //imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+        //Show
+        //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+         */
+!!!137111.java!!!	getActivity() : Activity
+        return this;

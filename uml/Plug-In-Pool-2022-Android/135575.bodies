@@ -1,0 +1,174 @@
+class PeripheriqueBluetooth
+!!!144791.java!!!	PeripheriqueBluetooth(inout handler : android.os.Handler)
+        activerBluetooth();
+
+        this.device = null;
+        this.nom = "";
+        this.adresse = "";
+        this.handler = handler;
+!!!144919.java!!!	getInstance(inout handler : Handler) : PeripheriqueBluetooth
+        if (peripheriqueBluetooth == null)
+        {
+            Log.d(TAG,"Création PeripheriqueBluetooth");
+            peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
+        }
+        else
+        {
+            Log.d(TAG,"Change le handler");
+            peripheriqueBluetooth.setHandler(handler);
+        }
+        return peripheriqueBluetooth;
+!!!145047.java!!!	setHandler(inout handler : Handler) : void
+        this.handler = handler;
+        if(tReception != null)
+            tReception.setHandlerUI(handler);
+!!!145175.java!!!	activerBluetooth() : void
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!bluetoothAdapter.isEnabled())
+        {
+            Log.d(TAG,"Activation bluetooth");
+            bluetoothAdapter.enable();
+        }
+!!!145303.java!!!	rechercherTable(in idTable : String) : boolean
+        Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
+
+        Log.d(TAG,"Recherche bluetooth : " + idTable);
+        for (BluetoothDevice appareil : appareilsAppaires)
+        {
+            Log.d(TAG,"Nom : " + appareil.getName() + " | Adresse : " + appareil.getAddress());
+            if (appareil.getName().equals(idTable) || appareil.getAddress().equals(idTable))
+            {
+                device = appareil;
+                this.nom = device.getName();
+                this.adresse = device.getAddress();
+                creerSocket();
+                return true; // trouvé !
+            }
+        }
+
+        return false;
+!!!145431.java!!!	creerSocket() : void
+        if (device == null)
+            return;
+        try
+        {
+            Log.d(TAG, "Création socket");
+            socket = device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"));
+            receiveStream = socket.getInputStream();
+            sendStream = socket.getOutputStream();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            Log.d(TAG, "Erreur création socket !");
+            socket = null;
+        }
+
+        if (socket != null)
+        {
+            tReception = new TReception(handler, socket);
+            if(handler != null)
+            {
+                Message message = new Message();
+                message.what = CODE_CREATION_SOCKET;
+                message.obj = this.nom;
+                handler.sendMessage(message);
+            }
+        }
+!!!145559.java!!!	getNom() : String
+        return nom;
+!!!145687.java!!!	getAdresse() : String
+        return adresse;
+!!!145815.java!!!	getSocket() : BluetoothSocket
+        return this.socket;
+!!!145943.java!!!	setNom(in nom : String) : void
+        this.nom = nom;
+!!!146071.java!!!	estConnecte() : boolean
+        if(socket == null)
+            return false;
+        else
+            return socket.isConnected();
+!!!146199.java!!!	envoyer(in data : String) : void
+        if(socket == null)
+            return;
+
+        new Thread()
+        {
+            @Override public void run()
+            {
+                try
+                {
+                    if(socket.isConnected())
+                    {
+                        Log.d(TAG, "envoyer() : " + data);
+                        sendStream.write(data.getBytes());
+                        sendStream.flush();
+                    }
+                }
+                catch (IOException e)
+                {
+                    System.out.println("<Socket> error send");
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+!!!146327.java!!!	connecter() : void
+        if (socket == null)
+            return;
+        new Thread()
+        {
+            @SuppressLint("MissingPermission")
+            @Override public void run()
+            {
+                try
+                {
+                    Log.d(TAG, "Connexion bluetooth");
+                    socket.connect();
+
+                    if(handler != null)
+                    {
+                        Message message = new Message();
+                        message.what = CODE_CONNEXION_SOCKET;
+                        message.obj = nom;
+                        handler.sendMessage(message);
+                    }
+
+                    tReception.start();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("<Socket> error connect");
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+!!!146455.java!!!	deconnecter() : void
+        if (device == null || socket == null)
+            return;
+
+        Log.d(TAG,"Déconnexion du module " + this.nom + " | Adresse : " + this.adresse);
+        new Thread()
+        {
+            @Override public void run()
+            {
+                try
+                {
+                    tReception.arreter();
+                    socket.close();
+                    if(handler != null)
+                    {
+                        Message message = new Message();
+                        message.what = CODE_DECONNEXION_SOCKET;
+                        message.obj = nom;
+                        handler.sendMessage(message);
+                    }
+                }
+                catch (IOException e)
+                {
+                    Log.e(TAG,"Erreur fermeture du socket");
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+!!!146583.java!!!	toString() : String
+        return "\nNom : " + nom + "\nAdresse : " + adresse;

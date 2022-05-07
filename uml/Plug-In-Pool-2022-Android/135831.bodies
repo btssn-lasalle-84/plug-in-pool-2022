@@ -1,0 +1,75 @@
+class IHMPlugInPool
+!!!140695.java!!!	onCreate(inout savedInstanceState : Bundle) : void
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate()");
+        initialiserRessourcesIHM();
+        initialiserRessourcesBluetooth();
+!!!140823.java!!!	onStart() : void
+        super.onStart();
+        Log.d(TAG, "onStart()");
+!!!140951.java!!!	onResume() : void
+        super.onResume();
+        Log.d(TAG, "onResume()");
+!!!141079.java!!!	onPause() : void
+        super.onPause();
+        Log.d(TAG, "onPause()");
+!!!141207.java!!!	onStop() : void
+        super.onStop();
+        Log.d(TAG, "onStop()");
+!!!141335.java!!!	onDestroy() : void
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+!!!141463.java!!!	initialiserRessourcesIHM() : void
+        boutonHistoriqueRencontre = (Button)findViewById(R.id.boutonHistoriqueRencontre);
+        boutonCreerJoueur = (Button)findViewById(R.id.boutonCreerJoueur);
+        boutonNouvelleRencontre = (Button)findViewById(R.id.boutonNouvelleRencontre);
+        boutonEtatBluetooth = (AppCompatButton)findViewById(R.id.boutonEtatBluetooth);
+
+        boutonNouvelleRencontre.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMPlugInPool.this, IHMNouvelleRencontre.class);
+                startActivity(intent);
+            }
+        });
+
+        boutonCreerJoueur.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMPlugInPool.this, IHMCreerJoueur.class);
+                startActivity(intent);
+            }
+        });
+!!!141591.java!!!	initialiserRessourcesBluetooth() : void
+        Log.d(TAG, "initialiserRessourcesBluetooth()");
+
+        if(bluetoothAdapter == null)
+        {
+            boutonEtatBluetooth.setBackgroundResource(R.drawable.bords_ronds);
+            Log.d(TAG, "initialiserRessourcesBluetooth() Etat bluetooth : " + bluetoothAdapter.isEnabled());
+        }
+        else
+        {
+            if (!bluetoothAdapter.isEnabled())
+            {
+                boutonEtatBluetooth.setBackgroundResource(R.drawable.bords_ronds);
+                Log.d(TAG, "initialiserRessourcesBluetooth() Etat bluetooth : " + bluetoothAdapter.isEnabled());
+                bluetoothAdapter.enable();
+                boutonEtatBluetooth.setBackgroundResource(R.drawable.bords_ronds_verts);
+            }
+            else
+            {
+                boutonEtatBluetooth.setBackgroundResource(R.drawable.bords_ronds_verts);
+                Set<BluetoothDevice> devices = bluetoothAdapter.getBondedDevices();
+                Log.d(TAG, "initialiserRessourcesBluetooth() Etat bluetooth : " + bluetoothAdapter.isEnabled());
+                for (BluetoothDevice blueDevice : devices)
+                {
+                    Log.d(TAG, "initialiserRessourcesBluetooth() - Périphérique = [" + blueDevice.getAddress() + "] "  + blueDevice.getName());
+                }
+            }
+        }
