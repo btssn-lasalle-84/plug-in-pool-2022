@@ -6,8 +6,6 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,9 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * @class IHMCreerJoueur
@@ -189,7 +188,7 @@ public class IHMCreerJoueur extends AppCompatActivity
         listeJoueurs.setAdapter(adapter);
 
         /**
-         * @brief Suppresion d'un joueur
+         * @brief Suppression d'un joueur
          */
         listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
@@ -220,7 +219,11 @@ public class IHMCreerJoueur extends AppCompatActivity
         exitTextPrenomJoueur.setText("");
     }
 
-    public static void cacherClavier(Activity activity) {
+    /**
+     * @brief Méthode pour cacher le clavier au lancement de l'activité
+     */
+    public static void cacherClavier(Activity activity)
+    {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = activity.getCurrentFocus();
         if (view == null) {

@@ -17,4 +17,6 @@
     <string name="faute">Faute</string>
     <string name="Joueurs"><u>Joueurs :</u></string>
     <string name="Scores"><u>Scores :</u></string>
+    <string name="parametres"><u>Paramètres :</u></string>
+    <string name="nombre_de_manches"><u>Nombre de manches :</u></string>
 </resources>

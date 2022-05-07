@@ -283,6 +283,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                     listeJoueurs.setItemChecked(i, estCochee);
                     if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
                         boutonLancerRencontre.setEnabled(true);
+                    else
+                        boutonLancerRencontre.setEnabled(false);
                 }
             }
         });
