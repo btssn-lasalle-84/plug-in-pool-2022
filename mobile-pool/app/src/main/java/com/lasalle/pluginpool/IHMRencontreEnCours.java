@@ -36,6 +36,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMRencontreEnCours_";  //!< TAG pour les logs
+    private static final int JOUEUR_1 = 0;  //!< indice du joueur n°1
+    private static final int JOUEUR_2 = 1;  //!< indice du joueur n°2
 
     /**
      * Attributs
@@ -74,10 +76,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
             Log.d(TAG, "[onCreate] Joueur : " + joueurs.get(i).getPrenom() + " " + joueurs.get(i).getNom());
         }
 
+        ouvrirBaseDeDonnees();
         initialiserRessourcesIHMRencontreEnCours();
         gererHandler();
         initialiserRessourcesBluetooth();
-        ouvrirBaseDeDonnees();
     }
 
     /**
@@ -203,23 +205,14 @@ public class IHMRencontreEnCours extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     private void listerRessourcesRencontre()
     {
-        texteJoueur1.setText("-> " + rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom());
-        texteJoueur2.setText("-> " + rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom());
+        texteJoueur1.setText("-> " + rencontre.getJoueurs().get(JOUEUR_1).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_1).getPrenom());
+        texteJoueur2.setText("-> " + rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
     }
 
     @SuppressLint("SetTextI18n")
-    private void changerJoueurIHM(String couleur)
+    private void changerJoueurIHM()
     {
-        if(couleur.equals(Protocole.JOUEUR_ROUGE))
-        {
-            //texteJoueur1.setText(rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom());
-            //texteJoueur2.setText(rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom());
-        }
-        else if(couleur.equals(Protocole.JOUEUR_JAUNE))
-        {
-            //texteJoueur1.setText(rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom());
-            //texteJoueur2.setText(rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom());
-        }
+
     }
 
     /**
@@ -280,7 +273,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         {
             case Protocole.EMPOCHE:
                 // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
-                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + "-> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
                 rencontre.jouerRencontre(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
                 break;
             case Protocole.FAUTE:
@@ -289,8 +282,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 rencontre.faute(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
                 break;
             case Protocole.SUIVANT:
-                //
-                changerJoueurIHM(champs[Protocole.CHAMP_COULEUR]);
+                // $PLUG;NEXT;
+                changerJoueurIHM();
                 Log.d(TAG, "Trame NEXT");
                 break;
             case Protocole.ACK:
