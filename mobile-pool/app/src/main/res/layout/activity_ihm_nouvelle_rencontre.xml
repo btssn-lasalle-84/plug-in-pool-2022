@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layoutHautDePage">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutParametresRencontre"
+            android:id="@+id/layoutParametresNouvelleRencontre"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="50dp"
@@ -116,13 +116,13 @@
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/parametres"
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+                app:layout_constraintBottom_toTopOf="@+id/layoutParametresRencontre"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/listeJoueursParametres" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
+                android:id="@+id/layoutParametresRencontre"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="50dp"
@@ -135,30 +135,29 @@
                 app:layout_constraintTop_toBottomOf="@id/textParametres">
 
                 <TextView
-                    android:id="@+id/textView2"
-                    style="color"
+                    android:id="@+id/textNombreManches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/nombre_de_manches"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/editTextNumber2"
+                    android:id="@+id/editTextNombreManches"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="211dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="50dp"
-                    android:ems="10"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="6dp"
+                    android:ems="2"
                     android:inputType="number"
+                    android:textAlignment="textEnd"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@+id/textView2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textNombreManches"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

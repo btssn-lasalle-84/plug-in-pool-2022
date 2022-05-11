@@ -19,4 +19,5 @@
     <string name="Scores"><u>Scores :</u></string>
     <string name="parametres"><u>Paramètres :</u></string>
     <string name="nombre_de_manches"><u>Nombre de manches :</u></string>
+    <string name="valeurDefautNbRencontre">1</string>
 </resources>

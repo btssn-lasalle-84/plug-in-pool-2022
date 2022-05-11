@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,14 +51,16 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private BaseDeDonnees baseDeDonnees = null;
     private Handler handler = null;
     private Rencontre rencontre = null;
+    private Vector<Joueur> joueursRencontre;
+    private int nbManchesGagnantes;
 
     /**
      * Ressources IHM
      */
     private Button boutonLancerRencontre;//!< Le bouton de lancement
+    private EditText nbManches;
     private ListView listeJoueurs;
     private List<Joueur> joueurs;
-    private Vector<Joueur> joueursRencontre;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -132,6 +135,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     {
         Log.d(TAG, "initialiserRessourcesIHMNouvelleRencontre()");
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
+        nbManches = (EditText)findViewById(R.id.editTextNombreManches);
+        nbManches.setText(Integer.toString(NB_MANCHES_GAGNANTES));
         // Il faut être connecté à la table et avoir deux joueurs sélectionnés
         boutonLancerRencontre.setEnabled(false);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueursParametres);
@@ -182,9 +187,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void initialiserRencontre()
     {
         joueursRencontre = new Vector<Joueur>();
-        /**
-         * @todo Récupérer le nombre de manches gagnantes pour cette rencontre
-         */
+        nbManchesGagnantes = Integer.parseInt(nbManches.getText().toString());
         rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
     }
 
