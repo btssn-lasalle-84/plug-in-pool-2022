@@ -6,10 +6,14 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
 import java.time.*;
@@ -27,6 +31,10 @@ public class Rencontre implements Serializable
      */
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
+    private static final int NB_BILLES = 7;
+    private static final int NB_POCHES = 6;
+    private static final String TAG = "_Rencontre_";
+
     /**
      * Attributs
      */
@@ -36,6 +44,9 @@ public class Rencontre implements Serializable
     //private LocalDateTime horodatage;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
+
+    private PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private Handler handler = null;
 
     /**
      * @brief Constructeur
@@ -51,34 +62,77 @@ public class Rencontre implements Serializable
     }
 
     /**
-     * @brief Initialise les ressources de la rencontre
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void initialiserRencontre()
-    {
-        /**
-         * @todo Changer les getJoueurs() et getNbManchesGagnates() avec les valeurs de l'ihm
-         */
-        //etatRencontre = RENCONTRE_ENCOURS;
-    }
-
-    /**
      * @brief Gère le déroulement de la rencontre
      * @param couleur
      * @param blouse
      */
     public void jouerRencontre(String couleur, String blouse)
     {
+        Log.d(TAG, "jouerRencontre()");
         if(etatRencontre == RENCONTRE_ENCOURS)
         {
             if(nbManches < nbManchesGagnantes)
             {
+                if(couleur.equals(Protocole.JOUEUR_ROUGE))
+                {
+                    joueurs.get(0).empocherBille();
+                    joueurs.get(0).toucherBille();
+                    joueurs.get(0).tirerBille();
+                    Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                }
+                else if(couleur.equals(Protocole.JOUEUR_JAUNE))
+                {
+                    joueurs.get(1).empocherBille();
+                    joueurs.get(1).toucherBille();
+                    joueurs.get(1).tirerBille();
+                    Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                }
 
+                if(joueurs.get(0).getNbBillesEmpochees() == NB_BILLES || joueurs.get(1).getNbBillesEmpochees() == NB_BILLES)
+                {
+                    Log.d(TAG, "jouerRencontre() : manche finie");
+                    rejouerRencontre();
+                }
             }
             else
             {
-
+                terminerRencontre();
             }
+        }
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une rencontre
+     */
+    private void terminerRencontre()
+    {
+        Log.d(TAG, "terminerRencontre()");
+        etatRencontre = RENCONTRE_FINIE;
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche
+     */
+    private void rejouerRencontre()
+    {
+        Log.d(TAG, "rejouerRencontre()");
+        joueurs.get(0).resetNbBillesEmpochees();
+        joueurs.get(1).resetNbBillesEmpochees();
+        nbManches++;
+    }
+
+    /**
+     * @brief Méthode appelée à la détection d'une faute
+     */
+    public void faute(String couleur, String blouse)
+    {
+        if(couleur.equals(Protocole.JOUEUR_ROUGE))
+        {
+            joueurs.get(0).augmenterFautes();
+        }
+        else if(couleur.equals(Protocole.JOUEUR_JAUNE))
+        {
+            joueurs.get(1).augmenterFautes();
         }
     }
 

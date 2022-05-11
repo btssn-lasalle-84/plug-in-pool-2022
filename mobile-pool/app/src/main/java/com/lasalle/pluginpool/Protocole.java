@@ -39,4 +39,7 @@ public class Protocole
 
     public static final int CODE_ERREUR_TRAME_INCONNUE = 0;
     public static final int CODE_ERREUR_TRAME_NONSUPPORTEE = 1;
+
+    public static final String JOUEUR_ROUGE = "R";
+    public static final String JOUEUR_JAUNE = "J";
 }

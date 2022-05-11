@@ -22,6 +22,7 @@ public class Joueur implements Serializable
     private String prenom;
     private int nbBillesEmpochees = 0;
     private int nbBillesTouchees = 0;
+    private int nbCoupsTires = 0;
     private int nbFautes = 0;
 
     /**
@@ -36,14 +37,34 @@ public class Joueur implements Serializable
     /**
      * @brief Accesseurs
      */
-    public  String getNom()
+    public String getNom()
     {
         return this.nom;
     }
 
-    public  String getPrenom()
+    public String getPrenom()
     {
         return this.prenom;
+    }
+
+    public int getNbBillesEmpochees()
+    {
+        return nbBillesEmpochees;
+    }
+
+    public int getNbBillesTouchees()
+    {
+        return nbBillesTouchees;
+    }
+
+    public int getNbFautes()
+    {
+        return nbFautes;
+    }
+
+    public int getNbCoupsTires()
+    {
+        return nbCoupsTires;
     }
 
     /**
@@ -57,5 +78,30 @@ public class Joueur implements Serializable
     public void setPrenom(String prenom)
     {
         this.prenom = prenom;
+    }
+
+    public void empocherBille()
+    {
+        ++this.nbBillesEmpochees;
+    }
+
+    public void augmenterFautes()
+    {
+        ++this.nbFautes;
+    }
+
+    public void toucherBille()
+    {
+        ++this.nbBillesTouchees;
+    }
+
+    public void tirerBille()
+    {
+        ++this.nbCoupsTires;
+    }
+
+    public void resetNbBillesEmpochees()
+    {
+        this.nbBillesEmpochees = 0;
     }
 }
