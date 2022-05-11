@@ -9,14 +9,20 @@ package com.lasalle.pluginpool;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -35,8 +41,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
      * Attributs
      */
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private BaseDeDonnees baseDeDonnees = null;
     private Handler handler = null;
     private Rencontre rencontre = null;
+    Vector<Joueur> joueurs;
 
     /**
      * Ressources IHM
@@ -44,6 +52,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private Button boutonQuitterRencontre;//!< Le bouton permettant d'arreter la rencontre
     private Button boutonFaute;//!< Le bouton permettant de signaler une faute lors du tour du joueur
     private Button boutonJoueurSuivant;//!< Le bouton permettant de passer la main au joueur suivant
+    private TextView texteJoueur1;
+    private TextView texteJoueur2;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -55,10 +65,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
         setContentView(R.layout.activity_ihm_rencontre_en_cours);
         Log.d(TAG, "onCreate()");
 
-        // récupération de données
+        // Récupération de données
         rencontre = (Rencontre) getIntent().getSerializableExtra(IHMNouvelleRencontre.ID_INTENT_RENCONTRE);
         // Exemple : les joueurs de cette rencontre
-        Vector<Joueur> joueurs = rencontre.getJoueurs();
+        joueurs = rencontre.getJoueurs();
         for (int i = 0; i < joueurs.size(); i++)
         {
             Log.d(TAG, "[onCreate] Joueur : " + joueurs.get(i).getPrenom() + " " + joueurs.get(i).getNom());
@@ -67,6 +77,16 @@ public class IHMRencontreEnCours extends AppCompatActivity
         initialiserRessourcesIHMRencontreEnCours();
         gererHandler();
         initialiserRessourcesBluetooth();
+        ouvrirBaseDeDonnees();
+    }
+
+    /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
     }
 
     /**
@@ -141,6 +161,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
         boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
         boutonFaute = (Button)findViewById(R.id.boutonFaute);
         boutonJoueurSuivant = (Button)findViewById(R.id.boutonJoueurSuivant);
+        texteJoueur1 = (TextView)findViewById(R.id.texteJoueur1);
+        texteJoueur2 = (TextView)findViewById(R.id.texteJoueur2);
+
+        listerRessourcesRencontre();
 
         boutonQuitterRencontre.setOnClickListener(
             new View.OnClickListener()
@@ -171,6 +195,31 @@ public class IHMRencontreEnCours extends AppCompatActivity
                     /*Passage au joueur suivant*/
                 }
             });
+    }
+
+    /**
+     * @brief Liste les joueurs et leurs scores
+     */
+    @SuppressLint("SetTextI18n")
+    private void listerRessourcesRencontre()
+    {
+        texteJoueur1.setText("-> " + rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom());
+        texteJoueur2.setText("-> " + rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom());
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void changerJoueurIHM(String couleur)
+    {
+        if(couleur.equals(Protocole.JOUEUR_ROUGE))
+        {
+            //texteJoueur1.setText(rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom());
+            //texteJoueur2.setText(rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom());
+        }
+        else if(couleur.equals(Protocole.JOUEUR_JAUNE))
+        {
+            //texteJoueur1.setText(rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom());
+            //texteJoueur2.setText(rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom());
+        }
     }
 
     /**
@@ -241,6 +290,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 break;
             case Protocole.SUIVANT:
                 //
+                changerJoueurIHM(champs[Protocole.CHAMP_COULEUR]);
                 Log.d(TAG, "Trame NEXT");
                 break;
             case Protocole.ACK:

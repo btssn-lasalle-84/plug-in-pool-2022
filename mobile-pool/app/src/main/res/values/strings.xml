@@ -20,4 +20,6 @@
     <string name="parametres"><u>Paramètres :</u></string>
     <string name="nombre_de_manches"><u>Nombre de manches :</u></string>
     <string name="valeurDefautNbRencontre">1</string>
+    <string name="joueur1">joueur1</string>
+    <string name="joueur2">joueur2</string>
 </resources>
