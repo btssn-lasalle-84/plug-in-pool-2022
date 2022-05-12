@@ -31,7 +31,7 @@ public class Rencontre implements Serializable
      */
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
-    private static final int NB_BILLES = 7;
+    private static final int NB_BILLES_COULEUR = 7;
     private static final int NB_POCHES = 6;
     private static final String TAG = "_Rencontre_";
 
@@ -44,6 +44,7 @@ public class Rencontre implements Serializable
     //private LocalDateTime horodatage;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
+    private int joueurEnCours;
 
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
@@ -66,7 +67,7 @@ public class Rencontre implements Serializable
      * @param couleur
      * @param blouse
      */
-    public void jouerRencontre(String couleur, String blouse)
+    public void jouerCoup(String couleur, String blouse)
     {
         Log.d(TAG, "jouerRencontre()");
         if(etatRencontre == RENCONTRE_ENCOURS)
@@ -88,7 +89,7 @@ public class Rencontre implements Serializable
                     Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
                 }
 
-                if(joueurs.get(0).getNbBillesEmpochees() == NB_BILLES || joueurs.get(1).getNbBillesEmpochees() == NB_BILLES)
+                if(joueurs.get(0).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(1).getNbBillesEmpochees() == NB_BILLES_COULEUR)
                 {
                     Log.d(TAG, "jouerRencontre() : manche finie");
                     rejouerRencontre();

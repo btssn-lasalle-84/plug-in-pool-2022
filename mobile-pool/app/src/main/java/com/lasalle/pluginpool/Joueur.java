@@ -20,6 +20,7 @@ public class Joueur implements Serializable
      */
     private String nom;
     private String prenom;
+    private String couleur;
     private int nbBillesEmpochees = 0;
     private int nbBillesTouchees = 0;
     private int nbCoupsTires = 0;
@@ -32,6 +33,7 @@ public class Joueur implements Serializable
     {
         this.nom = nom;
         this.prenom = prenom;
+        this.couleur = null;
     }
 
     /**
@@ -45,6 +47,11 @@ public class Joueur implements Serializable
     public String getPrenom()
     {
         return this.prenom;
+    }
+
+    public String getCouleur()
+    {
+        return couleur;
     }
 
     public int getNbBillesEmpochees()
@@ -78,6 +85,11 @@ public class Joueur implements Serializable
     public void setPrenom(String prenom)
     {
         this.prenom = prenom;
+    }
+
+    public void setCouleur(String couleur)
+    {
+        this.couleur = couleur;
     }
 
     public void empocherBille()

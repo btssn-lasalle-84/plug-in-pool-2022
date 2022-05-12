@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,9 +21,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -47,6 +54,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private Handler handler = null;
     private Rencontre rencontre = null;
     Vector<Joueur> joueurs;
+    private int premierJoueur;
 
     /**
      * Ressources IHM
@@ -56,6 +64,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private Button boutonJoueurSuivant;//!< Le bouton permettant de passer la main au joueur suivant
     private TextView texteJoueur1;
     private TextView texteJoueur2;
+    private TextView curseur1;
+    private TextView curseur2;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -165,6 +175,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
         boutonJoueurSuivant = (Button)findViewById(R.id.boutonJoueurSuivant);
         texteJoueur1 = (TextView)findViewById(R.id.texteJoueur1);
         texteJoueur2 = (TextView)findViewById(R.id.texteJoueur2);
+        curseur1 = (TextView)findViewById(R.id.curseur1);
+        curseur2 = (TextView)findViewById(R.id.curseur2);
 
         listerRessourcesRencontre();
 
@@ -205,14 +217,43 @@ public class IHMRencontreEnCours extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     private void listerRessourcesRencontre()
     {
-        texteJoueur1.setText("-> " + rencontre.getJoueurs().get(JOUEUR_1).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_1).getPrenom());
-        texteJoueur2.setText("-> " + rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
+        texteJoueur1.setText(rencontre.getJoueurs().get(JOUEUR_1).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_1).getPrenom());
+        texteJoueur2.setText(rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
     }
 
+    /**
+     * @brief Initialise les scores des joueurs
+     */
+    private void initialiserScores()
+    {
+        if(premierJoueur == JOUEUR_1)
+        {
+            curseur1.setVisibility(View.VISIBLE);
+            curseur2.setVisibility(View.INVISIBLE);
+        }
+        else if(premierJoueur == JOUEUR_2)
+        {
+            curseur1.setVisibility(View.INVISIBLE);
+            curseur2.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+    * @brief Change le curseur du joueur en cours sur l'IHM
+    */
     @SuppressLint("SetTextI18n")
     private void changerJoueurIHM()
     {
-
+        if(curseur1.getVisibility() == View.INVISIBLE)
+        {
+            curseur1.setVisibility(View.VISIBLE);
+            curseur2.setVisibility(View.INVISIBLE);
+        }
+        else if(curseur2.getVisibility() == View.INVISIBLE)
+        {
+            curseur1.setVisibility(View.INVISIBLE);
+            curseur2.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -274,7 +315,42 @@ public class IHMRencontreEnCours extends AppCompatActivity
             case Protocole.EMPOCHE:
                 // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
                 Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
-                rencontre.jouerRencontre(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                if(joueurs.get(JOUEUR_1).getNbBillesEmpochees() == 0 && joueurs.get(JOUEUR_2).getNbBillesEmpochees() == 0)
+                {
+                    final String[] listeJoueurs = {joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom(),
+                                                   joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom()};
+                    new AlertDialog.Builder(IHMRencontreEnCours.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                        .setTitle("Qui a rentré la première bille ?")
+                        .setSingleChoiceItems(listeJoueurs, listeJoueurs.length, new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_ROUGE))
+                                {
+                                    joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
+                                    joueurs.get(JOUEUR_2).setCouleur(Protocole.JOUEUR_JAUNE);
+                                }
+                                else if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_JAUNE))
+                                {
+                                    joueurs.get(JOUEUR_1).setCouleur(Protocole.JOUEUR_JAUNE);
+                                    joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
+                                }
+                                premierJoueur = i;
+                                Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
+                                Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
+                            }
+                        })
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i)
+                            {
+                                initialiserScores();
+                            }
+                        }).show();
+                }
+                rencontre.jouerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
                 break;
             case Protocole.FAUTE:
                 // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
