@@ -20,6 +20,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.Vector;
 
 /**
@@ -56,6 +59,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private TextView texteJoueur2;
     private TextView curseur1;
     private TextView curseur2;
+    private TextView texteDernierCoup1;
+    private TextView texteDernierCoup2;
+    private TextView texteScoreJoueur1;
+    private TextView texteScoreJoueur2;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -102,7 +109,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         if(!peripheriqueBluetooth.estConnecte())
             peripheriqueBluetooth.connecter();
         else
-            peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+            demarrerNouvellePartie();
     }
 
     /**
@@ -156,6 +163,15 @@ public class IHMRencontreEnCours extends AppCompatActivity
     }
 
     /**
+     * @brief Démarre une nouvelle partie
+     */
+    private void demarrerNouvellePartie()
+    {
+        peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
+        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+    }
+
+    /**
      * @brief Initialise les ressources graphiques de l'activité
      */
     private void initialiserRessourcesIHMRencontreEnCours()
@@ -167,6 +183,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
         texteJoueur2 = (TextView)findViewById(R.id.texteJoueur2);
         curseur1 = (TextView)findViewById(R.id.curseur1);
         curseur2 = (TextView)findViewById(R.id.curseur2);
+        texteDernierCoup1 = (TextView)findViewById(R.id.texteDernierCoup1);
+        texteDernierCoup2 = (TextView)findViewById(R.id.texteDernierCoup2);
+        texteScoreJoueur1 = (TextView)findViewById(R.id.texteScoreJoueur1);
+        texteScoreJoueur2 = (TextView)findViewById(R.id.texteScoreJoueur2);
 
         listerRessourcesRencontre();
 
@@ -187,8 +207,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : " + Protocole.trameFaute);
-                    peripheriqueBluetooth.envoyer(Protocole.trameFaute);
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : faute");
                 }
             });
 
@@ -197,8 +216,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : " + Protocole.trameSuivant);
-                    peripheriqueBluetooth.envoyer(Protocole.trameSuivant);
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : suivant");
                 }
             });
     }
@@ -211,6 +229,10 @@ public class IHMRencontreEnCours extends AppCompatActivity
     {
         texteJoueur1.setText(rencontre.getJoueurs().get(JOUEUR_1).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_1).getPrenom());
         texteJoueur2.setText(rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
+        texteDernierCoup1.setText("");
+        texteDernierCoup2.setText("");
+        texteScoreJoueur1.setText("Nombre billes empochees : " + joueurs.get(JOUEUR_1).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur2.setText("Nombre billes empochees : " + joueurs.get(JOUEUR_2).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
     }
 
     /**
@@ -241,7 +263,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
             curseur1.setVisibility(View.VISIBLE);
             curseur2.setVisibility(View.INVISIBLE);
         }
-        else if(curseur2.getVisibility() == View.INVISIBLE)
+        else if(curseur1.getVisibility() == View.VISIBLE)
         {
             curseur1.setVisibility(View.INVISIBLE);
             curseur2.setVisibility(View.VISIBLE);
@@ -268,7 +290,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                         break;
                     case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
-                        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+                        demarrerNouvellePartie();
                         break;
                     case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
@@ -309,11 +331,13 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
                 afficherListePremierJoueur(champs);
                 rencontre.jouerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                actualiserScores(champs);
                 break;
             case Protocole.FAUTE:
                 // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
                 Log.d(TAG, "Trame FAUTE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
                 rencontre.faute(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                actualiserScores(champs);
                 break;
             case Protocole.SUIVANT:
                 // $PLUG;NEXT;
@@ -333,6 +357,47 @@ public class IHMRencontreEnCours extends AppCompatActivity
     }
 
     /**
+     * @brief Méthode appelée à chaque empochage d'une bille
+     * @param champs
+     */
+    @SuppressLint("SetTextI18n")
+    private void actualiserScores(String[] champs)
+    {
+        Log.d(TAG, "actualiserScores()");
+        switch(champs[Protocole.CHAMP_TYPE_TRAME])
+        {
+            case Protocole.EMPOCHE:
+                Log.d(TAG, "actualiserScores() - cas empoche");
+                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_1).getCouleur()))
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(JOUEUR_1).getCouleur());
+                    texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_2).getCouleur()))
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(JOUEUR_2).getCouleur());
+                    texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                break;
+            case Protocole.FAUTE:
+                Log.d(TAG, "actualiserScores() - cas faute");
+                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_1).getCouleur()))
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(JOUEUR_1).getCouleur());
+                    texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_2).getCouleur()))
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(JOUEUR_2).getCouleur());
+                    texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                break;
+        }
+        texteScoreJoueur1.setText("Nombre billes empochées : " + joueurs.get(JOUEUR_1).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur2.setText("Nombre billes empochées : " + joueurs.get(JOUEUR_2).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+    }
+
+    /**
      * @brief Affiche la liste des joueurs pour sélectionner le premier joueur
      * @param champs
      */
@@ -344,23 +409,25 @@ public class IHMRencontreEnCours extends AppCompatActivity
             final String[] listeJoueurs = {joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom(),
                                            joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom()};
             new AlertDialog.Builder(IHMRencontreEnCours.this, R.style.Theme_PlugInPool_BoiteDialogue)
-                .setTitle("Qui a rentré la première bille ?")
+                .setTitle("Qui a empoché la première bille ?")
                 .setSingleChoiceItems(listeJoueurs, listeJoueurs.length, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
+                        Log.d(TAG, "Première couleur : " + champs[Protocole.CHAMP_COULEUR]);
                         if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_ROUGE))
                         {
                             joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
-                            joueurs.get(JOUEUR_2).setCouleur(Protocole.JOUEUR_JAUNE);
+                            joueurs.get((i == 0) ? 1 : 0).setCouleur(Protocole.JOUEUR_JAUNE);
                         }
                         else if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_JAUNE))
                         {
-                            joueurs.get(JOUEUR_1).setCouleur(Protocole.JOUEUR_JAUNE);
-                            joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
+                            joueurs.get(i).setCouleur(Protocole.JOUEUR_JAUNE);
+                            joueurs.get((i == 0) ? 1 : 0).setCouleur(Protocole.JOUEUR_ROUGE);
                         }
                         premierJoueur = i;
+                        Log.d(TAG, "Premier joueur : " + joueurs.get(i).getNom() + " " + joueurs.get(i).getPrenom() + " Couleur : " + joueurs.get(i).getCouleur() + " " + i);
                         Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
                         Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
                     }

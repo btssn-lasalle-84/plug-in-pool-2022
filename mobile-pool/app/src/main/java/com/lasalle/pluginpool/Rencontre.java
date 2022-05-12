@@ -31,7 +31,7 @@ public class Rencontre implements Serializable
      */
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
-    private static final int NB_BILLES_COULEUR = 7;
+    private static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
     private static final int NB_POCHES = 6;
     private static final String TAG = "_Rencontre_";
 
@@ -159,9 +159,15 @@ public class Rencontre implements Serializable
     {
         return joueurs;
     }
+
     public void setJoueurs(Vector<Joueur> joueurs)
     {
         this.joueurs = joueurs;
+    }
+
+    public int getNbBillesCouleur()
+    {
+        return this.NB_BILLES_COULEUR - 1;
     }
 
     /**
