@@ -19,9 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.view.View;
-
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * @class IHMPlugInPool
