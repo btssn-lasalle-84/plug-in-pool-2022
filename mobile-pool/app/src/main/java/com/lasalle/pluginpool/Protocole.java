@@ -25,6 +25,8 @@ public class Protocole
     public static final String trameCommencer = "$PLUG;START;\r\n";
     public static final String trameAnnuler = "$PLUG;RESET;\r\n";
     public static final String trameAcquitemment = "$PLUG;ACK;\r\n";
+    public static final String trameFaute = "$PLUG;FAUTE;\r\n";
+    public static final String trameSuivant = "$PLUG;NEXT;\r\n";
 
     public static final String EMPOCHE = "EMPOCHE";
     public static final String FAUTE = "FAUTE";

@@ -185,8 +185,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    // ou : peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
-                    peripheriqueBluetooth.envoyer(Protocole.trameArreter);
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : " + Protocole.trameAnnuler);
+                    peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
                     Intent intent = new Intent(IHMRencontreEnCours.this, IHMNouvelleRencontre.class);
                     startActivity(intent);
                 }
@@ -197,7 +197,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    /*Signalement d'une faute*/
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : " + Protocole.trameFaute);
+                    peripheriqueBluetooth.envoyer(Protocole.trameFaute);
                 }
             });
 
@@ -206,7 +207,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 public void onClick(View v)
                 {
-                    /*Passage au joueur suivant*/
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : " + Protocole.trameSuivant);
+                    peripheriqueBluetooth.envoyer(Protocole.trameSuivant);
                 }
             });
     }
@@ -315,41 +317,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
             case Protocole.EMPOCHE:
                 // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
                 Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
-                if(joueurs.get(JOUEUR_1).getNbBillesEmpochees() == 0 && joueurs.get(JOUEUR_2).getNbBillesEmpochees() == 0)
-                {
-                    final String[] listeJoueurs = {joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom(),
-                                                   joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom()};
-                    new AlertDialog.Builder(IHMRencontreEnCours.this, R.style.Theme_PlugInPool_BoiteDialogue)
-                        .setTitle("Qui a rentré la première bille ?")
-                        .setSingleChoiceItems(listeJoueurs, listeJoueurs.length, new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i)
-                            {
-                                if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_ROUGE))
-                                {
-                                    joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
-                                    joueurs.get(JOUEUR_2).setCouleur(Protocole.JOUEUR_JAUNE);
-                                }
-                                else if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_JAUNE))
-                                {
-                                    joueurs.get(JOUEUR_1).setCouleur(Protocole.JOUEUR_JAUNE);
-                                    joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
-                                }
-                                premierJoueur = i;
-                                Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
-                                Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
-                            }
-                        })
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i)
-                            {
-                                initialiserScores();
-                            }
-                        }).show();
-                }
+                afficherListePremierJoueur(champs);
                 rencontre.jouerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
                 break;
             case Protocole.FAUTE:
@@ -371,6 +339,50 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 Log.d(TAG, "Trame ERREUR");
                 peripheriqueBluetooth.envoyer(Protocole.trameArreter);
                 break;
+        }
+    }
+
+    /**
+     * @brief Affiche la liste des joueurs pour sélectionner le premier joueur
+     * @param champs
+     */
+    private void afficherListePremierJoueur(String[] champs)
+    {
+        Log.d(TAG, "afficherListePremierJoueur()");
+        if(joueurs.get(JOUEUR_1).getNbBillesEmpochees() == 0 && joueurs.get(JOUEUR_2).getNbBillesEmpochees() == 0)
+        {
+            final String[] listeJoueurs = {joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom(),
+                                           joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom()};
+            new AlertDialog.Builder(IHMRencontreEnCours.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                .setTitle("Qui a rentré la première bille ?")
+                .setSingleChoiceItems(listeJoueurs, listeJoueurs.length, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_ROUGE))
+                        {
+                            joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
+                            joueurs.get(JOUEUR_2).setCouleur(Protocole.JOUEUR_JAUNE);
+                        }
+                        else if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_JAUNE))
+                        {
+                            joueurs.get(JOUEUR_1).setCouleur(Protocole.JOUEUR_JAUNE);
+                            joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
+                        }
+                        premierJoueur = i;
+                        Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
+                        Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
+                    }
+                })
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        initialiserScores();
+                    }
+                }).show();
         }
     }
 }
