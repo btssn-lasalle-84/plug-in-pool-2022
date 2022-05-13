@@ -84,41 +84,45 @@ public class Rencontre implements Serializable
         Log.d(TAG, "jouerRencontre()");
         String couleur = "";
         int j = 0;
-        while(j < coups.size())
+        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
         {
-            couleur = coups.get(j).getCouleur();
-            Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
-            if(etatRencontre == RENCONTRE_ENCOURS)
+            while(j < coups.size())
             {
-                if(nbManches < nbManchesGagnantes)
+                couleur = coups.get(j).getCouleur();
+                Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
+                if (etatRencontre == RENCONTRE_ENCOURS)
                 {
-                    if(couleur.equals(joueurs.get(premierJoueur).getCouleur()))
+                    if (nbManches < nbManchesGagnantes)
                     {
-                        joueurs.get(0).empocherBille();
-                        joueurs.get(0).toucherBille();
-                        joueurs.get(0).tirerBille();
-                        Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
-                    }
-                    else if(couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
-                    {
-                        joueurs.get(1).empocherBille();
-                        joueurs.get(1).toucherBille();
-                        joueurs.get(1).tirerBille();
-                        Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
-                    }
+                        if (couleur.equals(joueurs.get(premierJoueur).getCouleur()))
+                        {
+                            joueurs.get(0).empocherBille();
+                            joueurs.get(0).toucherBille();
+                            joueurs.get(0).tirerBille();
+                            coups.remove(coups.lastElement());
+                            Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                        }
+                        else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                        {
+                            joueurs.get(1).empocherBille();
+                            joueurs.get(1).toucherBille();
+                            joueurs.get(1).tirerBille();
+                            coups.remove(coups.lastElement());
+                            Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                        }
 
-                    if(joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
-                    {
-                        Log.d(TAG, "jouerRencontre() : manche finie");
-                        rejouerRencontre();
+                        if (joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                        {
+                            Log.d(TAG, "jouerRencontre() : manche finie");
+                            rejouerRencontre();
+                        }
                     }
-                }
-                else
-                {
-                    terminerRencontre();
+                    else
+                    {
+                        terminerRencontre();
+                    }
                 }
             }
-            coups.remove(coups.lastElement());
         }
     }
 

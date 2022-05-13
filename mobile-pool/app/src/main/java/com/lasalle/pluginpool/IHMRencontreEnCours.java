@@ -342,10 +342,12 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
                 Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
                 rencontre.stockerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
-                rencontre.jouerCoup();
                 if(!estPremierJoueurChoisi)
+                {
                     estPremierJoueurChoisi = true;
                     afficherListePremierJoueur(champs);
+                }
+                rencontre.jouerCoup();
                 actualiserScores(champs);
                 break;
             case Protocole.FAUTE:

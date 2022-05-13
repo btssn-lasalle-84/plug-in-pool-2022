@@ -33,7 +33,7 @@ public class Joueur implements Serializable
     {
         this.nom = nom;
         this.prenom = prenom;
-        this.couleur = null;
+        this.couleur = "";
     }
 
     /**
