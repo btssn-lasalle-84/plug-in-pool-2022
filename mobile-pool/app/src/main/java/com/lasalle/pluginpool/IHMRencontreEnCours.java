@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,6 +49,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private Rencontre rencontre = null;
     Vector<Joueur> joueurs;
     private int premierJoueur;
+    private int deuxiemeJoueur;
+    private boolean estPremierJoueurChoisi = false;
 
     /**
      * Ressources IHM
@@ -229,10 +232,12 @@ public class IHMRencontreEnCours extends AppCompatActivity
     {
         texteJoueur1.setText(rencontre.getJoueurs().get(JOUEUR_1).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_1).getPrenom());
         texteJoueur2.setText(rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
+        curseur1.setVisibility(View.INVISIBLE);
+        curseur2 .setVisibility(View.INVISIBLE);
         texteDernierCoup1.setText("");
         texteDernierCoup2.setText("");
-        texteScoreJoueur1.setText("Nombre billes empochees : " + joueurs.get(JOUEUR_1).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
-        texteScoreJoueur2.setText("Nombre billes empochees : " + joueurs.get(JOUEUR_2).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur1.setText("Nombre billes empochees : 0 / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur2.setText("Nombre billes empochees : 0 / " + rencontre.getNbBillesCouleur());
     }
 
     /**
@@ -258,15 +263,22 @@ public class IHMRencontreEnCours extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     private void changerJoueurIHM()
     {
-        if(curseur1.getVisibility() == View.INVISIBLE)
+        if(estPremierJoueurChoisi)
         {
-            curseur1.setVisibility(View.VISIBLE);
-            curseur2.setVisibility(View.INVISIBLE);
+            if(curseur1.getVisibility() == View.INVISIBLE)
+            {
+                curseur1.setVisibility(View.VISIBLE);
+                curseur2.setVisibility(View.INVISIBLE);
+            }
+            else if(curseur1.getVisibility() == View.VISIBLE)
+            {
+                curseur1.setVisibility(View.INVISIBLE);
+                curseur2.setVisibility(View.VISIBLE);
+            }
         }
-        else if(curseur1.getVisibility() == View.VISIBLE)
+        else
         {
-            curseur1.setVisibility(View.INVISIBLE);
-            curseur2.setVisibility(View.VISIBLE);
+            return;
         }
     }
 
@@ -329,8 +341,11 @@ public class IHMRencontreEnCours extends AppCompatActivity
             case Protocole.EMPOCHE:
                 // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
                 Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
-                afficherListePremierJoueur(champs);
-                rencontre.jouerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                rencontre.stockerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                rencontre.jouerCoup();
+                if(!estPremierJoueurChoisi)
+                    estPremierJoueurChoisi = true;
+                    afficherListePremierJoueur(champs);
                 actualiserScores(champs);
                 break;
             case Protocole.FAUTE:
@@ -368,33 +383,33 @@ public class IHMRencontreEnCours extends AppCompatActivity
         {
             case Protocole.EMPOCHE:
                 Log.d(TAG, "actualiserScores() - cas empoche");
-                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_1).getCouleur()))
+                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(premierJoueur).getCouleur()))
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(JOUEUR_1).getCouleur());
+                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
-                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_2).getCouleur()))
+                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(deuxiemeJoueur).getCouleur()))
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(JOUEUR_2).getCouleur());
+                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 break;
             case Protocole.FAUTE:
                 Log.d(TAG, "actualiserScores() - cas faute");
-                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_1).getCouleur()))
+                if(curseur1.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(JOUEUR_1).getCouleur());
+                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
-                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(JOUEUR_2).getCouleur()))
+                else if(curseur2.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(JOUEUR_2).getCouleur());
+                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 break;
         }
-        texteScoreJoueur1.setText("Nombre billes empochées : " + joueurs.get(JOUEUR_1).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
-        texteScoreJoueur2.setText("Nombre billes empochées : " + joueurs.get(JOUEUR_2).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur1.setText("Nombre billes empochées : " + joueurs.get(premierJoueur).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur2.setText("Nombre billes empochées : " + joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
     }
 
     /**
@@ -427,6 +442,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                             joueurs.get((i == 0) ? 1 : 0).setCouleur(Protocole.JOUEUR_ROUGE);
                         }
                         premierJoueur = i;
+                        deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
                         Log.d(TAG, "Premier joueur : " + joueurs.get(i).getNom() + " " + joueurs.get(i).getPrenom() + " Couleur : " + joueurs.get(i).getCouleur() + " " + i);
                         Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
                         Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
@@ -437,6 +453,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
+                        rencontre.initialiserJoueurs(premierJoueur);
                         initialiserScores();
                     }
                 }).show();

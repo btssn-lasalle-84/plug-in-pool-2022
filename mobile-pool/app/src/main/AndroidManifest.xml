@@ -30,11 +30,13 @@
         <activity
             android:name=".IHMCreerJoueur"
             android:exported="false"
-            android:theme="@style/Theme.PlugInPool.NoActionBar" />
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".IHMNouvelleRencontre"
             android:exported="false"
-            android:theme="@style/Theme.PlugInPool.NoActionBar" />
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".IHMPlugInPool"
             android:exported="true"

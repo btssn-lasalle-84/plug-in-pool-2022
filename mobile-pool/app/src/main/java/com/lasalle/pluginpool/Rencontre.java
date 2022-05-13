@@ -44,8 +44,9 @@ public class Rencontre implements Serializable
     //private LocalDateTime horodatage;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
-    private int joueurEnCours;
-
+    private Vector<Coup> coups;
+    private int premierJoueur;
+    private int deuxiemeJoueur;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
 
@@ -60,45 +61,64 @@ public class Rencontre implements Serializable
         this.etatRencontre = RENCONTRE_ENCOURS;
         //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
         this.joueurs = joueurs;
+        this.coups = new Vector<>();
+    }
+
+    public void initialiserJoueurs(int premierJoueur)
+    {
+        this.premierJoueur = premierJoueur;
+        this.deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
+    }
+
+    public void stockerCoup(String couleur, String blouse)
+    {
+        Coup coup = new Coup(couleur, blouse);
+        coups.add(coup);
     }
 
     /**
      * @brief Gère le déroulement de la rencontre
-     * @param couleur
-     * @param blouse
      */
-    public void jouerCoup(String couleur, String blouse)
+    public void jouerCoup()
     {
         Log.d(TAG, "jouerRencontre()");
-        if(etatRencontre == RENCONTRE_ENCOURS)
+        String couleur = "";
+        int j = 0;
+        while(j < coups.size())
         {
-            if(nbManches < nbManchesGagnantes)
+            couleur = coups.get(j).getCouleur();
+            Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
+            if(etatRencontre == RENCONTRE_ENCOURS)
             {
-                if(couleur.equals(Protocole.JOUEUR_ROUGE))
+                if(nbManches < nbManchesGagnantes)
                 {
-                    joueurs.get(0).empocherBille();
-                    joueurs.get(0).toucherBille();
-                    joueurs.get(0).tirerBille();
-                    Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
-                }
-                else if(couleur.equals(Protocole.JOUEUR_JAUNE))
-                {
-                    joueurs.get(1).empocherBille();
-                    joueurs.get(1).toucherBille();
-                    joueurs.get(1).tirerBille();
-                    Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
-                }
+                    if(couleur.equals(joueurs.get(premierJoueur).getCouleur()))
+                    {
+                        joueurs.get(0).empocherBille();
+                        joueurs.get(0).toucherBille();
+                        joueurs.get(0).tirerBille();
+                        Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                    }
+                    else if(couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                    {
+                        joueurs.get(1).empocherBille();
+                        joueurs.get(1).toucherBille();
+                        joueurs.get(1).tirerBille();
+                        Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                    }
 
-                if(joueurs.get(0).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(1).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                    if(joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                    {
+                        Log.d(TAG, "jouerRencontre() : manche finie");
+                        rejouerRencontre();
+                    }
+                }
+                else
                 {
-                    Log.d(TAG, "jouerRencontre() : manche finie");
-                    rejouerRencontre();
+                    terminerRencontre();
                 }
             }
-            else
-            {
-                terminerRencontre();
-            }
+            coups.remove(coups.lastElement());
         }
     }
 
