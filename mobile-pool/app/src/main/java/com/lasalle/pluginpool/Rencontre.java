@@ -47,6 +47,7 @@ public class Rencontre implements Serializable
     private Vector<Coup> coups;
     private int premierJoueur;
     private int deuxiemeJoueur;
+    private Joueur joueurGagnant;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
 
@@ -81,7 +82,7 @@ public class Rencontre implements Serializable
      */
     public void jouerCoup()
     {
-        Log.d(TAG, "jouerRencontre()");
+        Log.d(TAG, "jouerCoup()");
         String couleur = "";
         int j = 0;
         if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
@@ -100,7 +101,7 @@ public class Rencontre implements Serializable
                             joueurs.get(0).toucherBille();
                             joueurs.get(0).tirerBille();
                             coups.remove(coups.lastElement());
-                            Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                            Log.d(TAG, "jouerCoup() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
                         }
                         else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
                         {
@@ -108,18 +109,22 @@ public class Rencontre implements Serializable
                             joueurs.get(1).toucherBille();
                             joueurs.get(1).tirerBille();
                             coups.remove(coups.lastElement());
-                            Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                            Log.d(TAG, "jouerCoup() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
                         }
 
                         if (joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
                         {
-                            Log.d(TAG, "jouerRencontre() : manche finie");
-                            rejouerRencontre();
+                            Log.d(TAG, "jouerCoup() : manche finie");
+                            if(joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                            {
+                                joueurs.get(premierJoueur).augmenterNbManchesGagnees();
+                            }
+                            else if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                            {
+                                joueurs.get(deuxiemeJoueur).augmenterNbManchesGagnees();
+                            }
+                            terminerManche();
                         }
-                    }
-                    else
-                    {
-                        terminerRencontre();
                     }
                 }
             }
@@ -129,7 +134,7 @@ public class Rencontre implements Serializable
     /**
      * @brief Méthode appelée à la fin d'une rencontre
      */
-    private void terminerRencontre()
+    protected void terminerRencontre()
     {
         Log.d(TAG, "terminerRencontre()");
         etatRencontre = RENCONTRE_FINIE;
@@ -138,12 +143,23 @@ public class Rencontre implements Serializable
     /**
      * @brief Méthode appelée à la fin d'une manche
      */
-    private void rejouerRencontre()
+    private void terminerManche()
     {
-        Log.d(TAG, "rejouerRencontre()");
-        joueurs.get(0).resetNbBillesEmpochees();
-        joueurs.get(1).resetNbBillesEmpochees();
+        Log.d(TAG, "terminerManche()");
         nbManches++;
+        Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
+        Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
+        if(nbManches < nbManchesGagnantes)
+        {
+            Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
+            joueurs.get(0).resetNbBillesEmpochees();
+            joueurs.get(1).resetNbBillesEmpochees();
+        }
+        else
+        {
+            Log.d(TAG, "terminerManche() : terminerRencontre()");
+            terminerRencontre();
+        }
     }
 
     /**

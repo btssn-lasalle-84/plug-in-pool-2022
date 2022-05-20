@@ -21,6 +21,7 @@ public class Joueur implements Serializable
     private String nom;
     private String prenom;
     private String couleur;
+    private int nbManchesGagnees = 0;
     private int nbBillesEmpochees = 0;
     private int nbBillesTouchees = 0;
     private int nbCoupsTires = 0;
@@ -74,6 +75,11 @@ public class Joueur implements Serializable
         return nbCoupsTires;
     }
 
+    public int getNbManchesGagnees()
+    {
+        return nbManchesGagnees;
+    }
+
     /**
      * @brief Mutateurs
      */
@@ -115,5 +121,10 @@ public class Joueur implements Serializable
     public void resetNbBillesEmpochees()
     {
         this.nbBillesEmpochees = 0;
+    }
+
+    public void augmenterNbManchesGagnees()
+    {
+        this.nbManchesGagnees++;
     }
 }

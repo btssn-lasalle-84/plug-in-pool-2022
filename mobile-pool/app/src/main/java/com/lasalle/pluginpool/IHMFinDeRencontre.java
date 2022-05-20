@@ -8,10 +8,15 @@ package com.lasalle.pluginpool;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  * @class IHMFinDeRencontre
@@ -24,13 +29,24 @@ public class IHMFinDeRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMFinDeRencontre_";  //!< TAG pour les logs
+    private static final String RENCONTRE = "RENCONTRE";
+    private static final String EGALITE = "Egalité !";
+
+    /**
+     * Variables
+     */
+    private Rencontre rencontre;
 
     /**
      * Ressources IHM
      */
     private Button boutonEnregistrerRencontre;//!< Le bouton permettant l'enregistrement des données de la rencontre'
     private Button boutonRejouer;//!< Le bouton permettant de rejouer une rencontre avec les mêmes paramètres'
-
+    private Joueur joueurGagnant;
+    private TextView texteJoueurGagnant;
+    private TextView texteGagnant;
+    private TextView nbManchesGagnantes;
+    private TextView dureeRencontre;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -42,6 +58,8 @@ public class IHMFinDeRencontre extends AppCompatActivity
         setContentView(R.layout.activity_ihm_fin_de_rencontre);
         Log.d(TAG, "onCreate()");
         initialiserRessourcesIHMFinDeRencontre();
+        initialiserGagnantIHMFinDeRencontre();
+        initialiserNbManchesIHMFinDeRencontre();
     }
 
     /**
@@ -101,6 +119,8 @@ public class IHMFinDeRencontre extends AppCompatActivity
     {
         boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
+        texteGagnant = (TextView)findViewById(R.id.texteGagnant);
+        nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
 
         boutonEnregistrerRencontre.setOnClickListener(
             new View.OnClickListener()
@@ -120,5 +140,42 @@ public class IHMFinDeRencontre extends AppCompatActivity
                     startActivity(intent);*/
                 }
             });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initialiserGagnantIHMFinDeRencontre()
+    {
+        Log.d(TAG, "initialiserScoresIHMFinDeRencontre()");
+        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
+
+        if(rencontre.getJoueurs().get(0).getNbManchesGagnees() > rencontre.getJoueurs().get(1).getNbManchesGagnees())
+        {
+            joueurGagnant = rencontre.getJoueurs().get(0);
+            texteJoueurGagnant.setText(joueurGagnant.getNom() + " " + joueurGagnant.getPrenom());
+        }
+        else if(rencontre.getJoueurs().get(0).getNbManchesGagnees() < rencontre.getJoueurs().get(1).getNbManchesGagnees())
+        {
+            joueurGagnant = rencontre.getJoueurs().get(1);
+            texteJoueurGagnant.setText(joueurGagnant.getNom() + " " + joueurGagnant.getPrenom());
+        }
+        else
+        {
+            texteGagnant.setVisibility(View.INVISIBLE);
+            texteJoueurGagnant.setText(EGALITE);
+        }
+    }
+
+    private void initialiserNbManchesIHMFinDeRencontre()
+    {
+        Log.d(TAG, "initialiserNbManchesIHMFinDeRencontre()");
+        if(texteJoueurGagnant.getText().toString().equals(EGALITE))
+        {
+            nbManchesGagnantes.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            nbManchesGagnantes.setVisibility(View.VISIBLE);
+            nbManchesGagnantes.setText(joueurGagnant.getNbManchesGagnees() + " / " + rencontre.getNbManchesGagnantes() + "manche(s) gagnée(s)");
+        }
     }
 }

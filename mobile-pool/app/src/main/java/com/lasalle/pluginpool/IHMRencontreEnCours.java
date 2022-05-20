@@ -39,6 +39,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private static final String TAG = "_IHMRencontreEnCours_";  //!< TAG pour les logs
     private static final int JOUEUR_1 = 0;  //!< indice du joueur n°1
     private static final int JOUEUR_2 = 1;  //!< indice du joueur n°2
+    private static final int RENCONTRE_ENCOURS = 0;
+    private static final int RENCONTRE_FINIE = 1;
+    private static final String RENCONTRE = "RENCONTRE";
 
     /**
      * Attributs
@@ -349,6 +352,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 }
                 rencontre.jouerCoup();
                 actualiserScores(champs);
+                terminerRencontre();
                 break;
             case Protocole.FAUTE:
                 // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
@@ -459,6 +463,21 @@ public class IHMRencontreEnCours extends AppCompatActivity
                         initialiserScores();
                     }
                 }).show();
+        }
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une rencontre afin de changer de page, afficher les scores finaux et enregistrer la rencontre
+     */
+    private void terminerRencontre()
+    {
+        if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        {
+            Log.d(TAG, "terminerRencontre()");
+
+            Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
+            intent.putExtra(RENCONTRE, rencontre);
+            startActivity(intent);
         }
     }
 }
