@@ -15,8 +15,8 @@
         <entry key="app/src/main/res/layout/activity_ihm_creer_joueur.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ihm_fin_de_rencontre.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_ihm_historique_des_rencontres.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_ihm_nouvelle_rencontre.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_ihm_rencontre_en_cours.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_ihm_nouvelle_rencontre.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_ihm_rencontre_en_cours.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
       </map>
     </option>

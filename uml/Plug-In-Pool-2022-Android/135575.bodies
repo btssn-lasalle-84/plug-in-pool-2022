@@ -1,70 +1,12 @@
-package com.lasalle.pluginpool;
-
-/**
- * @file PeripheriqueBluetooth.java
- * @brief Déclaration de la classe PeripheriqueBluetooth
- * @author MERAS Pierre
- */
-
-import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Set;
-import java.util.UUID;
-
-/**
- * @class PeripheriqueBluetooth
- * @brief Classe permettant de créer des périphériques bluetooth
- */
-public class PeripheriqueBluetooth extends Thread
-{
-    /**
-     * Constantes
-     */
-    private static final String TAG = "_PeripheriqueBluetooth_";  //!< TAG pour les logs
-    public final static int CODE_CREATION_SOCKET = 0;
-    public final static int CODE_CONNEXION_SOCKET = 1;
-    public final static int CODE_RECEPTION_TRAME = 2;
-    public final static int CODE_DECONNEXION_SOCKET = 3;
-
-    /**
-     * Variables
-     */
-    private static PeripheriqueBluetooth peripheriqueBluetooth = null;
-    private String nom;
-    private String adresse;
-    private Handler handler = null;
-    private static BluetoothAdapter bluetoothAdapter = null;
-    private BluetoothDevice device = null;
-    private BluetoothSocket socket = null;
-    private InputStream receiveStream = null;
-    private OutputStream sendStream = null;
-    private TReception tReception = null;
-
-    /**
-     * @brief Constructeurs
-     */
-    @SuppressLint("MissingPermission")
-    private PeripheriqueBluetooth(android.os.Handler handler)
-    {
+class PeripheriqueBluetooth
+!!!144791.java!!!	PeripheriqueBluetooth(inout handler : android.os.Handler)
         activerBluetooth();
 
         this.device = null;
         this.nom = "";
         this.adresse = "";
         this.handler = handler;
-    }
-
-    public static PeripheriqueBluetooth getInstance(Handler handler)
-    {
+!!!144919.java!!!	getInstance(inout handler : Handler) : PeripheriqueBluetooth
         if (peripheriqueBluetooth == null)
         {
             Log.d(TAG,"Création PeripheriqueBluetooth");
@@ -76,29 +18,18 @@ public class PeripheriqueBluetooth extends Thread
             peripheriqueBluetooth.setHandler(handler);
         }
         return peripheriqueBluetooth;
-    }
-
-    public void setHandler(Handler handler)
-    {
+!!!145047.java!!!	setHandler(inout handler : Handler) : void
         this.handler = handler;
         if(tReception != null)
             tReception.setHandlerUI(handler);
-    }
-
-    @SuppressLint("MissingPermission")
-    private void activerBluetooth()
-    {
+!!!145175.java!!!	activerBluetooth() : void
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!bluetoothAdapter.isEnabled())
         {
             Log.d(TAG,"Activation bluetooth");
             bluetoothAdapter.enable();
         }
-    }
-
-    @SuppressLint("MissingPermission")
-    public boolean rechercherTable(String idTable)
-    {
+!!!145303.java!!!	rechercherTable(in idTable : String) : boolean
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
 
         Log.d(TAG,"Recherche bluetooth : " + idTable);
@@ -116,11 +47,7 @@ public class PeripheriqueBluetooth extends Thread
         }
 
         return false;
-    }
-
-    @SuppressLint("MissingPermission")
-    private void creerSocket()
-    {
+!!!145431.java!!!	creerSocket() : void
         if (device == null)
             return;
         try
@@ -148,50 +75,20 @@ public class PeripheriqueBluetooth extends Thread
                 handler.sendMessage(message);
             }
         }
-    }
-
-    /**
-     * @brief Accesseurs
-     */
-    public String getNom()
-    {
+!!!145559.java!!!	getNom() : String
         return nom;
-    }
-
-    public String getAdresse()
-    {
+!!!145687.java!!!	getAdresse() : String
         return adresse;
-    }
-
-    public BluetoothSocket getSocket()
-    {
+!!!145815.java!!!	getSocket() : BluetoothSocket
         return this.socket;
-    }
-
-    /**
-     * @brief Mutateurs
-     */
-    public void setNom(String nom)
-    {
+!!!145943.java!!!	setNom(in nom : String) : void
         this.nom = nom;
-    }
-
-    /**
-     * @brief Récuperer l'état de la connexion
-     */
-    public boolean estConnecte()
-    {
+!!!146071.java!!!	estConnecte() : boolean
         if(socket == null)
             return false;
         else
             return socket.isConnected();
-    }
-
-    /**
-     * @brief Envoie des données sur la connexion bluetooth
-     */
-    public void envoyer(String data)
-    {
+!!!146199.java!!!	envoyer(in data : String) : void
         if(socket == null)
             return;
 
@@ -215,13 +112,7 @@ public class PeripheriqueBluetooth extends Thread
                 }
             }
         }.start();
-    }
-
-    /**
-     * @brief Débute la connexion bluetooth
-     */
-    public void connecter()
-    {
+!!!146327.java!!!	connecter() : void
         if (socket == null)
             return;
         new Thread()
@@ -251,13 +142,7 @@ public class PeripheriqueBluetooth extends Thread
                 }
             }
         }.start();
-    }
-
-    /**
-     * @brief Met fin à la connexion bluetooth
-     */
-    public void deconnecter()
-    {
+!!!146455.java!!!	deconnecter() : void
         if (device == null || socket == null)
             return;
 
@@ -285,13 +170,5 @@ public class PeripheriqueBluetooth extends Thread
                 }
             }
         }.start();
-    }
-
-    /**
-     * @brief Renvoie l'objet sous forme de chaîne de caractères
-     */
-    public String toString()
-    {
+!!!146583.java!!!	toString() : String
         return "\nNom : " + nom + "\nAdresse : " + adresse;
-    }
-}

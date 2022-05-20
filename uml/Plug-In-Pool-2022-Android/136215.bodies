@@ -1,0 +1,22 @@
+class Manche
+!!!143639.java!!!	Manche(in pointsJoueur1 : int, in pointsJoueur2 : int)
+        this.pointsJoueur1 = pointsJoueur1;
+        this.pointsJoueur2 = pointsJoueur2;
+        this.debut = LocalDateTime.now(ZoneId.systemDefault());
+        this.fin = null;
+!!!143767.java!!!	getPointsJoueur1() : int
+        return this.pointsJoueur1;
+!!!143895.java!!!	getPointsJoueur2() : int
+        return this.pointsJoueur2;
+!!!144023.java!!!	getDebut() : LocalDateTime
+        return this.debut;
+!!!144151.java!!!	getFin() : LocalDateTime
+        return this.fin;
+!!!144279.java!!!	setPointsJoueur1(in pointsJoueur1 : int) : void
+        this.pointsJoueur1 = pointsJoueur1;
+!!!144407.java!!!	setPointsJoueur2(in pointsJoueur2 : int) : void
+        this.pointsJoueur2 = pointsJoueur2;
+!!!144535.java!!!	setDebut(inout debut : LocalDateTime) : void
+        this.debut = debut;
+!!!144663.java!!!	setFin(inout fin : LocalDateTime) : void
+        this.fin = fin;

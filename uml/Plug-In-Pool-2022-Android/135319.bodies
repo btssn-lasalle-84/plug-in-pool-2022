@@ -1,0 +1,23 @@
+class IHMHistoriqueDesRencontres
+!!!138135.java!!!	onCreate(inout savedInstanceState : Bundle) : void
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ihm_historique_des_rencontres);
+        Log.d(TAG, "onCreate()");
+        initialiserRessourcesIHMHistoriqueDesRencontres();
+!!!138263.java!!!	onStart() : void
+        super.onStart();
+        Log.d(TAG, "onStart()");
+!!!138391.java!!!	onResume() : void
+        super.onResume();
+        Log.d(TAG, "onResume()");
+!!!138519.java!!!	onPause() : void
+        super.onPause();
+        Log.d(TAG, "onPause()");
+!!!138647.java!!!	onStop() : void
+        super.onStop();
+        Log.d(TAG, "onStop()");
+!!!138775.java!!!	onDestroy() : void
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+!!!138903.java!!!	initialiserRessourcesIHMHistoriqueDesRencontres() : void
+        /*Bouton accueil*/

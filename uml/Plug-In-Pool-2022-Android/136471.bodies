@@ -1,50 +1,5 @@
-package com.lasalle.pluginpool;
-
-/**
- * @file TReception.java
- * @brief Déclaration de la classe TReception
- * @author MERAS Pierre
- */
-
-import android.bluetooth.BluetoothSocket;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.concurrent.locks.ReentrantLock;
-
-/**
- * @class TReception
- * @brief Classe permettant de gérer la reception bluetooth
- */
-
-public class TReception extends Thread
-{
-    /**
-     * Constante
-     */
-    private static final String TAG = "_TReception_";  //!< TAG pour les logs
-
-    /**
-     * Attributs
-     */
-    Handler handlerUI;
-    InputStream receiveStream = null;
-    OutputStream sendStream = null;
-    BluetoothSocket socket = null;
-    private boolean fini;
-    private final ReentrantLock mutex = new ReentrantLock();
-
-    /**
-     * @brief Constructeur
-     */
-    public TReception(Handler h, BluetoothSocket socket)
-    {
+class TReception
+!!!148503.java!!!	TReception(inout h : Handler, inout socket : BluetoothSocket)
         this.handlerUI = h;
         this.fini = false;
         this.socket = socket;
@@ -57,17 +12,11 @@ public class TReception extends Thread
         {
             e.printStackTrace();
         }
-    }
-
-    public void setHandlerUI(Handler h)
-    {
+!!!148631.java!!!	setHandlerUI(inout h : Handler) : void
         mutex.lock();
         this.handlerUI = h;
         mutex.unlock();
-    }
-
-    @Override public void run()
-    {
+!!!148759.java!!!	run() : void
         Log.d(TAG, "Démarrage réception bluetooth");
         BufferedReader reception = new BufferedReader(new InputStreamReader(receiveStream));
         while(!fini)
@@ -107,10 +56,7 @@ public class TReception extends Thread
             }
         }
         Log.d(TAG, "Arrêt réception bluetooth");
-    }
-
-    public void arreter()
-    {
+!!!148887.java!!!	arreter() : void
         if(!fini)
         {
             fini = true;
@@ -123,5 +69,3 @@ public class TReception extends Thread
         {
             e.printStackTrace();
         }
-    }
-}

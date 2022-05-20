@@ -1,7 +1,9 @@
 format 224
-"Plug-In-Pool-2022"
-  revision 8
-  modified_by 60 "pmeras"
+"Plug-In-Pool-2022-Android"
+  revision 10
+  modified_by 23 "tv"
+  java_root_dir "../../mobile-pool/app/src/main/java/com/lasalle/pluginpool/"
+  mysql_root_dir "../../sql/"
 
 
   
@@ -44,6 +46,7 @@ format 224
 
   mark_for_import
   
+  java_package "com.lasalle"
   usecaseview 128060 "Vue des cas d'utilisation"
     
     usecasediagramsettings end
@@ -832,4 +835,8 @@ format 224
       end
     end
   end
+
+  package_ref 134551 // pluginpool
+
+  package_ref 134679 // unknown
 end

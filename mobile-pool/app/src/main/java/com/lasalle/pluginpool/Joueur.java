@@ -6,20 +6,25 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import android.os.Build;
+import java.io.Serializable;
 
 /**
  * @class Joueur
  * @brief Classe pour un Joueur
  */
 
-public class Joueur
+public class Joueur implements Serializable
 {
     /**
      * Variables
      */
     private String nom;
     private String prenom;
+    private String couleur;
+    private int nbBillesEmpochees = 0;
+    private int nbBillesTouchees = 0;
+    private int nbCoupsTires = 0;
+    private int nbFautes = 0;
 
     /**
      * @brief Constructeur
@@ -28,26 +33,50 @@ public class Joueur
     {
         this.nom = nom;
         this.prenom = prenom;
+        this.couleur = "";
     }
 
     /**
      * @brief Accesseurs
      */
-
-    public  String getNom()
+    public String getNom()
     {
         return this.nom;
     }
 
-    public  String getPrenom()
+    public String getPrenom()
     {
         return this.prenom;
+    }
+
+    public String getCouleur()
+    {
+        return couleur;
+    }
+
+    public int getNbBillesEmpochees()
+    {
+        return nbBillesEmpochees;
+    }
+
+    public int getNbBillesTouchees()
+    {
+        return nbBillesTouchees;
+    }
+
+    public int getNbFautes()
+    {
+        return nbFautes;
+    }
+
+    public int getNbCoupsTires()
+    {
+        return nbCoupsTires;
     }
 
     /**
      * @brief Mutateurs
      */
-
     public void setNom(String nom)
     {
         this.nom = nom;
@@ -56,5 +85,35 @@ public class Joueur
     public void setPrenom(String prenom)
     {
         this.prenom = prenom;
+    }
+
+    public void setCouleur(String couleur)
+    {
+        this.couleur = couleur;
+    }
+
+    public void empocherBille()
+    {
+        ++this.nbBillesEmpochees;
+    }
+
+    public void augmenterFautes()
+    {
+        ++this.nbFautes;
+    }
+
+    public void toucherBille()
+    {
+        ++this.nbBillesTouchees;
+    }
+
+    public void tirerBille()
+    {
+        ++this.nbCoupsTires;
+    }
+
+    public void resetNbBillesEmpochees()
+    {
+        this.nbBillesEmpochees = 0;
     }
 }

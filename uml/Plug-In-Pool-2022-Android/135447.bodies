@@ -1,142 +1,29 @@
-package com.lasalle.pluginpool;
-
-/**
- * @file IHMNouvelleRencontre.java
- * @brief Déclaration de la classe IHMNouvelleRencontre
- * @author MERAS Pierre
- */
-
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckedTextView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-/**
- * @class IHMNouvelleRencontre
- * @brief L'activité pour une nouvelle rencontre
- */
-
-public class IHMNouvelleRencontre extends AppCompatActivity
-{
-    /**
-     * Constantes
-     */
-    private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
-    public static final String ID_INTENT_RENCONTRE = "Rencontre"; //!< Identifiant de données dans l'Intent
-    public static final int NB_JOUEURS = 2; //!< Le nombre de joueurs pour une rencontre
-    public static final int NB_MANCHES_GAGNANTES = 5; //!< Le nombre de manches gagnantes par défaut
-
-    /**
-     * Attributs
-     */
-    private PeripheriqueBluetooth peripheriqueBluetooth = null;
-    private BaseDeDonnees baseDeDonnees = null;
-    private Handler handler = null;
-    private Rencontre rencontre = null;
-    private Vector<Joueur> joueursRencontre;
-    private int nbManchesGagnantes;
-
-    /**
-     * Ressources IHM
-     */
-    private Button boutonLancerRencontre;//!< Le bouton de lancement
-    private EditText nbManches;
-    private ListView listeJoueurs;
-    private List<Joueur> joueurs;
-
-    /**
-     * @brief Méthode appelée à la création de l'activité
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+class IHMNouvelleRencontre
+!!!139031.java!!!	onCreate(inout savedInstanceState : Bundle) : void
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_nouvelle_rencontre);
         Log.d(TAG, "onCreate()");
         initialiserRessourcesIHMNouvelleRencontre();
         gererHandler();
         initialiserRessourcesBluetooth();
-    }
-
-    /**
-     * @brief Méthode appelée au démarrage après le onCreate() ou un restart après un onStop()
-     */
-    @Override
-    protected void onStart()
-    {
+!!!139159.java!!!	onStart() : void
         super.onStart();
         Log.d(TAG, "onStart()");
-    }
-
-    /**
-     * @brief Méthode appelée après onStart() ou après onPause()
-     */
-    @Override
-    protected void onResume()
-    {
+!!!139287.java!!!	onResume() : void
         super.onResume();
         Log.d(TAG, "onResume()");
-    }
-
-    /**
-     * @brief Méthode appelée après qu'une boîte de dialogue s'est affichée (on reprend sur un onResume()) ou avant onStop() (activité plus visible)
-     */
-    @Override
-    protected void onPause()
-    {
+!!!139415.java!!!	onPause() : void
         super.onPause();
         Log.d(TAG, "onPause()");
-    }
-
-    /**
-     * @brief Méthode appelée lorsque l'activité n'est plus visible
-     */
-    @Override
-    protected void onStop()
-    {
+!!!139543.java!!!	onStop() : void
         super.onStop();
         Log.d(TAG, "onStop()");
-    }
-
-    /**
-     * @brief Méthode appelée à la destruction de l'application (après onStop() et détruite par le système Android)
-     */
-    @Override
-    protected void onDestroy()
-    {
+!!!139671.java!!!	onDestroy() : void
         super.onDestroy();
         Log.d(TAG, "onDestroy()");
-    }
-
-    /**
-     * @brief Initialise les ressources graphiques de l'activité
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void initialiserRessourcesIHMNouvelleRencontre()
-    {
+!!!139799.java!!!	initialiserRessourcesIHMNouvelleRencontre() : void
         Log.d(TAG, "initialiserRessourcesIHMNouvelleRencontre()");
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
-        nbManches = (EditText)findViewById(R.id.editTextNombreManches);
-        nbManches.setText(Integer.toString(NB_MANCHES_GAGNANTES));
         // Il faut être connecté à la table et avoir deux joueurs sélectionnés
         boutonLancerRencontre.setEnabled(false);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueursParametres);
@@ -156,13 +43,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 startActivity(intent);
             }
         });
-    }
-
-    /**
-     * @brief Ajoute les joueurs sélectionnés pour cette rencontre
-     */
-    private void ajouterJoueursSelectionnes()
-    {
+!!!139927.java!!!	ajouterJoueursSelectionnes() : void
         //Log.d(TAG, "[ajouterJoueursSelectionnes] listeJoueurs : " + listeJoueurs.getCount());
         //Log.d(TAG, "[ajouterJoueursSelectionnes] joueurs : " + joueurs.size());
         for (int i = 0; i < listeJoueurs.getCount(); i++)
@@ -178,46 +59,23 @@ public class IHMNouvelleRencontre extends AppCompatActivity
             }
         }
         rencontre.setJoueurs(joueursRencontre);
-    }
-
-    /**
-     * @brief Initialise un objet Rencontre
-     */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void initialiserRencontre()
-    {
+!!!140055.java!!!	initialiserRencontre() : void
         joueursRencontre = new Vector<Joueur>();
-        nbManchesGagnantes = Integer.parseInt(nbManches.getText().toString());
+        /**
+         * @todo Récupérer le nombre de manches gagnantes pour cette rencontre
+         */
         rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
-    }
-
-    /**
-     * @brief Initialise les ressources bluetooth
-     */
-    private void initialiserRessourcesBluetooth()
-    {
+!!!140183.java!!!	initialiserRessourcesBluetooth() : void
         Log.d(TAG,"initialiserRessourcesBluetooth()");
         peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
         if(peripheriqueBluetooth.rechercherTable(Protocole.nomTable))
         {
             peripheriqueBluetooth.connecter();
         }
-    }
-
-    /**
-     * @brief Méthode permettant d'obtenir un accès à la base de données
-     */
-    private void ouvrirBaseDeDonnees()
-    {
+!!!140311.java!!!	ouvrirBaseDeDonnees() : void
         baseDeDonnees = new BaseDeDonnees(this);
         baseDeDonnees.ouvrir();
-    }
-
-    /**
-     * @brief Gère le handler pour la communication
-     */
-    private void gererHandler()
-    {
+!!!140439.java!!!	gererHandler() : void
         Log.d(TAG,"gererHandler()");
         this.handler = new Handler(this.getMainLooper())
         {
@@ -247,13 +105,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 }
             }
         };
-    }
-
-    /**
-     * @brief Liste les joueurs disponibles
-     */
-    private void listerJoueurs()
-    {
+!!!140567.java!!!	listerJoueurs() : void
         Log.d(TAG, "listerJoueurs()");
         joueurs = baseDeDonnees.getJoueurs();
         List<String> nomsJoueurs = new ArrayList<String>();
@@ -286,10 +138,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                     listeJoueurs.setItemChecked(i, estCochee);
                     if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
                         boutonLancerRencontre.setEnabled(true);
-                    else
-                        boutonLancerRencontre.setEnabled(false);
                 }
             }
         });
-    }
-}

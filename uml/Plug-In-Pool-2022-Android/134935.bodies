@@ -1,62 +1,5 @@
-package com.lasalle.pluginpool;
-
-/**
- * @file IHMCreerJoueur.java
- * @brief Déclaration de la classe IHMCreerJoueur
- * @author MERAS Pierre
- */
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * @class IHMCreerJoueur
- * @brief L'activité pour créer un joueur
- */
-
-public class IHMCreerJoueur extends AppCompatActivity
-{
-    /**
-     * Constantes
-     */
-    private static final String TAG = "_IHMCreerJoueur_";  //!< TAG pour les logs
-
-    /**
-     * Attributs
-     */
-    private BaseDeDonnees baseDeDonnees = null;
-
-    /**
-     * Ressources IHM
-     */
-    private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
-    private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
-    private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
-    private ListView listeJoueurs;//!< La liste permettant l'affichage des joueurs
-
-    /**
-     * @brief Méthode appelée à la création de l'activité
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+class IHMCreerJoueur
+!!!135703.java!!!	onCreate(inout savedInstanceState : Bundle) : void
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_creer_joueur);
         Log.d(TAG, "onCreate()");
@@ -64,72 +7,25 @@ public class IHMCreerJoueur extends AppCompatActivity
         ouvrirBaseDeDonnees();
 
         initialiserRessourcesIHMCreerJoueur();
-    }
-
-    /**
-     * @brief Méthode appelée au démarrage après le onCreate() ou un restart après un onStop()
-     */
-    @Override
-    protected void onStart()
-    {
+!!!135831.java!!!	onStart() : void
         super.onStart();
         Log.d(TAG, "onStart()");
-    }
-
-    /**
-     * @brief Méthode appelée après onStart() ou après onPause()
-     */
-    @Override
-    protected void onResume()
-    {
+!!!135959.java!!!	onResume() : void
         super.onResume();
         Log.d(TAG, "onResume()");
-    }
-
-    /**
-     * @brief Méthode appelée après qu'une boîte de dialogue s'est affichée (on reprend sur un onResume()) ou avant onStop() (activité plus visible)
-     */
-    @Override
-    protected void onPause()
-    {
+!!!136087.java!!!	onPause() : void
         super.onPause();
         Log.d(TAG, "onPause()");
-    }
-
-    /**
-     * @brief Méthode appelée lorsque l'activité n'est plus visible
-     */
-    @Override
-    protected void onStop()
-    {
+!!!136215.java!!!	onStop() : void
         super.onStop();
         Log.d(TAG, "onStop()");
-    }
-
-    /**
-     * @brief Méthode appelée à la destruction de l'application (après onStop() et détruite par le système Android)
-     */
-    @Override
-    protected void onDestroy()
-    {
+!!!136343.java!!!	onDestroy() : void
         super.onDestroy();
         Log.d(TAG, "onDestroy()");
-    }
-
-    /**
-     * @brief Méthode permettant d'obtenir un accès à la base de données
-     */
-    private void ouvrirBaseDeDonnees()
-    {
+!!!136471.java!!!	ouvrirBaseDeDonnees() : void
         baseDeDonnees = new BaseDeDonnees(this);
         baseDeDonnees.ouvrir();
-    }
-
-    /**
-     * @brief Initialise les ressources graphiques de l'activité
-     */
-    private void initialiserRessourcesIHMCreerJoueur()
-    {
+!!!136599.java!!!	initialiserRessourcesIHMCreerJoueur() : void
         Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
         editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
@@ -148,13 +44,7 @@ public class IHMCreerJoueur extends AppCompatActivity
                 creerJoueur();
             }
         });
-    }
-
-    /**
-     * @brief Méthode pour créer un joueur
-     */
-    private void creerJoueur()
-    {
+!!!136727.java!!!	creerJoueur() : void
         Log.d(TAG, "creerJoueur()");
         String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
         String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
@@ -167,13 +57,7 @@ public class IHMCreerJoueur extends AppCompatActivity
 
         baseDeDonnees.insererJoueur(nouveauJoueur);
         listerJoueurs();
-    }
-
-    /**
-     * @brief Méthode pour lister les joueurs
-     */
-    private void listerJoueurs()
-    {
+!!!136855.java!!!	listerJoueurs() : void
         Log.d(TAG, "listerJoueurs()");
         List<Joueur> joueurs = baseDeDonnees.getJoueurs();
         List<String> nomsJoueurs = new ArrayList<String>();
@@ -188,7 +72,7 @@ public class IHMCreerJoueur extends AppCompatActivity
         listeJoueurs.setAdapter(adapter);
 
         /**
-         * @brief Suppression d'un joueur
+         * @brief Suppresion d'un joueur
          */
         listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
@@ -217,13 +101,7 @@ public class IHMCreerJoueur extends AppCompatActivity
 
         editTextNomJoueur.setText("");
         exitTextPrenomJoueur.setText("");
-    }
-
-    /**
-     * @brief Méthode pour cacher le clavier au lancement de l'activité
-     */
-    public static void cacherClavier(Activity activity)
-    {
+!!!136983.java!!!	cacherClavier(inout activity : Activity) : void
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = activity.getCurrentFocus();
         if (view == null) {
@@ -237,10 +115,5 @@ public class IHMCreerJoueur extends AppCompatActivity
         //Show
         //imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
          */
-    }
-
-    private Activity getActivity()
-    {
+!!!137111.java!!!	getActivity() : Activity
         return this;
-    }
-}

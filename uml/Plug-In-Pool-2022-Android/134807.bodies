@@ -1,0 +1,12 @@
+class Joueur
+!!!142999.java!!!	Joueur(in nom : String, in prenom : String)
+        this.nom = nom;
+        this.prenom = prenom;
+!!!143127.java!!!	getNom() : String
+        return this.nom;
+!!!143255.java!!!	getPrenom() : String
+        return this.prenom;
+!!!143383.java!!!	setNom(in nom : String) : void
+        this.nom = nom;
+!!!143511.java!!!	setPrenom(in prenom : String) : void
+        this.prenom = prenom;

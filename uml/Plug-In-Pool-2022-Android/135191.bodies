@@ -1,0 +1,43 @@
+class IHMFinDeRencontre
+!!!137239.java!!!	onCreate(inout savedInstanceState : Bundle) : void
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ihm_fin_de_rencontre);
+        Log.d(TAG, "onCreate()");
+        initialiserRessourcesIHMFinDeRencontre();
+!!!137367.java!!!	onStart() : void
+        super.onStart();
+        Log.d(TAG, "onStart()");
+!!!137495.java!!!	onResume() : void
+        super.onResume();
+        Log.d(TAG, "onResume()");
+!!!137623.java!!!	onPause() : void
+        super.onPause();
+        Log.d(TAG, "onPause()");
+!!!137751.java!!!	onStop() : void
+        super.onStop();
+        Log.d(TAG, "onStop()");
+!!!137879.java!!!	onDestroy() : void
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+!!!138007.java!!!	initialiserRessourcesIHMFinDeRencontre() : void
+        boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
+        boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
+
+        boutonEnregistrerRencontre.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Enregistrer la rencontre*/
+                }
+            });
+
+        boutonRejouer.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                    startActivity(intent);*/
+                }
+            });

@@ -6,10 +6,16 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.android.material.tabs.TabLayout;
+
+import java.io.Serializable;
 import java.time.*;
 import java.util.Vector;
 
@@ -18,35 +24,146 @@ import java.util.Vector;
  * @brief Classe pour une rencontre
  */
 
-public class Rencontre
+public class Rencontre implements Serializable
 {
     /**
-     * Variables
+     * Constantes
+     */
+    private static final int RENCONTRE_ENCOURS = 0;
+    private static final int RENCONTRE_FINIE = 1;
+    private static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
+    private static final int NB_POCHES = 6;
+    private static final String TAG = "_Rencontre_";
+
+    /**
+     * Attributs
      */
     private int nbManchesGagnantes;
+    private int nbManches;
     private int etatRencontre;
-    private LocalDateTime horodatage;
+    //private LocalDateTime horodatage;
     private Vector<Manche> manches;
-    private Joueur joueur1;
-    private Joueur joueur2;
+    private Vector<Joueur> joueurs;
+    private Vector<Coup> coups;
+    private int premierJoueur;
+    private int deuxiemeJoueur;
+    private PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private Handler handler = null;
 
     /**
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Rencontre(int nbManchesGagnantes, int etatRencontre, Joueur joueur1, Joueur joueur2)
+    public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
-        this.etatRencontre = etatRencontre;
-        this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
-        this.joueur1 = joueur1;
-        this.joueur2 = joueur2;
+        this.nbManches = 0;
+        this.etatRencontre = RENCONTRE_ENCOURS;
+        //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
+        this.joueurs = joueurs;
+        this.coups = new Vector<>();
+    }
+
+    public void initialiserJoueurs(int premierJoueur)
+    {
+        this.premierJoueur = premierJoueur;
+        this.deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
+    }
+
+    public void stockerCoup(String couleur, String blouse)
+    {
+        Coup coup = new Coup(couleur, blouse);
+        coups.add(coup);
+    }
+
+    /**
+     * @brief Gère le déroulement de la rencontre
+     */
+    public void jouerCoup()
+    {
+        Log.d(TAG, "jouerRencontre()");
+        String couleur = "";
+        int j = 0;
+        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
+        {
+            while(j < coups.size())
+            {
+                couleur = coups.get(j).getCouleur();
+                Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
+                if (etatRencontre == RENCONTRE_ENCOURS)
+                {
+                    if (nbManches < nbManchesGagnantes)
+                    {
+                        if (couleur.equals(joueurs.get(premierJoueur).getCouleur()))
+                        {
+                            joueurs.get(0).empocherBille();
+                            joueurs.get(0).toucherBille();
+                            joueurs.get(0).tirerBille();
+                            coups.remove(coups.lastElement());
+                            Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                        }
+                        else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                        {
+                            joueurs.get(1).empocherBille();
+                            joueurs.get(1).toucherBille();
+                            joueurs.get(1).tirerBille();
+                            coups.remove(coups.lastElement());
+                            Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                        }
+
+                        if (joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                        {
+                            Log.d(TAG, "jouerRencontre() : manche finie");
+                            rejouerRencontre();
+                        }
+                    }
+                    else
+                    {
+                        terminerRencontre();
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une rencontre
+     */
+    private void terminerRencontre()
+    {
+        Log.d(TAG, "terminerRencontre()");
+        etatRencontre = RENCONTRE_FINIE;
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche
+     */
+    private void rejouerRencontre()
+    {
+        Log.d(TAG, "rejouerRencontre()");
+        joueurs.get(0).resetNbBillesEmpochees();
+        joueurs.get(1).resetNbBillesEmpochees();
+        nbManches++;
+    }
+
+    /**
+     * @brief Méthode appelée à la détection d'une faute
+     */
+    public void faute(String couleur, String blouse)
+    {
+        if(couleur.equals(Protocole.JOUEUR_ROUGE))
+        {
+            joueurs.get(0).augmenterFautes();
+        }
+        else if(couleur.equals(Protocole.JOUEUR_JAUNE))
+        {
+            joueurs.get(1).augmenterFautes();
+        }
     }
 
     /**
      * @brief Accesseurs
      */
-
     public int getEtatRencontre()
     {
         return this.etatRencontre;
@@ -57,25 +174,29 @@ public class Rencontre
         return this.nbManchesGagnantes;
     }
 
-    public LocalDateTime getHorodatage()
+    /*public LocalDateTime getHorodatage()
     {
         return this.horodatage;
+    }*/
+
+    public Vector<Joueur> getJoueurs()
+    {
+        return joueurs;
     }
 
-    public Joueur getJoueur1()
+    public void setJoueurs(Vector<Joueur> joueurs)
     {
-        return this.joueur1;
+        this.joueurs = joueurs;
     }
 
-    public Joueur getJoueur2()
+    public int getNbBillesCouleur()
     {
-        return this.joueur2;
+        return this.NB_BILLES_COULEUR - 1;
     }
 
     /**
      * @brief Mutateurs
      */
-
     public void setEtatRencontre(int etatRencontre)
     {
         this.etatRencontre = etatRencontre;
@@ -86,18 +207,8 @@ public class Rencontre
         this.nbManchesGagnantes = nbManchesGagnantes;
     }
 
-    public void setHorodatage(LocalDateTime horodatage)
+    /*public void setHorodatage(LocalDateTime horodatage)
     {
         this.horodatage = horodatage;
-    }
-
-    public void setJoueur1(Joueur joueur1)
-    {
-        this.joueur1 = joueur1;
-    }
-
-    public void setJoueur2(Joueur joueur2)
-    {
-        this.joueur2 = joueur2;
-    }
+    }*/
 }

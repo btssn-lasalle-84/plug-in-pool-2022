@@ -1,0 +1,36 @@
+class Rencontre
+!!!146711.java!!!	Rencontre(inout joueurs : Vector<Joueur>, in nbManchesGagnantes : int)
+        this.nbManchesGagnantes = nbManchesGagnantes;
+        this.nbManches = 0;
+        this.etatRencontre = RENCONTRE_ENCOURS;
+        //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
+        this.joueurs = joueurs;
+!!!146839.java!!!	initialiserRencontre() : void
+        /**
+         * @todo Changer les getJoueurs() et getNbManchesGagnates() avec les valeurs de l'ihm
+         */
+        //etatRencontre = RENCONTRE_ENCOURS;
+!!!146967.java!!!	jouerRencontre(in couleur : String, in blouse : String) : void
+        if(etatRencontre == RENCONTRE_ENCOURS)
+        {
+            if(nbManches < nbManchesGagnantes)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+!!!147095.java!!!	getEtatRencontre() : int
+        return this.etatRencontre;
+!!!147223.java!!!	getNbManchesGagnantes() : int
+        return this.nbManchesGagnantes;
+!!!147351.java!!!	getJoueurs() : Joueur
+        return joueurs;
+!!!147479.java!!!	setJoueurs(inout joueurs : Vector<Joueur>) : void
+        this.joueurs = joueurs;
+!!!147607.java!!!	setEtatRencontre(in etatRencontre : int) : void
+        this.etatRencontre = etatRencontre;
+!!!147735.java!!!	setNbManchesGagnantes(in nbManchesGagnantes : int) : void
+        this.nbManchesGagnantes = nbManchesGagnantes;
