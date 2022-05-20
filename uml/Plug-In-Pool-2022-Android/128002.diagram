@@ -1,0 +1,269 @@
+format 224
+
+classinstance 128002 class_ref 128060 // Joueur
+  name ""   xyz 19 4 2000 life_line_z 2000
+classinstance 128130 class_ref 135447 // IHMNouvelleRencontre
+ write_horizontally yes  name ""   xyz 229 4 2000 life_line_z 2000
+classinstance 129410 class_ref 134551 // BaseDeDonnees
+  name ""   xyz 656 4 2000 life_line_z 2000
+classinstance 131074 class_ref 135575 // PeripheriqueBluetooth
+  name ""   xyz 902 4 2000 life_line_z 2000
+fragment 131714 "alt"
+  xyzwh 255 424 2000 747 76
+end
+textcanvas 131842 "[table trouvée]"
+  xyzwh 335 428 2040 93 15
+fragment 132866 "alt"
+  xyzwh 106 727 1995 609 69
+end
+textcanvas 133634 "[2 joueurs sélectionnés ET table connecté] "
+  xyzwh 144 732 2025 281 15
+classinstance 137602 class_ref 135703 // Rencontre
+  name ""   xyz 569 971 2000 life_line_z 2000
+fragment 137730 "loop"
+  xyzwh 230 1087 1995 309 70
+end
+textcanvas 137858 "[pour chaque joueur sélectionné]"
+  xyzwh 278 1094 2035 213 15
+note 139010 "Crée et exécute l'activité IHMRencontreEnCours"
+  xyzwh 361 1331 2000 189 55
+note 139266 "Crée et exécute l'activité IHMNouvelleRencontre"
+  xyzwh 69 105 2000 207 61
+durationcanvas 128258 classinstance_ref 128002 // :Joueur
+  xyzwh 40 73 2010 11 40
+end
+durationcanvas 128386 classinstance_ref 128130 // :IHMNouvelleRencontre
+  xyzwh 307 74 2010 11 453
+  overlappingdurationcanvas 128642
+    xyzwh 313 77 2020 11 444
+    overlappingdurationcanvas 128898
+      xyzwh 319 123 2030 11 177
+      overlappingdurationcanvas 129154
+	xyzwh 325 153 2040 11 42
+      end
+      overlappingdurationcanvas 129794
+	xyzwh 325 211 2040 11 84
+	overlappingdurationcanvas 130306
+	  xyzwh 331 264 2050 11 25
+	end
+      end
+    end
+    overlappingdurationcanvas 130818
+      xyzwh 319 384 2030 11 131
+    end
+  end
+end
+durationcanvas 129538 classinstance_ref 129410 // :BaseDeDonnees
+  xyzwh 714 178 2010 11 25
+end
+durationcanvas 130050 classinstance_ref 129410 // :BaseDeDonnees
+  xyzwh 714 228 2010 11 25
+end
+durationcanvas 131458 classinstance_ref 131074 // :PeripheriqueBluetooth
+  xyzwh 977 395 2010 11 25
+end
+durationcanvas 131970 classinstance_ref 131074 // :PeripheriqueBluetooth
+  xyzwh 977 454 2010 11 96
+end
+durationcanvas 132226 classinstance_ref 128002 // :Joueur
+  xyzwh 40 690 2010 11 40
+end
+durationcanvas 132354 classinstance_ref 128130 // :IHMNouvelleRencontre
+  xyzwh 307 692 2010 11 107
+  overlappingdurationcanvas 132610
+    xyzwh 313 707 2020 11 86
+    overlappingdurationcanvas 133122
+      xyzwh 319 762 2030 11 25
+    end
+  end
+end
+durationcanvas 134786 classinstance_ref 128002 // :Joueur
+  xyzwh 40 831 2010 11 40
+end
+durationcanvas 134914 classinstance_ref 128130 // :IHMNouvelleRencontre
+  xyzwh 307 832 2010 11 60
+end
+durationcanvas 135810 classinstance_ref 128130 // :IHMNouvelleRencontre
+  xyzwh 307 539 2010 11 71
+end
+durationcanvas 136194 classinstance_ref 128002 // :Joueur
+  xyzwh 40 964 2010 11 40
+end
+durationcanvas 136322 classinstance_ref 128130 // :IHMNouvelleRencontre
+  xyzwh 307 964 2010 11 381
+  overlappingdurationcanvas 136578
+    xyzwh 313 979 2020 11 360
+    overlappingdurationcanvas 136834
+      xyzwh 319 1004 2030 11 30
+    end
+    overlappingdurationcanvas 137090
+      xyzwh 319 1065 2030 11 127
+      overlappingdurationcanvas 137986
+	xyzwh 325 1127 2040 11 25
+      end
+    end
+    overlappingdurationcanvas 137346
+      xyzwh 319 1226 2030 11 31
+    end
+    overlappingdurationcanvas 138754
+      xyzwh 319 1309 2030 11 25
+    end
+  end
+end
+durationcanvas 138242 classinstance_ref 137602 // :Rencontre
+  xyzwh 605 1175 2010 11 25
+end
+durationcanvas 138498 classinstance_ref 137602 // :Rencontre
+  xyzwh 605 1246 2010 11 25
+end
+durationcanvas 139778 classinstance_ref 137602 // :Rencontre
+  xyzwh 605 1021 2010 11 25
+end
+msg 128514 asynchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 128386
+  yz 74 2015 explicitmsg "clic sur le bouton RENCONTRE"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 76 59
+reflexivemsg 128770 synchronous
+  to durationcanvas_ref 128642
+  yz 77 2025 msg operation_ref 139031 // "onCreate(inout savedInstanceState : Bundle) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 320 63
+reflexivemsg 129026 synchronous
+  to durationcanvas_ref 128898
+  yz 123 2035 msg operation_ref 139799 // "initialiserRessourcesIHMNouvelleRencontre() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 332 111
+reflexivemsg 129282 synchronous
+  to durationcanvas_ref 129154
+  yz 153 2045 msg operation_ref 140311 // "ouvrirBaseDeDonnees() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 338 137
+msg 129666 synchronous
+  from durationcanvas_ref 129154
+  to durationcanvas_ref 129538
+  yz 178 2045 msg operation_ref 134679 // "ouvrir() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 507 163
+reflexivemsg 129922 synchronous
+  to durationcanvas_ref 129794
+  yz 211 2045 msg operation_ref 140567 // "listerJoueurs() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 336 198
+msg 130178 synchronous
+  from durationcanvas_ref 129794
+  to durationcanvas_ref 130050
+  yz 229 2050 msg operation_ref 135063 // "getJoueurs() : Joueur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 489 214
+reflexivemsg 130434 synchronous
+  to durationcanvas_ref 130306
+  yz 264 2055 msg operation_ref 131970 // "afficherJoueurs(inout nomsJoueurs : List<String>) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 340 252
+reflexivemsg 130946 synchronous
+  to durationcanvas_ref 130818
+  yz 384 2035 msg operation_ref 140183 // "initialiserRessourcesBluetooth() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 331 371
+msg 131586 synchronous
+  from durationcanvas_ref 130818
+  to durationcanvas_ref 131458
+  yz 399 2040 msg operation_ref 145303 // "rechercherTable(in idTable : String) : boolean"
+  show_full_operations_definition yes show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 595 384
+msg 132098 synchronous
+  from durationcanvas_ref 130818
+  to durationcanvas_ref 131970
+  yz 455 2035 msg operation_ref 146327 // "connecter() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 616 440
+msg 132482 asynchronous
+  from durationcanvas_ref 132226
+  to durationcanvas_ref 132354
+  yz 692 2015 explicitmsg "clic sur un joueur de la liste"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 89 677
+reflexivemsg 132738 synchronous
+  to durationcanvas_ref 132610
+  yz 707 2025 msg operation_ref 132098 // "selectionnerJoueur(inout view : CheckedTextView, in i : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 320 691
+reflexivemsg 133250 synchronous
+  to durationcanvas_ref 133122
+  yz 762 2035 explicitmsg "activerBoutonLancerRencontre()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 327 750
+msg 135042 asynchronous
+  from durationcanvas_ref 134786
+  to durationcanvas_ref 134914
+  yz 832 2015 explicitmsg "clic sur un joueur de la liste"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 89 817
+msg 135938 synchronous
+  from durationcanvas_ref 131970
+  to durationcanvas_ref 135810
+  yz 539 2015 explicitmsg "handleMessage()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 590 524
+msg 136450 asynchronous
+  from durationcanvas_ref 136194
+  to durationcanvas_ref 136322
+  yz 964 2015 explicitmsg "clic sur le bouton \"LANCER LA RENCONTRE\""
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 27 949
+reflexivemsg 136706 synchronous
+  to durationcanvas_ref 136578
+  yz 979 2025 explicitmsg "onClick()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 323 963
+reflexivemsg 136962 synchronous
+  to durationcanvas_ref 136834
+  yz 1004 2035 msg operation_ref 140055 // "initialiserRencontre() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 331 992
+reflexivemsg 137218 synchronous
+  to durationcanvas_ref 137090
+  yz 1065 2035 msg operation_ref 139927 // "ajouterJoueursSelectionnes() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 331 1052
+reflexivemsg 137474 synchronous
+  to durationcanvas_ref 137346
+  yz 1226 2035 msg operation_ref 128514 // "ajouterNbManches() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 330 1210
+reflexivemsg 138114 synchronous
+  to durationcanvas_ref 137986
+  yz 1127 2045 explicitmsg "ajouterJoueur()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 334 1114
+msg 138370 synchronous
+  from durationcanvas_ref 137090
+  to durationcanvas_ref 138242
+  yz 1175 2035 msg operation_ref 147479 // "setJoueurs(inout joueurs : Vector<Joueur>) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 412 1160
+msg 138626 synchronous
+  from durationcanvas_ref 137346
+  to durationcanvas_ref 138498
+  yz 1246 2040 msg operation_ref 147735 // "setNbManchesGagnantes(in nbManchesGagnantes : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 363 1231
+reflexivemsg 138882 synchronous
+  to durationcanvas_ref 138754
+  yz 1309 2035 explicitmsg "startActivity()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 330 1294
+msg 139906 synchronous
+  from durationcanvas_ref 136834
+  to durationcanvas_ref 139778
+  yz 1023 3005 explicitmsg "Rencontre()"
+  stereotype "<<create>>" xyz 421 1033 3000
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 422 1012
+line 139138 -_-_
+  from ref 139010 z 2036 to ref 138882
+line 139650 -_-_
+  from ref 139266 z 2016 to ref 128514
+end

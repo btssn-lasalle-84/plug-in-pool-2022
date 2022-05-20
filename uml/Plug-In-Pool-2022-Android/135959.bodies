@@ -4,18 +4,22 @@ class IHMRencontreEnCours
         setContentView(R.layout.activity_ihm_rencontre_en_cours);
         Log.d(TAG, "onCreate()");
 
-        // récupération de données
+        // Récupération de données
         rencontre = (Rencontre) getIntent().getSerializableExtra(IHMNouvelleRencontre.ID_INTENT_RENCONTRE);
         // Exemple : les joueurs de cette rencontre
-        Vector<Joueur> joueurs = rencontre.getJoueurs();
+        joueurs = rencontre.getJoueurs();
         for (int i = 0; i < joueurs.size(); i++)
         {
             Log.d(TAG, "[onCreate] Joueur : " + joueurs.get(i).getPrenom() + " " + joueurs.get(i).getNom());
         }
 
+        ouvrirBaseDeDonnees();
         initialiserRessourcesIHMRencontreEnCours();
         gererHandler();
         initialiserRessourcesBluetooth();
+!!!128642.java!!!	ouvrirBaseDeDonnees() : void
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
 !!!141847.java!!!	initialiserRessourcesBluetooth() : void
         Log.d(TAG,"initialiserRessourcesBluetooth()");
         peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
@@ -23,7 +27,7 @@ class IHMRencontreEnCours
         if(!peripheriqueBluetooth.estConnecte())
             peripheriqueBluetooth.connecter();
         else
-            peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+            demarrerNouvellePartie();
 !!!141975.java!!!	onStart() : void
         super.onStart();
         Log.d(TAG, "onStart()");
@@ -39,18 +43,31 @@ class IHMRencontreEnCours
 !!!142487.java!!!	onDestroy() : void
         super.onDestroy();
         Log.d(TAG, "onDestroy()");
+!!!128770.java!!!	demarrerNouvellePartie() : void
+        peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
+        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
 !!!142615.java!!!	initialiserRessourcesIHMRencontreEnCours() : void
         boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
         boutonFaute = (Button)findViewById(R.id.boutonFaute);
         boutonJoueurSuivant = (Button)findViewById(R.id.boutonJoueurSuivant);
+        texteJoueur1 = (TextView)findViewById(R.id.texteJoueur1);
+        texteJoueur2 = (TextView)findViewById(R.id.texteJoueur2);
+        curseur1 = (TextView)findViewById(R.id.curseur1);
+        curseur2 = (TextView)findViewById(R.id.curseur2);
+        texteDernierCoup1 = (TextView)findViewById(R.id.texteDernierCoup1);
+        texteDernierCoup2 = (TextView)findViewById(R.id.texteDernierCoup2);
+        texteScoreJoueur1 = (TextView)findViewById(R.id.texteScoreJoueur1);
+        texteScoreJoueur2 = (TextView)findViewById(R.id.texteScoreJoueur2);
+
+        listerRessourcesRencontre();
 
         boutonQuitterRencontre.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    // ou : peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
-                    peripheriqueBluetooth.envoyer(Protocole.trameArreter);
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : " + Protocole.trameAnnuler);
+                    peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
                     Intent intent = new Intent(IHMRencontreEnCours.this, IHMNouvelleRencontre.class);
                     startActivity(intent);
                 }
@@ -61,7 +78,7 @@ class IHMRencontreEnCours
             {
                 public void onClick(View v)
                 {
-                    /*Signalement d'une faute*/
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : faute");
                 }
             });
 
@@ -70,9 +87,47 @@ class IHMRencontreEnCours
             {
                 public void onClick(View v)
                 {
-                    /*Passage au joueur suivant*/
+                    Log.d(TAG, "initialiserRessourcesIHMRencontreEnCours() : suivant");
                 }
             });
+!!!128898.java!!!	listerRessourcesRencontre() : void
+        texteJoueur1.setText(rencontre.getJoueurs().get(JOUEUR_1).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_1).getPrenom());
+        texteJoueur2.setText(rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
+        curseur1.setVisibility(View.INVISIBLE);
+        curseur2 .setVisibility(View.INVISIBLE);
+        texteDernierCoup1.setText("");
+        texteDernierCoup2.setText("");
+        texteScoreJoueur1.setText("Nombre billes empochees : 0 / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur2.setText("Nombre billes empochees : 0 / " + rencontre.getNbBillesCouleur());
+!!!129026.java!!!	initialiserScores() : void
+        if(premierJoueur == JOUEUR_1)
+        {
+            curseur1.setVisibility(View.VISIBLE);
+            curseur2.setVisibility(View.INVISIBLE);
+        }
+        else if(premierJoueur == JOUEUR_2)
+        {
+            curseur1.setVisibility(View.INVISIBLE);
+            curseur2.setVisibility(View.VISIBLE);
+        }
+!!!129154.java!!!	changerJoueurIHM() : void
+        if(estPremierJoueurChoisi)
+        {
+            if(curseur1.getVisibility() == View.INVISIBLE)
+            {
+                curseur1.setVisibility(View.VISIBLE);
+                curseur2.setVisibility(View.INVISIBLE);
+            }
+            else if(curseur1.getVisibility() == View.VISIBLE)
+            {
+                curseur1.setVisibility(View.INVISIBLE);
+                curseur2.setVisibility(View.VISIBLE);
+            }
+        }
+        else
+        {
+            return;
+        }
 !!!142743.java!!!	gererHandler() : void
         this.handler = new Handler(this.getMainLooper())
         {
@@ -89,7 +144,7 @@ class IHMRencontreEnCours
                         break;
                     case PeripheriqueBluetooth.CODE_CONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] CODE_CONNEXION_SOCKET = " + message.obj.toString());
-                        peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+                        demarrerNouvellePartie();
                         break;
                     case PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET:
                         Log.d(TAG, "[Handler] DECONNEXION_SOCKET = " + message.obj.toString());
@@ -121,15 +176,26 @@ class IHMRencontreEnCours
         {
             case Protocole.EMPOCHE:
                 // $PLUG;EMPOCHE;{COULEUR};{BLOUSE};\r\n
-                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + "-> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
-                rencontre.jouerRencontre(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                Log.d(TAG, "Trame EMPOCHE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                rencontre.stockerCoup(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                if(!estPremierJoueurChoisi)
+                {
+                    estPremierJoueurChoisi = true;
+                    afficherListePremierJoueur(champs);
+                }
+                rencontre.jouerCoup();
+                actualiserScores(champs);
+                terminerRencontre();
                 break;
             case Protocole.FAUTE:
                 // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
                 Log.d(TAG, "Trame FAUTE : Couleur = " + champs[Protocole.CHAMP_COULEUR] + " -> Blouse = " + champs[Protocole.CHAMP_BLOUSE]);
+                rencontre.faute(champs[Protocole.CHAMP_COULEUR], champs[Protocole.CHAMP_BLOUSE]);
+                actualiserScores(champs);
                 break;
             case Protocole.SUIVANT:
-                //
+                // $PLUG;NEXT;
+                changerJoueurIHM();
                 Log.d(TAG, "Trame NEXT");
                 break;
             case Protocole.ACK:
@@ -141,4 +207,87 @@ class IHMRencontreEnCours
                 Log.d(TAG, "Trame ERREUR");
                 peripheriqueBluetooth.envoyer(Protocole.trameArreter);
                 break;
+        }
+!!!129282.java!!!	actualiserScores(inout champs : String [[]]) : void
+        Log.d(TAG, "actualiserScores()");
+        switch(champs[Protocole.CHAMP_TYPE_TRAME])
+        {
+            case Protocole.EMPOCHE:
+                Log.d(TAG, "actualiserScores() - cas empoche");
+                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(premierJoueur).getCouleur()))
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
+                    texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
+                    texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                break;
+            case Protocole.FAUTE:
+                Log.d(TAG, "actualiserScores() - cas faute");
+                if(curseur1.getVisibility() == View.VISIBLE)
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
+                    texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                else if(curseur2.getVisibility() == View.VISIBLE)
+                {
+                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
+                    texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                }
+                break;
+        }
+        texteScoreJoueur1.setText("Nombre billes empochées : " + joueurs.get(premierJoueur).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        texteScoreJoueur2.setText("Nombre billes empochées : " + joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+!!!129410.java!!!	afficherListePremierJoueur(inout champs : String [[]]) : void
+        Log.d(TAG, "afficherListePremierJoueur()");
+        if(joueurs.get(JOUEUR_1).getNbBillesEmpochees() == 0 && joueurs.get(JOUEUR_2).getNbBillesEmpochees() == 0)
+        {
+            final String[] listeJoueurs = {joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom(),
+                                           joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom()};
+            new AlertDialog.Builder(IHMRencontreEnCours.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                .setTitle("Qui a empoché la première bille ?")
+                .setSingleChoiceItems(listeJoueurs, listeJoueurs.length, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        Log.d(TAG, "Première couleur : " + champs[Protocole.CHAMP_COULEUR]);
+                        if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_ROUGE))
+                        {
+                            joueurs.get(i).setCouleur(Protocole.JOUEUR_ROUGE);
+                            joueurs.get((i == 0) ? 1 : 0).setCouleur(Protocole.JOUEUR_JAUNE);
+                        }
+                        else if(champs[Protocole.CHAMP_COULEUR].equals(Protocole.JOUEUR_JAUNE))
+                        {
+                            joueurs.get(i).setCouleur(Protocole.JOUEUR_JAUNE);
+                            joueurs.get((i == 0) ? 1 : 0).setCouleur(Protocole.JOUEUR_ROUGE);
+                        }
+                        premierJoueur = i;
+                        deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
+                        Log.d(TAG, "Premier joueur : " + joueurs.get(i).getNom() + " " + joueurs.get(i).getPrenom() + " Couleur : " + joueurs.get(i).getCouleur() + " " + i);
+                        Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
+                        Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
+                    }
+                })
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        rencontre.initialiserJoueurs(premierJoueur);
+                        initialiserScores();
+                    }
+                }).show();
+        }
+!!!129538.java!!!	terminerRencontre() : void
+        if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        {
+            Log.d(TAG, "terminerRencontre()");
+
+            Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
+            intent.putExtra(RENCONTRE, rencontre);
+            startActivity(intent);
         }

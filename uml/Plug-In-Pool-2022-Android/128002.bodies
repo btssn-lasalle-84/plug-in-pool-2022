@@ -1,0 +1,8 @@
+class Coup
+!!!128002.java!!!	Coup(in couleur : String, in blouse : String)
+        this.couleur = couleur;
+        this.blouse = blouse;
+!!!128130.java!!!	getCouleur() : String
+        return this.couleur;
+!!!128258.java!!!	getBlouse() : String
+        return blouse;

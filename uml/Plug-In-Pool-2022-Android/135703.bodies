@@ -5,22 +5,80 @@ class Rencontre
         this.etatRencontre = RENCONTRE_ENCOURS;
         //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
         this.joueurs = joueurs;
-!!!146839.java!!!	initialiserRencontre() : void
-        /**
-         * @todo Changer les getJoueurs() et getNbManchesGagnates() avec les valeurs de l'ihm
-         */
-        //etatRencontre = RENCONTRE_ENCOURS;
-!!!146967.java!!!	jouerRencontre(in couleur : String, in blouse : String) : void
-        if(etatRencontre == RENCONTRE_ENCOURS)
+        this.coups = new Vector<>();
+!!!131074.java!!!	initialiserJoueurs(in premierJoueur : int) : void
+        this.premierJoueur = premierJoueur;
+        this.deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
+!!!131202.java!!!	stockerCoup(in couleur : String, in blouse : String) : void
+        Coup coup = new Coup(couleur, blouse);
+        coups.add(coup);
+!!!131330.java!!!	jouerCoup() : void
+        Log.d(TAG, "jouerCoup()");
+        String couleur = "";
+        int j = 0;
+        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
         {
-            if(nbManches < nbManchesGagnantes)
+            while(j < coups.size())
             {
+                couleur = coups.get(j).getCouleur();
+                Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
+                if (etatRencontre == RENCONTRE_ENCOURS)
+                {
+                    if (nbManches < nbManchesGagnantes)
+                    {
+                        if (couleur.equals(joueurs.get(premierJoueur).getCouleur()))
+                        {
+                            joueurs.get(0).empocherBille();
+                            joueurs.get(0).toucherBille();
+                            joueurs.get(0).tirerBille();
+                            coups.remove(coups.lastElement());
+                            Log.d(TAG, "jouerCoup() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                        }
+                        else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                        {
+                            joueurs.get(1).empocherBille();
+                            joueurs.get(1).toucherBille();
+                            joueurs.get(1).tirerBille();
+                            coups.remove(coups.lastElement());
+                            Log.d(TAG, "jouerCoup() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                        }
 
+                        if (joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                        {
+                            Log.d(TAG, "jouerCoup() : manche finie");
+                            terminerManche();
+                        }
+                    }
+                }
             }
-            else
-            {
-
-            }
+        }
+!!!131458.java!!!	terminerRencontre() : void
+        Log.d(TAG, "terminerRencontre()");
+        etatRencontre = RENCONTRE_FINIE;
+!!!131586.java!!!	terminerManche() : void
+        Log.d(TAG, "terminerManche()");
+        nbManches++;
+        Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
+        Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
+        if(nbManches < nbManchesGagnantes)
+        {
+            Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
+            joueurs.get(0).resetNbBillesEmpochees();
+            joueurs.get(1).resetNbBillesEmpochees();
+        }
+        else
+        {
+            Log.d(TAG, "terminerManche() : terminerRencontre()");
+            terminerRencontre();
+        }
+!!!131714.java!!!	faute(in couleur : String, in blouse : String) : void
+        if(couleur.equals(Protocole.JOUEUR_ROUGE))
+        {
+            joueurs.get(0).augmenterFautes();
+        }
+        else if(couleur.equals(Protocole.JOUEUR_JAUNE))
+        {
+            joueurs.get(1).augmenterFautes();
         }
 !!!147095.java!!!	getEtatRencontre() : int
         return this.etatRencontre;
@@ -30,6 +88,8 @@ class Rencontre
         return joueurs;
 !!!147479.java!!!	setJoueurs(inout joueurs : Vector<Joueur>) : void
         this.joueurs = joueurs;
+!!!131842.java!!!	getNbBillesCouleur() : int
+        return this.NB_BILLES_COULEUR - 1;
 !!!147607.java!!!	setEtatRencontre(in etatRencontre : int) : void
         this.etatRencontre = etatRencontre;
 !!!147735.java!!!	setNbManchesGagnantes(in nbManchesGagnantes : int) : void

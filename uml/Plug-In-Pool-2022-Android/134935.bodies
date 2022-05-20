@@ -72,7 +72,7 @@ class IHMCreerJoueur
         listeJoueurs.setAdapter(adapter);
 
         /**
-         * @brief Suppresion d'un joueur
+         * @brief Suppression d'un joueur
          */
         listeJoueurs.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {

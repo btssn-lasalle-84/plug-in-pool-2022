@@ -1,7 +1,7 @@
 format 224
 "pluginpool" // pluginpool
-  revision 2
-  modified_by 23 "tv"
+  revision 3
+  modified_by 2 "btssn2"
   // class settings
   
   classdiagramsettings member_max_width 0 end
@@ -948,6 +948,31 @@ ${members}}
 	MysqlColumn
       end
 
+      attribute 131074 "couleur"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131202 "nbManchesGagnees"
+	private explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 141335 "nbBillesEmpochees"
 	private explicit_type "int"
 	init_value " 0"
@@ -962,6 +987,19 @@ ${members}}
       end
 
       attribute 141463 "nbBillesTouchees"
+	private explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131330 "nbCoupsTires"
 	private explicit_type "int"
 	init_value " 0"
 	cpp_decl ""
@@ -1029,6 +1067,66 @@ ${members}}
 	
       end
 
+      operation 129666 "getCouleur"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129794 "getNbBillesEmpochees"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129922 "getNbBillesTouchees"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130050 "getNbFautes"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130178 "getNbCoupsTires"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
       operation 143383 "setNom"
 	public explicit_return_type "void"
 	nparams 1
@@ -1050,6 +1148,79 @@ ${members}}
 	  param in name "prenom" explicit_type "String"
 	
 	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130306 "setCouleur"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "couleur" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130434 "empocherBille"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130562 "augmenterFautes"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130690 "toucherBille"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130818 "tirerBille"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130946 "resetNbBillesEmpochees"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
   ${body}}
 "
 	
@@ -1328,6 +1499,8 @@ Attributs
 	
 	
 	
+	comment "@brief Méthode pour cacher le clavier au lancement de l'activité
+"
       end
 
       operation 137111 "getActivity"
@@ -1382,6 +1555,32 @@ ${members}}
 !< TAG pour les logs"
       end
 
+      attribute 128258 "RENCONTRE"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " \"RENCONTRE\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128002 // rencontre (<unidirectional association>)
+	relation 128002 --->
+	  a role_name "rencontre" private
+	    comment "
+Variables
+
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128002 // rencontre (<unidirectional association>)
+	  b parent class_ref 135703 // Rencontre
+      end
+
       attribute 138391 "boutonEnregistrerRencontre"
 	private explicit_type "Button"
 	cpp_decl ""
@@ -1408,6 +1607,42 @@ ${members}}
 	mysql_decl ""
 	MysqlColumn
 	comment "!< Le bouton permettant de rejouer une rencontre avec les mêmes paramètres'"
+      end
+
+      attribute 128386 "joueurGagnant"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128514 "nbManchesGagnantes"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 128642 "dureeRencontre"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       operation 137239 "onCreate"
@@ -1519,6 +1754,18 @@ ${members}}
 	
 	comment "@brief Initialise les ressources graphiques de l'activité
 "
+      end
+
+      operation 128386 "initialiserScoresIHMFinDeRencontre"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
       end
     end
 
@@ -1677,14 +1924,23 @@ ${members}}
     end
 
     class 135447 "IHMNouvelleRencontre"
-      visibility public 
-      cpp_decl ""
+      visibility public stereotype "activity"
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl "class ${name}${inherit}:
+${docstring}${members}
+"
+      idl_decl "${comment}${abstract}${custom}valuetype ${name}${inherit} {
+${members}};
+"
       explicit_switch_type ""
       mysql_decl ""
       
@@ -1801,6 +2057,28 @@ Attributs
 	  b parent class_ref 135703 // Rencontre
       end
 
+      classrelation 135831 // joueursRencontre (<unidirectional association>)
+	relation 135831 --->
+	  stereotype "Vector"
+	  a role_name "joueursRencontre" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 135831 // joueursRencontre (<unidirectional association>)
+	  b parent class_ref 134807 // Joueur
+      end
+
+      attribute 128770 "nbManchesGagnantes"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 139415 "boutonLancerRencontre"
 	private explicit_type "Button"
 	cpp_decl ""
@@ -1814,6 +2092,18 @@ Attributs
 	comment "Ressources IHM
 
 !< Le bouton de lancement"
+      end
+
+      attribute 128898 "nbManches"
+	private explicit_type "EditText"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       attribute 139543 "listeJoueurs"
@@ -1835,16 +2125,6 @@ Attributs
 	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 135703 // joueurs (<unidirectional association>)
-	  b parent class_ref 134807 // Joueur
-      end
-
-      classrelation 135831 // joueursRencontre (<unidirectional association>)
-	relation 135831 --->
-	  stereotype "Vector"
-	  a role_name "joueursRencontre" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
-"
-	    classrelation_ref 135831 // joueursRencontre (<unidirectional association>)
 	  b parent class_ref 134807 // Joueur
       end
 
@@ -1962,6 +2242,20 @@ Attributs
 "
       end
 
+      operation 128514 "ajouterNbManches"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Ajoute les joueurs sélectionnés pour cette rencontre
+"
+      end
+
       operation 139927 "ajouterJoueursSelectionnes"
 	private explicit_return_type "void"
 	nparams 0
@@ -2046,6 +2340,33 @@ Attributs
 	
 	comment "@brief Liste les joueurs disponibles
 "
+      end
+
+      operation 132098 "selectionnerJoueur"
+	private explicit_return_type "void"
+	nparams 2
+	  param inout name "view" explicit_type "CheckedTextView"
+	  param in name "i" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131970 "afficherJoueurs"
+	private explicit_return_type "void"
+	nparams 1
+	  param inout name "nomsJoueurs" explicit_type "List<String>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
       end
 
       classrelation 138391 // <dependency>
@@ -2534,6 +2855,46 @@ ${members}}
 	MysqlColumn
       end
 
+      attribute 131970 "NB_BILLES_COULEUR"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 8"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment " 7 billes rouges ou jaunes et 1 bille noire"
+      end
+
+      attribute 132098 "NB_POCHES"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 6"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132226 "TAG"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " \"_Rencontre_\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 146583 "nbManchesGagnantes"
 	private explicit_type "int"
 	cpp_decl ""
@@ -2595,6 +2956,71 @@ ${members}}
 	  b parent class_ref 134807 // Joueur
       end
 
+      classrelation 128386 // coups (<unidirectional association>)
+	relation 128386 --->
+	  stereotype "Vector"
+	  a role_name "coups" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128386 // coups (<unidirectional association>)
+	  b parent class_ref 128002 // Coup
+      end
+
+      attribute 132354 "premierJoueur"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 132482 "deuxiemeJoueur"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 128514 // joueurGagnant (<unidirectional association>)
+	relation 128514 --->
+	  a role_name "joueurGagnant" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128514 // joueurGagnant (<unidirectional association>)
+	  b parent class_ref 134807 // Joueur
+      end
+
+      classrelation 128642 // peripheriqueBluetooth (<unidirectional association>)
+	relation 128642 --->
+	  a role_name "peripheriqueBluetooth" init_value " null" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128642 // peripheriqueBluetooth (<unidirectional association>)
+	  b parent class_ref 135575 // PeripheriqueBluetooth
+      end
+
+      attribute 132610 "handler"
+	private explicit_type "Handler"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       operation 146711 "Rencontre"
 	public explicit_return_type ""
 	nparams 2
@@ -2613,23 +3039,20 @@ ${members}}
 "
       end
 
-      operation 146839 "initialiserRencontre"
+      operation 131074 "initialiserJoueurs"
 	public explicit_return_type "void"
-	nparams 0
+	nparams 1
+	  param in name "premierJoueur" explicit_type "int"
 	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}
 "
-	java_annotation "@RequiresApi(api = Build.VERSION_CODES.O)
-"
 	
 	
 	
-	comment "@brief Initialise les ressources de la rencontre
-"
       end
 
-      operation 146967 "jouerRencontre"
+      operation 131202 "stockerCoup"
 	public explicit_return_type "void"
 	nparams 2
 	  param in name "couleur" explicit_type "String"
@@ -2641,9 +3064,63 @@ ${members}}
 	
 	
 	
+      end
+
+      operation 131330 "jouerCoup"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
 	comment "@brief Gère le déroulement de la rencontre
-@param couleur
-@param blouse
+"
+      end
+
+      operation 131458 "terminerRencontre"
+	protected explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Méthode appelée à la fin d'une rencontre
+"
+      end
+
+      operation 131586 "terminerManche"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Méthode appelée à la fin d'une manche
+"
+      end
+
+      operation 131714 "faute"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "couleur" explicit_type "String"
+	  param in name "blouse" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Méthode appelée à la détection d'une faute
 "
       end
 
@@ -2702,6 +3179,18 @@ return this.horodatage;
 	
       end
 
+      operation 131842 "getNbBillesCouleur"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
       operation 147607 "setEtatRencontre"
 	public explicit_return_type "void"
 	nparams 1
@@ -2729,6 +3218,7 @@ return this.horodatage;
 	
 	
       end
+
     end
 
     class 135831 "IHMPlugInPool"
@@ -3040,6 +3530,73 @@ ${members}}
 !< TAG pour les logs"
       end
 
+      attribute 129026 "JOUEUR_1"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment "!< indice du joueur n°1"
+      end
+
+      attribute 129154 "JOUEUR_2"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 1"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment "!< indice du joueur n°2"
+      end
+
+      attribute 129282 "RENCONTRE_ENCOURS"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129410 "RENCONTRE_FINIE"
+	class_attribute const_attribute private explicit_type "int"
+	init_value " 1"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129538 "RENCONTRE"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " \"RENCONTRE\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       classrelation 136343 // peripheriqueBluetooth (<unidirectional association>)
 	relation 136343 --->
 	  a role_name "peripheriqueBluetooth" init_value " null" private
@@ -3051,6 +3608,15 @@ Attributs
 "
 	    classrelation_ref 136343 // peripheriqueBluetooth (<unidirectional association>)
 	  b parent class_ref 135575 // PeripheriqueBluetooth
+      end
+
+      classrelation 128130 // baseDeDonnees (<unidirectional association>)
+	relation 128130 --->
+	  a role_name "baseDeDonnees" init_value " null" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128130 // baseDeDonnees (<unidirectional association>)
+	  b parent class_ref 134551 // BaseDeDonnees
       end
 
       attribute 140567 "handler"
@@ -3073,6 +3639,53 @@ Attributs
 "
 	    classrelation_ref 136471 // rencontre (<unidirectional association>)
 	  b parent class_ref 135703 // Rencontre
+      end
+
+      classrelation 128258 // joueurs (<unidirectional association>)
+	relation 128258 --->
+	  stereotype "Vector"
+	  a role_name "joueurs" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	    classrelation_ref 128258 // joueurs (<unidirectional association>)
+	  b parent class_ref 134807 // Joueur
+      end
+
+      attribute 129666 "premierJoueur"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129794 "deuxiemeJoueur"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 129922 "estPremierJoueurChoisi"
+	private explicit_type "boolean"
+	init_value " false"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
       end
 
       attribute 140695 "boutonQuitterRencontre"
@@ -3116,6 +3729,102 @@ Attributs
 	comment "!< Le bouton permettant de passer la main au joueur suivant"
       end
 
+      attribute 130050 "texteJoueur1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130178 "texteJoueur2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130306 "curseur1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130434 "curseur2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130562 "texteDernierCoup1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130690 "texteDernierCoup2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130818 "texteScoreJoueur1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 130946 "texteScoreJoueur2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       operation 141719 "onCreate"
 	protected explicit_return_type "void"
 	nparams 1
@@ -3130,6 +3839,20 @@ Attributs
 	
 	
 	comment "@brief Méthode appelée à la création de l'activité
+"
+      end
+
+      operation 128642 "ouvrirBaseDeDonnees"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Méthode permettant d'obtenir un accès à la base de données
 "
       end
 
@@ -3227,6 +3950,20 @@ Attributs
 "
       end
 
+      operation 128770 "demarrerNouvellePartie"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Démarre une nouvelle partie
+"
+      end
+
       operation 142615 "initialiserRessourcesIHMRencontreEnCours"
 	private explicit_return_type "void"
 	nparams 0
@@ -3238,6 +3975,52 @@ Attributs
 	
 	
 	comment "@brief Initialise les ressources graphiques de l'activité
+"
+      end
+
+      operation 128898 "listerRessourcesRencontre"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressLint(\"SetTextI18n\")
+"
+	
+	
+	
+	comment "@brief Liste les joueurs et leurs scores
+"
+      end
+
+      operation 129026 "initialiserScores"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Initialise les scores des joueurs
+"
+      end
+
+      operation 129154 "changerJoueurIHM"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressLint(\"SetTextI18n\")
+"
+	
+	
+	
+	comment "@brief Change le curseur du joueur en cours sur l'IHM
 "
       end
 
@@ -3267,6 +4050,56 @@ Attributs
 	
 	
 	comment "@brief Gère le message reçu pour détecter une mauvaise trame
+"
+      end
+
+      operation 129282 "actualiserScores"
+	private explicit_return_type "void"
+	nparams 1
+	  param inout name "champs" explicit_type "String"
+	multiplicity "[]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressLint(\"SetTextI18n\")
+"
+	
+	
+	
+	comment "@brief Méthode appelée à chaque empochage d'une bille
+@param champs
+"
+      end
+
+      operation 129410 "afficherListePremierJoueur"
+	private explicit_return_type "void"
+	nparams 1
+	  param inout name "champs" explicit_type "String"
+	multiplicity "[]"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Affiche la liste des joueurs pour sélectionner le premier joueur
+@param champs
+"
+      end
+
+      operation 129538 "terminerRencontre"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Méthode appelée à la fin d'une rencontre afin de changer de page, afficher les scores finaux et enregistrer la rencontre
 "
       end
 
@@ -3776,6 +4609,32 @@ ${members}}
 	MysqlColumn
       end
 
+      attribute 131458 "trameFaute"
+	class_attribute const_attribute public explicit_type "String"
+	init_value " \"$PLUG;FAUTE;\\r\\n\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131586 "trameSuivant"
+	class_attribute const_attribute public explicit_type "String"
+	init_value " \"$PLUG;NEXT;\\r\\n\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       attribute 144919 "EMPOCHE"
 	class_attribute const_attribute public explicit_type "String"
 	init_value " \"EMPOCHE\""
@@ -3918,11 +4777,139 @@ ${members}}
 	mysql_decl ""
 	MysqlColumn
       end
+
+      attribute 131714 "JOUEUR_ROUGE"
+	class_attribute const_attribute public explicit_type "String"
+	init_value " \"R\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 131842 "JOUEUR_JAUNE"
+	class_attribute const_attribute public explicit_type "String"
+	init_value " \"J\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
     end
 
     classdiagram 134551 "version 0.2"
       classdiagramsettings show_members_full_definition yes show_members_visibility yes member_max_width 0 end
       size A0
+    end
+
+    class 128002 "Coup"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
+      comment "@file Coup.java
+@brief Déclaration de la classe Coup
+@author MERAS Pierre
+
+
+@class Coup
+@brief Classe pour un Coup
+"
+      attribute 128002 "couleur"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+	comment "Attributs
+
+"
+      end
+
+      attribute 128130 "blouse"
+	private explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      operation 128002 "Coup"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "couleur" explicit_type "String"
+	  param in name "blouse" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "@brief Constructeur
+"
+      end
+
+      operation 128130 "getCouleur"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128258 "getBlouse"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128130 "Handler"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl ""
+      
     end
   end
 
@@ -3939,7 +4926,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import java.util.ListIterator;
 import java.util.Vector;
 ${definition}"
       associated_elems
@@ -3952,7 +4938,6 @@ ${definition}"
       java_src "${comment}
 ${package}
 ${imports}
-import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -3967,9 +4952,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 ${definition}"
       associated_elems
 	class_ref 134935 // IHMCreerJoueur
@@ -3982,10 +4967,12 @@ ${definition}"
 ${package}
 ${imports}
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 ${definition}"
       associated_elems
 	class_ref 135191 // IHMFinDeRencontre
@@ -3998,12 +4985,8 @@ ${definition}"
 ${package}
 ${imports}
 import androidx.appcompat.app.AppCompatActivity;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 ${definition}"
       associated_elems
 	class_ref 135319 // IHMHistoriqueDesRencontres
@@ -4012,6 +4995,22 @@ ${definition}"
 
     artifact 135063 "IHMNouvelleRencontre"
       stereotype "source"
+      cpp_h "#ifndef ${NAMESPACE}_${NAME}_H
+#define ${NAMESPACE}_${NAME}_H
+
+${comment}
+${includes}
+${declarations}
+${namespace_start}
+${definition}
+${namespace_end}
+#endif
+"
+      cpp_src "${comment}
+${includes}
+${namespace_start}
+${members}
+${namespace_end}"
       java_src "${comment}
 ${package}
 ${imports}
@@ -4026,6 +5025,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -4035,6 +5035,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 ${definition}"
+      php_src "<?php
+${comment}
+${namespace}
+${require_once}
+${use}
+${definition}
+?>
+"
+      python_src "${comment}
+${import}
+${definition}"
+      idl_src "#ifndef ${MODULE}_${NAME}_H
+#define ${MODULE}_${NAME}_H
+
+${comment}
+${includes}
+${module_start}
+${definition}
+${module_end}
+#endif
+"
       associated_elems
 	class_ref 135447 // IHMNouvelleRencontre
       end
@@ -4058,7 +5079,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import java.util.Set;
-import java.util.Vector;
 ${definition}"
       associated_elems
 	class_ref 135831 // IHMPlugInPool
@@ -4072,13 +5092,19 @@ ${package}
 ${imports}
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import org.w3c.dom.Text;
 import java.util.Vector;
 ${definition}"
       associated_elems
@@ -4152,9 +5178,12 @@ ${definition}"
       java_src "${comment}
 ${package}
 ${imports}
+import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import androidx.annotation.RequiresApi;
+import com.google.android.material.tabs.TabLayout;
 import java.io.Serializable;
 import java.time.*;
 import java.util.Vector;
@@ -4197,6 +5226,17 @@ import java.util.concurrent.locks.ReentrantLock;
 ${definition}"
       associated_elems
 	class_ref 136471 // TReception
+      end
+    end
+
+    artifact 128002 "Coup"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_elems
+	class_ref 128002 // Coup
       end
     end
   end

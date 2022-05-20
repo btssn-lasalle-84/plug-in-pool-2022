@@ -4,6 +4,7 @@ class IHMFinDeRencontre
         setContentView(R.layout.activity_ihm_fin_de_rencontre);
         Log.d(TAG, "onCreate()");
         initialiserRessourcesIHMFinDeRencontre();
+        initialiserScoresIHMFinDeRencontre();
 !!!137367.java!!!	onStart() : void
         super.onStart();
         Log.d(TAG, "onStart()");
@@ -41,3 +42,6 @@ class IHMFinDeRencontre
                     startActivity(intent);*/
                 }
             });
+!!!128386.java!!!	initialiserScoresIHMFinDeRencontre() : void
+        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
+        joueurGagnant =
