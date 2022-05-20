@@ -179,10 +179,10 @@
                     app:layout_constraintVertical_bias="1.0">
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/dureeRencontre"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="00m00s"
+                        android:text="@string/_00m00s"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

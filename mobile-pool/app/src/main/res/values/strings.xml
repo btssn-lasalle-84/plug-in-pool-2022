@@ -26,4 +26,5 @@
     <string name="dur_e_de_la_rencontre">Durée de la rencontre :</string>
     <string name="_0_manches">0 manches</string>
     <string name="joueurgagnant">joueurGagnant</string>
+    <string name="_00m00s">00m00s</string>
 </resources>

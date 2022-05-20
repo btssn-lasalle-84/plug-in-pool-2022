@@ -17,6 +17,8 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
 import java.time.*;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -41,7 +43,9 @@ public class Rencontre implements Serializable
     private int nbManchesGagnantes;
     private int nbManches;
     private int etatRencontre;
-    //private LocalDateTime horodatage;
+    private Date horodatageDebut;
+    private Date horodatage;
+    private int horodatageSecondes;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
     private Vector<Coup> coups;
@@ -54,13 +58,11 @@ public class Rencontre implements Serializable
     /**
      * @brief Constructeur
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
-        //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
         this.joueurs = joueurs;
         this.coups = new Vector<>();
     }
@@ -80,6 +82,7 @@ public class Rencontre implements Serializable
     /**
      * @brief Gère le déroulement de la rencontre
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void jouerCoup()
     {
         Log.d(TAG, "jouerCoup()");
@@ -138,11 +141,13 @@ public class Rencontre implements Serializable
     {
         Log.d(TAG, "terminerRencontre()");
         etatRencontre = RENCONTRE_FINIE;
+        //this.setHorodatage();
     }
 
     /**
      * @brief Méthode appelée à la fin d'une manche
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void terminerManche()
     {
         Log.d(TAG, "terminerManche()");
@@ -190,10 +195,10 @@ public class Rencontre implements Serializable
         return this.nbManchesGagnantes;
     }
 
-    /*public LocalDateTime getHorodatage()
+    public String getHorodatage()
     {
-        return this.horodatage;
-    }*/
+        return String.format("%s:%s", horodatageSecondes/60, horodatageSecondes%60);
+    }
 
     public Vector<Joueur> getJoueurs()
     {
@@ -223,8 +228,16 @@ public class Rencontre implements Serializable
         this.nbManchesGagnantes = nbManchesGagnantes;
     }
 
-    /*public void setHorodatage(LocalDateTime horodatage)
+    public void setHorodatageDebut()
     {
-        this.horodatage = horodatage;
-    }*/
+        Log.d(TAG, "setHorodatageDebut()");
+        //this.horodatageDebut = null;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setHorodatage()
+    {
+        Log.d(TAG, "setHorodatage() : " + horodatageSecondes + " secondes");
+        //horodatageSecondes = null;
+    }
 }

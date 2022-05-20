@@ -150,6 +150,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 initialiserRencontre();
                 ajouterJoueursSelectionnes();
                 ajouterNbManches();
+                rencontre.setHorodatageDebut();
                 Log.d(TAG, "nbManches : " + rencontre.getNbManchesGagnantes());
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités

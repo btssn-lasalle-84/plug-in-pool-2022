@@ -60,6 +60,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
         initialiserRessourcesIHMFinDeRencontre();
         initialiserGagnantIHMFinDeRencontre();
         initialiserNbManchesIHMFinDeRencontre();
+        initialiserDureeIHMFinDeRencontre();
     }
 
     /**
@@ -121,6 +122,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
         texteGagnant = (TextView)findViewById(R.id.texteGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
+        dureeRencontre = (TextView)findViewById(R.id.dureeRencontre);
 
         boutonEnregistrerRencontre.setOnClickListener(
             new View.OnClickListener()
@@ -177,5 +179,11 @@ public class IHMFinDeRencontre extends AppCompatActivity
             nbManchesGagnantes.setVisibility(View.VISIBLE);
             nbManchesGagnantes.setText(joueurGagnant.getNbManchesGagnees() + " / " + rencontre.getNbManchesGagnantes() + "manche(s) gagnée(s)");
         }
+    }
+
+    private void initialiserDureeIHMFinDeRencontre()
+    {
+        Log.d(TAG, "initialiserDureeIHMFinDeRencontre()");
+        dureeRencontre.setText(rencontre.getHorodatage());
     }
 }
