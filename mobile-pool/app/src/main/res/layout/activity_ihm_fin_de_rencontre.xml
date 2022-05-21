@@ -141,12 +141,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/gagnant"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/textJoueurGagnant"
+                        app:layout_constraintEnd_toStartOf="@+id/texteJoueurGagnant"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textJoueurGagnant"
+                        android:id="@+id/texteJoueurGagnant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"

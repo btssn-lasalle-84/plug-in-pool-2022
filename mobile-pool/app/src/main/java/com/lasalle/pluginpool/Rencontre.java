@@ -6,18 +6,10 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
-import com.google.android.material.tabs.TabLayout;
-
 import java.io.Serializable;
-import java.time.*;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Vector;
 
@@ -45,13 +37,12 @@ public class Rencontre implements Serializable
     private int etatRencontre;
     private Date horodatageDebut;
     private Date horodatage;
-    private int horodatageSecondes;
+    private int dureeRencontreSecondes;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
     private Vector<Coup> coups;
     private int premierJoueur;
     private int deuxiemeJoueur;
-    private Joueur joueurGagnant;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
 
@@ -77,23 +68,24 @@ public class Rencontre implements Serializable
     {
         Coup coup = new Coup(couleur, blouse);
         coups.add(coup);
+        Log.d(TAG, "stockerCoup() : couleur " + couleur + " blouse : " + blouse);
     }
 
     /**
      * @brief Gère le déroulement de la rencontre
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void jouerCoup()
     {
         Log.d(TAG, "jouerCoup()");
         String couleur = "";
-        int j = 0;
-        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
+        String blouse = "";
+        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(premierJoueur).getCouleur().equals("J"))
         {
-            while(j < coups.size())
+            while(coups.size() > 0)
             {
-                couleur = coups.get(j).getCouleur();
-                Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
+                couleur = coups.lastElement().getCouleur();
+                blouse = coups.lastElement().getBlouse();
+                Log.d(TAG, "jouerCoup() : couleur " + couleur + " blouse : " + blouse);
                 if (etatRencontre == RENCONTRE_ENCOURS)
                 {
                     if (nbManches < nbManchesGagnantes)
@@ -141,13 +133,12 @@ public class Rencontre implements Serializable
     {
         Log.d(TAG, "terminerRencontre()");
         etatRencontre = RENCONTRE_FINIE;
-        //this.setHorodatage();
+        calculerDureeRencontre();
     }
 
     /**
      * @brief Méthode appelée à la fin d'une manche
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void terminerManche()
     {
         Log.d(TAG, "terminerManche()");
@@ -197,7 +188,7 @@ public class Rencontre implements Serializable
 
     public String getHorodatage()
     {
-        return String.format("%s:%s", horodatageSecondes/60, horodatageSecondes%60);
+        return String.format("%sm%ss", dureeRencontreSecondes/60, dureeRencontreSecondes%60);
     }
 
     public Vector<Joueur> getJoueurs()
@@ -231,13 +222,14 @@ public class Rencontre implements Serializable
     public void setHorodatageDebut()
     {
         Log.d(TAG, "setHorodatageDebut()");
-        //this.horodatageDebut = null;
+        this.horodatageDebut = new Date();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void setHorodatage()
+    public void calculerDureeRencontre()
     {
-        Log.d(TAG, "setHorodatage() : " + horodatageSecondes + " secondes");
-        //horodatageSecondes = null;
+        Date now = new Date();
+        long h = now.getTime() - this.horodatageDebut.getTime();
+        Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
+        dureeRencontreSecondes = (int)(h / 1000);
     }
 }

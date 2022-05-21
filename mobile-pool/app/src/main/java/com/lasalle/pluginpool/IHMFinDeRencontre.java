@@ -6,17 +6,14 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @class IHMFinDeRencontre
@@ -120,7 +117,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
     {
         boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
-        texteGagnant = (TextView)findViewById(R.id.texteGagnant);
+        texteJoueurGagnant = (TextView)findViewById(R.id.texteJoueurGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
         dureeRencontre = (TextView)findViewById(R.id.dureeRencontre);
 
@@ -167,6 +164,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void initialiserNbManchesIHMFinDeRencontre()
     {
         Log.d(TAG, "initialiserNbManchesIHMFinDeRencontre()");
