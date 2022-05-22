@@ -27,4 +27,8 @@
     <string name="_0_manches">0 manches</string>
     <string name="joueurgagnant">joueurGagnant</string>
     <string name="_00m00s">00m00s</string>
+    <string name="_0">0</string>
+    <string name="nombre_de_fautes">Nombre de fautes :\ </string>
+    <string name="_0pourcent">0%</string>
+    <string name="pr_cision_d_empochage">Précision d\'empochage :\ </string>
 </resources>

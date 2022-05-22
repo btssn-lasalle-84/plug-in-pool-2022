@@ -58,6 +58,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
         initialiserGagnantIHMFinDeRencontre();
         initialiserNbManchesIHMFinDeRencontre();
         initialiserDureeIHMFinDeRencontre();
+        initialiserStatistiquesFinDeRencontre();
     }
 
     /**
@@ -118,6 +119,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
         boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
         texteJoueurGagnant = (TextView)findViewById(R.id.texteJoueurGagnant);
+        texteGagnant = (TextView)findViewById(R.id.texteGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
         dureeRencontre = (TextView)findViewById(R.id.dureeRencontre);
 
@@ -164,6 +166,9 @@ public class IHMFinDeRencontre extends AppCompatActivity
         }
     }
 
+    /**
+     * @brief Méthode pour afficher les manches remportées à la fin d'une rencontre
+     */
     @SuppressLint("SetTextI18n")
     private void initialiserNbManchesIHMFinDeRencontre()
     {
@@ -179,9 +184,20 @@ public class IHMFinDeRencontre extends AppCompatActivity
         }
     }
 
+    /**
+     * @brief Méthode pour afficher la durée de la rencontre
+     */
     private void initialiserDureeIHMFinDeRencontre()
     {
         Log.d(TAG, "initialiserDureeIHMFinDeRencontre()");
         dureeRencontre.setText(rencontre.getHorodatage());
+    }
+
+    /**
+     * @brief Méthode pour afficher les statistiques des joueurs
+     */
+    private void initialiserStatistiquesFinDeRencontre()
+    {
+        Log.d(TAG, "initialiserStatistiquesFinDeRencontre()");
     }
 }
