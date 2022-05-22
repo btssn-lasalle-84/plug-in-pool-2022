@@ -172,6 +172,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
     {
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
         peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+        estPremierJoueurChoisi = false;
+        joueurs.get(0).setCouleur("");
+        joueurs.get(1).setCouleur("");
     }
 
     /**
@@ -269,16 +272,14 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 curseur1.setVisibility(View.VISIBLE);
                 curseur2.setVisibility(View.INVISIBLE);
+                joueurs.get(0).tirerBille(); //Si on change de joueur, alors il a forcément loupé son tir sinon il aurait rejoué
             }
             else if(curseur1.getVisibility() == View.VISIBLE)
             {
                 curseur1.setVisibility(View.INVISIBLE);
                 curseur2.setVisibility(View.VISIBLE);
+                joueurs.get(1).tirerBille();
             }
-        }
-        else
-        {
-            return;
         }
     }
 
@@ -463,14 +464,18 @@ public class IHMRencontreEnCours extends AppCompatActivity
     }
 
     /**
-     * @brief Méthode appelée à la fin d'une rencontre afin de changer de page, afficher les scores finaux et enregistrer la rencontre
+     * @brief Méthode appelée à la fin d'une manche afin de commencer une nouvelle manche ou bien de finir la rencontre
      */
     private void terminerRencontre()
     {
-        if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        Log.d(TAG, "terminerRencontre()");
+        if(rencontre.estNouvelleManche())
         {
-            Log.d(TAG, "terminerRencontre()");
-
+            demarrerNouvellePartie();
+            rencontre.changerNouvelleManche();
+        }
+        else if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        {
             Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);

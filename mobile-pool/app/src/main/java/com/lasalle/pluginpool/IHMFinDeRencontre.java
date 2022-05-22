@@ -44,6 +44,14 @@ public class IHMFinDeRencontre extends AppCompatActivity
     private TextView texteGagnant;
     private TextView nbManchesGagnantes;
     private TextView dureeRencontre;
+    private TextView precisionJoueur1;
+    private TextView precisionJoueur2;
+    private TextView nbfautesJoueur1;
+    private TextView nbfautesJoueur2;
+    private TextView nomJoueurStatistiques1;
+    private TextView nomJoueurStatistiques2;
+    private Joueur joueur1;
+    private Joueur joueur2;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -97,7 +105,8 @@ public class IHMFinDeRencontre extends AppCompatActivity
     @Override
     protected void onStop()
     {
-        super.onStop();
+        super.onStop();        joueur1 = rencontre.getJoueurs().get(0);
+        joueur2 = rencontre.getJoueurs().get(1);
         Log.d(TAG, "onStop()");
     }
 
@@ -122,6 +131,12 @@ public class IHMFinDeRencontre extends AppCompatActivity
         texteGagnant = (TextView)findViewById(R.id.texteGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
         dureeRencontre = (TextView)findViewById(R.id.dureeRencontre);
+        nomJoueurStatistiques1 = (TextView)findViewById(R.id.nomJoueurStatistiques1);
+        nomJoueurStatistiques2 = (TextView)findViewById(R.id.nomJoueurStatistiques2);
+        precisionJoueur1 = (TextView)findViewById(R.id.precision1);
+        precisionJoueur2 = (TextView)findViewById(R.id.precision2);
+        nbfautesJoueur1 = (TextView)findViewById(R.id.nbFautes1);
+        nbfautesJoueur2 = (TextView)findViewById(R.id.nbFautes2);
 
         boutonEnregistrerRencontre.setOnClickListener(
             new View.OnClickListener()
@@ -196,8 +211,25 @@ public class IHMFinDeRencontre extends AppCompatActivity
     /**
      * @brief Méthode pour afficher les statistiques des joueurs
      */
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     private void initialiserStatistiquesFinDeRencontre()
     {
         Log.d(TAG, "initialiserStatistiquesFinDeRencontre()");
+
+        joueur1 = rencontre.getJoueurs().get(0);
+        joueur2 = rencontre.getJoueurs().get(1);
+        double precision1 = (((double)joueur1.getNbBillesTouchees() / (double)joueur1.getNbCoupsTires()) * 100);
+        double precision2 = (((double)joueur2.getNbBillesTouchees() / (double)joueur2.getNbCoupsTires()) * 100);
+        Log.d(TAG, "joueur1.getNbBillesTouchees() : " + joueur1.getNbBillesTouchees() + " joueur1.getNbCoupsTires() : " + joueur1.getNbCoupsTires());
+        Log.d(TAG, "joueur2.getNbBillesTouchees() : " + joueur2.getNbBillesTouchees() + " joueur2.getNbCoupsTires() : " + joueur2.getNbCoupsTires());
+        Log.d(TAG, "joueur1 precision : " + precision1);
+        Log.d(TAG, "joueur2 precision : " + precision2);
+
+        nomJoueurStatistiques1.setText(joueur1.getNom() + " " + joueur1.getPrenom()  + " :");
+        nomJoueurStatistiques2.setText(joueur2.getNom() + " " + joueur2.getPrenom()  + " :");
+        nbfautesJoueur1.setText(String.valueOf(joueur1.getNbFautes()));
+        nbfautesJoueur2.setText(String.valueOf(joueur2.getNbFautes()));
+        precisionJoueur1.setText(String.format("%.2f", precision1) + "%");
+        precisionJoueur2.setText(String.format("%.2f", precision2) + "%");
     }
 }

@@ -25,6 +25,7 @@ public class Rencontre implements Serializable
      */
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
+    private static boolean NOUVELLE_MANCHE = false;
     private static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
     private static final int NB_POCHES = 6;
     private static final String TAG = "_Rencontre_";
@@ -85,6 +86,7 @@ public class Rencontre implements Serializable
             {
                 couleur = coups.lastElement().getCouleur();
                 blouse = coups.lastElement().getBlouse();
+                coups.remove(coups.lastElement());
                 Log.d(TAG, "jouerCoup() : couleur " + couleur + " blouse : " + blouse);
                 if (etatRencontre == RENCONTRE_ENCOURS)
                 {
@@ -95,7 +97,6 @@ public class Rencontre implements Serializable
                             joueurs.get(0).empocherBille();
                             joueurs.get(0).toucherBille();
                             joueurs.get(0).tirerBille();
-                            coups.remove(coups.lastElement());
                             Log.d(TAG, "jouerCoup() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
                         }
                         else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
@@ -103,7 +104,6 @@ public class Rencontre implements Serializable
                             joueurs.get(1).empocherBille();
                             joueurs.get(1).toucherBille();
                             joueurs.get(1).tirerBille();
-                            coups.remove(coups.lastElement());
                             Log.d(TAG, "jouerCoup() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
                         }
 
@@ -148,6 +148,7 @@ public class Rencontre implements Serializable
         if(nbManches < nbManchesGagnantes)
         {
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
+            NOUVELLE_MANCHE = true;
             joueurs.get(0).resetNbBillesEmpochees();
             joueurs.get(1).resetNbBillesEmpochees();
         }
@@ -165,10 +166,12 @@ public class Rencontre implements Serializable
     {
         if(couleur.equals(Protocole.JOUEUR_ROUGE))
         {
+            joueurs.get(0).tirerBille();
             joueurs.get(0).augmenterFautes();
         }
         else if(couleur.equals(Protocole.JOUEUR_JAUNE))
         {
+            joueurs.get(1).tirerBille();
             joueurs.get(1).augmenterFautes();
         }
     }
@@ -184,6 +187,11 @@ public class Rencontre implements Serializable
     public int getNbManchesGagnantes()
     {
         return this.nbManchesGagnantes;
+    }
+
+    public int getNbManches()
+    {
+        return this.nbManches;
     }
 
     public String getHorodatage()
@@ -204,6 +212,11 @@ public class Rencontre implements Serializable
     public int getNbBillesCouleur()
     {
         return this.NB_BILLES_COULEUR - 1;
+    }
+
+    public boolean estNouvelleManche()
+    {
+        return this.NOUVELLE_MANCHE;
     }
 
     /**
@@ -231,5 +244,10 @@ public class Rencontre implements Serializable
         long h = now.getTime() - this.horodatageDebut.getTime();
         Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
         dureeRencontreSecondes = (int)(h / 1000);
+    }
+
+    public void changerNouvelleManche()
+    {
+        NOUVELLE_MANCHE = !NOUVELLE_MANCHE;
     }
 }

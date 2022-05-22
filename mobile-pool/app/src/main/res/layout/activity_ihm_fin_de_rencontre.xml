@@ -307,7 +307,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/nbFaute2"
+                        android:id="@+id/nbFautes2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/_0"
@@ -320,7 +320,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/nombre_de_fautes"
-                        app:layout_constraintEnd_toStartOf="@+id/nbFaute2"
+                        app:layout_constraintEnd_toStartOf="@+id/nbFautes2"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
@@ -330,7 +330,7 @@
                         android:text="@string/_0pourcent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/nbFaute2" />
+                        app:layout_constraintTop_toBottomOf="@id/nbFautes2" />
 
                     <TextView
                         android:id="@+id/textePrecision2"
