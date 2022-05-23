@@ -1,0 +1,171 @@
+format 224
+
+classcanvas 128002 class_ref 135831 // IHMPlugInPool
+  classdiagramsettings member_max_width 0 end
+  xyz 954.1 77.4 2000
+end
+classcanvas 128130 class_ref 134551 // BaseDeDonnees
+  classdiagramsettings hide_attributes yes member_max_width 0 end
+  xyz 1832.9 57.8 2006
+end
+classcanvas 128258 class_ref 135575 // PeripheriqueBluetooth
+  classdiagramsettings member_max_width 0 end
+  xyz 1738.4 1528.3 2018
+end
+classcanvas 128386 class_ref 136215 // Manche
+  classdiagramsettings member_max_width 0 end
+  xyz 94.4 2356.2 3011
+end
+classcanvas 128514 class_ref 136471 // TReception
+  classdiagramsettings member_max_width 0 end
+  xyz 1733 2419.3 3005
+end
+classcanvas 128642 class_ref 134935 // IHMCreerJoueur
+  classdiagramsettings member_max_width 0 end
+  xyz 96.5 82.4 2000
+end
+classcanvas 128770 class_ref 128002 // Coup
+  classdiagramsettings member_max_width 0 end
+  xyz 701.3 2517.4 3011
+end
+classcanvas 128898 class_ref 136599 // Protocole
+  classdiagramsettings member_max_width 0 end
+  xyz 1219.8 2152.8 3010
+end
+classcanvas 129026 class_ref 135703 // Rencontre
+  classdiagramsettings member_max_width 0 end
+  xyz 603.7 1537.5 3005
+end
+classcanvas 129154 class_ref 135447 // IHMNouvelleRencontre
+  classdiagramsettings member_max_width 0 end
+  xyz 94.6 716 2012
+end
+classcanvas 129282 class_ref 135959 // IHMRencontreEnCours
+  classdiagramsettings member_max_width 0 end
+  xyz 1770.9 490.8 2024
+end
+classcanvas 129410 class_ref 134807 // Joueur
+  classdiagramsettings member_max_width 0 end
+  xyz 101.3 1528.9 2000
+end
+relationcanvas 129538 relation_ref 136471 // <unidirectional association>
+  from ref 129282 z 3006 to ref 129026
+  role_a_pos 865 1525 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129666 relation_ref 135575 // <unidirectional association>
+  from ref 129154 z 3006 to ref 129026
+  role_a_pos 642 1460 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129794 relation_ref 137367 // <unidirectional association>
+  from ref 129026 z 3012 stereotype "<<Vector>>" xyz 653 2189.5 3012 to ref 128386
+  role_a_pos 242 2329 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 129922 relation_ref 128258 // <unidirectional association>
+  from ref 129282 z 2025 to point 630.9 1332.3
+  line 130050 z 2025 stereotype "<<Vector>>" xyz 465 1411 3000 to ref 129410
+  role_a_pos 312 1513 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130178 relation_ref 135319 // <unidirectional association>
+  from ref 129154 z 2019 to ref 128258
+  role_a_pos 1556 1560 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130306 relation_ref 134807 // <unidirectional association>
+  from ref 128642 z 2007 to point 1026.6 520.9
+  line 130434 z 2007 to ref 128130
+  role_a_pos 1717 65 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130562 relation_ref 128130 // <unidirectional association>
+  from ref 129282 z 2025 to ref 128130
+  role_a_pos 1913 103 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130690 relation_ref 138135 // <dependency>
+  from ref 128002 z 2025 to point 1426.1 430.9
+  line 130818 z 2025 to ref 129282
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 130946 relation_ref 136983 // <unidirectional association>
+  decenter_end 344
+  from ref 128258 z 2019 to point 2156.1 1546.6
+  line 131074 z 2019 to point 2182.8 1604.7
+  line 131202 z 2019 to ref 128258
+  role_a_pos 2059 1585 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131330 relation_ref 137879 // <dependency>
+  decenter_end 442
+  from ref 128002 z 2001 to ref 128642
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131458 relation_ref 137111 // <unidirectional association>
+  from ref 128258 z 3006 to ref 128514
+  role_a_pos 1869 2391 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131586 relation_ref 135447 // <unidirectional association>
+  from ref 129154 z 2013 to ref 128130
+  role_a_pos 1685 53 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131714 relation_ref 135831 // <unidirectional association>
+  from ref 129154 z 2013 stereotype "<<Vector>>" xyz 290.5 1306 2013 to ref 129410
+  role_a_pos 229 1466 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131842 relation_ref 128642 // <unidirectional association>
+  from ref 129026 z 3006 to ref 128258
+  role_a_pos 1573 1627 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 131970 relation_ref 137495 // <unidirectional association>
+  from ref 129026 z 3006 stereotype "<<Vector>>" xyz 551 1625 3006 to ref 129410
+  role_a_pos 312 1601 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132098 relation_ref 138007 // <dependency>
+  from ref 128002 z 2013 to ref 129154
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132482 relation_ref 138391 // <dependency>
+  from ref 129154 z 3011 to point 1310.9 1414.7
+  line 132610 z 3011 to point 1326.1 1650.9
+  line 132738 z 3011 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132866 relation_ref 136087 // <unidirectional association>
+  from ref 128002 z 2007 to ref 128130
+  role_a_pos 1701 59 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 132994 relation_ref 135703 // <unidirectional association>
+  from ref 129154 z 2013 stereotype "<<List>>" xyz 115 1210 2013 to point 130.9 1344.7
+  line 133122 z 2013 to ref 129410
+  role_a_pos 199 1466 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133250 relation_ref 136343 // <unidirectional association>
+  from ref 129282 z 2025 to ref 128258
+  role_a_pos 1909 1497 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133378 relation_ref 128386 // <unidirectional association>
+  from ref 129026 z 3012 stereotype "<<Vector>>" xyz 691.5 2131 3012 to ref 128770
+  role_a_pos 780 2491 3000 no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 133506 relation_ref 138263 // <dependency>
+  from ref 129282 z 3011 to ref 128898
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

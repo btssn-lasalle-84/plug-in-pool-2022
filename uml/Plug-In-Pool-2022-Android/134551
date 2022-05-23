@@ -1,6 +1,6 @@
 format 224
 "pluginpool" // pluginpool
-  revision 4
+  revision 5
   modified_by 2 "btssn2"
   // class settings
   
@@ -1254,14 +1254,23 @@ ${members}}
     end
 
     class 134935 "IHMCreerJoueur"
-      visibility public 
-      cpp_decl ""
+      visibility public stereotype "activity"
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
 "
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
+      php_decl "${comment}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      python_2_2 python_decl "class ${name}${inherit}:
+${docstring}${members}
+"
+      idl_decl "${comment}${abstract}${custom}valuetype ${name}${inherit} {
+${members}};
+"
       explicit_switch_type ""
       mysql_decl ""
       
@@ -1541,7 +1550,7 @@ Attributs
     end
 
     class 135191 "IHMFinDeRencontre"
-      visibility public 
+      visibility public stereotype "activity"
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -1963,11 +1972,10 @@ Variables
 	comment "@brief Méthode pour afficher les statistiques des joueurs
 "
       end
-
     end
 
     class 135319 "IHMHistoriqueDesRencontres"
-      visibility public 
+      visibility public stereotype "activity"
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -2315,7 +2323,7 @@ Attributs
 	relation 135703 --->
 	  stereotype "List"
 	  a role_name "joueurs" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
 	    classrelation_ref 135703 // joueurs (<unidirectional association>)
 	  b parent class_ref 134807 // Joueur
@@ -2571,7 +2579,7 @@ Attributs
     end
 
     class 135575 "PeripheriqueBluetooth"
-      visibility public 
+      active visibility public 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -2990,7 +2998,6 @@ Variables
 	comment "@brief Renvoie l'objet sous forme de chaîne de caractères
 "
       end
-
     end
 
     class 135703 "Rencontre"
@@ -3508,11 +3515,10 @@ ${members}}
 	
 	
       end
-
     end
 
     class 135831 "IHMPlugInPool"
-      visibility public 
+      visibility public stereotype "activity"
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -3782,7 +3788,7 @@ Attributs
     end
 
     class 135959 "IHMRencontreEnCours"
-      visibility public 
+      visibility public stereotype "activity"
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -4595,7 +4601,7 @@ ${members}}
     end
 
     class 136471 "TReception"
-      visibility public 
+      active visibility public stereotype "thread"
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -4764,7 +4770,6 @@ Attributs
 	
 	
       end
-
     end
 
     class 136599 "Protocole"
@@ -5195,6 +5200,11 @@ ${members}}
       explicit_switch_type ""
       mysql_decl ""
       
+    end
+
+    classdiagram 134530 "version 0.2 resume"
+      classdiagramsettings hide_attributes no hide_operations yes show_members_full_definition yes show_members_visibility yes member_max_width 0 end
+      size A0
     end
   end
 
