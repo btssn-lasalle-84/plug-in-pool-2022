@@ -17,6 +17,8 @@ class Joueur
         return nbFautes;
 !!!130178.java!!!	getNbCoupsTires() : int
         return nbCoupsTires;
+!!!139138.java!!!	getNbManchesGagnees() : int
+        return nbManchesGagnees;
 !!!143383.java!!!	setNom(in nom : String) : void
         this.nom = nom;
 !!!143511.java!!!	setPrenom(in prenom : String) : void
@@ -33,3 +35,5 @@ class Joueur
         ++this.nbCoupsTires;
 !!!130946.java!!!	resetNbBillesEmpochees() : void
         this.nbBillesEmpochees = 0;
+!!!139266.java!!!	augmenterNbManchesGagnees() : void
+        this.nbManchesGagnees++;

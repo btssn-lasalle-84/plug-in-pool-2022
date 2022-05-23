@@ -46,6 +46,9 @@ class IHMRencontreEnCours
 !!!128770.java!!!	demarrerNouvellePartie() : void
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
         peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+        estPremierJoueurChoisi = false;
+        joueurs.get(0).setCouleur("");
+        joueurs.get(1).setCouleur("");
 !!!142615.java!!!	initialiserRessourcesIHMRencontreEnCours() : void
         boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
         boutonFaute = (Button)findViewById(R.id.boutonFaute);
@@ -117,16 +120,14 @@ class IHMRencontreEnCours
             {
                 curseur1.setVisibility(View.VISIBLE);
                 curseur2.setVisibility(View.INVISIBLE);
+                joueurs.get(0).tirerBille(); //Si on change de joueur, alors il a forcément loupé son tir sinon il aurait rejoué
             }
             else if(curseur1.getVisibility() == View.VISIBLE)
             {
                 curseur1.setVisibility(View.INVISIBLE);
                 curseur2.setVisibility(View.VISIBLE);
+                joueurs.get(1).tirerBille();
             }
-        }
-        else
-        {
-            return;
         }
 !!!142743.java!!!	gererHandler() : void
         this.handler = new Handler(this.getMainLooper())
@@ -214,14 +215,14 @@ class IHMRencontreEnCours
         {
             case Protocole.EMPOCHE:
                 Log.d(TAG, "actualiserScores() - cas empoche");
-                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(premierJoueur).getCouleur()))
+                if(curseur1.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
-                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                else if(curseur2.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 break;
@@ -229,12 +230,12 @@ class IHMRencontreEnCours
                 Log.d(TAG, "actualiserScores() - cas faute");
                 if(curseur1.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 else if(curseur2.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 2 : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 break;
@@ -267,9 +268,8 @@ class IHMRencontreEnCours
                         }
                         premierJoueur = i;
                         deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
-                        Log.d(TAG, "Premier joueur : " + joueurs.get(i).getNom() + " " + joueurs.get(i).getPrenom() + " Couleur : " + joueurs.get(i).getCouleur() + " " + i);
-                        Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
-                        Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
+                        Log.d(TAG, "Premier joueur : " + joueurs.get(premierJoueur).getNom() + " " + joueurs.get(premierJoueur).getPrenom() + " Couleur : " + joueurs.get(premierJoueur).getCouleur() + " " + premierJoueur);
+                        Log.d(TAG, "Deuxième joueur : " + joueurs.get(deuxiemeJoueur).getNom() + " " + joueurs.get(deuxiemeJoueur).getPrenom() + " Couleur : " + joueurs.get(deuxiemeJoueur).getCouleur() + " " + deuxiemeJoueur);
                     }
                 })
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener()
@@ -283,10 +283,14 @@ class IHMRencontreEnCours
                 }).show();
         }
 !!!129538.java!!!	terminerRencontre() : void
-        if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        Log.d(TAG, "terminerRencontre()");
+        if(rencontre.estNouvelleManche())
         {
-            Log.d(TAG, "terminerRencontre()");
-
+            demarrerNouvellePartie();
+            rencontre.changerNouvelleManche();
+        }
+        else if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        {
             Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);

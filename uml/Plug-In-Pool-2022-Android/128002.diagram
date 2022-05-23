@@ -17,7 +17,7 @@ fragment 132866 "alt"
   xyzwh 106 727 1995 609 69
 end
 textcanvas 133634 "[2 joueurs sélectionnés ET table connecté] "
-  xyzwh 144 732 2025 281 15
+  xyzwh 141 873 2025 281 15
 classinstance 137602 class_ref 135703 // Rencontre
   name ""   xyz 569 971 2000 life_line_z 2000
 fragment 137730 "loop"
@@ -29,6 +29,16 @@ note 139010 "Crée et exécute l'activité IHMRencontreEnCours"
   xyzwh 361 1331 2000 189 55
 note 139266 "Crée et exécute l'activité IHMNouvelleRencontre"
   xyzwh 69 105 2000 207 61
+fragment 140546 "alt"
+  xyzwh 156.5 582.5 1995 609 69
+end
+textcanvas 140674 "[2 joueurs sélectionnés ET table connecté] "
+  xyzwh 194.5 587.5 2025 281 15
+fragment 141570 "alt"
+  xyzwh 105.5 868.5 1995 609 69
+end
+textcanvas 141698 "[2 joueurs sélectionnés ET table connecté] "
+  xyzwh 142.5 732.5 2025 281 15
 durationcanvas 128258 classinstance_ref 128002 // :Joueur
   xyzwh 40 73 2010 11 40
 end
@@ -78,13 +88,25 @@ durationcanvas 132354 classinstance_ref 128130 // :IHMNouvelleRencontre
   end
 end
 durationcanvas 134786 classinstance_ref 128002 // :Joueur
-  xyzwh 40 831 2010 11 40
+  xyzwh 40 818 2010 11 53
 end
 durationcanvas 134914 classinstance_ref 128130 // :IHMNouvelleRencontre
-  xyzwh 307 832 2010 11 60
+  xyzwh 307 831 2010 11 109
+  overlappingdurationcanvas 140802
+    xyzwh 313 842 2020 11 92
+    overlappingdurationcanvas 141314
+      xyzwh 319 903 2030 11 25
+    end
+  end
 end
 durationcanvas 135810 classinstance_ref 128130 // :IHMNouvelleRencontre
-  xyzwh 307 539 2010 11 71
+  xyzwh 307 539 2010 11 114
+  overlappingdurationcanvas 140034
+    xyzwh 313 569 2020 11 78
+    overlappingdurationcanvas 140290
+      xyzwh 319 615 2030 11 25
+    end
+  end
 end
 durationcanvas 136194 classinstance_ref 128002 // :Joueur
   xyzwh 40 964 2010 11 40
@@ -194,13 +216,13 @@ reflexivemsg 133250 synchronous
   to durationcanvas_ref 133122
   yz 762 2035 explicitmsg "activerBoutonLancerRencontre()"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 327 750
+  label_xy 326 750
 msg 135042 asynchronous
   from durationcanvas_ref 134786
   to durationcanvas_ref 134914
-  yz 832 2015 explicitmsg "clic sur un joueur de la liste"
+  yz 831 2015 explicitmsg "clic sur un joueur de la liste"
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
-  label_xy 89 817
+  label_xy 89 816
 msg 135938 synchronous
   from durationcanvas_ref 131970
   to durationcanvas_ref 135810
@@ -262,6 +284,26 @@ msg 139906 synchronous
   stereotype "<<create>>" xyz 421 1033 3000
   show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
   label_xy 422 1012
+reflexivemsg 140162 synchronous
+  to durationcanvas_ref 140034
+  yz 569 2025 msg operation_ref 132098 // "selectionnerJoueur(inout view : CheckedTextView, in i : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 322 553
+reflexivemsg 140418 synchronous
+  to durationcanvas_ref 140290
+  yz 615 2035 explicitmsg "activerBoutonLancerRencontre()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 326 601
+reflexivemsg 140930 synchronous
+  to durationcanvas_ref 140802
+  yz 842 2025 msg operation_ref 132098 // "selectionnerJoueur(inout view : CheckedTextView, in i : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 328 827
+reflexivemsg 141442 synchronous
+  to durationcanvas_ref 141314
+  yz 903 2035 explicitmsg "activerBoutonLancerRencontre()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 326 885
 line 139138 -_-_
   from ref 139010 z 2036 to ref 138882
 line 139650 -_-_

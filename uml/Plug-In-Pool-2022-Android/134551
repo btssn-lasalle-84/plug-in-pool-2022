@@ -1,6 +1,6 @@
 format 224
 "pluginpool" // pluginpool
-  revision 3
+  revision 4
   modified_by 2 "btssn2"
   // class settings
   
@@ -1127,6 +1127,18 @@ ${members}}
 	
       end
 
+      operation 139138 "getNbManchesGagnees"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
       operation 143383 "setNom"
 	public explicit_return_type "void"
 	nparams 1
@@ -1217,6 +1229,18 @@ ${members}}
       end
 
       operation 130946 "resetNbBillesEmpochees"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139266 "augmenterNbManchesGagnees"
 	public explicit_return_type "void"
 	nparams 0
 	
@@ -1568,6 +1592,19 @@ ${members}}
 	MysqlColumn
       end
 
+      attribute 139138 "EGALITE"
+	class_attribute const_attribute private explicit_type "String"
+	init_value " \"Egalité !\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       classrelation 128002 // rencontre (<unidirectional association>)
 	relation 128002 --->
 	  a role_name "rencontre" private
@@ -1609,7 +1646,28 @@ Variables
 	comment "!< Le bouton permettant de rejouer une rencontre avec les mêmes paramètres'"
       end
 
-      attribute 128386 "joueurGagnant"
+      classrelation 135170 // joueurGagnant (<unidirectional association>)
+	relation 135170 --->
+	  a role_name "joueurGagnant" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 135170 // joueurGagnant (<unidirectional association>)
+	  b parent class_ref 134807 // Joueur
+      end
+
+      attribute 139266 "texteJoueurGagnant"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 139394 "texteGagnant"
 	private explicit_type "TextView"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
@@ -1643,6 +1701,96 @@ Variables
 	idl_decl ""
 	mysql_decl ""
 	MysqlColumn
+      end
+
+      attribute 139522 "precisionJoueur1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 139650 "precisionJoueur2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 139778 "nbfautesJoueur1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 139906 "nbfautesJoueur2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 140034 "nomJoueurStatistiques1"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 140162 "nomJoueurStatistiques2"
+	private explicit_type "TextView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      classrelation 135298 // joueur1 (<unidirectional association>)
+	relation 135298 --->
+	  a role_name "joueur1" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 135298 // joueur1 (<unidirectional association>)
+	  b parent class_ref 134807 // Joueur
+      end
+
+      classrelation 135426 // joueur2 (<unidirectional association>)
+	relation 135426 --->
+	  a role_name "joueur2" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 135426 // joueur2 (<unidirectional association>)
+	  b parent class_ref 134807 // Joueur
       end
 
       operation 137239 "onCreate"
@@ -1756,7 +1904,37 @@ Variables
 "
       end
 
-      operation 128386 "initialiserScoresIHMFinDeRencontre"
+      operation 138626 "initialiserGagnantIHMFinDeRencontre"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressLint(\"SetTextI18n\")
+"
+	
+	
+	
+      end
+
+      operation 138754 "initialiserNbManchesIHMFinDeRencontre"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressLint(\"SetTextI18n\")
+"
+	
+	
+	
+	comment "@brief Méthode pour afficher les manches remportées à la fin d'une rencontre
+"
+      end
+
+      operation 138882 "initialiserDureeIHMFinDeRencontre"
 	private explicit_return_type "void"
 	nparams 0
 	
@@ -1766,7 +1944,26 @@ Variables
 	
 	
 	
+	comment "@brief Méthode pour afficher la durée de la rencontre
+"
       end
+
+      operation 139010 "initialiserStatistiquesFinDeRencontre"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@SuppressLint({\"SetTextI18n\", \"DefaultLocale\"})
+"
+	
+	
+	
+	comment "@brief Méthode pour afficher les statistiques des joueurs
+"
+      end
+
     end
 
     class 135319 "IHMHistoriqueDesRencontres"
@@ -2035,17 +2232,13 @@ Attributs
 	  b parent class_ref 134551 // BaseDeDonnees
       end
 
-      attribute 139287 "handler"
-	private explicit_type "Handler"
-	init_value " null"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+      classrelation 135554 // handler (<unidirectional association>)
+	relation 135554 --->
+	  a role_name "handler" init_value " null" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	    classrelation_ref 135554 // handler (<unidirectional association>)
+	  b parent class_ref 128130 // Handler
       end
 
       classrelation 135575 // rencontre (<unidirectional association>)
@@ -2505,17 +2698,13 @@ Variables
 	MysqlColumn
       end
 
-      attribute 143127 "handler"
-	private explicit_type "Handler"
-	init_value " null"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+      classrelation 135810 // handler (<unidirectional association>)
+	relation 135810 --->
+	  a role_name "handler" init_value " null" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	    classrelation_ref 135810 // handler (<unidirectional association>)
+	  b parent class_ref 128130 // Handler
       end
 
       attribute 143255 "bluetoothAdapter"
@@ -2801,6 +2990,7 @@ Variables
 	comment "@brief Renvoie l'objet sous forme de chaîne de caractères
 "
       end
+
     end
 
     class 135703 "Rencontre"
@@ -2845,6 +3035,19 @@ ${members}}
       attribute 146455 "RENCONTRE_FINIE"
 	class_attribute const_attribute private explicit_type "int"
 	init_value " 1"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 140290 "NOUVELLE_MANCHE"
+	class_attribute private explicit_type "boolean"
+	init_value " false"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
@@ -2934,12 +3137,46 @@ ${members}}
 	MysqlColumn
       end
 
+      attribute 140418 "horodatageDebut"
+	private explicit_type "Date"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 140546 "horodatage"
+	private explicit_type "Date"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
+      attribute 140674 "dureeRencontreSecondes"
+	private explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl ""
+	MysqlColumn
+      end
+
       classrelation 137367 // manches (<unidirectional association>)
 	relation 137367 --->
 	  stereotype "Vector"
 	  a role_name "manches" private
-	    comment "private LocalDateTime horodatage;
-"
 	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
 "
 	    classrelation_ref 137367 // manches (<unidirectional association>)
@@ -2990,15 +3227,6 @@ ${members}}
 	MysqlColumn
       end
 
-      classrelation 128514 // joueurGagnant (<unidirectional association>)
-	relation 128514 --->
-	  a role_name "joueurGagnant" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 128514 // joueurGagnant (<unidirectional association>)
-	  b parent class_ref 134807 // Joueur
-      end
-
       classrelation 128642 // peripheriqueBluetooth (<unidirectional association>)
 	relation 128642 --->
 	  a role_name "peripheriqueBluetooth" init_value " null" private
@@ -3008,17 +3236,13 @@ ${members}}
 	  b parent class_ref 135575 // PeripheriqueBluetooth
       end
 
-      attribute 132610 "handler"
-	private explicit_type "Handler"
-	init_value " null"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+      classrelation 135938 // handler (<unidirectional association>)
+	relation 135938 --->
+	  a role_name "handler" init_value " null" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	    classrelation_ref 135938 // handler (<unidirectional association>)
+	  b parent class_ref 128130 // Handler
       end
 
       operation 146711 "Rencontre"
@@ -3029,8 +3253,6 @@ ${members}}
 	
 	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
   ${body}}
-"
-	java_annotation "@RequiresApi(api = Build.VERSION_CODES.O)
 "
 	
 	
@@ -3150,6 +3372,30 @@ ${members}}
 	
       end
 
+      operation 139394 "getNbManches"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139522 "getHorodatage"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
       operation 147351 "getJoueurs"
 	public return_type class_ref 134807 // Joueur
 	nparams 0
@@ -3160,10 +3406,6 @@ ${members}}
 	
 	
 	
-	comment "public LocalDateTime getHorodatage()
-{
-return this.horodatage;
-}"
       end
 
       operation 147479 "setJoueurs"
@@ -3181,6 +3423,18 @@ return this.horodatage;
 
       operation 131842 "getNbBillesCouleur"
 	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139650 "estNouvelleManche"
+	public explicit_return_type "boolean"
 	nparams 0
 	
 	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
@@ -3212,6 +3466,42 @@ return this.horodatage;
 	  param in name "nbManchesGagnantes" explicit_type "int"
 	
 	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139778 "setHorodatageDebut"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 139906 "calculerDureeRencontre"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 140034 "changerNouvelleManche"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
   ${body}}
 "
 	
@@ -3619,17 +3909,13 @@ Attributs
 	  b parent class_ref 134551 // BaseDeDonnees
       end
 
-      attribute 140567 "handler"
-	private explicit_type "Handler"
-	init_value " null"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+      classrelation 135682 // handler (<unidirectional association>)
+	relation 135682 --->
+	  a role_name "handler" init_value " null" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
+	    classrelation_ref 135682 // handler (<unidirectional association>)
+	  b parent class_ref 128130 // Handler
       end
 
       classrelation 136471 // rencontre (<unidirectional association>)
@@ -4099,7 +4385,7 @@ Attributs
 	
 	
 	
-	comment "@brief Méthode appelée à la fin d'une rencontre afin de changer de page, afficher les scores finaux et enregistrer la rencontre
+	comment "@brief Méthode appelée à la fin d'une manche afin de commencer une nouvelle manche ou bien de finir la rencontre
 "
       end
 
@@ -4347,19 +4633,17 @@ ${members}}
 !< TAG pour les logs"
       end
 
-      attribute 149399 "handlerUI"
-	package explicit_type "Handler"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl ""
-	MysqlColumn
-	comment "Attributs
+      classrelation 136066 // handlerUI (<unidirectional association>)
+	relation 136066 --->
+	  a role_name "handlerUI" package
+	    comment "
+Attributs
 
 "
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 136066 // handlerUI (<unidirectional association>)
+	  b parent class_ref 128130 // Handler
       end
 
       attribute 149527 "receiveStream"
@@ -4480,6 +4764,7 @@ ${members}}
 	
 	
       end
+
     end
 
     class 136599 "Protocole"
@@ -4966,13 +5251,13 @@ ${definition}"
       java_src "${comment}
 ${package}
 ${imports}
-import androidx.appcompat.app.AppCompatActivity;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 ${definition}"
       associated_elems
 	class_ref 135191 // IHMFinDeRencontre
@@ -5090,13 +5375,10 @@ ${definition}"
       java_src "${comment}
 ${package}
 ${imports}
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -5104,7 +5386,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.Vector;
 ${definition}"
       associated_elems
@@ -5178,14 +5461,10 @@ ${definition}"
       java_src "${comment}
 ${package}
 ${imports}
-import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
-import androidx.annotation.RequiresApi;
-import com.google.android.material.tabs.TabLayout;
 import java.io.Serializable;
-import java.time.*;
+import java.util.Date;
 import java.util.Vector;
 ${definition}"
       associated_elems
