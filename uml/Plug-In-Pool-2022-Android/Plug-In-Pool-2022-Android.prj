@@ -1,6 +1,6 @@
 format 224
 "Plug-In-Pool-2022-Android"
-  revision 13
+  revision 14
   modified_by 2 "btssn2"
   java_root_dir "../../mobile-pool/app/src/main/java/com/lasalle/pluginpool/"
   mysql_root_dir "../../sql/"
@@ -598,6 +598,16 @@ format 224
 
     sequencediagram 128002 "ds Lancer une rencontre"
       sequencediagramsettings show_stereotype_properties yes end
+      overlapping_bars size A0
+    end
+
+    sequencediagram 141058 "ds Editer un joueur"
+      sequencediagramsettings end
+      overlapping_bars size A0
+    end
+
+    sequencediagram 141186 "ds Gérer une rencontre"
+      sequencediagramsettings end
       overlapping_bars size A0
     end
   end

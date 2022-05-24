@@ -1,6 +1,6 @@
 format 224
 "pluginpool" // pluginpool
-  revision 5
+  revision 6
   modified_by 2 "btssn2"
   // class settings
   
@@ -2231,15 +2231,6 @@ Attributs
 	  b parent class_ref 135575 // PeripheriqueBluetooth
       end
 
-      classrelation 135447 // baseDeDonnees (<unidirectional association>)
-	relation 135447 --->
-	  a role_name "baseDeDonnees" init_value " null" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 135447 // baseDeDonnees (<unidirectional association>)
-	  b parent class_ref 134551 // BaseDeDonnees
-      end
-
       classrelation 135554 // handler (<unidirectional association>)
 	relation 135554 --->
 	  a role_name "handler" init_value " null" private
@@ -2575,6 +2566,15 @@ Attributs
 	  a public
 	    classrelation_ref 138391 // <dependency>
 	  b parent class_ref 136599 // Protocole
+      end
+
+      classrelation 142594 // baseDeDonnees (<unidirectional association>)
+	relation 142594 --->
+	  a role_name "baseDeDonnees" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 142594 // baseDeDonnees (<unidirectional association>)
+	  b parent class_ref 134551 // BaseDeDonnees
       end
     end
 
@@ -3558,19 +3558,6 @@ ${members}}
 !< TAG pour les logs"
       end
 
-      classrelation 136087 // baseDeDonnees (<unidirectional association>)
-	relation 136087 --->
-	  a role_name "baseDeDonnees" init_value " null" private
-	    comment "
-Attributs
-
-"
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 136087 // baseDeDonnees (<unidirectional association>)
-	  b parent class_ref 134551 // BaseDeDonnees
-      end
-
       attribute 139799 "bluetoothAdapter"
 	private explicit_type "BluetoothAdapter"
 	init_value " BluetoothAdapter.getDefaultAdapter()"
@@ -3785,10 +3772,19 @@ Attributs
 	    classrelation_ref 138135 // <dependency>
 	  b parent class_ref 135959 // IHMRencontreEnCours
       end
+
+      classrelation 142722 // baseDeDonnees (<unidirectional association>)
+	relation 142722 --->
+	  a role_name "baseDeDonnees" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 142722 // baseDeDonnees (<unidirectional association>)
+	  b parent class_ref 134551 // BaseDeDonnees
+      end
     end
 
     class 135959 "IHMRencontreEnCours"
-      visibility public stereotype "activity"
+      active visibility public stereotype "activity"
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${static}${final}${abstract}class ${name}${extends}${implements} {
 ${members}}
@@ -5203,7 +5199,7 @@ ${members}}
     end
 
     classdiagram 134530 "version 0.2 resume"
-      classdiagramsettings hide_attributes no hide_operations yes show_members_full_definition yes show_members_visibility yes member_max_width 0 end
+      classdiagramsettings draw_all_relations no hide_attributes no hide_operations yes show_members_full_definition yes show_members_visibility yes member_max_width 0 end
       size A0
     end
   end

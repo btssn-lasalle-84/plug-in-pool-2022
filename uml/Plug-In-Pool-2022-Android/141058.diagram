@@ -1,0 +1,162 @@
+format 224
+
+classinstance 128002 class_ref 134807 // Joueur
+  drawing_mode actor  name ""   xyz 62 49 2000 life_line_z 2000
+classinstance 128130 class_ref 134935 // IHMCreerJoueur
+  name ""   xyz 385 39 2000 life_line_z 2000
+note 128642 "Crée et exécute l'activité IHMCreerJoueur"
+  xyzwh 168 158 2000 201 53
+classinstance 129154 class_ref 134551 // BaseDeDonnees
+  name ""   xyz 725 36 2000 life_line_z 2000
+fragment 131714 "alt"
+  xyzwh 400 447 1995 432 96
+end
+textcanvas 131842 "[boutonValider]"
+  xyzwh 464 452 2000 98 15
+durationcanvas 128258 classinstance_ref 128002 // :Joueur
+  xyzwh 83 113 2010 11 40
+end
+durationcanvas 128386 classinstance_ref 128130 // :IHMCreerJoueur
+  xyzwh 441 114 2010 11 237
+  overlappingdurationcanvas 128898
+    xyzwh 447 122 2020 11 223
+    overlappingdurationcanvas 129282
+      xyzwh 453 161 2030 11 38
+    end
+    overlappingdurationcanvas 129794
+      xyzwh 453 222 2030 11 117
+      overlappingdurationcanvas 130050
+	xyzwh 459 256 2040 11 77
+	overlappingdurationcanvas 130562
+	  xyzwh 465 302 2050 11 25
+	end
+      end
+    end
+  end
+end
+durationcanvas 129538 classinstance_ref 129154 // :BaseDeDonnees
+  xyzwh 783 182 2010 11 25
+end
+durationcanvas 130306 classinstance_ref 129154 // :BaseDeDonnees
+  xyzwh 783 270 2010 11 30
+end
+durationcanvas 131074 classinstance_ref 128002 // :Joueur
+  xyzwh 83 411 2010 11 45
+end
+durationcanvas 131202 classinstance_ref 128130 // :IHMCreerJoueur
+  xyzwh 441 411 2010 11 147
+  overlappingdurationcanvas 131458
+    xyzwh 447 427 2020 11 126
+  end
+end
+durationcanvas 131970 classinstance_ref 129154 // :BaseDeDonnees
+  xyzwh 783 495 2010 11 26
+end
+durationcanvas 132226 classinstance_ref 128002 // :Joueur
+  xyzwh 83 587 2010 11 41
+end
+durationcanvas 132354 classinstance_ref 128130 // :IHMCreerJoueur
+  xyzwh 441 587 2010 11 155
+  overlappingdurationcanvas 132610
+    xyzwh 447 600 2020 11 25
+  end
+  overlappingdurationcanvas 132866
+    xyzwh 447 651 2020 11 85
+    overlappingdurationcanvas 133378
+      xyzwh 453 706 2030 11 25
+    end
+  end
+end
+durationcanvas 133122 classinstance_ref 129154 // :BaseDeDonnees
+  xyzwh 783 673 2010 11 25
+end
+msg 128514 synchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 128386
+  yz 114 2015 explicitmsg "Clic sur la bouton JOUEURS"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 173 99
+reflexivemsg 129026 synchronous
+  to durationcanvas_ref 128898
+  yz 122 2025 msg operation_ref 135703 // "onCreate(inout savedInstanceState : Bundle) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 458 106
+reflexivemsg 129410 synchronous
+  to durationcanvas_ref 129282
+  yz 161 2035 msg operation_ref 136471 // "ouvrirBaseDeDonnees() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 461 146
+msg 129666 synchronous
+  from durationcanvas_ref 129282
+  to durationcanvas_ref 129538
+  yz 182 2040 msg operation_ref 134679 // "ouvrir() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 599 171
+reflexivemsg 129922 synchronous
+  to durationcanvas_ref 129794
+  yz 222 2035 msg operation_ref 136599 // "initialiserRessourcesIHMCreerJoueur() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 463 207
+reflexivemsg 130178 synchronous
+  to durationcanvas_ref 130050
+  yz 256 2045 msg operation_ref 136855 // "listerJoueurs() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 471 239
+msg 130434 synchronous
+  from durationcanvas_ref 130050
+  to durationcanvas_ref 130306
+  yz 270 2045 msg operation_ref 135063 // "getJoueurs() : Joueur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 588 259
+reflexivemsg 130690 synchronous
+  to durationcanvas_ref 130562
+  yz 302 2055 explicitmsg "afficherJoueurs()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 474 285
+msg 131330 synchronous
+  from durationcanvas_ref 131074
+  to durationcanvas_ref 131202
+  yz 411 2015 explicitmsg "Clic long sur un Joueur"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 192 396
+reflexivemsg 131586 synchronous
+  to durationcanvas_ref 131458
+  yz 427 2025 explicitmsg "demanderSuppression()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 456 409
+msg 132098 synchronous
+  from durationcanvas_ref 131458
+  to durationcanvas_ref 131970
+  yz 495 2025 msg operation_ref 135319 // "supprimerJoueur(inout joueur : Joueur) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 560 483
+msg 132482 synchronous
+  from durationcanvas_ref 132226
+  to durationcanvas_ref 132354
+  yz 587 2015 explicitmsg "Clic sur le bouton VALIDER"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 177 572
+reflexivemsg 132738 synchronous
+  to durationcanvas_ref 132610
+  yz 600 2025 msg operation_ref 136983 // "cacherClavier(inout activity : Activity) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 458 583
+reflexivemsg 132994 synchronous
+  to durationcanvas_ref 132866
+  yz 651 2025 msg operation_ref 136727 // "creerJoueur() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 461 636
+msg 133250 synchronous
+  from durationcanvas_ref 132866
+  to durationcanvas_ref 133122
+  yz 673 2025 msg operation_ref 135191 // "insererJoueur(inout joueur : Joueur) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 570 658
+reflexivemsg 133506 synchronous
+  to durationcanvas_ref 133378
+  yz 706 2035 msg operation_ref 136855 // "listerJoueurs() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 463 691
+line 128770 -_-_
+  from ref 128642 z 2016 to ref 128514
+end
