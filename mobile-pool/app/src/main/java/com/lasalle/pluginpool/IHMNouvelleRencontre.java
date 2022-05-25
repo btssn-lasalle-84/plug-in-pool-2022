@@ -288,6 +288,11 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         });
     }
 
+    /**
+     * Méthode pour activer le bouton LANCER LA RENCONTRE une fois les paramètres saisis
+     * @param view
+     * @param i
+     */
     private void selectionnerJoueur(CheckedTextView view, int i)
     {
         if(listeJoueurs.getCheckedItemCount() > NB_JOUEURS)
@@ -307,6 +312,10 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         }
     }
 
+    /**
+     * Méthode pour afficher la liste des joueurs dans la base de données sur l'IHM
+     * @param nomsJoueurs
+     */
     private void afficherJoueurs(List<String> nomsJoueurs)
     {
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, nomsJoueurs);

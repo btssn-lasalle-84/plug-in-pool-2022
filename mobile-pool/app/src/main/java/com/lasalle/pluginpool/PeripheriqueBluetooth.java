@@ -63,6 +63,11 @@ public class PeripheriqueBluetooth extends Thread
         this.handler = handler;
     }
 
+    /**
+     * Méthode pour empêcher l'instanciation de plusieurs objets de cette classe (singleton)
+     * @param handler
+     * @return
+     */
     public static PeripheriqueBluetooth getInstance(Handler handler)
     {
         if (peripheriqueBluetooth == null)
@@ -78,6 +83,10 @@ public class PeripheriqueBluetooth extends Thread
         return peripheriqueBluetooth;
     }
 
+    /**
+     * @brief Méthode pour affecter un handler à un objet tReception
+     * @param handler
+     */
     public void setHandler(Handler handler)
     {
         this.handler = handler;
@@ -85,6 +94,9 @@ public class PeripheriqueBluetooth extends Thread
             tReception.setHandlerUI(handler);
     }
 
+    /**
+     * @brief Méthode pour forcer l'activation du bluetooth
+     */
     @SuppressLint("MissingPermission")
     private void activerBluetooth()
     {
@@ -96,6 +108,11 @@ public class PeripheriqueBluetooth extends Thread
         }
     }
 
+    /**
+     * Méthode pour rechercher une table en particulier
+     * @param idTable
+     * @return
+     */
     @SuppressLint("MissingPermission")
     public boolean rechercherTable(String idTable)
     {
@@ -118,6 +135,9 @@ public class PeripheriqueBluetooth extends Thread
         return false;
     }
 
+    /**
+     * @brief Méthode pour la création d'un socket
+     */
     @SuppressLint("MissingPermission")
     private void creerSocket()
     {

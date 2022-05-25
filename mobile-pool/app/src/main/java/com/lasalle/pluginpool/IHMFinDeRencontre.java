@@ -158,6 +158,9 @@ public class IHMFinDeRencontre extends AppCompatActivity
             });
     }
 
+    /**
+     * @brief Méthode pour afficher le nom du joueur Gagnant sur l'IHM
+     */
     @SuppressLint("SetTextI18n")
     private void initialiserGagnantIHMFinDeRencontre()
     {
@@ -218,18 +221,16 @@ public class IHMFinDeRencontre extends AppCompatActivity
 
         joueur1 = rencontre.getJoueurs().get(0);
         joueur2 = rencontre.getJoueurs().get(1);
-        double precision1 = (((double)joueur1.getNbBillesTouchees() / (double)joueur1.getNbCoupsTires()) * 100);
-        double precision2 = (((double)joueur2.getNbBillesTouchees() / (double)joueur2.getNbCoupsTires()) * 100);
         Log.d(TAG, "joueur1.getNbBillesTouchees() : " + joueur1.getNbBillesTouchees() + " joueur1.getNbCoupsTires() : " + joueur1.getNbCoupsTires());
         Log.d(TAG, "joueur2.getNbBillesTouchees() : " + joueur2.getNbBillesTouchees() + " joueur2.getNbCoupsTires() : " + joueur2.getNbCoupsTires());
-        Log.d(TAG, "joueur1 precision : " + precision1);
-        Log.d(TAG, "joueur2 precision : " + precision2);
+        Log.d(TAG, "joueur1 precision : " + joueur1.getPrecision());
+        Log.d(TAG, "joueur2 precision : " + joueur2.getPrecision());
 
         nomJoueurStatistiques1.setText(joueur1.getNom() + " " + joueur1.getPrenom()  + " :");
         nomJoueurStatistiques2.setText(joueur2.getNom() + " " + joueur2.getPrenom()  + " :");
         nbfautesJoueur1.setText(String.valueOf(joueur1.getNbFautes()));
         nbfautesJoueur2.setText(String.valueOf(joueur2.getNbFautes()));
-        precisionJoueur1.setText(String.format("%.2f", precision1) + "%");
-        precisionJoueur2.setText(String.format("%.2f", precision2) + "%");
+        precisionJoueur1.setText(String.format("%.2f", joueur1.getPrecision()) + "%");
+        precisionJoueur2.setText(String.format("%.2f", joueur2.getPrecision()) + "%");
     }
 }

@@ -238,6 +238,9 @@ public class Rencontre implements Serializable
         this.horodatageDebut = new Date();
     }
 
+    /**
+     * @brief Méthode pour calculer la durée d'une rencontre
+     */
     public void calculerDureeRencontre()
     {
         Date now = new Date();
@@ -246,6 +249,9 @@ public class Rencontre implements Serializable
         dureeRencontreSecondes = (int)(h / 1000);
     }
 
+    /**
+     * @brief Méthode appelée à la fin d'une manche
+     */
     public void changerNouvelleManche()
     {
         NOUVELLE_MANCHE = !NOUVELLE_MANCHE;

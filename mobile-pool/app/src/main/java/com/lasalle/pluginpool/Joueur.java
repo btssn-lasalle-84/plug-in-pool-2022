@@ -38,6 +38,14 @@ public class Joueur implements Serializable
     }
 
     /**
+     * @brief Méthode pour calculer la précision d'un joueur
+     */
+    public double getPrecision()
+    {
+        return (((double)this.getNbBillesTouchees() / (double)this.getNbCoupsTires()) * 100);
+    }
+
+    /**
      * @brief Accesseurs
      */
     public String getNom()

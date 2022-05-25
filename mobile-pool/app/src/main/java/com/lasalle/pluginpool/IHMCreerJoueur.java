@@ -239,6 +239,9 @@ public class IHMCreerJoueur extends AppCompatActivity
          */
     }
 
+    /**
+     * @brief Accesseurs
+     */
     private Activity getActivity()
     {
         return this;
