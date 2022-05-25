@@ -142,20 +142,32 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         listeJoueurs = (ListView)findViewById(R.id.listeJoueursParametres);
         ouvrirBaseDeDonnees();
         listerJoueurs();
-        initialiserRencontre();
         boutonLancerRencontre.setOnClickListener(
         new View.OnClickListener()
         {
             public void onClick(View v)
             {
+                initialiserRencontre();
                 ajouterJoueursSelectionnes();
-
+                ajouterNbManches();
+                rencontre.setHorodatageDebut();
+                Log.d(TAG, "nbManches : " + rencontre.getNbManchesGagnantes());
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités
                 intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * @brief Ajoute les joueurs sélectionnés pour cette rencontre
+     */
+    private void ajouterNbManches()
+    {
+        nbManchesGagnantes = Integer.parseInt(nbManches.getText().toString());
+        rencontre.setNbManchesGagnantes(nbManchesGagnantes);
+        Log.d(TAG, "ajouterNbManches () : nbManchesGagnantes : " + nbManchesGagnantes);
     }
 
     /**
@@ -187,7 +199,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void initialiserRencontre()
     {
         joueursRencontre = new Vector<Joueur>();
-        nbManchesGagnantes = Integer.parseInt(nbManches.getText().toString());
         rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
     }
 
@@ -252,7 +263,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     /**
      * @brief Liste les joueurs disponibles
      */
-    private void listerJoueurs()
+    private void
+    listerJoueurs()
     {
         Log.d(TAG, "listerJoueurs()");
         joueurs = baseDeDonnees.getJoueurs();
@@ -264,32 +276,50 @@ public class IHMNouvelleRencontre extends AppCompatActivity
             nomsJoueurs.add(joueur.getNom() + " " + joueur.getPrenom());
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, nomsJoueurs);
-        listeJoueurs.setAdapter(adapter);
-
-        this.listeJoueurs.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        afficherJoueurs(nomsJoueurs);
 
         this.listeJoueurs.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
             {
-                if(listeJoueurs.getCheckedItemCount() > NB_JOUEURS)
-                {
-                    Toast.makeText(IHMNouvelleRencontre.this, "2 Joueurs maximum !", Toast.LENGTH_SHORT).show();
-                    listeJoueurs.setItemChecked(i, false);
-                }
-                else
-                {
-                    CheckedTextView v = (CheckedTextView)view;
-                    boolean estCochee = v.isChecked();
-                    listeJoueurs.setItemChecked(i, estCochee);
-                    if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
-                        boutonLancerRencontre.setEnabled(true);
-                    else
-                        boutonLancerRencontre.setEnabled(false);
-                }
+                selectionnerJoueur((CheckedTextView) view, i);
             }
         });
+    }
+
+    /**
+     * Méthode pour activer le bouton LANCER LA RENCONTRE une fois les paramètres saisis
+     * @param view
+     * @param i
+     */
+    private void selectionnerJoueur(CheckedTextView view, int i)
+    {
+        if(listeJoueurs.getCheckedItemCount() > NB_JOUEURS)
+        {
+            Toast.makeText(IHMNouvelleRencontre.this, "2 Joueurs maximum !", Toast.LENGTH_SHORT).show();
+            listeJoueurs.setItemChecked(i, false);
+        }
+        else
+        {
+            CheckedTextView v = view;
+            boolean estCochee = v.isChecked();
+            listeJoueurs.setItemChecked(i, estCochee);
+            if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
+                boutonLancerRencontre.setEnabled(true);
+            else
+                boutonLancerRencontre.setEnabled(false);
+        }
+    }
+
+    /**
+     * Méthode pour afficher la liste des joueurs dans la base de données sur l'IHM
+     * @param nomsJoueurs
+     */
+    private void afficherJoueurs(List<String> nomsJoueurs)
+    {
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, nomsJoueurs);
+        listeJoueurs.setAdapter(adapter);
+        this.listeJoueurs.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
 }

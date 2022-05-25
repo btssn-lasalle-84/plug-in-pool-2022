@@ -6,14 +6,10 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Vector;
 
@@ -39,6 +36,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private static final String TAG = "_IHMRencontreEnCours_";  //!< TAG pour les logs
     private static final int JOUEUR_1 = 0;  //!< indice du joueur n°1
     private static final int JOUEUR_2 = 1;  //!< indice du joueur n°2
+    private static final int RENCONTRE_ENCOURS = 0;
+    private static final int RENCONTRE_FINIE = 1;
+    private static final String RENCONTRE = "RENCONTRE";
 
     /**
      * Attributs
@@ -172,6 +172,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
     {
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
         peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
+        estPremierJoueurChoisi = false;
+        joueurs.get(0).setCouleur("");
+        joueurs.get(1).setCouleur("");
     }
 
     /**
@@ -269,16 +272,14 @@ public class IHMRencontreEnCours extends AppCompatActivity
             {
                 curseur1.setVisibility(View.VISIBLE);
                 curseur2.setVisibility(View.INVISIBLE);
+                joueurs.get(0).tirerBille(); //Si on change de joueur, alors il a forcément loupé son tir sinon il aurait rejoué
             }
             else if(curseur1.getVisibility() == View.VISIBLE)
             {
                 curseur1.setVisibility(View.INVISIBLE);
                 curseur2.setVisibility(View.VISIBLE);
+                joueurs.get(1).tirerBille();
             }
-        }
-        else
-        {
-            return;
         }
     }
 
@@ -349,6 +350,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 }
                 rencontre.jouerCoup();
                 actualiserScores(champs);
+                terminerRencontre();
                 break;
             case Protocole.FAUTE:
                 // $PLUG;FAUTE;{COULEUR};{BLOUSE};\r\n
@@ -385,14 +387,14 @@ public class IHMRencontreEnCours extends AppCompatActivity
         {
             case Protocole.EMPOCHE:
                 Log.d(TAG, "actualiserScores() - cas empoche");
-                if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(premierJoueur).getCouleur()))
+                if(curseur1.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
-                else if(champs[Protocole.CHAMP_COULEUR].equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                else if(curseur2.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 break;
@@ -400,12 +402,12 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 Log.d(TAG, "actualiserScores() - cas faute");
                 if(curseur1.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 else if(curseur2.getVisibility() == View.VISIBLE)
                 {
-                    Log.d(TAG, "actualiserScores() : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
+                    Log.d(TAG, "actualiserScores() joueur 2 : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
                 }
                 break;
@@ -445,9 +447,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
                         }
                         premierJoueur = i;
                         deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
-                        Log.d(TAG, "Premier joueur : " + joueurs.get(i).getNom() + " " + joueurs.get(i).getPrenom() + " Couleur : " + joueurs.get(i).getCouleur() + " " + i);
-                        Log.d(TAG, joueurs.get(JOUEUR_1).getNom() + " " + joueurs.get(JOUEUR_1).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_1).getCouleur());
-                        Log.d(TAG, joueurs.get(JOUEUR_2).getNom() + " " + joueurs.get(JOUEUR_2).getPrenom() + " Couleur : " + joueurs.get(JOUEUR_2).getCouleur());
+                        Log.d(TAG, "Premier joueur : " + joueurs.get(premierJoueur).getNom() + " " + joueurs.get(premierJoueur).getPrenom() + " Couleur : " + joueurs.get(premierJoueur).getCouleur() + " " + premierJoueur);
+                        Log.d(TAG, "Deuxième joueur : " + joueurs.get(deuxiemeJoueur).getNom() + " " + joueurs.get(deuxiemeJoueur).getPrenom() + " Couleur : " + joueurs.get(deuxiemeJoueur).getCouleur() + " " + deuxiemeJoueur);
                     }
                 })
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener()
@@ -459,6 +460,25 @@ public class IHMRencontreEnCours extends AppCompatActivity
                         initialiserScores();
                     }
                 }).show();
+        }
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche afin de commencer une nouvelle manche ou bien de finir la rencontre
+     */
+    private void terminerRencontre()
+    {
+        Log.d(TAG, "terminerRencontre()");
+        if(rencontre.estNouvelleManche())
+        {
+            demarrerNouvellePartie();
+            rencontre.changerNouvelleManche();
+        }
+        else if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
+        {
+            Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
+            intent.putExtra(RENCONTRE, rencontre);
+            startActivity(intent);
         }
     }
 }

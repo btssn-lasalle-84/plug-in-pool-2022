@@ -6,17 +6,11 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
-import com.google.android.material.tabs.TabLayout;
-
 import java.io.Serializable;
-import java.time.*;
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -31,6 +25,7 @@ public class Rencontre implements Serializable
      */
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
+    private static boolean NOUVELLE_MANCHE = false;
     private static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
     private static final int NB_POCHES = 6;
     private static final String TAG = "_Rencontre_";
@@ -41,7 +36,9 @@ public class Rencontre implements Serializable
     private int nbManchesGagnantes;
     private int nbManches;
     private int etatRencontre;
-    //private LocalDateTime horodatage;
+    private Date horodatageDebut;
+    private Date horodatage;
+    private int dureeRencontreSecondes;
     private Vector<Manche> manches;
     private Vector<Joueur> joueurs;
     private Vector<Coup> coups;
@@ -53,13 +50,11 @@ public class Rencontre implements Serializable
     /**
      * @brief Constructeur
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
-        //this.horodatage = LocalDateTime.now(ZoneId.systemDefault());
         this.joueurs = joueurs;
         this.coups = new Vector<>();
     }
@@ -74,6 +69,7 @@ public class Rencontre implements Serializable
     {
         Coup coup = new Coup(couleur, blouse);
         coups.add(coup);
+        Log.d(TAG, "stockerCoup() : couleur " + couleur + " blouse : " + blouse);
     }
 
     /**
@@ -81,15 +77,17 @@ public class Rencontre implements Serializable
      */
     public void jouerCoup()
     {
-        Log.d(TAG, "jouerRencontre()");
+        Log.d(TAG, "jouerCoup()");
         String couleur = "";
-        int j = 0;
-        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
+        String blouse = "";
+        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(premierJoueur).getCouleur().equals("J"))
         {
-            while(j < coups.size())
+            while(coups.size() > 0)
             {
-                couleur = coups.get(j).getCouleur();
-                Log.d(TAG, "jouerCoup() : coup n° " + j + " - couleur " + couleur);
+                couleur = coups.lastElement().getCouleur();
+                blouse = coups.lastElement().getBlouse();
+                coups.remove(coups.lastElement());
+                Log.d(TAG, "jouerCoup() : couleur " + couleur + " blouse : " + blouse);
                 if (etatRencontre == RENCONTRE_ENCOURS)
                 {
                     if (nbManches < nbManchesGagnantes)
@@ -99,27 +97,29 @@ public class Rencontre implements Serializable
                             joueurs.get(0).empocherBille();
                             joueurs.get(0).toucherBille();
                             joueurs.get(0).tirerBille();
-                            coups.remove(coups.lastElement());
-                            Log.d(TAG, "jouerRencontre() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                            Log.d(TAG, "jouerCoup() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
                         }
                         else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
                         {
                             joueurs.get(1).empocherBille();
                             joueurs.get(1).toucherBille();
                             joueurs.get(1).tirerBille();
-                            coups.remove(coups.lastElement());
-                            Log.d(TAG, "jouerRencontre() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                            Log.d(TAG, "jouerCoup() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
                         }
 
                         if (joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
                         {
-                            Log.d(TAG, "jouerRencontre() : manche finie");
-                            rejouerRencontre();
+                            Log.d(TAG, "jouerCoup() : manche finie");
+                            if(joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                            {
+                                joueurs.get(premierJoueur).augmenterNbManchesGagnees();
+                            }
+                            else if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                            {
+                                joueurs.get(deuxiemeJoueur).augmenterNbManchesGagnees();
+                            }
+                            terminerManche();
                         }
-                    }
-                    else
-                    {
-                        terminerRencontre();
                     }
                 }
             }
@@ -129,21 +129,34 @@ public class Rencontre implements Serializable
     /**
      * @brief Méthode appelée à la fin d'une rencontre
      */
-    private void terminerRencontre()
+    protected void terminerRencontre()
     {
         Log.d(TAG, "terminerRencontre()");
         etatRencontre = RENCONTRE_FINIE;
+        calculerDureeRencontre();
     }
 
     /**
      * @brief Méthode appelée à la fin d'une manche
      */
-    private void rejouerRencontre()
+    private void terminerManche()
     {
-        Log.d(TAG, "rejouerRencontre()");
-        joueurs.get(0).resetNbBillesEmpochees();
-        joueurs.get(1).resetNbBillesEmpochees();
+        Log.d(TAG, "terminerManche()");
         nbManches++;
+        Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
+        Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
+        if(nbManches < nbManchesGagnantes)
+        {
+            Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
+            NOUVELLE_MANCHE = true;
+            joueurs.get(0).resetNbBillesEmpochees();
+            joueurs.get(1).resetNbBillesEmpochees();
+        }
+        else
+        {
+            Log.d(TAG, "terminerManche() : terminerRencontre()");
+            terminerRencontre();
+        }
     }
 
     /**
@@ -153,10 +166,12 @@ public class Rencontre implements Serializable
     {
         if(couleur.equals(Protocole.JOUEUR_ROUGE))
         {
+            joueurs.get(0).tirerBille();
             joueurs.get(0).augmenterFautes();
         }
         else if(couleur.equals(Protocole.JOUEUR_JAUNE))
         {
+            joueurs.get(1).tirerBille();
             joueurs.get(1).augmenterFautes();
         }
     }
@@ -174,10 +189,15 @@ public class Rencontre implements Serializable
         return this.nbManchesGagnantes;
     }
 
-    /*public LocalDateTime getHorodatage()
+    public int getNbManches()
     {
-        return this.horodatage;
-    }*/
+        return this.nbManches;
+    }
+
+    public String getHorodatage()
+    {
+        return String.format("%sm%ss", dureeRencontreSecondes/60, dureeRencontreSecondes%60);
+    }
 
     public Vector<Joueur> getJoueurs()
     {
@@ -194,6 +214,11 @@ public class Rencontre implements Serializable
         return this.NB_BILLES_COULEUR - 1;
     }
 
+    public boolean estNouvelleManche()
+    {
+        return this.NOUVELLE_MANCHE;
+    }
+
     /**
      * @brief Mutateurs
      */
@@ -207,8 +232,28 @@ public class Rencontre implements Serializable
         this.nbManchesGagnantes = nbManchesGagnantes;
     }
 
-    /*public void setHorodatage(LocalDateTime horodatage)
+    public void setHorodatageDebut()
     {
-        this.horodatage = horodatage;
-    }*/
+        Log.d(TAG, "setHorodatageDebut()");
+        this.horodatageDebut = new Date();
+    }
+
+    /**
+     * @brief Méthode pour calculer la durée d'une rencontre
+     */
+    public void calculerDureeRencontre()
+    {
+        Date now = new Date();
+        long h = now.getTime() - this.horodatageDebut.getTime();
+        Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
+        dureeRencontreSecondes = (int)(h / 1000);
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche
+     */
+    public void changerNouvelleManche()
+    {
+        NOUVELLE_MANCHE = !NOUVELLE_MANCHE;
+    }
 }

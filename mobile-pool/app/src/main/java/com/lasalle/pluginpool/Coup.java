@@ -28,6 +28,9 @@ public class Coup
         this.blouse = blouse;
     }
 
+    /**
+     * @brief Accesseurs
+     */
     public String getCouleur()
     {
         return this.couleur;

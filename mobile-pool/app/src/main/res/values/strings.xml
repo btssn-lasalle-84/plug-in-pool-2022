@@ -22,4 +22,13 @@
     <string name="valeurDefautNbRencontre">1</string>
     <string name="joueur1">joueur1</string>
     <string name="joueur2">joueur2</string>
+    <string name="gagnant">Gagnant :</string>
+    <string name="dur_e_de_la_rencontre">Durée de la rencontre :</string>
+    <string name="_0_manches">0 manches</string>
+    <string name="joueurgagnant">joueurGagnant</string>
+    <string name="_00m00s">00m00s</string>
+    <string name="_0">0</string>
+    <string name="nombre_de_fautes">Nombre de fautes :\ </string>
+    <string name="_0pourcent">0%</string>
+    <string name="pr_cision_d_empochage">Précision d\'empochage :\ </string>
 </resources>
