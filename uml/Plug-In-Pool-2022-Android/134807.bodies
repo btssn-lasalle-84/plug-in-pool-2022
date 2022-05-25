@@ -1,0 +1,39 @@
+class Joueur
+!!!142999.java!!!	Joueur(in nom : String, in prenom : String)
+        this.nom = nom;
+        this.prenom = prenom;
+        this.couleur = "";
+!!!143127.java!!!	getNom() : String
+        return this.nom;
+!!!143255.java!!!	getPrenom() : String
+        return this.prenom;
+!!!129666.java!!!	getCouleur() : String
+        return couleur;
+!!!129794.java!!!	getNbBillesEmpochees() : int
+        return nbBillesEmpochees;
+!!!129922.java!!!	getNbBillesTouchees() : int
+        return nbBillesTouchees;
+!!!130050.java!!!	getNbFautes() : int
+        return nbFautes;
+!!!130178.java!!!	getNbCoupsTires() : int
+        return nbCoupsTires;
+!!!139138.java!!!	getNbManchesGagnees() : int
+        return nbManchesGagnees;
+!!!143383.java!!!	setNom(in nom : String) : void
+        this.nom = nom;
+!!!143511.java!!!	setPrenom(in prenom : String) : void
+        this.prenom = prenom;
+!!!130306.java!!!	setCouleur(in couleur : String) : void
+        this.couleur = couleur;
+!!!130434.java!!!	empocherBille() : void
+        ++this.nbBillesEmpochees;
+!!!130562.java!!!	augmenterFautes() : void
+        ++this.nbFautes;
+!!!130690.java!!!	toucherBille() : void
+        ++this.nbBillesTouchees;
+!!!130818.java!!!	tirerBille() : void
+        ++this.nbCoupsTires;
+!!!130946.java!!!	resetNbBillesEmpochees() : void
+        this.nbBillesEmpochees = 0;
+!!!139266.java!!!	augmenterNbManchesGagnees() : void
+        this.nbManchesGagnees++;

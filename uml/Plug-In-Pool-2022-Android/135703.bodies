@@ -1,0 +1,124 @@
+class Rencontre
+!!!146711.java!!!	Rencontre(inout joueurs : Vector<Joueur>, in nbManchesGagnantes : int)
+        this.nbManchesGagnantes = nbManchesGagnantes;
+        this.nbManches = 0;
+        this.etatRencontre = RENCONTRE_ENCOURS;
+        this.joueurs = joueurs;
+        this.coups = new Vector<>();
+!!!131074.java!!!	initialiserJoueurs(in premierJoueur : int) : void
+        this.premierJoueur = premierJoueur;
+        this.deuxiemeJoueur = (premierJoueur == 0) ? 1 : 0;
+!!!131202.java!!!	stockerCoup(in couleur : String, in blouse : String) : void
+        Coup coup = new Coup(couleur, blouse);
+        coups.add(coup);
+        Log.d(TAG, "stockerCoup() : couleur " + couleur + " blouse : " + blouse);
+!!!131330.java!!!	jouerCoup() : void
+        Log.d(TAG, "jouerCoup()");
+        String couleur = "";
+        String blouse = "";
+        if(joueurs.get(premierJoueur).getCouleur().equals("R") || joueurs.get(premierJoueur).getCouleur().equals("J"))
+        {
+            while(coups.size() > 0)
+            {
+                couleur = coups.lastElement().getCouleur();
+                blouse = coups.lastElement().getBlouse();
+                coups.remove(coups.lastElement());
+                Log.d(TAG, "jouerCoup() : couleur " + couleur + " blouse : " + blouse);
+                if (etatRencontre == RENCONTRE_ENCOURS)
+                {
+                    if (nbManches < nbManchesGagnantes)
+                    {
+                        if (couleur.equals(joueurs.get(premierJoueur).getCouleur()))
+                        {
+                            joueurs.get(0).empocherBille();
+                            joueurs.get(0).toucherBille();
+                            joueurs.get(0).tirerBille();
+                            Log.d(TAG, "jouerCoup() : Joueur Rouge - " + joueurs.get(0).getNbBillesEmpochees() + " billes empochees");
+                        }
+                        else if (couleur.equals(joueurs.get(deuxiemeJoueur).getCouleur()))
+                        {
+                            joueurs.get(1).empocherBille();
+                            joueurs.get(1).toucherBille();
+                            joueurs.get(1).tirerBille();
+                            Log.d(TAG, "jouerCoup() : Joueur Jaune - " + joueurs.get(1).getNbBillesEmpochees() + " billes empochees");
+                        }
+
+                        if (joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR || joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                        {
+                            Log.d(TAG, "jouerCoup() : manche finie");
+                            if(joueurs.get(premierJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                            {
+                                joueurs.get(premierJoueur).augmenterNbManchesGagnees();
+                            }
+                            else if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() == NB_BILLES_COULEUR)
+                            {
+                                joueurs.get(deuxiemeJoueur).augmenterNbManchesGagnees();
+                            }
+                            terminerManche();
+                        }
+                    }
+                }
+            }
+        }
+!!!131458.java!!!	terminerRencontre() : void
+        Log.d(TAG, "terminerRencontre()");
+        etatRencontre = RENCONTRE_FINIE;
+        calculerDureeRencontre();
+!!!131586.java!!!	terminerManche() : void
+        Log.d(TAG, "terminerManche()");
+        nbManches++;
+        Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
+        Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
+        if(nbManches < nbManchesGagnantes)
+        {
+            Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
+            NOUVELLE_MANCHE = true;
+            joueurs.get(0).resetNbBillesEmpochees();
+            joueurs.get(1).resetNbBillesEmpochees();
+        }
+        else
+        {
+            Log.d(TAG, "terminerManche() : terminerRencontre()");
+            terminerRencontre();
+        }
+!!!131714.java!!!	faute(in couleur : String, in blouse : String) : void
+        if(couleur.equals(Protocole.JOUEUR_ROUGE))
+        {
+            joueurs.get(0).tirerBille();
+            joueurs.get(0).augmenterFautes();
+        }
+        else if(couleur.equals(Protocole.JOUEUR_JAUNE))
+        {
+            joueurs.get(1).tirerBille();
+            joueurs.get(1).augmenterFautes();
+        }
+!!!147095.java!!!	getEtatRencontre() : int
+        return this.etatRencontre;
+!!!147223.java!!!	getNbManchesGagnantes() : int
+        return this.nbManchesGagnantes;
+!!!139394.java!!!	getNbManches() : int
+        return this.nbManches;
+!!!139522.java!!!	getHorodatage() : String
+        return String.format("%sm%ss", dureeRencontreSecondes/60, dureeRencontreSecondes%60);
+!!!147351.java!!!	getJoueurs() : Joueur
+        return joueurs;
+!!!147479.java!!!	setJoueurs(inout joueurs : Vector<Joueur>) : void
+        this.joueurs = joueurs;
+!!!131842.java!!!	getNbBillesCouleur() : int
+        return this.NB_BILLES_COULEUR - 1;
+!!!139650.java!!!	estNouvelleManche() : boolean
+        return this.NOUVELLE_MANCHE;
+!!!147607.java!!!	setEtatRencontre(in etatRencontre : int) : void
+        this.etatRencontre = etatRencontre;
+!!!147735.java!!!	setNbManchesGagnantes(in nbManchesGagnantes : int) : void
+        this.nbManchesGagnantes = nbManchesGagnantes;
+!!!139778.java!!!	setHorodatageDebut() : void
+        Log.d(TAG, "setHorodatageDebut()");
+        this.horodatageDebut = new Date();
+!!!139906.java!!!	calculerDureeRencontre() : void
+        Date now = new Date();
+        long h = now.getTime() - this.horodatageDebut.getTime();
+        Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
+        dureeRencontreSecondes = (int)(h / 1000);
+!!!140034.java!!!	changerNouvelleManche() : void
+        NOUVELLE_MANCHE = !NOUVELLE_MANCHE;

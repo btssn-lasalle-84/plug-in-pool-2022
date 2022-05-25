@@ -1,0 +1,241 @@
+format 224
+
+classinstance 128002 class_ref 134807 // Joueur
+  drawing_mode actor  name ""   xyz 128 4 2000 life_line_z 2000
+classinstance 128130 class_ref 135959 // IHMRencontreEnCours
+ color orange  name ""   xyz 416 4 2000 life_line_z 2000
+classinstance 129666 class_ref 134551 // BaseDeDonnees
+  name ""   xyz 767 4 2000 life_line_z 2000
+classinstance 131586 class_ref 136471 // TReception
+ color darkgreen  name ""   xyz 1378 4 2000 life_line_z 2000
+classinstance 131714 class_ref 128130 // Handler
+  name ""   xyz 1105 312 2005 life_line_z 2000
+fragment 133250 "alt"
+  xyzwh 398 612 1985 830 479
+end
+textcanvas 133378 "[CODE_RECEPTION_TRAME]
+"
+  xyzwh 435 622 2045 205 17
+fragment 134786 "alt"
+  xyzwh 404 758 1990 817 325
+  separator 4419
+  separator 7864
+end
+textcanvas 134914 "[EMPOCHE]"
+  xyzwh 442 763 2045 83 17
+classinstance 135042 class_ref 135703 // Rencontre
+  name ""   xyz 957 4 2000 life_line_z 2000
+textcanvas 136578 "[FAUTE]"
+  xyzwh 416 917 2005 56 17
+textcanvas 137218 "[SUIVANT]
+"
+  xyzwh 409 1025 2000 72 17
+note 137602 "Envoie un message à l'activité IHMRencontreEnCours content la trame reçue"
+  xyzwh 1173 534 2000 227 71
+classinstance 139522 class_ref 135575 // PeripheriqueBluetooth
+ color mediumblue  name ""   xyz 1165 4 2000 life_line_z 2000
+durationcanvas 128258 classinstance_ref 128002 // :Joueur
+  xyzwh 149 60 2010 11 61
+end
+durationcanvas 130562 classinstance_ref 129666 // :BaseDeDonnees
+  xyzwh 825 240 2010 11 35
+end
+durationcanvas 131842 classinstance_ref 131586 // :TReception
+  color darkgreen
+  xyzwh 1430 454 2010 11 79
+end
+durationcanvas 131970 classinstance_ref 131714 // :Handler
+  xyzwh 1133 448 2010 11 621
+  overlappingdurationcanvas 132226
+    color orange
+    xyzwh 1139 478 2020 11 581
+  end
+end
+durationcanvas 139650 classinstance_ref 139522 // :PeripheriqueBluetooth
+  color mediumblue
+  xyzwh 1252 365 2010 11 35
+end
+durationcanvas 142466 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 60 2010 11 336
+  overlappingdurationcanvas 142338
+    xyzwh 500 64 2020 11 326
+    overlappingdurationcanvas 132738
+      xyzwh 506 310 2030 11 74
+      overlappingdurationcanvas 132994
+	xyzwh 512 353 2040 11 26
+      end
+    end
+    overlappingdurationcanvas 140802
+      xyzwh 506 267 2030 11 25
+    end
+    overlappingdurationcanvas 141570
+      xyzwh 506 221 2030 11 31
+    end
+    overlappingdurationcanvas 141954
+      xyzwh 506 126 2030 11 84
+      overlappingdurationcanvas 141826
+	xyzwh 512 173 2040 11 25
+      end
+    end
+    overlappingdurationcanvas 142210
+      xyzwh 506 93 2030 11 25
+    end
+  end
+end
+durationcanvas 145538 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 514 2010 11 25
+end
+durationcanvas 145794 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 558 2010 11 40
+end
+durationcanvas 146050 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 657 2010 11 40
+end
+durationcanvas 146306 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 706 2010 11 40
+end
+durationcanvas 146562 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 796 2010 11 40
+end
+durationcanvas 146690 classinstance_ref 135042 // :Rencontre
+  xyzwh 993 796 2010 11 25
+end
+durationcanvas 146946 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 850 2010 11 40
+end
+durationcanvas 147074 classinstance_ref 135042 // :Rencontre
+  xyzwh 993 850 2010 11 25
+end
+durationcanvas 147330 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 928 2010 11 32
+end
+durationcanvas 147458 classinstance_ref 135042 // :Rencontre
+  xyzwh 993 928 2010 11 26
+end
+durationcanvas 147714 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 966 2010 11 33
+end
+durationcanvas 147970 classinstance_ref 128130 // :IHMRencontreEnCours
+  xyzwh 494 1035 2010 11 40
+end
+msg 128514 synchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 142466
+  yz 60 2015 explicitmsg "Clic sur le bouton LANCER LA RENCONTRE"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 181 45
+reflexivemsg 128770 synchronous
+  to durationcanvas_ref 142338
+  yz 64 2025 msg operation_ref 141719 // "onCreate(inout savedInstanceState : Bundle) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 515 45
+reflexivemsg 129026 synchronous
+  to durationcanvas_ref 142210
+  yz 93 2035 explicitmsg "initialiserRessourcesRencontre()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 515 77
+reflexivemsg 130434 synchronous
+  to durationcanvas_ref 141570
+  yz 221 2035 msg operation_ref 128642 // "ouvrirBaseDeDonnees() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 523 207
+msg 130690 synchronous
+  from durationcanvas_ref 141570
+  to durationcanvas_ref 130562
+  yz 240 2035 msg operation_ref 134679 // "ouvrir() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 706 225
+reflexivemsg 130946 synchronous
+  to durationcanvas_ref 141954
+  yz 126 2035 msg operation_ref 142615 // "initialiserRessourcesIHMRencontreEnCours() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 522 110
+reflexivemsg 131202 synchronous
+  to durationcanvas_ref 141826
+  yz 173 2045 msg operation_ref 128898 // "listerRessourcesRencontre() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 521 156
+msg 132098 asynchronous
+  from durationcanvas_ref 131842
+  to durationcanvas_ref 131970
+  yz 454 3005 explicitmsg "sendMessage()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 1236 439
+reflexivemsg 132354 synchronous
+  to durationcanvas_ref 132226
+  yz 478 2025 explicitmsg "handleMessage()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 1152 464
+reflexivemsg 132866 synchronous
+  to durationcanvas_ref 132738
+  yz 310 3005 msg operation_ref 141847 // "initialiserRessourcesBluetooth() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 518 295
+reflexivemsg 133122 synchronous
+  to durationcanvas_ref 132994
+  yz 353 2045 msg operation_ref 128770 // "demarrerNouvellePartie() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 524 338
+reflexivemsg 133890 synchronous
+  to durationcanvas_ref 140802
+  yz 267 2035 msg operation_ref 142743 // "gererHandler() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 522 252
+msg 139778 asynchronous
+  from durationcanvas_ref 132994
+  to durationcanvas_ref 139650
+  yz 365 2045 explicitmsg "envoyer(Protocole.trameCommencer)"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 762 350
+msg 145666 synchronous
+  from durationcanvas_ref 132226
+  to durationcanvas_ref 145538
+  yz 514 2030 explicitmsg "extraireMessage()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 763 499
+reflexivemsg 145922 synchronous
+  to durationcanvas_ref 145794
+  yz 558 2015 explicitmsg "decouperTrame()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 506 543
+reflexivemsg 146178 synchronous
+  to durationcanvas_ref 146050
+  yz 657 2015 msg operation_ref 129282 // "actualiserScores(inout champs : String [[]]) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 510 642
+reflexivemsg 146434 synchronous
+  to durationcanvas_ref 146306
+  yz 706 3005 msg operation_ref 129538 // "terminerRencontre() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 512 693
+msg 146818 synchronous
+  from durationcanvas_ref 146562
+  to durationcanvas_ref 146690
+  yz 796 2015 msg operation_ref 131202 // "stockerCoup(in couleur : String, in blouse : String) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 703 781
+msg 147202 synchronous
+  from durationcanvas_ref 146946
+  to durationcanvas_ref 147074
+  yz 850 2015 msg operation_ref 131330 // "jouerCoup() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 710 835
+msg 147586 synchronous
+  from durationcanvas_ref 147330
+  to durationcanvas_ref 147458
+  yz 928 3005 msg operation_ref 131714 // "faute(in couleur : String, in blouse : String) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 728 914
+reflexivemsg 147842 synchronous
+  to durationcanvas_ref 147714
+  yz 966 2015 msg operation_ref 129282 // "actualiserScores(inout champs : String [[]]) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 507 950
+reflexivemsg 148098 synchronous
+  to durationcanvas_ref 147970
+  yz 1035 2015 msg operation_ref 129154 // "changerJoueurIHM() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 502 1021
+line 137730 -_-_
+  from ref 137602 z 3006 to ref 132098
+end

@@ -1,7 +1,9 @@
 format 224
-"Plug-In-Pool-2022"
-  revision 8
-  modified_by 60 "pmeras"
+"Plug-In-Pool-2022-Android"
+  revision 14
+  modified_by 2 "btssn2"
+  java_root_dir "../../mobile-pool/app/src/main/java/com/lasalle/pluginpool/"
+  mysql_root_dir "../../sql/"
 
 
   
@@ -44,6 +46,7 @@ format 224
 
   mark_for_import
   
+  java_package "com.lasalle"
   usecaseview 128060 "Vue des cas d'utilisation"
     
     usecasediagramsettings end
@@ -171,6 +174,18 @@ format 224
 	  stereotype "include"
 	  on usecase_ref 128444 // Dialoguer avec les modules
       end
+
+      simplerelation 128002
+	-_->
+	  stereotype "extend"
+	  on usecase_ref 128572 // Enregistrer la rencontre
+      end
+
+      simplerelation 128130
+	-_->
+	  stereotype "extend"
+	  on usecase_ref 128444 // Dialoguer avec les modules
+      end
     end
 
     usecase 128444 "Dialoguer avec les modules"
@@ -251,6 +266,12 @@ format 224
 	  stereotype "extend"
 	  on usecase_ref 128188 // Lancer une rencontre
       end
+
+      simplerelation 128258
+	-_->
+	  stereotype "include"
+	  on usecase_ref 128188 // Lancer une rencontre
+      end
     end
 
     usecase 128828 "Editer un joueur"
@@ -308,6 +329,11 @@ format 224
       
       activitydiagramsettings
        end
+      simplerelation 128386
+	-_->
+	  stereotype "extend"
+	  on usecase_ref 129084 // Purger l'historique
+      end
     end
 
     usecase 129084 "Purger l'historique"
@@ -568,6 +594,21 @@ format 224
         end
       relations
         end
+    end
+
+    sequencediagram 128002 "ds Lancer une rencontre"
+      sequencediagramsettings show_stereotype_properties yes end
+      overlapping_bars size A0
+    end
+
+    sequencediagram 141058 "ds Editer un joueur"
+      sequencediagramsettings end
+      overlapping_bars size A0
+    end
+
+    sequencediagram 141186 "ds Gérer une rencontre"
+      sequencediagramsettings end
+      overlapping_bars size A0
     end
   end
 
@@ -832,4 +873,8 @@ format 224
       end
     end
   end
+
+  package_ref 134551 // pluginpool
+
+  package_ref 134679 // unknown
 end

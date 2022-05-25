@@ -1,0 +1,47 @@
+class BaseDeDonnees
+!!!134551.java!!!	BaseDeDonnees(inout context : Context)
+        this.sqlite = new SQLite(context);
+!!!134679.java!!!	ouvrir() : void
+        Log.d(TAG, "ouvrir()");
+        if (bdd == null)
+            bdd = sqlite.getWritableDatabase();
+!!!134807.java!!!	fermer() : void
+        Log.d(TAG, "fermer()");
+        if (bdd != null)
+            if (bdd.isOpen())
+                bdd.close();
+!!!134935.java!!!	effectuerRequete(in requete : String) : Cursor
+        ouvrir();
+
+        Cursor curseurResultat = bdd.rawQuery(requete,null);
+        Log.d(TAG,"effectuerRequete() : Exécution de la requete : " + requete);
+        Log.d(TAG,"effectuerRequete() : Nombre de résultats : " + Integer.toString(curseurResultat.getCount()));
+
+        return curseurResultat;
+!!!135063.java!!!	getJoueurs() : Joueur
+        Vector<Joueur> joueurs = new Vector<Joueur>();
+        String requete = "SELECT * FROM Joueur";
+
+        Cursor curseurResultat = effectuerRequete(requete);
+
+        for (int i = 0; i < curseurResultat.getCount(); i++)
+        {
+            curseurResultat.moveToNext();
+            Log.d(TAG, "nom = " + curseurResultat.getString(INDEX_NOM_JOUEUR) + " - " + "prenom = " + curseurResultat.getString(INDEX_PRENOM_JOUEUR));
+            joueurs.add(new Joueur(curseurResultat.getString(INDEX_NOM_JOUEUR),curseurResultat.getString(INDEX_PRENOM_JOUEUR)));
+        }
+
+        return joueurs;
+!!!135191.java!!!	insererJoueur(inout joueur : Joueur) : void
+        ouvrir();
+        bdd.execSQL(DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')");
+!!!135319.java!!!	supprimerJoueur(inout joueur : Joueur) : void
+        ouvrir();
+        bdd.execSQL(DEBUT_REQUETE_SUPPRESSION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "'");
+!!!135447.java!!!	terminerManche(in idManche : int) : void
+        ouvrir();
+        String requete = DEBUT_REQUETE_TERMINER_MANCHE + Integer.toString(idManche);
+        bdd.execSQL(requete);
+!!!135575.java!!!	executerRequete(in requete : String) : void
+        ouvrir();
+        bdd.execSQL(requete);

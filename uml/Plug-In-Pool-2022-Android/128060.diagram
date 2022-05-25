@@ -5,28 +5,42 @@ classcanvas 128188 class_ref 128060 // Joueur
   xyz 72 430 2000
 end
 usecasecanvas 128316 usecase_ref 128188 // Lancer une rencontre
-  xyzwh 361 446 3005 64 32 label_xy 324 478
+  xyzwh 362 446 3005 64 32 label_xy 325 478
 end
 usecasecanvas 128444 usecase_ref 128316 // Gérer le déroulement d'une rencontre
-  xyzwh 361 314 3005 64 32 label_xy 271 346
+  xyzwh 362 314 3005 64 32 label_xy 272 346
 end
 usecasecanvas 128572 usecase_ref 128444 // Dialoguer avec les modules
   xyzwh 628 446 3005 64 32 label_xy 570 478
 end
 usecasecanvas 128700 usecase_ref 128572 // Enregistrer la rencontre
-  xyzwh 629 313 3005 63 35 label_xy 580 351
+  xyzwh 628 313 3005 63 35 label_xy 579 351
 end
 usecasecanvas 128828 usecase_ref 128700 // Paramétrer une rencontre
-  xyzwh 361 605 3005 64 32 label_xy 309 637
+  xyzwh 362 605 3005 64 32 label_xy 310 637
 end
 usecasecanvas 128956 usecase_ref 128828 // Editer un joueur
-  xyzwh 361 201 3005 64 32 label_xy 341 233
+  xyzwh 362 201 3005 64 32 label_xy 342 233
 end
 usecasecanvas 129084 usecase_ref 128956 // Consulter l'historique des rencontres
-  xyzwh 361 839 3005 64 32 label_xy 275 871
+  xyzwh 362 837 3005 64 32 label_xy 276 869
 end
 usecasecanvas 129212 usecase_ref 129084 // Purger l'historique
-  xyzwh 583 837 3005 64 32 label_xy 561 871
+  xyzwh 628 837 3005 64 32 label_xy 606 871
+end
+line 128002 ----
+  from ref 128188 z 3006 to ref 128956
+simplerelationcanvas 128130 simplerelation_ref 128002
+  from ref 128444 z 3006 stereotype "<<extend>>" xyz 487 329 3000 to ref 128700
+end
+simplerelationcanvas 128258 simplerelation_ref 128130
+  from ref 128444 z 3006 stereotype "<<extend>>" xyz 487.5 394 3000 to ref 128572
+end
+simplerelationcanvas 128386 simplerelation_ref 128258
+  from ref 128828 z 3006 stereotype "<<include>>" xyz 353 540 3000 to ref 128316
+end
+simplerelationcanvas 128514 simplerelation_ref 128386
+  from ref 129084 z 3006 stereotype "<<extend>>" xyz 487 851.5 3000 to ref 129212
 end
 line 129340 ----
   from ref 128188 z 3006 to ref 128316
@@ -34,34 +48,6 @@ line 129468 ----
   from ref 128188 z 3006 to ref 129084
 simplerelationcanvas 129596 simplerelation_ref 135484
   decenter_end 484
-  from ref 128316 z 3006 stereotype "<<include>>" xyz 351 394 3000 to ref 128444
+  from ref 128316 z 3006 stereotype "<<include>>" xyz 352 394 3000 to ref 128444
 end
-simplerelationcanvas 129724 simplerelation_ref 135612
-<<<<<<< HEAD:uml/Plug-In-Pool-2022-Android/128060.diagram
-  from ref 128444 z 3006 stereotype "<<include>>" xyz 485 328 3000 to ref 128700
-=======
-  from ref 128444 z 3006 stereotype "<<include>>" xyz 351 268 3000 to ref 128700
->>>>>>> 484b2dc77e3e57ed8dee6375753e73c6b145ea42:uml/Plug-In-Pool-2022/128060.diagram
-end
-simplerelationcanvas 129852 simplerelation_ref 135740
-  from ref 128444 z 3006 stereotype "<<include>>" xyz 486 394 3000 to ref 128572
-end
-simplerelationcanvas 129980 simplerelation_ref 135868
-<<<<<<< HEAD:uml/Plug-In-Pool-2022-Android/128060.diagram
-  from ref 128828 z 3006 stereotype "<<extend>>" xyz 352 539 3000 to ref 128316
-end
-simplerelationcanvas 130236 simplerelation_ref 136124
-  from ref 129212 z 3006 stereotype "<<extend>>" xyz 463 852 3000 to ref 129084
-=======
-  from ref 128828 z 3006 stereotype "<<extend>>" xyz 349 537 3000 to ref 128316
-end
-simplerelationcanvas 130108 simplerelation_ref 135996
-  from ref 128956 z 3006 stereotype "<<extend>>" xyz 458 539 3000 to ref 128316
-end
-simplerelationcanvas 130236 simplerelation_ref 136124
-  from ref 129212 z 3006 stereotype "<<extend>>" xyz 447 852 3000 to ref 129084
->>>>>>> 484b2dc77e3e57ed8dee6375753e73c6b145ea42:uml/Plug-In-Pool-2022/128060.diagram
-end
-line 130748 ----
-  from ref 128956 z 3006 to ref 128188
 end

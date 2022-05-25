@@ -1,0 +1,109 @@
+class IHMFinDeRencontre
+!!!137239.java!!!	onCreate(inout savedInstanceState : Bundle) : void
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ihm_fin_de_rencontre);
+        Log.d(TAG, "onCreate()");
+        initialiserRessourcesIHMFinDeRencontre();
+        initialiserGagnantIHMFinDeRencontre();
+        initialiserNbManchesIHMFinDeRencontre();
+        initialiserDureeIHMFinDeRencontre();
+        initialiserStatistiquesFinDeRencontre();
+!!!137367.java!!!	onStart() : void
+        super.onStart();
+        Log.d(TAG, "onStart()");
+!!!137495.java!!!	onResume() : void
+        super.onResume();
+        Log.d(TAG, "onResume()");
+!!!137623.java!!!	onPause() : void
+        super.onPause();
+        Log.d(TAG, "onPause()");
+!!!137751.java!!!	onStop() : void
+        super.onStop();        joueur1 = rencontre.getJoueurs().get(0);
+        joueur2 = rencontre.getJoueurs().get(1);
+        Log.d(TAG, "onStop()");
+!!!137879.java!!!	onDestroy() : void
+        super.onDestroy();
+        Log.d(TAG, "onDestroy()");
+!!!138007.java!!!	initialiserRessourcesIHMFinDeRencontre() : void
+        boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
+        boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
+        texteJoueurGagnant = (TextView)findViewById(R.id.texteJoueurGagnant);
+        texteGagnant = (TextView)findViewById(R.id.texteGagnant);
+        nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
+        dureeRencontre = (TextView)findViewById(R.id.dureeRencontre);
+        nomJoueurStatistiques1 = (TextView)findViewById(R.id.nomJoueurStatistiques1);
+        nomJoueurStatistiques2 = (TextView)findViewById(R.id.nomJoueurStatistiques2);
+        precisionJoueur1 = (TextView)findViewById(R.id.precision1);
+        precisionJoueur2 = (TextView)findViewById(R.id.precision2);
+        nbfautesJoueur1 = (TextView)findViewById(R.id.nbFautes1);
+        nbfautesJoueur2 = (TextView)findViewById(R.id.nbFautes2);
+
+        boutonEnregistrerRencontre.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Enregistrer la rencontre*/
+                }
+            });
+
+        boutonRejouer.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                    startActivity(intent);*/
+                }
+            });
+!!!138626.java!!!	initialiserGagnantIHMFinDeRencontre() : void
+        Log.d(TAG, "initialiserScoresIHMFinDeRencontre()");
+        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
+
+        if(rencontre.getJoueurs().get(0).getNbManchesGagnees() > rencontre.getJoueurs().get(1).getNbManchesGagnees())
+        {
+            joueurGagnant = rencontre.getJoueurs().get(0);
+            texteJoueurGagnant.setText(joueurGagnant.getNom() + " " + joueurGagnant.getPrenom());
+        }
+        else if(rencontre.getJoueurs().get(0).getNbManchesGagnees() < rencontre.getJoueurs().get(1).getNbManchesGagnees())
+        {
+            joueurGagnant = rencontre.getJoueurs().get(1);
+            texteJoueurGagnant.setText(joueurGagnant.getNom() + " " + joueurGagnant.getPrenom());
+        }
+        else
+        {
+            texteGagnant.setVisibility(View.INVISIBLE);
+            texteJoueurGagnant.setText(EGALITE);
+        }
+!!!138754.java!!!	initialiserNbManchesIHMFinDeRencontre() : void
+        Log.d(TAG, "initialiserNbManchesIHMFinDeRencontre()");
+        if(texteJoueurGagnant.getText().toString().equals(EGALITE))
+        {
+            nbManchesGagnantes.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            nbManchesGagnantes.setVisibility(View.VISIBLE);
+            nbManchesGagnantes.setText(joueurGagnant.getNbManchesGagnees() + " / " + rencontre.getNbManchesGagnantes() + "manche(s) gagnée(s)");
+        }
+!!!138882.java!!!	initialiserDureeIHMFinDeRencontre() : void
+        Log.d(TAG, "initialiserDureeIHMFinDeRencontre()");
+        dureeRencontre.setText(rencontre.getHorodatage());
+!!!139010.java!!!	initialiserStatistiquesFinDeRencontre() : void
+        Log.d(TAG, "initialiserStatistiquesFinDeRencontre()");
+
+        joueur1 = rencontre.getJoueurs().get(0);
+        joueur2 = rencontre.getJoueurs().get(1);
+        double precision1 = (((double)joueur1.getNbBillesTouchees() / (double)joueur1.getNbCoupsTires()) * 100);
+        double precision2 = (((double)joueur2.getNbBillesTouchees() / (double)joueur2.getNbCoupsTires()) * 100);
+        Log.d(TAG, "joueur1.getNbBillesTouchees() : " + joueur1.getNbBillesTouchees() + " joueur1.getNbCoupsTires() : " + joueur1.getNbCoupsTires());
+        Log.d(TAG, "joueur2.getNbBillesTouchees() : " + joueur2.getNbBillesTouchees() + " joueur2.getNbCoupsTires() : " + joueur2.getNbCoupsTires());
+        Log.d(TAG, "joueur1 precision : " + precision1);
+        Log.d(TAG, "joueur2 precision : " + precision2);
+
+        nomJoueurStatistiques1.setText(joueur1.getNom() + " " + joueur1.getPrenom()  + " :");
+        nomJoueurStatistiques2.setText(joueur2.getNom() + " " + joueur2.getPrenom()  + " :");
+        nbfautesJoueur1.setText(String.valueOf(joueur1.getNbFautes()));
+        nbfautesJoueur2.setText(String.valueOf(joueur2.getNbFautes()));
+        precisionJoueur1.setText(String.format("%.2f", precision1) + "%");
+        precisionJoueur2.setText(String.format("%.2f", precision2) + "%");
