@@ -1,5 +1,17 @@
 # Le projet plug-in-pool-2022
 
+- [Le projet plug-in-pool-2022](#le-projet-plug-in-pool-2022)
+  - [Présentation](#présentation)
+  - [Fonctionnalités Mobile-POOL](#fonctionnalités-mobile-pool)
+  - [Captures Mobile-POOL](#captures-mobile-pool)
+  - [TODOs Mobile-POOL](#todos-mobile-pool)
+  - [Fonctionnalités Écran-POOL](#fonctionnalités-écran-pool)
+  - [Historique des versions](#historique-des-versions)
+  - [Auteurs](#auteurs)
+  - [Kanban](#kanban)
+
+## Présentation
+
 Système numérique permettant de jouer au billard BlackBall
 
 - Automatisation du déroulement d’une partie
@@ -16,17 +28,36 @@ Le système Plug-in-Pool est décomposé en trois modules :
 
 Application mobile qui gère le déroulement des rencontres
 
-- Itération 2 :
-    - [ ] Enregistrer un nouveau joueur
-  - [ ] Sélectionner un joueur existant
-  - [ ] Paramétrer la partie : type et nombre de manches gagnantes
-- Itération 3 :
-  - [ ] Initialiser une communication
-  - [ ] Recevoir une trame
-  - [ ] Envoyer une trame
-  - [ ] Traiter une trame
-  - [ ] Connecter une table de billard
-  - [ ] Connecter l’écran
+- Initialiser une communication
+- Connecter une table de billard
+- Dialoguer avec une table de billard
+- Enregistrer un nouveau joueur
+- Sélectionner deux joueurs pour une partie
+- Paramétrer le nombre de manches gagnantes pour une partie
+- Démarrer une partie
+- Gérer la partie et Afficher le score d’une partie
+- Afficher le joueur courant
+- Afficher les billes empochées/à empocher de chaque joueur
+- Terminer une partie
+- Afficher les statistiques d'une partie
+
+## Captures Mobile-POOL
+
+![](captures/Screenshot_Accueil.png)
+
+![](captures/Screenshot_Enregistrement_Joueur.png)
+
+![](captures/Screenshot_Demarrage_Partie.png)
+
+![](captures/Screenshot_Deroulement_Partie.png)
+
+![](captures/Screenshot_Fin_Partie.png)
+
+## TODOs Mobile-POOL
+
+- [ ] Enregistrer une partie
+- [ ] Afficher l’historique des parties
+- [ ] Améliorer l'affichage graphique du déroulement d'une partie et du score
 
 ## Fonctionnalités Écran-POOL
 
@@ -43,6 +74,7 @@ L’application Qt s’exécutera en mode “Kiosque” sur le Raspberry Pi.
 
 ## Historique des versions
 
+- version 0.2 : 25/05/2022
 - Version 0.1 : 02/04/2022
 
 ## Auteurs
