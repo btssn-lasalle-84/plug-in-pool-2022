@@ -1,0 +1,5 @@
+<map id="com.lasalle.pluginpool.PeripheriqueBluetooth" name="com.lasalle.pluginpool.PeripheriqueBluetooth">
+<area shape="rect" id="node1" title="Classe permettant de créer des périphériques bluetooth." alt="" coords="5,404,248,877"/>
+<area shape="rect" id="node2" href="$class_thread.html" title=" " alt="" coords="90,5,153,83"/>
+<area shape="rect" id="node3" href="$classcom_1_1lasalle_1_1pluginpool_1_1_t_reception.html" title="Classe permettant de gérer la reception bluetooth." alt="" coords="143,132,364,341"/>
+</map>

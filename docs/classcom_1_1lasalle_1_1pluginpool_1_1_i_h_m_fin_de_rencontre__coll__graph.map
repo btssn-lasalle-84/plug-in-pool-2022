@@ -1,0 +1,8 @@
+<map id="com.lasalle.pluginpool.IHMFinDeRencontre" name="com.lasalle.pluginpool.IHMFinDeRencontre">
+<area shape="rect" id="node1" title="L&#39;activité de fin de rencontre." alt="" coords="110,1535,307,2052"/>
+<area shape="rect" id="node2" href="$classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html" title="Classe pour un Joueur." alt="" coords="5,1028,231,1355"/>
+<area shape="rect" id="node3" href="$classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html" title="Classe pour une rencontre." alt="" coords="255,940,469,1443"/>
+<area shape="rect" id="node4" href="$classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html" title="Classe permettant de créer des périphériques bluetooth." alt="" coords="241,404,483,877"/>
+<area shape="rect" id="node5" href="$class_thread.html" title=" " alt="" coords="325,5,388,83"/>
+<area shape="rect" id="node6" href="$classcom_1_1lasalle_1_1pluginpool_1_1_t_reception.html" title="Classe permettant de gérer la reception bluetooth." alt="" coords="378,132,599,341"/>
+</map>

@@ -1,0 +1,400 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>plug-in-pool:  Fichier source de /home/tv/Documents/git/projets-2022/plug-in-pool-2022/mobile-pool/app/src/main/java/com/lasalle/pluginpool/IHMNouvelleRencontre.java</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="plug-in-pool.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">plug-in-pool
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS SNIR LaSalle Avignon 2022</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('_i_h_m_nouvelle_rencontre_8java_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">IHMNouvelleRencontre.java</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_i_h_m_nouvelle_rencontre_8java.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>com.lasalle.pluginpool;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> android.content.Intent;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">import</span> android.os.Build;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">import</span> android.os.Bundle;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">import</span> android.os.Handler;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">import</span> android.os.Message;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">import</span> android.util.Log;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">import</span> android.view.View;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">import</span> android.widget.AdapterView;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">import</span> android.widget.ArrayAdapter;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">import</span> android.widget.Button;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">import</span> android.widget.CheckedTextView;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">import</span> android.widget.EditText;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">import</span> android.widget.ListView;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">import</span> android.widget.Toast;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">import</span> androidx.annotation.NonNull;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">import</span> androidx.annotation.RequiresApi;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">import</span> java.util.ArrayList;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">import</span> java.util.List;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">import</span> java.util.Vector;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html">   37</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html">IHMNouvelleRencontre</a> <span class="keyword">extends</span> AppCompatActivity</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">   42</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a> = <span class="stringliteral">&quot;_IHMNouvelleRencontre_&quot;</span>;  </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ad2ac84e373fa0b4b321511089a62c36c">   43</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ad2ac84e373fa0b4b321511089a62c36c">ID_INTENT_RENCONTRE</a> = <span class="stringliteral">&quot;Rencontre&quot;</span>; </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a08f681ec9efff05c48bfcd5177a3b8d2">   44</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keywordtype">int</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a08f681ec9efff05c48bfcd5177a3b8d2">NB_JOUEURS</a> = 2; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a2d8cc628afccfd73c5ab1a2f82e5f92c">   45</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keywordtype">int</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a2d8cc628afccfd73c5ab1a2f82e5f92c">NB_MANCHES_GAGNANTES</a> = 5; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa0b283218c297cfa9a4eb9c167d095f2">   50</a></span>&#160;    <span class="keyword">private</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">PeripheriqueBluetooth</a> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa0b283218c297cfa9a4eb9c167d095f2">peripheriqueBluetooth</a> = <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a425bf69d5b7a5f5377ff0ebcfb8df152">   51</a></span>&#160;    <span class="keyword">private</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html">BaseDeDonnees</a> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a425bf69d5b7a5f5377ff0ebcfb8df152">baseDeDonnees</a> = <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a8a121c7de94b139c152d204a681e6cd0">   52</a></span>&#160;    <span class="keyword">private</span> Handler <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a8a121c7de94b139c152d204a681e6cd0">handler</a> = <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#abae8194597564c66bda06338f33fc2cd">   53</a></span>&#160;    <span class="keyword">private</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html">Rencontre</a> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#abae8194597564c66bda06338f33fc2cd">rencontre</a> = <span class="keyword">null</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9d2e8966511584c9a1c314d1e27f0c51">   54</a></span>&#160;    <span class="keyword">private</span> Vector&lt;Joueur&gt; <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9d2e8966511584c9a1c314d1e27f0c51">joueursRencontre</a>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#afcd2e8a1f7f381dc6492b5a2432920f0">   55</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">int</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#afcd2e8a1f7f381dc6492b5a2432920f0">nbManchesGagnantes</a>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a7d6170eec113074f675c223b6d0af426">   60</a></span>&#160;    <span class="keyword">private</span> Button <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a7d6170eec113074f675c223b6d0af426">boutonLancerRencontre</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa8845021c031a6342e75a5da8bcda0fa">   61</a></span>&#160;    <span class="keyword">private</span> EditText <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa8845021c031a6342e75a5da8bcda0fa">nbManches</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fcd7d4bc57d03df748deee2c26a0c2">   62</a></span>&#160;    <span class="keyword">private</span> ListView <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fcd7d4bc57d03df748deee2c26a0c2">listeJoueurs</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9c66e944c51dc78c37ba59e1e80dfb31">   63</a></span>&#160;    <span class="keyword">private</span> List&lt;Joueur&gt; <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9c66e944c51dc78c37ba59e1e80dfb31">joueurs</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    @RequiresApi(api = Build.VERSION_CODES.O)</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    @Override</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a6949ad14fdaf849b5516b963479e35ae">   70</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a6949ad14fdaf849b5516b963479e35ae">onCreate</a>(Bundle savedInstanceState)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    {</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        super.onCreate(savedInstanceState);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        setContentView(R.layout.activity_ihm_nouvelle_rencontre);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;onCreate()&quot;</span>);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fdf34af83bc4f637eb9cd4180f1d96">initialiserRessourcesIHMNouvelleRencontre</a>();</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a0249bbcdeee5653a4ab1c3a8f0d08198">gererHandler</a>();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a543f205ca65cbf5b708baa261524a06c">initialiserRessourcesBluetooth</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    @Override</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a3628b2c5946dd8d84bee7b18d54d19a1">   84</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a3628b2c5946dd8d84bee7b18d54d19a1">onStart</a>()</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        super.onStart();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;onStart()&quot;</span>);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    @Override</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#acd1b355a50fb2f72817930ca0706f757">   94</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#acd1b355a50fb2f72817930ca0706f757">onResume</a>()</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        super.onResume();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;onResume()&quot;</span>);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    @Override</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a377d6c9822ed89f108e4499e863e95e5">  104</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a377d6c9822ed89f108e4499e863e95e5">onPause</a>()</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        super.onPause();</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;onPause()&quot;</span>);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    }</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    @Override</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ae4011c3e66f47731db0eeac39be34c94">  114</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ae4011c3e66f47731db0eeac39be34c94">onStop</a>()</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        super.onStop();</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;onStop()&quot;</span>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    }</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    @Override</div>
+<div class="line"><a name="l00124"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ac5c52ad6f41dfcf94473b081fcc816fc">  124</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ac5c52ad6f41dfcf94473b081fcc816fc">onDestroy</a>()</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    {</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        super.onDestroy();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;onDestroy()&quot;</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    @RequiresApi(api = Build.VERSION_CODES.O)</div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fdf34af83bc4f637eb9cd4180f1d96">  134</a></span>&#160;    private <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fdf34af83bc4f637eb9cd4180f1d96">initialiserRessourcesIHMNouvelleRencontre</a>()</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">TAG</a>, <span class="stringliteral">&quot;initialiserRessourcesIHMNouvelleRencontre()&quot;</span>);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a7d6170eec113074f675c223b6d0af426">boutonLancerRencontre</a> = (Button)findViewById(R.id.boutonLancerRencontre);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa8845021c031a6342e75a5da8bcda0fa">nbManches</a> = (EditText)findViewById(R.id.editTextNombreManches);</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa8845021c031a6342e75a5da8bcda0fa">nbManches</a>.setText(Integer.toString(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a2d8cc628afccfd73c5ab1a2f82e5f92c">NB_MANCHES_GAGNANTES</a>));</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="comment">// Il faut être connecté à la table et avoir deux joueurs sélectionnés</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a7d6170eec113074f675c223b6d0af426">boutonLancerRencontre</a>.setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fcd7d4bc57d03df748deee2c26a0c2">listeJoueurs</a> = (ListView)findViewById(R.id.listeJoueursParametres);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a453fad40a7cf0132f8d1639410ee8ad4">ouvrirBaseDeDonnees</a>();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9ff8389508091dfb819520b6338ebfa0">listerJoueurs</a>();</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a7d6170eec113074f675c223b6d0af426">boutonLancerRencontre</a>.setOnClickListener(</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keyword">new</span> View.OnClickListener()</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        {</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            public void onClick(View v)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            {</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                initialiserRencontre();</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                ajouterJoueursSelectionnes();</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                ajouterNbManches();</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                rencontre.setHorodatageDebut();</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                Log.d(TAG, <span class="stringliteral">&quot;nbManches : &quot;</span> + rencontre.getNbManchesGagnantes());</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                <span class="comment">// passage de données entre activités</span></div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                intent.putExtra(ID_INTENT_RENCONTRE, rencontre);</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                startActivity(intent);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            }</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        });</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a665e679eef335a2cc768117e91878f06">  166</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a665e679eef335a2cc768117e91878f06">ajouterNbManches</a>()</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    {</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        nbManchesGagnantes = Integer.parseInt(nbManches.getText().toString());</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        rencontre.setNbManchesGagnantes(nbManchesGagnantes);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        Log.d(TAG, <span class="stringliteral">&quot;ajouterNbManches () : nbManchesGagnantes : &quot;</span> + nbManchesGagnantes);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    }</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9f656c6eb2f4619ecdcfeb6ec396ee11">  176</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9f656c6eb2f4619ecdcfeb6ec396ee11">ajouterJoueursSelectionnes</a>()</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        <span class="comment">//Log.d(TAG, &quot;[ajouterJoueursSelectionnes] listeJoueurs : &quot; + listeJoueurs.getCount());</span></div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;        <span class="comment">//Log.d(TAG, &quot;[ajouterJoueursSelectionnes] joueurs : &quot; + joueurs.size());</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; listeJoueurs.getCount(); i++)</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        {</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keywordflow">if</span> (listeJoueurs.isItemChecked(i))</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                <span class="comment">//Log.d(TAG, &quot;[ajouterJoueursSelectionnes] joueur selectionné : &quot; + i);</span></div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                <span class="keywordflow">if</span>(joueurs.get(i) != <span class="keyword">null</span>)</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                {</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                    Log.d(TAG, <span class="stringliteral">&quot;[ajouterJoueursSelectionnes] Joueur : &quot;</span> + joueurs.get(i).getPrenom() + <span class="stringliteral">&quot; &quot;</span> + joueurs.get(i).getNom());</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                    joueursRencontre.add(<span class="keyword">new</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html">Joueur</a>(joueurs.get(i).getNom(), joueurs.get(i).getPrenom()));</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                }</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            }</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        }</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        rencontre.setJoueurs(joueursRencontre);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    }</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;    @RequiresApi(api = Build.VERSION_CODES.O)</div>
+<div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#abbd752e75b9127ffdeceb942fa375326">  199</a></span>&#160;    private <span class="keywordtype">void</span> initialiserRencontre()</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    {</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;        joueursRencontre = <span class="keyword">new</span> Vector&lt;Joueur&gt;();</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;        rencontre = <span class="keyword">new</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html">Rencontre</a>(joueursRencontre, NB_MANCHES_GAGNANTES);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a543f205ca65cbf5b708baa261524a06c">  208</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a543f205ca65cbf5b708baa261524a06c">initialiserRessourcesBluetooth</a>()</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    {</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        Log.d(TAG,<span class="stringliteral">&quot;initialiserRessourcesBluetooth()&quot;</span>);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        peripheriqueBluetooth = <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">PeripheriqueBluetooth</a>.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a71160bb777fb9212aee2b5c7f86c8984">getInstance</a>(handler);</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keywordflow">if</span>(peripheriqueBluetooth.rechercherTable(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_protocole.html">Protocole</a>.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_protocole.html#a5311168a8485d30510ab7823a7ad4f93">nomTable</a>))</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        {</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            peripheriqueBluetooth.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a6d3ccca1f7accc3881fffe3c23d06185">connecter</a>();</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        }</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    }</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00221"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a453fad40a7cf0132f8d1639410ee8ad4">  221</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a453fad40a7cf0132f8d1639410ee8ad4">ouvrirBaseDeDonnees</a>()</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    {</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        baseDeDonnees = <span class="keyword">new</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html">BaseDeDonnees</a>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        baseDeDonnees.ouvrir();</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    }</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a0249bbcdeee5653a4ab1c3a8f0d08198">  230</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a0249bbcdeee5653a4ab1c3a8f0d08198">gererHandler</a>()</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        Log.d(TAG,<span class="stringliteral">&quot;gererHandler()&quot;</span>);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        this.handler = <span class="keyword">new</span> Handler(this.getMainLooper())</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            @Override</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            <span class="keyword">public</span> <span class="keywordtype">void</span> handleMessage(@NonNull Message message)</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            {</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;                Log.d(TAG, <span class="stringliteral">&quot;[Handler] id du message = &quot;</span> + message.what);</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;                Log.d(TAG, <span class="stringliteral">&quot;[Handler] contenu du message = &quot;</span> + message.obj.toString());</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                <span class="keywordflow">switch</span> (message.what)</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;                {</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;                    <span class="keywordflow">case</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">PeripheriqueBluetooth</a>.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#adb28f94b8169c579bc3bfd5d99b141b2">CODE_CREATION_SOCKET</a>:</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                        Log.d(TAG, <span class="stringliteral">&quot;[Handler] CREATION_SOCKET = &quot;</span> + message.obj.toString());</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;                    <span class="keywordflow">case</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">PeripheriqueBluetooth</a>.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#acc505c0e9ff333f43f639aed5a35450a">CODE_CONNEXION_SOCKET</a>:</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;                        Log.d(TAG, <span class="stringliteral">&quot;[Handler] CODE_CONNEXION_SOCKET = &quot;</span> + message.obj.toString());</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;                        <span class="keywordflow">if</span>(listeJoueurs.getCheckedItemCount() == NB_JOUEURS &amp;&amp; peripheriqueBluetooth.estConnecte())</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                            boutonLancerRencontre.setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;                        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;                    <span class="keywordflow">case</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">PeripheriqueBluetooth</a>.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a4350c8f6caf150a7e98d462851db7f8c">CODE_DECONNEXION_SOCKET</a>:</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;                        Log.d(TAG, <span class="stringliteral">&quot;[Handler] DECONNEXION_SOCKET = &quot;</span> + message.obj.toString());</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;                        boutonLancerRencontre.setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;                        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                    <span class="keywordflow">case</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">PeripheriqueBluetooth</a>.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a3b96ccd542812f401a1f2516f67a9b15">CODE_RECEPTION_TRAME</a>:</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;                        Log.d(TAG, <span class="stringliteral">&quot;[Handler] RECEPTION_TRAME = &quot;</span> + message.obj.toString());</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;                        <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;                }</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            }</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        };</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    }</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9ff8389508091dfb819520b6338ebfa0">  267</a></span>&#160;    <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9ff8389508091dfb819520b6338ebfa0">listerJoueurs</a>()</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        Log.d(TAG, <span class="stringliteral">&quot;listerJoueurs()&quot;</span>);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        joueurs = baseDeDonnees.getJoueurs();</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        List&lt;String&gt; nomsJoueurs = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; joueurs.size(); ++i)</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        {</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;            <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html">Joueur</a> joueur = joueurs.get(i);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;            nomsJoueurs.add(joueur.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a2cc77b0fae0fc6ab8efb8037dd8aa781">getNom</a>() + <span class="stringliteral">&quot; &quot;</span> + joueur.<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#ab5b9cfe3ce12fbd146d4176b31fcfb44">getPrenom</a>());</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;        }</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        afficherJoueurs(nomsJoueurs);</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160; </div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        this.listeJoueurs.setOnItemClickListener(<span class="keyword">new</span> AdapterView.OnItemClickListener()</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        {</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;            @Override</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            public void onItemClick(AdapterView&lt;?&gt; adapterView, View view, int i, long l)</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;            {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                selectionnerJoueur((CheckedTextView) view, i);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;            }</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;        });</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;    }</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160; </div>
+<div class="line"><a name="l00296"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a88ae9b9e9add53ce1dedca0ff5e77fe1">  296</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a88ae9b9e9add53ce1dedca0ff5e77fe1">selectionnerJoueur</a>(CheckedTextView view, <span class="keywordtype">int</span> i)</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;    {</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;        <span class="keywordflow">if</span>(listeJoueurs.getCheckedItemCount() &gt; NB_JOUEURS)</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        {</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;            Toast.makeText(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html">IHMNouvelleRencontre</a>.this, <span class="stringliteral">&quot;2 Joueurs maximum !&quot;</span>, Toast.LENGTH_SHORT).show();</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;            listeJoueurs.setItemChecked(i, <span class="keyword">false</span>);</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        }</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        {</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;            CheckedTextView v = view;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;            <span class="keywordtype">boolean</span> estCochee = v.isChecked();</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;            listeJoueurs.setItemChecked(i, estCochee);</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;            <span class="keywordflow">if</span>(listeJoueurs.getCheckedItemCount() == NB_JOUEURS &amp;&amp; peripheriqueBluetooth.estConnecte())</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                boutonLancerRencontre.setEnabled(<span class="keyword">true</span>);</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                boutonLancerRencontre.setEnabled(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;        }</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    }</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a01a421ce94d8d8cd056a8508e6147b14">  319</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a01a421ce94d8d8cd056a8508e6147b14">afficherJoueurs</a>(List&lt;String&gt; nomsJoueurs)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    {</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        ArrayAdapter adapter = <span class="keyword">new</span> ArrayAdapter(<span class="keyword">this</span>, android.R.layout.simple_list_item_checked, nomsJoueurs);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        listeJoueurs.setAdapter(adapter);</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;        this.listeJoueurs.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;}</div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a9eed0f5806b3507e8fb97f2b6e32680a"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9eed0f5806b3507e8fb97f2b6e32680a">com.lasalle.pluginpool.IHMNouvelleRencontre.TAG</a></div><div class="ttdeci">static final String TAG</div><div class="ttdoc">TAG pour les logs.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00042">IHMNouvelleRencontre.java:42</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a08f681ec9efff05c48bfcd5177a3b8d2"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a08f681ec9efff05c48bfcd5177a3b8d2">com.lasalle.pluginpool.IHMNouvelleRencontre.NB_JOUEURS</a></div><div class="ttdeci">static final int NB_JOUEURS</div><div class="ttdoc">Le nombre de joueurs pour une rencontre.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00044">IHMNouvelleRencontre.java:44</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a425bf69d5b7a5f5377ff0ebcfb8df152"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a425bf69d5b7a5f5377ff0ebcfb8df152">com.lasalle.pluginpool.IHMNouvelleRencontre.baseDeDonnees</a></div><div class="ttdeci">BaseDeDonnees baseDeDonnees</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00051">IHMNouvelleRencontre.java:51</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_ae4011c3e66f47731db0eeac39be34c94"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ae4011c3e66f47731db0eeac39be34c94">com.lasalle.pluginpool.IHMNouvelleRencontre.onStop</a></div><div class="ttdeci">void onStop()</div><div class="ttdoc">Méthode appelée lorsque l'activité n'est plus visible.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00114">IHMNouvelleRencontre.java:114</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html">com.lasalle.pluginpool.PeripheriqueBluetooth</a></div><div class="ttdoc">Classe permettant de créer des périphériques bluetooth.</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00027">PeripheriqueBluetooth.java:27</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a88ae9b9e9add53ce1dedca0ff5e77fe1"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a88ae9b9e9add53ce1dedca0ff5e77fe1">com.lasalle.pluginpool.IHMNouvelleRencontre.selectionnerJoueur</a></div><div class="ttdeci">void selectionnerJoueur(CheckedTextView view, int i)</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00296">IHMNouvelleRencontre.java:296</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a377d6c9822ed89f108e4499e863e95e5"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a377d6c9822ed89f108e4499e863e95e5">com.lasalle.pluginpool.IHMNouvelleRencontre.onPause</a></div><div class="ttdeci">void onPause()</div><div class="ttdoc">Méthode appelée après qu'une boîte de dialogue s'est affichée (on reprend sur un onResume()) ou avant...</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00104">IHMNouvelleRencontre.java:104</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html_acc505c0e9ff333f43f639aed5a35450a"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#acc505c0e9ff333f43f639aed5a35450a">com.lasalle.pluginpool.PeripheriqueBluetooth.CODE_CONNEXION_SOCKET</a></div><div class="ttdeci">static final int CODE_CONNEXION_SOCKET</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00034">PeripheriqueBluetooth.java:34</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html_a71160bb777fb9212aee2b5c7f86c8984"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a71160bb777fb9212aee2b5c7f86c8984">com.lasalle.pluginpool.PeripheriqueBluetooth.getInstance</a></div><div class="ttdeci">static PeripheriqueBluetooth getInstance(Handler handler)</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00071">PeripheriqueBluetooth.java:71</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a0249bbcdeee5653a4ab1c3a8f0d08198"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a0249bbcdeee5653a4ab1c3a8f0d08198">com.lasalle.pluginpool.IHMNouvelleRencontre.gererHandler</a></div><div class="ttdeci">void gererHandler()</div><div class="ttdoc">Gère le handler pour la communication.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00230">IHMNouvelleRencontre.java:230</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_aa0b283218c297cfa9a4eb9c167d095f2"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa0b283218c297cfa9a4eb9c167d095f2">com.lasalle.pluginpool.IHMNouvelleRencontre.peripheriqueBluetooth</a></div><div class="ttdeci">PeripheriqueBluetooth peripheriqueBluetooth</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00050">IHMNouvelleRencontre.java:50</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_ac5c52ad6f41dfcf94473b081fcc816fc"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ac5c52ad6f41dfcf94473b081fcc816fc">com.lasalle.pluginpool.IHMNouvelleRencontre.onDestroy</a></div><div class="ttdeci">void onDestroy()</div><div class="ttdoc">Méthode appelée à la destruction de l'application (après onStop() et détruite par le système Android)</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00124">IHMNouvelleRencontre.java:124</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_aa8845021c031a6342e75a5da8bcda0fa"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#aa8845021c031a6342e75a5da8bcda0fa">com.lasalle.pluginpool.IHMNouvelleRencontre.nbManches</a></div><div class="ttdeci">EditText nbManches</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00061">IHMNouvelleRencontre.java:61</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a2d8cc628afccfd73c5ab1a2f82e5f92c"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a2d8cc628afccfd73c5ab1a2f82e5f92c">com.lasalle.pluginpool.IHMNouvelleRencontre.NB_MANCHES_GAGNANTES</a></div><div class="ttdeci">static final int NB_MANCHES_GAGNANTES</div><div class="ttdoc">Le nombre de manches gagnantes par défaut.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00045">IHMNouvelleRencontre.java:45</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a543f205ca65cbf5b708baa261524a06c"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a543f205ca65cbf5b708baa261524a06c">com.lasalle.pluginpool.IHMNouvelleRencontre.initialiserRessourcesBluetooth</a></div><div class="ttdeci">void initialiserRessourcesBluetooth()</div><div class="ttdoc">Initialise les ressources bluetooth.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00208">IHMNouvelleRencontre.java:208</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a9f656c6eb2f4619ecdcfeb6ec396ee11"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9f656c6eb2f4619ecdcfeb6ec396ee11">com.lasalle.pluginpool.IHMNouvelleRencontre.ajouterJoueursSelectionnes</a></div><div class="ttdeci">void ajouterJoueursSelectionnes()</div><div class="ttdoc">Ajoute les joueurs sélectionnés pour cette rencontre.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00176">IHMNouvelleRencontre.java:176</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_ad2ac84e373fa0b4b321511089a62c36c"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ad2ac84e373fa0b4b321511089a62c36c">com.lasalle.pluginpool.IHMNouvelleRencontre.ID_INTENT_RENCONTRE</a></div><div class="ttdeci">static final String ID_INTENT_RENCONTRE</div><div class="ttdoc">Identifiant de données dans l'Intent.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00043">IHMNouvelleRencontre.java:43</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a9c66e944c51dc78c37ba59e1e80dfb31"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9c66e944c51dc78c37ba59e1e80dfb31">com.lasalle.pluginpool.IHMNouvelleRencontre.joueurs</a></div><div class="ttdeci">List&lt; Joueur &gt; joueurs</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00063">IHMNouvelleRencontre.java:63</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a6949ad14fdaf849b5516b963479e35ae"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a6949ad14fdaf849b5516b963479e35ae">com.lasalle.pluginpool.IHMNouvelleRencontre.onCreate</a></div><div class="ttdeci">void onCreate(Bundle savedInstanceState)</div><div class="ttdoc">Méthode appelée à la création de l'activité</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00070">IHMNouvelleRencontre.java:70</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a74fcd7d4bc57d03df748deee2c26a0c2"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fcd7d4bc57d03df748deee2c26a0c2">com.lasalle.pluginpool.IHMNouvelleRencontre.listeJoueurs</a></div><div class="ttdeci">ListView listeJoueurs</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00062">IHMNouvelleRencontre.java:62</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_acd1b355a50fb2f72817930ca0706f757"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#acd1b355a50fb2f72817930ca0706f757">com.lasalle.pluginpool.IHMNouvelleRencontre.onResume</a></div><div class="ttdeci">void onResume()</div><div class="ttdoc">Méthode appelée après onStart() ou après onPause()</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00094">IHMNouvelleRencontre.java:94</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a7d6170eec113074f675c223b6d0af426"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a7d6170eec113074f675c223b6d0af426">com.lasalle.pluginpool.IHMNouvelleRencontre.boutonLancerRencontre</a></div><div class="ttdeci">Button boutonLancerRencontre</div><div class="ttdoc">Le bouton de lancement.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00060">IHMNouvelleRencontre.java:60</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_abae8194597564c66bda06338f33fc2cd"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#abae8194597564c66bda06338f33fc2cd">com.lasalle.pluginpool.IHMNouvelleRencontre.rencontre</a></div><div class="ttdeci">Rencontre rencontre</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00053">IHMNouvelleRencontre.java:53</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a665e679eef335a2cc768117e91878f06"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a665e679eef335a2cc768117e91878f06">com.lasalle.pluginpool.IHMNouvelleRencontre.ajouterNbManches</a></div><div class="ttdeci">void ajouterNbManches()</div><div class="ttdoc">Ajoute les joueurs sélectionnés pour cette rencontre.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00166">IHMNouvelleRencontre.java:166</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_joueur_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html">com.lasalle.pluginpool.Joueur</a></div><div class="ttdoc">Classe pour un Joueur.</div><div class="ttdef"><b>Definition:</b> <a href="_joueur_8java_source.html#l00016">Joueur.java:16</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a9d2e8966511584c9a1c314d1e27f0c51"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9d2e8966511584c9a1c314d1e27f0c51">com.lasalle.pluginpool.IHMNouvelleRencontre.joueursRencontre</a></div><div class="ttdeci">Vector&lt; Joueur &gt; joueursRencontre</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00054">IHMNouvelleRencontre.java:54</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_rencontre_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html">com.lasalle.pluginpool.Rencontre</a></div><div class="ttdoc">Classe pour une rencontre.</div><div class="ttdef"><b>Definition:</b> <a href="_rencontre_8java_source.html#l00021">Rencontre.java:21</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html">com.lasalle.pluginpool.BaseDeDonnees</a></div><div class="ttdoc">Classe permettant de manipuler la base de données.</div><div class="ttdef"><b>Definition:</b> <a href="_base_de_donnees_8java_source.html#l00021">BaseDeDonnees.java:21</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_joueur_html_a2cc77b0fae0fc6ab8efb8037dd8aa781"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a2cc77b0fae0fc6ab8efb8037dd8aa781">com.lasalle.pluginpool.Joueur.getNom</a></div><div class="ttdeci">String getNom()</div><div class="ttdoc">Accesseurs.</div><div class="ttdef"><b>Definition:</b> <a href="_joueur_8java_source.html#l00051">Joueur.java:51</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a74fdf34af83bc4f637eb9cd4180f1d96"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a74fdf34af83bc4f637eb9cd4180f1d96">com.lasalle.pluginpool.IHMNouvelleRencontre.initialiserRessourcesIHMNouvelleRencontre</a></div><div class="ttdeci">void initialiserRessourcesIHMNouvelleRencontre()</div><div class="ttdoc">Initialise les ressources graphiques de l'activité</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00134">IHMNouvelleRencontre.java:134</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a9ff8389508091dfb819520b6338ebfa0"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a9ff8389508091dfb819520b6338ebfa0">com.lasalle.pluginpool.IHMNouvelleRencontre.listerJoueurs</a></div><div class="ttdeci">void listerJoueurs()</div><div class="ttdoc">Liste les joueurs disponibles.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00267">IHMNouvelleRencontre.java:267</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html_a6d3ccca1f7accc3881fffe3c23d06185"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a6d3ccca1f7accc3881fffe3c23d06185">com.lasalle.pluginpool.PeripheriqueBluetooth.connecter</a></div><div class="ttdeci">void connecter()</div><div class="ttdoc">Débute la connexion bluetooth.</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00243">PeripheriqueBluetooth.java:243</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html">com.lasalle.pluginpool.IHMNouvelleRencontre</a></div><div class="ttdoc">L'activité pour une nouvelle rencontre.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00037">IHMNouvelleRencontre.java:37</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a01a421ce94d8d8cd056a8508e6147b14"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a01a421ce94d8d8cd056a8508e6147b14">com.lasalle.pluginpool.IHMNouvelleRencontre.afficherJoueurs</a></div><div class="ttdeci">void afficherJoueurs(List&lt; String &gt; nomsJoueurs)</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00319">IHMNouvelleRencontre.java:319</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a453fad40a7cf0132f8d1639410ee8ad4"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a453fad40a7cf0132f8d1639410ee8ad4">com.lasalle.pluginpool.IHMNouvelleRencontre.ouvrirBaseDeDonnees</a></div><div class="ttdeci">void ouvrirBaseDeDonnees()</div><div class="ttdoc">Méthode permettant d'obtenir un accès à la base de données.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00221">IHMNouvelleRencontre.java:221</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a3628b2c5946dd8d84bee7b18d54d19a1"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a3628b2c5946dd8d84bee7b18d54d19a1">com.lasalle.pluginpool.IHMNouvelleRencontre.onStart</a></div><div class="ttdeci">void onStart()</div><div class="ttdoc">Méthode appelée au démarrage après le onCreate() ou un restart après un onStop()</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00084">IHMNouvelleRencontre.java:84</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_protocole_html_a5311168a8485d30510ab7823a7ad4f93"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_protocole.html#a5311168a8485d30510ab7823a7ad4f93">com.lasalle.pluginpool.Protocole.nomTable</a></div><div class="ttdeci">static final String nomTable</div><div class="ttdef"><b>Definition:</b> <a href="_protocole_8java_source.html#l00018">Protocole.java:18</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_joueur_html_ab5b9cfe3ce12fbd146d4176b31fcfb44"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#ab5b9cfe3ce12fbd146d4176b31fcfb44">com.lasalle.pluginpool.Joueur.getPrenom</a></div><div class="ttdeci">String getPrenom()</div><div class="ttdef"><b>Definition:</b> <a href="_joueur_8java_source.html#l00056">Joueur.java:56</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_afcd2e8a1f7f381dc6492b5a2432920f0"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#afcd2e8a1f7f381dc6492b5a2432920f0">com.lasalle.pluginpool.IHMNouvelleRencontre.nbManchesGagnantes</a></div><div class="ttdeci">int nbManchesGagnantes</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00055">IHMNouvelleRencontre.java:55</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_protocole_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_protocole.html">com.lasalle.pluginpool.Protocole</a></div><div class="ttdoc">Définition du protocole Plug In Pool.</div><div class="ttdef"><b>Definition:</b> <a href="_protocole_8java_source.html#l00013">Protocole.java:13</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html_a3b96ccd542812f401a1f2516f67a9b15"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a3b96ccd542812f401a1f2516f67a9b15">com.lasalle.pluginpool.PeripheriqueBluetooth.CODE_RECEPTION_TRAME</a></div><div class="ttdeci">static final int CODE_RECEPTION_TRAME</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00035">PeripheriqueBluetooth.java:35</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html_a4350c8f6caf150a7e98d462851db7f8c"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a4350c8f6caf150a7e98d462851db7f8c">com.lasalle.pluginpool.PeripheriqueBluetooth.CODE_DECONNEXION_SOCKET</a></div><div class="ttdeci">static final int CODE_DECONNEXION_SOCKET</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00036">PeripheriqueBluetooth.java:36</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre_html_a8a121c7de94b139c152d204a681e6cd0"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#a8a121c7de94b139c152d204a681e6cd0">com.lasalle.pluginpool.IHMNouvelleRencontre.handler</a></div><div class="ttdeci">Handler handler</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_nouvelle_rencontre_8java_source.html#l00052">IHMNouvelleRencontre.java:52</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth_html_adb28f94b8169c579bc3bfd5d99b141b2"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#adb28f94b8169c579bc3bfd5d99b141b2">com.lasalle.pluginpool.PeripheriqueBluetooth.CODE_CREATION_SOCKET</a></div><div class="ttdeci">static final int CODE_CREATION_SOCKET</div><div class="ttdef"><b>Definition:</b> <a href="_peripherique_bluetooth_8java_source.html#l00033">PeripheriqueBluetooth.java:33</a></div></div>
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_49c6480b242f9c8ac9178f53fe8d228d.html">mobile-pool</a></li><li class="navelem"><a class="el" href="dir_dbc7b73c4f5822d0f50bccc244aa5bf7.html">app</a></li><li class="navelem"><a class="el" href="dir_e85101677dbdfadf96284791956ae7a5.html">src</a></li><li class="navelem"><a class="el" href="dir_7fa6a23b2267034f6f330d8c4ced8253.html">main</a></li><li class="navelem"><a class="el" href="dir_574df648486f7077beef46ba5dfc9ef5.html">java</a></li><li class="navelem"><a class="el" href="dir_e5898b870de0659634e9b4ca389c686e.html">com</a></li><li class="navelem"><a class="el" href="dir_55e7c52135a7c4ab35a51591ee67e4b2.html">lasalle</a></li><li class="navelem"><a class="el" href="dir_6fad30c542b16b422077b7bfd2599803.html">pluginpool</a></li><li class="navelem"><a class="el" href="_i_h_m_nouvelle_rencontre_8java.html">IHMNouvelleRencontre.java</a></li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Jeudi 26 Mai 2022 09:38:34 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>
