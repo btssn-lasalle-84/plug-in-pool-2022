@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>plug-in-pool:  Fichier source de /home/tv/Documents/git/projets-2022/plug-in-pool-2022/mobile-pool/app/src/main/java/com/lasalle/pluginpool/IHMHistoriqueDesRencontres.java</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="plug-in-pool.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">plug-in-pool
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+   <div id="projectbrief">BTS SNIR LaSalle Avignon 2022</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('_i_h_m_historique_des_rencontres_8java_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">IHMHistoriqueDesRencontres.java</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_i_h_m_historique_des_rencontres_8java.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>com.lasalle.pluginpool;</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">import</span> android.os.Bundle;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">import</span> android.util.Log;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html">   19</a></span>&#160;<span class="keyword">public</span> <span class="keyword">class </span><a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html">IHMHistoriqueDesRencontres</a> <span class="keyword">extends</span> AppCompatActivity</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">   24</a></span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a> = <span class="stringliteral">&quot;_IHMHistoriqueRencontres_&quot;</span>;  </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    @Override</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a1e5a95c8373d8731a65a748e561785d2">   34</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a1e5a95c8373d8731a65a748e561785d2">onCreate</a>(Bundle savedInstanceState)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        super.onCreate(savedInstanceState);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        setContentView(R.layout.activity_ihm_historique_des_rencontres);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a>, <span class="stringliteral">&quot;onCreate()&quot;</span>);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a5a2b34de644a811de911680eb249c50e">initialiserRessourcesIHMHistoriqueDesRencontres</a>();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    @Override</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a32867e0a808bf337903a1146e292b61d">   46</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a32867e0a808bf337903a1146e292b61d">onStart</a>()</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        super.onStart();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a>, <span class="stringliteral">&quot;onStart()&quot;</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    @Override</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#ae0c5339903710d098f3014138d9f55b3">   56</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#ae0c5339903710d098f3014138d9f55b3">onResume</a>()</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        super.onResume();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a>, <span class="stringliteral">&quot;onResume()&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    }</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    @Override</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#aa6128666f964b3fb86e72d80166e9527">   66</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#aa6128666f964b3fb86e72d80166e9527">onPause</a>()</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        super.onPause();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a>, <span class="stringliteral">&quot;onPause()&quot;</span>);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    @Override</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a74da97f9f18650a41bce6c4d765b3359">   76</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a74da97f9f18650a41bce6c4d765b3359">onStop</a>()</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        super.onStop();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a>, <span class="stringliteral">&quot;onStop()&quot;</span>);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    }</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    @Override</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#ac8c94ddcb1419bb36c1fe75833599bac">   86</a></span>&#160;    <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#ac8c94ddcb1419bb36c1fe75833599bac">onDestroy</a>()</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        super.onDestroy();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        Log.d(<a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">TAG</a>, <span class="stringliteral">&quot;onDestroy()&quot;</span>);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a5a2b34de644a811de911680eb249c50e">   95</a></span>&#160;    <span class="keyword">private</span> <span class="keywordtype">void</span> <a class="code" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a5a2b34de644a811de911680eb249c50e">initialiserRessourcesIHMHistoriqueDesRencontres</a>()</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="comment">/*Bouton accueil*/</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_ac8c94ddcb1419bb36c1fe75833599bac"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#ac8c94ddcb1419bb36c1fe75833599bac">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.onDestroy</a></div><div class="ttdeci">void onDestroy()</div><div class="ttdoc">Méthode appelée à la destruction de l'application (après onStop() et détruite par le système Android)</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00086">IHMHistoriqueDesRencontres.java:86</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_a32867e0a808bf337903a1146e292b61d"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a32867e0a808bf337903a1146e292b61d">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.onStart</a></div><div class="ttdeci">void onStart()</div><div class="ttdoc">Méthode appelée au démarrage après le onCreate() ou un restart après un onStop()</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00046">IHMHistoriqueDesRencontres.java:46</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_a5a2b34de644a811de911680eb249c50e"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a5a2b34de644a811de911680eb249c50e">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.initialiserRessourcesIHMHistoriqueDesRencontres</a></div><div class="ttdeci">void initialiserRessourcesIHMHistoriqueDesRencontres()</div><div class="ttdoc">Initialise les ressources graphiques de l'activité</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00095">IHMHistoriqueDesRencontres.java:95</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_ae0c5339903710d098f3014138d9f55b3"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#ae0c5339903710d098f3014138d9f55b3">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.onResume</a></div><div class="ttdeci">void onResume()</div><div class="ttdoc">Méthode appelée après onStart() ou après onPause()</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00056">IHMHistoriqueDesRencontres.java:56</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html">com.lasalle.pluginpool.IHMHistoriqueDesRencontres</a></div><div class="ttdoc">L'activité pour créer un joueur.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00019">IHMHistoriqueDesRencontres.java:19</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_aa6128666f964b3fb86e72d80166e9527"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#aa6128666f964b3fb86e72d80166e9527">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.onPause</a></div><div class="ttdeci">void onPause()</div><div class="ttdoc">Méthode appelée après qu'une boîte de dialogue s'est affichée (on reprend sur un onResume()) ou avant...</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00066">IHMHistoriqueDesRencontres.java:66</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_a1e5a95c8373d8731a65a748e561785d2"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a1e5a95c8373d8731a65a748e561785d2">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.onCreate</a></div><div class="ttdeci">void onCreate(Bundle savedInstanceState)</div><div class="ttdoc">Méthode appelée à la création de l'activité</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00034">IHMHistoriqueDesRencontres.java:34</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_a662794486d59aec335db03ea4b42671c"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a662794486d59aec335db03ea4b42671c">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.TAG</a></div><div class="ttdeci">static final String TAG</div><div class="ttdoc">TAG pour les logs.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00024">IHMHistoriqueDesRencontres.java:24</a></div></div>
+<div class="ttc" id="aclasscom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres_html_a74da97f9f18650a41bce6c4d765b3359"><div class="ttname"><a href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_historique_des_rencontres.html#a74da97f9f18650a41bce6c4d765b3359">com.lasalle.pluginpool.IHMHistoriqueDesRencontres.onStop</a></div><div class="ttdeci">void onStop()</div><div class="ttdoc">Méthode appelée lorsque l'activité n'est plus visible.</div><div class="ttdef"><b>Definition:</b> <a href="_i_h_m_historique_des_rencontres_8java_source.html#l00076">IHMHistoriqueDesRencontres.java:76</a></div></div>
+<!-- HTML footer for doxygen 1.9.1-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_49c6480b242f9c8ac9178f53fe8d228d.html">mobile-pool</a></li><li class="navelem"><a class="el" href="dir_dbc7b73c4f5822d0f50bccc244aa5bf7.html">app</a></li><li class="navelem"><a class="el" href="dir_e85101677dbdfadf96284791956ae7a5.html">src</a></li><li class="navelem"><a class="el" href="dir_7fa6a23b2267034f6f330d8c4ced8253.html">main</a></li><li class="navelem"><a class="el" href="dir_574df648486f7077beef46ba5dfc9ef5.html">java</a></li><li class="navelem"><a class="el" href="dir_e5898b870de0659634e9b4ca389c686e.html">com</a></li><li class="navelem"><a class="el" href="dir_55e7c52135a7c4ab35a51591ee67e4b2.html">lasalle</a></li><li class="navelem"><a class="el" href="dir_6fad30c542b16b422077b7bfd2599803.html">pluginpool</a></li><li class="navelem"><a class="el" href="_i_h_m_historique_des_rencontres_8java.html">IHMHistoriqueDesRencontres.java</a></li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Jeudi 26 Mai 2022 09:38:34 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
+  </ul>
+</div>
+</body>
+</html>

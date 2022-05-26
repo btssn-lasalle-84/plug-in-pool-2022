@@ -3,6 +3,7 @@
 - [Le projet plug-in-pool-2022](#le-projet-plug-in-pool-2022)
   - [Présentation](#présentation)
   - [Fonctionnalités Mobile-POOL](#fonctionnalités-mobile-pool)
+  - [Documentation du code](#documentation-du-code)
   - [Captures Mobile-POOL](#captures-mobile-pool)
   - [TODOs Mobile-POOL](#todos-mobile-pool)
   - [Fonctionnalités Écran-POOL](#fonctionnalités-écran-pool)
@@ -40,6 +41,10 @@ Application mobile qui gère le déroulement des rencontres
 - Afficher les billes empochées/à empocher de chaque joueur
 - Terminer une partie
 - Afficher les statistiques d'une partie
+
+## Documentation du code
+
+https://btssn-lasalle-84.github.io/plug-in-pool-2022/
 
 ## Captures Mobile-POOL
 
