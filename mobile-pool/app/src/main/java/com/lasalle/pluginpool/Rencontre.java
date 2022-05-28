@@ -6,8 +6,11 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -149,6 +152,7 @@ public class Rencontre implements Serializable
         {
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
             NOUVELLE_MANCHE = true;
+            setHorodatageFinManche();
             joueurs.get(0).resetNbBillesEmpochees();
             joueurs.get(1).resetNbBillesEmpochees();
         }
@@ -238,6 +242,12 @@ public class Rencontre implements Serializable
         this.horodatageDebut = new Date();
     }
 
+    public void setHorodatageFinManche()
+    {
+        Log.d(TAG, "setHorodatageDebutManche()");
+        manches.lastElement().setHorodatageFin();
+    }
+
     /**
      * @brief Méthode pour calculer la durée d'une rencontre
      */
@@ -256,4 +266,15 @@ public class Rencontre implements Serializable
     {
         NOUVELLE_MANCHE = !NOUVELLE_MANCHE;
     }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche pour enregistrer une manche
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ajouterManche()
+    {
+        Log.d(TAG, "ajouterManche()");
+        manches.add(new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), new Date(), null));
+    }
 }
+

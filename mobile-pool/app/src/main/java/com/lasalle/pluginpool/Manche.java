@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
 import java.time.*;
+import java.util.Date;
 
 /**
  * @class Manche
@@ -25,19 +26,19 @@ public class Manche implements Serializable
      */
     private int pointsJoueur1;
     private int pointsJoueur2;
-    private LocalDateTime debut;
-    private LocalDateTime fin;
+    private Date debut;
+    private Date fin;
 
     /**
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Manche(int pointsJoueur1, int pointsJoueur2)
+    public Manche(int pointsJoueur1, int pointsJoueur2, Date debut, Date fin)
     {
         this.pointsJoueur1 = pointsJoueur1;
         this.pointsJoueur2 = pointsJoueur2;
-        this.debut = LocalDateTime.now(ZoneId.systemDefault());
-        this.fin = null;
+        this.debut = debut;
+        this.fin = fin;
     }
 
     /**
@@ -53,12 +54,12 @@ public class Manche implements Serializable
         return this.pointsJoueur2;
     }
 
-    public LocalDateTime getDebut()
+    public Date getDebut()
     {
         return this.debut;
     }
 
-    public LocalDateTime getFin()
+    public Date getFin()
     {
         return this.fin;
     }
@@ -76,13 +77,13 @@ public class Manche implements Serializable
         this.pointsJoueur2 = pointsJoueur2;
     }
 
-    public void setDebut(LocalDateTime debut)
+    public void setHorodatageFin()
     {
-        this.debut = debut;
+        this.fin = new Date();
     }
 
-    public void setFin(LocalDateTime fin)
+    public void setHorodatageDebut()
     {
-        this.fin = fin;
+        this.debut = new Date();
     }
 }

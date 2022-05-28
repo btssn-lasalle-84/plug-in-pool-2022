@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Vector;
@@ -466,6 +468,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Méthode appelée à la fin d'une manche afin de commencer une nouvelle manche ou bien de finir la rencontre
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void terminerRencontre()
     {
         Log.d(TAG, "terminerRencontre()");
@@ -473,6 +476,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         {
             demarrerNouvellePartie();
             rencontre.changerNouvelleManche();
+            rencontre.ajouterManche();
         }
         else if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
         {

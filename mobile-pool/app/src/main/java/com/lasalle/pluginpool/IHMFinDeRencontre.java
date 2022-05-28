@@ -233,4 +233,13 @@ public class IHMFinDeRencontre extends AppCompatActivity
         precisionJoueur1.setText(String.format("%.2f", joueur1.getPrecision()) + "%");
         precisionJoueur2.setText(String.format("%.2f", joueur2.getPrecision()) + "%");
     }
+
+    /**
+     * @brief Méthode appelée au début de la rencontre pour l'enregistrer dans la base de données
+     */
+    private void enregistrerRencontre()
+    {
+        Log.d(TAG, "enregistrerRencontre()");
+
+    }
 }
