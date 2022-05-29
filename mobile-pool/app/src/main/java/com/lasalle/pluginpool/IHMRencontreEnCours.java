@@ -92,6 +92,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         initialiserRessourcesIHMRencontreEnCours();
         gererHandler();
         initialiserRessourcesBluetooth();
+        enregistrerRencontreBDD();
     }
 
     /**
@@ -292,6 +293,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     {
         this.handler = new Handler(this.getMainLooper())
         {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void handleMessage(@NonNull Message message)
             {
@@ -322,6 +324,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Gère le message reçu pour détecter une mauvaise trame
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void gererMessage(String message)
     {
         // format général : $PLUG;{TYPE};{DONNEES;}\r\n
@@ -484,5 +487,11 @@ public class IHMRencontreEnCours extends AppCompatActivity
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);
         }
+    }
+
+    private void enregistrerRencontreBDD()
+    {
+        Log.d(TAG, "enregistrerRencontreBDD()");
+        baseDeDonnees.enregistrerRencontre(rencontre.getJoueurs().get(0), rencontre.getJoueurs().get(1), rencontre.getNbManchesGagnantes(), rencontre.getManches().get(0).getDebut());
     }
 }

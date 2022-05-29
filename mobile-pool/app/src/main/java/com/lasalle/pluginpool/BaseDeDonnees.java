@@ -1,10 +1,12 @@
 package com.lasalle.pluginpool;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -47,11 +49,12 @@ public class BaseDeDonnees
 
     private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, debut) VALUES (NULL,";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
-    private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idRencontre, idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (NULL,";
+    private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (NULL,";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
     private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
+    private static final String DEBUT_REQUETE_SELECTION_JOUEUR = "SELECT idJoueur FROM Joueur WHERE nom='";
 
     /**
      * @brief Constructeur de la classe BaseDeDonnees
@@ -158,5 +161,28 @@ public class BaseDeDonnees
     {
         ouvrir();
         bdd.execSQL(requete);
+    }
+
+    /**
+     * @brief Permet d'enregistrer la rencontre une fois commencée
+     * @param joueur1
+     * @param joueur2
+     * @param nbManchesGagnantes
+     * @param debut
+     */
+    public void enregistrerRencontre(Joueur joueur1, Joueur joueur2, int nbManchesGagnantes, Date debut)
+    {
+        ouvrir();
+        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(joueur1) + "," + chercherIDJoueur(joueur2) + "," + nbManchesGagnantes + "," + 1 + "," + debut + ");";
+        bdd.execSQL(requete);
+    }
+
+    @SuppressLint("Recycle")
+    public int chercherIDJoueur(Joueur joueur)
+    {
+        ouvrir();
+        String requete = DEBUT_REQUETE_SELECTION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "';";
+        Cursor curseurResultat = bdd.rawQuery(requete,null);
+        return curseurResultat.getInt(INDEX_ID_JOUEUR);
     }
 }

@@ -153,6 +153,7 @@ public class Rencontre implements Serializable
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
             NOUVELLE_MANCHE = true;
             setHorodatageFinManche();
+            setScoresFinManches();
             joueurs.get(0).resetNbBillesEmpochees();
             joueurs.get(1).resetNbBillesEmpochees();
         }
@@ -208,6 +209,11 @@ public class Rencontre implements Serializable
         return joueurs;
     }
 
+    public Vector<Manche> getManches()
+    {
+        return manches;
+    }
+
     public void setJoueurs(Vector<Joueur> joueurs)
     {
         this.joueurs = joueurs;
@@ -248,13 +254,19 @@ public class Rencontre implements Serializable
         manches.lastElement().setHorodatageFin();
     }
 
+    public void setScoresFinManches()
+    {
+        Log.d(TAG, "setScoresFinManches()");
+        manches.lastElement().setPointsJoueur1(joueurs.get(0).getNbBillesEmpochees());
+        manches.lastElement().setPointsJoueur2(joueurs.get(1).getNbBillesEmpochees());
+    }
+
     /**
      * @brief Méthode pour calculer la durée d'une rencontre
      */
     public void calculerDureeRencontre()
     {
-        Date now = new Date();
-        long h = now.getTime() - this.horodatageDebut.getTime();
+        long h = manches.get(0).getDebut().getTime() - manches.lastElement().getFin().getTime();
         Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
         dureeRencontreSecondes = (int)(h / 1000);
     }
