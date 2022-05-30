@@ -47,7 +47,7 @@ public class BaseDeDonnees
     private static final int INDEX_DEBUT = 4;
     private static final int INDEX_FIN = 5;
 
-    private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, debut) VALUES (NULL,";
+    private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idRencontre, pointsJoueur1, pointsJoueur2, debut, fin) VALUES (";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
@@ -168,15 +168,39 @@ public class BaseDeDonnees
      * @param joueur1
      * @param joueur2
      * @param nbManchesGagnantes
-     * @param debut
      */
-    public void enregistrerRencontre(Joueur joueur1, Joueur joueur2, int nbManchesGagnantes, long debut)
+    public void enregistrerRencontre(Joueur joueur1, Joueur joueur2, int nbManchesGagnantes)
     {
         ouvrir();
-        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(joueur1) + "," + chercherIDJoueur(joueur2) + "," + nbManchesGagnantes + "," + 1 + "," + new java.sql.Date(debut) + ");";
+        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(joueur1) + "," + chercherIDJoueur(joueur2) + "," + nbManchesGagnantes + "," + FIN_REQUETE_INSERTION_RENCONTRE;
         bdd.execSQL(requete);
     }
 
+    public void enregistrerManche(Manche manche)
+    {
+        ouvrir();
+        String requete = DEBUT_REQUETE_INSERTION_MANCHE + chercherIDRencontre() + "," + manche.getPointsJoueur1() + "," + manche.getPointsJoueur2() + "," + new java.sql.Date(manche.getDebut().getTime()) + "," + new java.sql.Date(manche.getFin().getTime()) + ");";
+        bdd.execSQL(requete);
+    }
+
+    /**
+     * @brief Méthode pour récupérer l'id de la dernière rencontre
+     * @return l'id de la dernière rencontre
+     */
+    @SuppressLint("Recycle")
+    public int chercherIDRencontre()
+    {
+        ouvrir();
+        Cursor curseurResultat = bdd.rawQuery(REQUETE_ID_RENCONTRE,null);
+        curseurResultat.moveToNext();
+        return curseurResultat.getInt(INDEX_ID_RENCONTRE);
+    }
+
+    /**
+     * @brief Méthode pour récupérer l'id d'un joueur
+     * @param joueur
+     * @return l'id du joueur
+     */
     @SuppressLint("Recycle")
     public int chercherIDJoueur(Joueur joueur)
     {
