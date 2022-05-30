@@ -33,6 +33,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
      * Variables
      */
     private Rencontre rencontre;
+    private BaseDeDonnees baseDeDonnees = null;
 
     /**
      * Ressources IHM
@@ -138,12 +139,15 @@ public class IHMFinDeRencontre extends AppCompatActivity
         nbfautesJoueur1 = (TextView)findViewById(R.id.nbFautes1);
         nbfautesJoueur2 = (TextView)findViewById(R.id.nbFautes2);
 
+        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
+        ouvrirBaseDeDonnees();
+
         boutonEnregistrerRencontre.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    /*Enregistrer la rencontre*/
+                    enregistrerRencontre();
                 }
             });
 
@@ -159,13 +163,21 @@ public class IHMFinDeRencontre extends AppCompatActivity
     }
 
     /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+    }
+
+    /**
      * @brief Méthode pour afficher le nom du joueur Gagnant sur l'IHM
      */
     @SuppressLint("SetTextI18n")
     private void initialiserGagnantIHMFinDeRencontre()
     {
         Log.d(TAG, "initialiserScoresIHMFinDeRencontre()");
-        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
 
         if(rencontre.getJoueurs().get(0).getNbManchesGagnees() > rencontre.getJoueurs().get(1).getNbManchesGagnees())
         {
@@ -240,6 +252,6 @@ public class IHMFinDeRencontre extends AppCompatActivity
     private void enregistrerRencontre()
     {
         Log.d(TAG, "enregistrerRencontre()");
-
+        baseDeDonnees.enregistrerRencontre(rencontre.getJoueurs().get(0), rencontre.getJoueurs().get(1), rencontre.getNbManchesGagnantes(), rencontre.getManches().get(0).getDebut().getTime());
     }
 }

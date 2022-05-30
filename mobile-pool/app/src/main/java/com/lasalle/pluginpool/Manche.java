@@ -7,6 +7,7 @@ package com.lasalle.pluginpool;
  */
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 
 public class Manche implements Serializable
 {
+    private static final String TAG = "_Manche_";
     /**
      * Variables
      */
@@ -80,6 +82,7 @@ public class Manche implements Serializable
     public void setHorodatageFin()
     {
         this.fin = new Date();
+        Log.d(TAG, "setHorodatageFin() : " + fin + " ms");
     }
 
     public void setHorodatageDebut()

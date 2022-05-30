@@ -49,7 +49,7 @@ public class BaseDeDonnees
 
     private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, debut) VALUES (NULL,";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
-    private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (NULL,";
+    private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
@@ -170,10 +170,10 @@ public class BaseDeDonnees
      * @param nbManchesGagnantes
      * @param debut
      */
-    public void enregistrerRencontre(Joueur joueur1, Joueur joueur2, int nbManchesGagnantes, Date debut)
+    public void enregistrerRencontre(Joueur joueur1, Joueur joueur2, int nbManchesGagnantes, long debut)
     {
         ouvrir();
-        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(joueur1) + "," + chercherIDJoueur(joueur2) + "," + nbManchesGagnantes + "," + 1 + "," + debut + ");";
+        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(joueur1) + "," + chercherIDJoueur(joueur2) + "," + nbManchesGagnantes + "," + 1 + "," + new java.sql.Date(debut) + ");";
         bdd.execSQL(requete);
     }
 
@@ -183,6 +183,7 @@ public class BaseDeDonnees
         ouvrir();
         String requete = DEBUT_REQUETE_SELECTION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "';";
         Cursor curseurResultat = bdd.rawQuery(requete,null);
+        curseurResultat.moveToNext();
         return curseurResultat.getInt(INDEX_ID_JOUEUR);
     }
 }

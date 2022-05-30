@@ -59,6 +59,7 @@ public class Rencontre implements Serializable
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
         this.joueurs = joueurs;
+        this.manches = new Vector<Manche>();
         this.coups = new Vector<>();
     }
 
@@ -142,17 +143,18 @@ public class Rencontre implements Serializable
     /**
      * @brief Méthode appelée à la fin d'une manche
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void terminerManche()
     {
         Log.d(TAG, "terminerManche()");
         nbManches++;
+        setHorodatageFinManche();
         Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
         Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
         if(nbManches < nbManchesGagnantes)
         {
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
             NOUVELLE_MANCHE = true;
-            setHorodatageFinManche();
             setScoresFinManches();
             joueurs.get(0).resetNbBillesEmpochees();
             joueurs.get(1).resetNbBillesEmpochees();
@@ -266,7 +268,7 @@ public class Rencontre implements Serializable
      */
     public void calculerDureeRencontre()
     {
-        long h = manches.get(0).getDebut().getTime() - manches.lastElement().getFin().getTime();
+        long h = manches.lastElement().getFin().getTime() - manches.get(0).getDebut().getTime() ;
         Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
         dureeRencontreSecondes = (int)(h / 1000);
     }
@@ -286,7 +288,8 @@ public class Rencontre implements Serializable
     public void ajouterManche()
     {
         Log.d(TAG, "ajouterManche()");
-        manches.add(new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), new Date(), null));
+        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), new Date(), null);
+        manches.add(manche);
     }
 }
 

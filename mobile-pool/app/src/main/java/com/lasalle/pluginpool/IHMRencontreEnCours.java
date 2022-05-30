@@ -92,7 +92,6 @@ public class IHMRencontreEnCours extends AppCompatActivity
         initialiserRessourcesIHMRencontreEnCours();
         gererHandler();
         initialiserRessourcesBluetooth();
-        enregistrerRencontreBDD();
     }
 
     /**
@@ -171,11 +170,13 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Démarre une nouvelle partie
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void demarrerNouvellePartie()
     {
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
         peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
         estPremierJoueurChoisi = false;
+        rencontre.ajouterManche();
         joueurs.get(0).setCouleur("");
         joueurs.get(1).setCouleur("");
     }
@@ -479,7 +480,6 @@ public class IHMRencontreEnCours extends AppCompatActivity
         {
             demarrerNouvellePartie();
             rencontre.changerNouvelleManche();
-            rencontre.ajouterManche();
         }
         else if(rencontre.getEtatRencontre() == RENCONTRE_FINIE)
         {
@@ -487,11 +487,5 @@ public class IHMRencontreEnCours extends AppCompatActivity
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);
         }
-    }
-
-    private void enregistrerRencontreBDD()
-    {
-        Log.d(TAG, "enregistrerRencontreBDD()");
-        baseDeDonnees.enregistrerRencontre(rencontre.getJoueurs().get(0), rencontre.getJoueurs().get(1), rencontre.getNbManchesGagnantes(), rencontre.getManches().get(0).getDebut());
     }
 }
