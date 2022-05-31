@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -138,16 +139,39 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
         for(int i = 0; i < listeRencontre.size(); ++i)
         {
             Rencontre rencontre = listeRencontre.get(i);
+            int scoreJoueur1 = compterManchesGagnees(rencontre);
+            DecimalFormat format = new DecimalFormat("00.00");
             Log.d(TAG, "nom = " + rencontre.getJoueurs().get(i).getNom() + " prenom = " + rencontre.getJoueurs().get(i).getPrenom());
             rencontres.add(
                 rencontre.getJoueurs().get(0).getNom() + " " +
                 rencontre.getJoueurs().get(0).getPrenom() + " VS " +
                 rencontre.getJoueurs().get(1).getNom() + " " +
-                rencontre.getJoueurs().get(1).getPrenom()
+                rencontre.getJoueurs().get(1).getPrenom() + " | " +
+                scoreJoueur1 + " - " +
+                (rencontre.getNbManches() - scoreJoueur1) + " | " +
+                format.format(rencontre.calculerPrecisionMoyenneJoueur1()) + " % - " +
+                format.format(rencontre.calculerPrecisionMoyenneJoueur2()) + " %"
             );
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, rencontres);
         listeHistoriqueRencontres.setAdapter(adapter);
+    }
+
+    /**
+     * @brief Permet de compter les manches gagnées de chaque joueur
+     */
+    private int compterManchesGagnees(Rencontre rencontre)
+    {
+        int mancheGagnees = 0;
+        for(int i = 0; i < rencontre.getNbManches(); ++i)
+        {
+            if(rencontre.getManches().get(0).getPointsJoueur1() > rencontre.getManches().get(1).getPointsJoueur1())
+            {
+                Log.d(TAG, "compterManchesGagnees() : nbManchesGagnées = " + mancheGagnees);
+                mancheGagnees++;
+            }
+        }
+        return mancheGagnees;
     }
 }

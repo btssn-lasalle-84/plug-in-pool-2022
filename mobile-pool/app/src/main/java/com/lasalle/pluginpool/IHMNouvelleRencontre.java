@@ -52,6 +52,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private Handler handler = null;
     private Rencontre rencontre = null;
     private Vector<Joueur> joueursRencontre;
+    private Vector<Manche> manchesRencontre;
     private int nbManchesGagnantes;
 
     /**
@@ -199,7 +200,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void initialiserRencontre()
     {
         joueursRencontre = new Vector<Joueur>();
-        rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
+        manchesRencontre = new Vector<Manche>();
+        rencontre = new Rencontre(joueursRencontre, manchesRencontre, NB_MANCHES_GAGNANTES);
     }
 
     /**

@@ -6,6 +6,7 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
@@ -53,13 +54,13 @@ public class Rencontre implements Serializable
     /**
      * @brief Constructeur
      */
-    public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
+    public Rencontre(Vector<Joueur> joueurs, Vector<Manche> manches, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
         this.joueurs = joueurs;
-        this.manches = new Vector<Manche>();
+        this.manches = manches;
         this.coups = new Vector<>();
     }
 
@@ -79,6 +80,7 @@ public class Rencontre implements Serializable
     /**
      * @brief Gère le déroulement de la rencontre
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void jouerCoup()
     {
         Log.d(TAG, "jouerCoup()");
@@ -288,8 +290,41 @@ public class Rencontre implements Serializable
     public void ajouterManche()
     {
         Log.d(TAG, "ajouterManche()");
-        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), new Date(), null);
+        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), this.getJoueurs().get(0).getPrecision(), this.getJoueurs().get(1).getPrecision(), new Date(), null);
         manches.add(manche);
+    }
+
+    /**
+     * @brief Permet le calcul de la précision du joueur 1 sur l'ensemble des manches d'une rencontre
+     * @return Précision du joueur 1
+     */
+    public double calculerPrecisionMoyenneJoueur1()
+    {
+        Log.d(TAG, "calculerPrecisionMoyenneJoueur1()");
+        double precision = 0;
+        for(int i = 0; i < this.getManches().size(); ++i)
+        {
+            precision += this.getManches().get(i).getPrecisionJoueur1();
+        }
+        precision /= this.getManches().size();
+        return precision;
+    }
+
+    /**
+     * @brief Permet le calcul de la précision du joueur 2 sur l'ensemble des manches d'une rencontre
+     * @return Précision du joueur 2
+     */
+    @SuppressLint("DefaultLocale")
+    public double calculerPrecisionMoyenneJoueur2()
+    {
+        Log.d(TAG, "calculerPrecisionMoyenneJoueur2()");
+        double precision = 0;
+        for(int i = 0; i < this.getManches().size(); ++i)
+        {
+            precision += this.getManches().get(i).getPrecisionJoueur2();
+        }
+        precision /= this.getManches().size();
+        return precision;
     }
 }
 

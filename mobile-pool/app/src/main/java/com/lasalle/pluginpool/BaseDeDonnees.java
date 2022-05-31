@@ -1,13 +1,14 @@
 package com.lasalle.pluginpool;
 
 import android.annotation.SuppressLint;
+import androidx.annotation.RequiresApi;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.util.Log;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Vector;
 
 /**
@@ -45,15 +46,18 @@ public class BaseDeDonnees
     private static final int INDEX_FK_RENCONTRE = 1;
     private static final int INDEX_POINTS_JOUEUR_1 = 2;
     private static final int INDEX_POINTS_JOUEUR_2 = 3;
-    private static final int INDEX_DEBUT = 4;
-    private static final int INDEX_FIN = 5;
+    private static final int INDEX_PRECISION_JOUEUR_1 = 4;
+    private static final int INDEX_PRECISION_JOUEUR_2 = 5;
+    private static final int INDEX_DEBUT = 6;
+    private static final int INDEX_FIN = 7;
 
     private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idRencontre, pointsJoueur1, pointsJoueur2, debut, fin) VALUES (";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
-    private static final String REQUETE_RENCONTRES = "SELECT * FROM Rencontre";
+    private static final String REQUETE_RENCONTRES = "SELECT * FROM Rencontre ;";
+    private static final String REQUETE_MANCHES = "SELECT * FROM Manche INNER JOIN Rencontre ON Manche.idRencontre=";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
     private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
     private static final String DEBUT_REQUETE_SELECTION_ID_JOUEUR = "SELECT idJoueur FROM Joueur WHERE nom='";
@@ -180,7 +184,13 @@ public class BaseDeDonnees
     public void enregistrerManche(Manche manche)
     {
         ouvrir();
-        String requete = DEBUT_REQUETE_INSERTION_MANCHE + chercherIDRencontre() + "," + manche.getPointsJoueur1() + "," + manche.getPointsJoueur2() + "," + new java.sql.Date(manche.getDebut().getTime()) + "," + new java.sql.Date(manche.getFin().getTime()) + ");";
+        String requete = DEBUT_REQUETE_INSERTION_MANCHE + chercherIDRencontre() + "," +
+                manche.getPointsJoueur1() + "," +
+                manche.getPointsJoueur2() + "," +
+                manche.getPrecisionJoueur1() + "," +
+                manche.getPrecisionJoueur2() + "," +
+                new java.sql.Date(manche.getDebut().getTime()) + "," +
+                new java.sql.Date(manche.getFin().getTime()) + ");";
         bdd.execSQL(requete);
     }
 
@@ -216,8 +226,10 @@ public class BaseDeDonnees
      * @brief Permet d'effectuer une requete de type SELECT pour récupérer toutes les rencontres
      * @return rencontres
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Vector<Rencontre> getRencontres()
     {
+        Log.d(TAG, "getRencontres()");
         Vector<Rencontre> rencontres = new Vector<Rencontre>();
         String requeteRencontres = REQUETE_RENCONTRES;
         Cursor curseurRencontres = effectuerRequete(requeteRencontres);
@@ -234,8 +246,38 @@ public class BaseDeDonnees
                 joueurs.add(new Joueur(curseurJoueurs.getString(INDEX_NOM_JOUEUR), curseurJoueurs.getString(INDEX_PRENOM_JOUEUR)));
                 Log.d(TAG, "nom = " + curseurJoueurs.getString(INDEX_NOM_JOUEUR) + " - " + "prenom = " + curseurJoueurs.getString(INDEX_PRENOM_JOUEUR));
             }
-            rencontres.add(new Rencontre(joueurs, curseurRencontres.getInt(INDEX_NB_MANCHES_GAGNANTES)));
+            Vector<Manche> manches = getManches(curseurRencontres.getInt(INDEX_ID_RENCONTRE));
+            rencontres.add(new Rencontre(joueurs, manches, curseurRencontres.getInt(INDEX_NB_MANCHES_GAGNANTES)));
         }
         return rencontres;
+    }
+
+    /**
+     * @brief Permet d'effectuer une requete de type SELECT pour récupérer toutes les manches associées à une rencontre
+     * @param idRencontre
+     * @return les manches associées à une rencontre
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Vector<Manche> getManches(int idRencontre)
+    {
+        Log.d(TAG, "getManches()");
+        Vector<Manche> manches = new Vector<Manche>();
+        String requeteManches = REQUETE_MANCHES + idRencontre + ";";
+        Cursor curseurManches = effectuerRequete(requeteManches);
+
+        for(int i = 0; i < curseurManches.getCount(); ++i)
+        {
+            curseurManches.moveToNext();
+            manches.add(new Manche(
+                curseurManches.getInt(INDEX_POINTS_JOUEUR_1),
+                curseurManches.getInt(INDEX_POINTS_JOUEUR_2),
+                curseurManches.getDouble(INDEX_PRECISION_JOUEUR_1),
+                curseurManches.getDouble(INDEX_PRECISION_JOUEUR_2),
+                new Date(curseurManches.getLong(INDEX_FINI)*1000),
+                new Date(curseurManches.getLong(INDEX_HORODATAGE)*1000))
+            );
+            Log.d(TAG, "Joueur 1 : " + manches.get(i).getPointsJoueur1() + " Joueur 2 : " + manches.get(i).getPointsJoueur2() + " Début : " + manches.get(i).getDebut() + " Fin : " + manches.get(i).getFin());
+        }
+        return manches;
     }
 }

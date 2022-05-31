@@ -28,6 +28,8 @@ public class Manche implements Serializable
      */
     private int pointsJoueur1;
     private int pointsJoueur2;
+    private double precisionJoueur1;
+    private double precisionJoueur2;
     private Date debut;
     private Date fin;
 
@@ -35,10 +37,12 @@ public class Manche implements Serializable
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Manche(int pointsJoueur1, int pointsJoueur2, Date debut, Date fin)
+    public Manche(int pointsJoueur1, int pointsJoueur2, double precisionJoueur1, double precisionJoueur2, Date debut, Date fin)
     {
         this.pointsJoueur1 = pointsJoueur1;
         this.pointsJoueur2 = pointsJoueur2;
+        this.precisionJoueur1 = precisionJoueur1;
+        this.precisionJoueur2 = precisionJoueur2;
         this.debut = debut;
         this.fin = fin;
     }
@@ -54,6 +58,16 @@ public class Manche implements Serializable
     public int getPointsJoueur2()
     {
         return this.pointsJoueur2;
+    }
+
+    public double getPrecisionJoueur1()
+    {
+        return precisionJoueur1;
+    }
+
+    public double getPrecisionJoueur2()
+    {
+        return precisionJoueur2;
     }
 
     public Date getDebut()
