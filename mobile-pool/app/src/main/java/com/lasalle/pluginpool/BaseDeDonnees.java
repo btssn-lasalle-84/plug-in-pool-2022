@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -52,9 +53,11 @@ public class BaseDeDonnees
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
+    private static final String REQUETE_RENCONTRES = "SELECT * FROM Rencontre";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
     private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
-    private static final String DEBUT_REQUETE_SELECTION_JOUEUR = "SELECT idJoueur FROM Joueur WHERE nom='";
+    private static final String DEBUT_REQUETE_SELECTION_ID_JOUEUR = "SELECT idJoueur FROM Joueur WHERE nom='";
+    private static final String DEBUT_REQUETE_SELECTION_JOUEUR = "SELECT * FROM Joueur WHERE Joueur.idJoueur=";
 
     /**
      * @brief Constructeur de la classe BaseDeDonnees
@@ -203,9 +206,36 @@ public class BaseDeDonnees
     public int chercherIDJoueur(Joueur joueur)
     {
         ouvrir();
-        String requete = DEBUT_REQUETE_SELECTION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "';";
+        String requete = DEBUT_REQUETE_SELECTION_ID_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "';";
         Cursor curseurResultat = bdd.rawQuery(requete,null);
         curseurResultat.moveToNext();
         return curseurResultat.getInt(INDEX_ID_JOUEUR);
+    }
+
+    /**
+     * @brief Permet d'effectuer une requete de type SELECT pour récupérer toutes les rencontres
+     * @return rencontres
+     */
+    public Vector<Rencontre> getRencontres()
+    {
+        Vector<Rencontre> rencontres = new Vector<Rencontre>();
+        String requeteRencontres = REQUETE_RENCONTRES;
+        Cursor curseurRencontres = effectuerRequete(requeteRencontres);
+
+        for (int i = 0; i < curseurRencontres.getCount(); i++)
+        {
+            curseurRencontres.moveToNext();
+            String requeteJoueurs = DEBUT_REQUETE_SELECTION_JOUEUR + curseurRencontres.getString(INDEX_ID_JOUEUR_1) + " OR Joueur.idJoueur=" + curseurRencontres.getString(INDEX_ID_JOUEUR_2) + ";";
+            Cursor curseurJoueurs = effectuerRequete(requeteJoueurs);
+            Vector<Joueur> joueurs = new Vector<Joueur>();
+            for(int j = 0; j < curseurJoueurs.getCount(); j++)
+            {
+                curseurJoueurs.moveToNext();
+                joueurs.add(new Joueur(curseurJoueurs.getString(INDEX_NOM_JOUEUR), curseurJoueurs.getString(INDEX_PRENOM_JOUEUR)));
+                Log.d(TAG, "nom = " + curseurJoueurs.getString(INDEX_NOM_JOUEUR) + " - " + "prenom = " + curseurJoueurs.getString(INDEX_PRENOM_JOUEUR));
+            }
+            rencontres.add(new Rencontre(joueurs, curseurRencontres.getInt(INDEX_NB_MANCHES_GAGNANTES)));
+        }
+        return rencontres;
     }
 }

@@ -10,6 +10,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @class IHMHistoriqueDesRencontres
@@ -22,6 +28,12 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMHistoriqueRencontres_";  //!< TAG pour les logs
+
+    /**
+     * Variables
+     */
+    private ListView listeHistoriqueRencontres;
+    private BaseDeDonnees baseDeDonnees = null;
 
     /**
      * Ressources IHM
@@ -92,8 +104,50 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     /**
      * @brief Initialise les ressources graphiques de l'activité
      */
+
+    /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+    }
+
+    /**
+     * @brief Méthode permettant d'initialiser les ressources de l'IHM
+     */
     private void initialiserRessourcesIHMHistoriqueDesRencontres()
     {
+        Log.d(TAG, "initialiserRessourcesIHMHistoriqueDesRencontres()");
+        listeHistoriqueRencontres = (ListView)findViewById(R.id.listeHistoriqueRencontres);
+        ouvrirBaseDeDonnees();
+        listerRencontres();
         /*Bouton accueil*/
+    }
+
+    /**
+     * @brief Méthode permettant de lister les rencontre dans la base de données
+     */
+    private void listerRencontres()
+    {
+        Log.d(TAG, "listerRencontres()");
+        Vector<Rencontre> listeRencontre = baseDeDonnees.getRencontres();
+        List<String> rencontres = new ArrayList<String>();
+
+        for(int i = 0; i < listeRencontre.size(); ++i)
+        {
+            Rencontre rencontre = listeRencontre.get(i);
+            Log.d(TAG, "nom = " + rencontre.getJoueurs().get(i).getNom() + " prenom = " + rencontre.getJoueurs().get(i).getPrenom());
+            rencontres.add(
+                rencontre.getJoueurs().get(0).getNom() + " " +
+                rencontre.getJoueurs().get(0).getPrenom() + " VS " +
+                rencontre.getJoueurs().get(1).getNom() + " " +
+                rencontre.getJoueurs().get(1).getPrenom()
+            );
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, rencontres);
+        listeHistoriqueRencontres.setAdapter(adapter);
     }
 }

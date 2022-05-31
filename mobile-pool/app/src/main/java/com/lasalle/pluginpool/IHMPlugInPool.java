@@ -139,6 +139,16 @@ public class IHMPlugInPool extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        boutonHistoriqueRencontre.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMPlugInPool.this, IHMHistoriqueDesRencontres.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
