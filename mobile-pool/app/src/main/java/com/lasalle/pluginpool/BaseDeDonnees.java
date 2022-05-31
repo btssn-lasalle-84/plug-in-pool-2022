@@ -165,14 +165,12 @@ public class BaseDeDonnees
 
     /**
      * @brief Permet d'enregistrer la rencontre une fois commencée
-     * @param joueur1
-     * @param joueur2
-     * @param nbManchesGagnantes
+     * @param rencontre
      */
-    public void enregistrerRencontre(Joueur joueur1, Joueur joueur2, int nbManchesGagnantes)
+    public void enregistrerRencontre(Rencontre rencontre)
     {
         ouvrir();
-        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(joueur1) + "," + chercherIDJoueur(joueur2) + "," + nbManchesGagnantes + "," + FIN_REQUETE_INSERTION_RENCONTRE;
+        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(rencontre.getJoueurs().get(0)) + "," + chercherIDJoueur(rencontre.getJoueurs().get(1)) + "," + rencontre.getNbManchesGagnantes() + "," + FIN_REQUETE_INSERTION_RENCONTRE;
         bdd.execSQL(requete);
     }
 

@@ -252,21 +252,20 @@ public class IHMFinDeRencontre extends AppCompatActivity
     private void enregistrerRencontre()
     {
         Log.d(TAG, "enregistrerRencontre()");
-        baseDeDonnees.enregistrerRencontre(rencontre.getJoueurs().get(0), rencontre.getJoueurs().get(1), rencontre.getNbManchesGagnantes());
-        int i = 0;
-        while(rencontre.getManches().capacity() > i)
+        baseDeDonnees.enregistrerRencontre(rencontre);
+        while(rencontre.getManches().size() > 0)
         {
-            enregistrerManche(i);
-            rencontre.getManches().remove(rencontre.getManches().lastElement());
+            enregistrerManche();
         }
     }
 
     /**
      * @brief Méthode appelée à la fin d'une manche pour l'enregistrer dans la base de données
      */
-    private void enregistrerManche(int i)
+    private void enregistrerManche()
     {
-        Log.d(TAG, "enregistrerManche()");
-        baseDeDonnees.enregistrerManche(rencontre.getManches().get(i));
+        Log.d(TAG, "enregistrerManche() : nbManches : " + rencontre.getManches().size());
+        baseDeDonnees.enregistrerManche(rencontre.getManches().lastElement());
+        rencontre.getManches().remove(rencontre.getManches().lastElement());
     }
 }
