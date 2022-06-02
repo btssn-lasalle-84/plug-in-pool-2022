@@ -64,6 +64,16 @@ public class Rencontre implements Serializable
         this.coups = new Vector<>();
     }
 
+    public Rencontre(Rencontre rencontre)
+    {
+        this.nbManchesGagnantes = rencontre.getNbManchesGagnantes();
+        this.nbManches = rencontre.getNbManches();
+        this.etatRencontre = rencontre.getEtatRencontre();
+        this.joueurs = rencontre.getJoueurs();
+        this.manches = rencontre.getManches();
+        this.coups = new Vector<>();
+    }
+
     public void initialiserJoueurs(int premierJoueur)
     {
         this.premierJoueur = premierJoueur;
@@ -158,8 +168,8 @@ public class Rencontre implements Serializable
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
             NOUVELLE_MANCHE = true;
             setScoresFinManches();
-            joueurs.get(0).resetNbBillesEmpochees();
-            joueurs.get(1).resetNbBillesEmpochees();
+            joueurs.get(0).resetStatistiques();
+            joueurs.get(1).resetStatistiques();
         }
         else
         {

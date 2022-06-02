@@ -44,9 +44,9 @@ public class SQLite extends SQLiteOpenHelper
     private static final String INSERT_TABLE_JOUEUR_7 = "INSERT INTO Joueur(nom, prenom) VALUES ('MERAS','Pierre');";
     private static final String INSERT_TABLE_JOUEUR_8 = "INSERT INTO Joueur(nom, prenom) VALUES ('PHILIPPE','Christopher');";
     private static final String INSERT_TABLE_RENCONTRE_1 = "INSERT INTO Rencontre(idRencontre, idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (NULL,7,8,2,0,'2022-01-29 08:00:00');";
-    private static final String INSERT_TABLE_MANCHE_1 = "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut) VALUES (NULL,1,1,0,57.32,45.25,'2022-01-29 08:15:00');";
-    private static final String INSERT_TABLE_MANCHE_2 = "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut) VALUES (NULL,1,0,1,82.54,78.15,'2022-01-29 08:25:00');";
-    private static final String INSERT_TABLE_MANCHE_3 = "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut) VALUES (NULL,1,1,0,52.47,12.25,'2022-01-29 08:55:00');";
+    private static final String INSERT_TABLE_MANCHE_1 = "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut) VALUES (NULL,1,8,4,57.32,45.25,'2022-01-29 08:15:00');";
+    private static final String INSERT_TABLE_MANCHE_2 = "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut) VALUES (NULL,1,8,2,82.54,78.15,'2022-01-29 08:25:00');";
+    private static final String INSERT_TABLE_MANCHE_3 = "INSERT INTO Manche(idManche, idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut) VALUES (NULL,1,4,8,52.47,12.25,'2022-01-29 08:55:00');";
 
     /**
      * @brief Constructeur de la classe SQLite

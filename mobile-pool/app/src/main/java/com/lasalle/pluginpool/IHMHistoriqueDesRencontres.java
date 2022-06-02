@@ -6,8 +6,10 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -138,17 +140,18 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
 
         for(int i = 0; i < listeRencontre.size(); ++i)
         {
-            Rencontre rencontre = listeRencontre.get(i);
+            Rencontre rencontre = new Rencontre(listeRencontre.get(i));
             int scoreJoueur1 = compterManchesGagnees(rencontre);
             DecimalFormat format = new DecimalFormat("00.00");
-            Log.d(TAG, "nom = " + rencontre.getJoueurs().get(i).getNom() + " prenom = " + rencontre.getJoueurs().get(i).getPrenom());
+            Log.d(TAG, "nom = " + rencontre.getJoueurs().get(0).getNom() + " prenom = " + rencontre.getJoueurs().get(0).getPrenom());
+            Log.d(TAG, "nom = " + rencontre.getJoueurs().get(1).getNom() + " prenom = " + rencontre.getJoueurs().get(1).getPrenom());
             rencontres.add(
                 rencontre.getJoueurs().get(0).getNom() + " " +
                 rencontre.getJoueurs().get(0).getPrenom() + " VS " +
                 rencontre.getJoueurs().get(1).getNom() + " " +
                 rencontre.getJoueurs().get(1).getPrenom() + " | " +
                 scoreJoueur1 + " - " +
-                (rencontre.getNbManches() - scoreJoueur1) + " | " +
+                (rencontre.getManches().size() - scoreJoueur1) + " | " +
                 format.format(rencontre.calculerPrecisionMoyenneJoueur1()) + " % - " +
                 format.format(rencontre.calculerPrecisionMoyenneJoueur2()) + " %"
             );
@@ -164,14 +167,17 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     private int compterManchesGagnees(Rencontre rencontre)
     {
         int mancheGagnees = 0;
-        for(int i = 0; i < rencontre.getNbManches(); ++i)
+        for(int i = 0; i < rencontre.getManches().size(); ++i)
         {
-            if(rencontre.getManches().get(0).getPointsJoueur1() > rencontre.getManches().get(1).getPointsJoueur1())
+            Log.d(TAG, "compterManchesGagnees() : Rencontre : " + i + " J1 = " +
+                    rencontre.getManches().get(i).getPointsJoueur1() + " J2 = " +
+                    rencontre.getManches().get(i).getPointsJoueur2());
+            if(rencontre.getManches().get(i).getPointsJoueur1() > rencontre.getManches().get(i).getPointsJoueur2())
             {
-                Log.d(TAG, "compterManchesGagnees() : nbManchesGagnées = " + mancheGagnees);
                 mancheGagnees++;
             }
         }
+        Log.d(TAG, "nbManchesGagnées : " + mancheGagnees);
         return mancheGagnees;
     }
 }

@@ -51,13 +51,13 @@ public class BaseDeDonnees
     private static final int INDEX_DEBUT = 6;
     private static final int INDEX_FIN = 7;
 
-    private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idRencontre, pointsJoueur1, pointsJoueur2, debut, fin) VALUES (";
+    private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut, fin) VALUES (";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
     private static final String REQUETE_RENCONTRES = "SELECT * FROM Rencontre ;";
-    private static final String REQUETE_MANCHES = "SELECT * FROM Manche INNER JOIN Rencontre ON Manche.idRencontre=";
+    private static final String REQUETE_MANCHES = "SELECT * FROM Manche WHERE idRencontre=";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
     private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
     private static final String DEBUT_REQUETE_SELECTION_ID_JOUEUR = "SELECT idJoueur FROM Joueur WHERE nom='";
@@ -178,6 +178,7 @@ public class BaseDeDonnees
     {
         ouvrir();
         String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(rencontre.getJoueurs().get(0)) + "," + chercherIDJoueur(rencontre.getJoueurs().get(1)) + "," + rencontre.getNbManchesGagnantes() + "," + FIN_REQUETE_INSERTION_RENCONTRE;
+        Log.d(TAG,"enregistrerRencontre() : Exécution de la requete : " + requete);
         bdd.execSQL(requete);
     }
 
@@ -237,9 +238,10 @@ public class BaseDeDonnees
         for (int i = 0; i < curseurRencontres.getCount(); i++)
         {
             curseurRencontres.moveToNext();
+            Vector<Joueur> joueurs = new Vector<Joueur>();
             String requeteJoueurs = DEBUT_REQUETE_SELECTION_JOUEUR + curseurRencontres.getString(INDEX_ID_JOUEUR_1) + " OR Joueur.idJoueur=" + curseurRencontres.getString(INDEX_ID_JOUEUR_2) + ";";
             Cursor curseurJoueurs = effectuerRequete(requeteJoueurs);
-            Vector<Joueur> joueurs = new Vector<Joueur>();
+
             for(int j = 0; j < curseurJoueurs.getCount(); j++)
             {
                 curseurJoueurs.moveToNext();
