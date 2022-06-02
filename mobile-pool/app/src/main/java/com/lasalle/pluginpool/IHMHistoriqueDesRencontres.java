@@ -147,11 +147,11 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
             Log.d(TAG, "nom = " + rencontre.getJoueurs().get(1).getNom() + " prenom = " + rencontre.getJoueurs().get(1).getPrenom());
             rencontres.add(
                 rencontre.getJoueurs().get(0).getNom() + " " +
-                rencontre.getJoueurs().get(0).getPrenom() + " VS " +
-                rencontre.getJoueurs().get(1).getNom() + " " +
-                rencontre.getJoueurs().get(1).getPrenom() + " | " +
+                rencontre.getJoueurs().get(0).getPrenom() +  " | " +
                 scoreJoueur1 + " - " +
                 (rencontre.getManches().size() - scoreJoueur1) + " | " +
+                rencontre.getJoueurs().get(1).getNom() + " " +
+                rencontre.getJoueurs().get(1).getPrenom() + " | " +
                 format.format(rencontre.calculerPrecisionMoyenneJoueur1()) + " % - " +
                 format.format(rencontre.calculerPrecisionMoyenneJoueur2()) + " %"
             );
