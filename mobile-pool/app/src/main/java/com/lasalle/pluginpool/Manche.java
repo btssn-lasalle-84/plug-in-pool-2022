@@ -93,6 +93,16 @@ public class Manche implements Serializable
         this.pointsJoueur2 = pointsJoueur2;
     }
 
+    public void setPrecisionJoueur1(double precisionJoueur1)
+    {
+        this.precisionJoueur1 = precisionJoueur1;
+    }
+
+    public void setPrecisionJoueur2(double precisionJoueur2)
+    {
+        this.precisionJoueur2 = precisionJoueur2;
+    }
+
     public void setHorodatageFin()
     {
         this.fin = new Date();

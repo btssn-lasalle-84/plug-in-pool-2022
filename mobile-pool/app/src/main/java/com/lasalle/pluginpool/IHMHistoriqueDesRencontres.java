@@ -6,16 +6,19 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -34,7 +37,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     /**
      * Constantes
      */
-    private static final String TAG = "_IHMHistoriqueRencontres_";  //!< TAG pour les logs
+    private static final String TAG = "_IHMHistorique_";  //!< TAG pour les logs
     private static final String DESCRIPTION_MANCHES = "Joueurs \t Score \t Précision";
 
     /**
@@ -46,6 +49,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     /**
      * Ressources IHM
      */
+    private Button boutonPurgerHistorique;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -129,14 +133,25 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     {
         Log.d(TAG, "initialiserRessourcesIHMHistoriqueDesRencontres()");
         listeHistoriqueRencontres = (ListView)findViewById(R.id.listeHistoriqueRencontres);
+        boutonPurgerHistorique = (Button)findViewById(R.id.boutonPurgerHistorique);
         ouvrirBaseDeDonnees();
         listerRencontres();
-        /*Bouton accueil*/
+
+        boutonPurgerHistorique.setOnClickListener(
+            new View.OnClickListener()
+            {
+                public void onClick(View v)
+                {
+                    baseDeDonnees.purgerRencontres();
+                    listerRencontres();
+                }
+            });
     }
 
     /**
      * @brief Méthode permettant de lister les rencontre dans la base de données
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void listerRencontres()
     {
         Log.d(TAG, "listerRencontres()");
@@ -162,7 +177,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
             );
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, rencontres);
+        ArrayAdapter adapter = new ArrayAdapter(IHMHistoriqueDesRencontres.this, android.R.layout.simple_list_item_1, rencontres);
         listeHistoriqueRencontres.setAdapter(adapter);
 
         listeHistoriqueRencontres.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
@@ -194,6 +209,11 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
         });
     }
 
+    /**
+     * @brief Permet de lister les rencontre dans un adaptateur
+     * @param rencontre
+     * @return l'adaptateur des rencontres
+     */
     private ArrayAdapter<String> listerManches(Rencontre rencontre)
     {
         Log.d(TAG, "afficherManches()");
@@ -212,6 +232,12 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
         return new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, manches);
     }
 
+    /**
+     * @brief Permet de trouver le gagnant d'une manche grace aux points
+     * @param rencontre
+     * @param i
+     * @return le gagnant de la manche
+     */
     private String trouverGagnant(Rencontre rencontre, int i)
     {
         Log.d(TAG, "trouverGagnant()");

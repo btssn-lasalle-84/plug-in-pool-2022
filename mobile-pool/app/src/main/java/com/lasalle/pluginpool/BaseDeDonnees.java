@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.util.Log;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Vector;
 
@@ -58,6 +59,7 @@ public class BaseDeDonnees
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
     private static final String REQUETE_RENCONTRES = "SELECT * FROM Rencontre;";
+    private static final String REQUETE_PURGE_RENCONTRES = "DELETE FROM Rencontre;";
     private static final String REQUETE_MANCHES = "SELECT * FROM Manche WHERE idRencontre=";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
     private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
@@ -183,6 +185,10 @@ public class BaseDeDonnees
         bdd.execSQL(requete);
     }
 
+    /**
+     * @brief Méthode appelée pour supprimer une seule rencontre
+     * @param rencontre
+     */
     public void supprimerRencontre(Rencontre rencontre)
     {
         ouvrir();
@@ -191,16 +197,35 @@ public class BaseDeDonnees
         bdd.execSQL(requete);
     }
 
+    /**
+     * @brief Méthode pour vider l'historique des rencontres
+     */
+    public void purgerRencontres()
+    {
+        ouvrir();
+        String requete = REQUETE_PURGE_RENCONTRES;
+        Log.d(TAG,"enregistrerRencontre() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
+    }
+
+    /**
+     * @brief Méthode pour enregistrer une manche une fois terminée
+     * @param manche
+     */
     public void enregistrerManche(Manche manche)
     {
         ouvrir();
+        DecimalFormat format = new DecimalFormat("00.0");
         String requete = DEBUT_REQUETE_INSERTION_MANCHE + chercherIDRencontre() + "," +
-                manche.getPointsJoueur1() + "," +
-                manche.getPointsJoueur2() + "," +
-                manche.getPrecisionJoueur1() + "," +
-                manche.getPrecisionJoueur2() + "," +
-                new java.sql.Date(manche.getDebut().getTime()) + "," +
-                new java.sql.Date(manche.getFin().getTime()) + ");";
+            manche.getPointsJoueur1() + "," +
+            manche.getPointsJoueur2() + "," +
+            format.format(manche.getPrecisionJoueur1()).replace(',','.') + "," +
+            format.format(manche.getPrecisionJoueur2()).replace(',','.') + "," +
+            new java.sql.Date(manche.getDebut().getTime()) + "," +
+            new java.sql.Date(manche.getFin().getTime()) + ");";
+        Log.d(TAG, "enregistrerManche() : requete = " + requete);
+        Log.d(TAG, "enregistrerManche() : Précision joueur 1 = " + manche.getPrecisionJoueur1());
+        Log.d(TAG, "enregistrerManche() : Précision joueur 2 = " + manche.getPrecisionJoueur2());
         bdd.execSQL(requete);
     }
 

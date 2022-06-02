@@ -33,4 +33,5 @@
     <string name="pr_cision_d_empochage">Précision d\'empochage :\ </string>
     <string name="joueurs"><u>Joueurs</u></string>
     <string name="pr_cision_d_empochageHistorique"><u>Précision d\'empochage</u></string>
+    <string name="purger_l_historique">Purger l\'historique</string>
 </resources>

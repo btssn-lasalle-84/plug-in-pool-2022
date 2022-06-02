@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -106,6 +107,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Initialise les ressources bluetooth
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initialiserRessourcesBluetooth()
     {
         Log.d(TAG,"initialiserRessourcesBluetooth()");
@@ -176,7 +178,6 @@ public class IHMRencontreEnCours extends AppCompatActivity
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
         peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
         estPremierJoueurChoisi = false;
-        rencontre.ajouterManche();
         joueurs.get(0).setCouleur("");
         joueurs.get(1).setCouleur("");
     }

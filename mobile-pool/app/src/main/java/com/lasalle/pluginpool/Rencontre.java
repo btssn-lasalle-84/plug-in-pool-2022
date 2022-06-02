@@ -41,6 +41,7 @@ public class Rencontre implements Serializable
     private int nbManchesGagnantes;
     private int nbManches;
     private int etatRencontre;
+    private Date debutManche;
     private Date horodatageDebut;
     private Date horodatage;
     private int dureeRencontreSecondes;
@@ -49,11 +50,12 @@ public class Rencontre implements Serializable
     private Vector<Coup> coups;
     private int premierJoueur;
     private int deuxiemeJoueur;
+    private boolean premierCoup = true;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
 
     /**
-     * @brief Constructeur
+     * @brief Constructeurs
      */
     public Rencontre(int idRencontre, Vector<Joueur> joueurs, Vector<Manche> manches, int nbManchesGagnantes)
     {
@@ -96,6 +98,11 @@ public class Rencontre implements Serializable
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void jouerCoup()
     {
+        if(premierCoup)
+        {
+            this.debutManche = new Date();
+            premierCoup = !premierCoup;
+        }
         Log.d(TAG, "jouerCoup()");
         String couleur = "";
         String blouse = "";
@@ -163,6 +170,7 @@ public class Rencontre implements Serializable
     {
         Log.d(TAG, "terminerManche()");
         nbManches++;
+        ajouterManche();
         setHorodatageFinManche();
         Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
         Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
@@ -287,7 +295,7 @@ public class Rencontre implements Serializable
      */
     public void calculerDureeRencontre()
     {
-        long h = manches.lastElement().getFin().getTime() - manches.get(0).getDebut().getTime() ;
+        long h = manches.lastElement().getFin().getTime() - manches.firstElement().getDebut().getTime() ;
         Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
         dureeRencontreSecondes = (int)(h / 1000);
     }
@@ -306,8 +314,14 @@ public class Rencontre implements Serializable
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ajouterManche()
     {
-        Log.d(TAG, "ajouterManche()");
-        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), this.getJoueurs().get(0).getPrecision(), this.getJoueurs().get(1).getPrecision(), new Date(), null);
+        Log.d(TAG, "ajouterManche() Billes J1 : " +
+            this.getJoueurs().get(0).getNbBillesEmpochees() + " Billes J2 : " +
+            this.getJoueurs().get(1).getNbBillesEmpochees() + " Precision J1 : " +
+            this.getJoueurs().get(0).getPrecision() + " Precision J2 : " +
+            this.getJoueurs().get(1).getPrecision()
+        );
+
+        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), this.getJoueurs().get(0).getPrecision(), this.getJoueurs().get(1).getPrecision(), debutManche, null);
         manches.add(manche);
     }
 
