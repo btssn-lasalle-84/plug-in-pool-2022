@@ -6,17 +6,17 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.text.DecimalFormat;
@@ -35,6 +35,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMHistoriqueRencontres_";  //!< TAG pour les logs
+    private static final String DESCRIPTION_MANCHES = "Joueurs \t Score \t Précision";
 
     /**
      * Variables
@@ -170,9 +171,10 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
             {
                 final int itemSelection = position;
+                ArrayAdapter<String> adapteurManches = listerManches(listeRencontre.get(itemSelection));
+
                 new AlertDialog.Builder(IHMHistoriqueDesRencontres.this, R.style.Theme_PlugInPool_BoiteDialogue)
-                    .setIcon(android.R.drawable.ic_delete)
-                    .setMessage("Description de la rencontre")
+                    .setTitle("Description de la rencontre")
                     .setPositiveButton("Supprimer", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -183,10 +185,43 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
                             adapter.notifyDataSetChanged();
                             Log.d(TAG, "Rencontre supprimée");
                         }
-                    }).setNegativeButton("Retour", null).show();
+                    })
+                    .setNegativeButton("Retour", null)
+                    .setAdapter(adapteurManches, null)
+                    .show();
                 return true;
             }
         });
+    }
+
+    private ArrayAdapter<String> listerManches(Rencontre rencontre)
+    {
+        Log.d(TAG, "afficherManches()");
+        List<String> manches = new ArrayList<String>();
+        for(int i = 0; i < rencontre.getManches().size(); ++i)
+        {
+            manches.add(
+                (i + 1) + " - Gagnant : " +
+                trouverGagnant(rencontre, i) + " | " +
+                rencontre.getManches().get(i).getPointsJoueur1() + " - " +
+                rencontre.getManches().get(i).getPointsJoueur2() + " | " +
+                rencontre.getManches().get(i).getPrecisionJoueur1() + "% - " +
+                rencontre.getManches().get(i).getPrecisionJoueur2() + "%"
+            );
+        }
+        return new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, manches);
+    }
+
+    private String trouverGagnant(Rencontre rencontre, int i)
+    {
+        Log.d(TAG, "trouverGagnant()");
+        String gagnantManche = rencontre.getJoueurs().get(0).getNom() + " " + rencontre.getJoueurs().get(0).getPrenom();
+
+        if(rencontre.getManches().get(i).getPointsJoueur1() < rencontre.getManches().get(i).getPointsJoueur2())
+        {
+            gagnantManche = rencontre.getJoueurs().get(1).getNom() + " " + rencontre.getJoueurs().get(1).getPrenom();
+        }
+        return gagnantManche;
     }
 
     /**

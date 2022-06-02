@@ -57,6 +57,7 @@ public class Rencontre implements Serializable
      */
     public Rencontre(int idRencontre, Vector<Joueur> joueurs, Vector<Manche> manches, int nbManchesGagnantes)
     {
+        this.idRencontre = idRencontre;
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
