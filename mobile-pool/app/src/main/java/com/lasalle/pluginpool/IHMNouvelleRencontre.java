@@ -47,6 +47,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     /**
      * Attributs
      */
+    private int idRencontre = -1;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private BaseDeDonnees baseDeDonnees = null;
     private Handler handler = null;
@@ -201,7 +202,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     {
         joueursRencontre = new Vector<Joueur>();
         manchesRencontre = new Vector<Manche>();
-        rencontre = new Rencontre(joueursRencontre, manchesRencontre, NB_MANCHES_GAGNANTES);
+        rencontre = new Rencontre(idRencontre, joueursRencontre, manchesRencontre, NB_MANCHES_GAGNANTES);
     }
 
     /**

@@ -54,6 +54,7 @@ public class BaseDeDonnees
     private static final String DEBUT_REQUETE_INSERTION_MANCHE =  "INSERT INTO Manche(idRencontre, pointsJoueur1, pointsJoueur2, precisionJoueur1, precisionJoueur2, debut, fin) VALUES (";
     private static final String DEBUT_REQUETE_TERMINER_MANCHE = "UPDATE Manche SET fin=DATETIME('now') WHERE idManche=";
     private static final String DEBUT_REQUETE_INSERTION_RENCONTRE = "INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (";
+    private static final String DEBUT_REQUETE_SUPPRESSION_RENCONTRE = "DELETE FROM Rencontre WHERE Rencontre.idRencontre=";
     private static final String FIN_REQUETE_INSERTION_RENCONTRE = "0,DATETIME('now'))";
     private static final String REQUETE_ID_RENCONTRE = "SELECT MAX(idRencontre) FROM Rencontre";
     private static final String REQUETE_RENCONTRES = "SELECT * FROM Rencontre ;";
@@ -182,6 +183,14 @@ public class BaseDeDonnees
         bdd.execSQL(requete);
     }
 
+    public void supprimerRencontre(Rencontre rencontre)
+    {
+        ouvrir();
+        String requete = DEBUT_REQUETE_SUPPRESSION_RENCONTRE + rencontre.getIdRencontre() + ";";
+        Log.d(TAG,"supprimerRencontre() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
+    }
+
     public void enregistrerManche(Manche manche)
     {
         ouvrir();
@@ -249,7 +258,7 @@ public class BaseDeDonnees
                 Log.d(TAG, "nom = " + curseurJoueurs.getString(INDEX_NOM_JOUEUR) + " - " + "prenom = " + curseurJoueurs.getString(INDEX_PRENOM_JOUEUR));
             }
             Vector<Manche> manches = getManches(curseurRencontres.getInt(INDEX_ID_RENCONTRE));
-            rencontres.add(new Rencontre(joueurs, manches, curseurRencontres.getInt(INDEX_NB_MANCHES_GAGNANTES)));
+            rencontres.add(new Rencontre(curseurRencontres.getInt(INDEX_ID_RENCONTRE), joueurs, manches, curseurRencontres.getInt(INDEX_NB_MANCHES_GAGNANTES)));
         }
         return rencontres;
     }

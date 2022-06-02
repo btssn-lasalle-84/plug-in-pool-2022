@@ -37,6 +37,7 @@ public class Rencontre implements Serializable
     /**
      * Attributs
      */
+    private int idRencontre;
     private int nbManchesGagnantes;
     private int nbManches;
     private int etatRencontre;
@@ -54,7 +55,7 @@ public class Rencontre implements Serializable
     /**
      * @brief Constructeur
      */
-    public Rencontre(Vector<Joueur> joueurs, Vector<Manche> manches, int nbManchesGagnantes)
+    public Rencontre(int idRencontre, Vector<Joueur> joueurs, Vector<Manche> manches, int nbManchesGagnantes)
     {
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
@@ -66,6 +67,7 @@ public class Rencontre implements Serializable
 
     public Rencontre(Rencontre rencontre)
     {
+        this.idRencontre = rencontre.getIdRencontre();
         this.nbManchesGagnantes = rencontre.getNbManchesGagnantes();
         this.nbManches = rencontre.getNbManches();
         this.etatRencontre = rencontre.getEtatRencontre();
@@ -198,6 +200,10 @@ public class Rencontre implements Serializable
     /**
      * @brief Accesseurs
      */
+    public int getIdRencontre()
+    {
+        return this.idRencontre;
+    }
     public int getEtatRencontre()
     {
         return this.etatRencontre;

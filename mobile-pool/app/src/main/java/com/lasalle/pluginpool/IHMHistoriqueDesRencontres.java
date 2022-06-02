@@ -9,9 +9,13 @@ package com.lasalle.pluginpool;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -159,6 +163,30 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, rencontres);
         listeHistoriqueRencontres.setAdapter(adapter);
+
+        listeHistoriqueRencontres.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                final int itemSelection = position;
+                new AlertDialog.Builder(IHMHistoriqueDesRencontres.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setMessage("Description de la rencontre")
+                    .setPositiveButton("Supprimer", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int j)
+                        {
+                            rencontres.remove(itemSelection);
+                            baseDeDonnees.supprimerRencontre(listeRencontre.get(itemSelection));
+                            adapter.notifyDataSetChanged();
+                            Log.d(TAG, "Rencontre supprimée");
+                        }
+                    }).setNegativeButton("Retour", null).show();
+                return true;
+            }
+        });
     }
 
     /**
