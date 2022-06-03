@@ -45,6 +45,16 @@ class IHMPlugInPool
                 startActivity(intent);
             }
         });
+
+        boutonHistoriqueRencontre.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMPlugInPool.this, IHMHistoriqueDesRencontres.class);
+                startActivity(intent);
+            }
+        });
 !!!141591.java!!!	initialiserRessourcesBluetooth() : void
         Log.d(TAG, "initialiserRessourcesBluetooth()");
 

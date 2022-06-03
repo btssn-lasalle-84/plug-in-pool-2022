@@ -69,7 +69,8 @@ class IHMNouvelleRencontre
         rencontre.setJoueurs(joueursRencontre);
 !!!140055.java!!!	initialiserRencontre() : void
         joueursRencontre = new Vector<Joueur>();
-        rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
+        manchesRencontre = new Vector<Manche>();
+        rencontre = new Rencontre(idRencontre, joueursRencontre, manchesRencontre, NB_MANCHES_GAGNANTES);
 !!!140183.java!!!	initialiserRessourcesBluetooth() : void
         Log.d(TAG,"initialiserRessourcesBluetooth()");
         peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);

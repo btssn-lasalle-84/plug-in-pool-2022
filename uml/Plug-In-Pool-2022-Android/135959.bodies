@@ -132,6 +132,7 @@ class IHMRencontreEnCours
 !!!142743.java!!!	gererHandler() : void
         this.handler = new Handler(this.getMainLooper())
         {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void handleMessage(@NonNull Message message)
             {
