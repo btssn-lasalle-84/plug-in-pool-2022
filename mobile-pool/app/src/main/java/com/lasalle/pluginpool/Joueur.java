@@ -126,7 +126,7 @@ public class Joueur implements Serializable
         ++this.nbCoupsTires;
     }
 
-    public void resetNbBillesEmpochees()
+    public void resetStatistiques()
     {
         this.nbBillesEmpochees = 0;
     }

@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,8 +20,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -104,6 +107,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Initialise les ressources bluetooth
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initialiserRessourcesBluetooth()
     {
         Log.d(TAG,"initialiserRessourcesBluetooth()");
@@ -168,6 +172,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Démarre une nouvelle partie
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void demarrerNouvellePartie()
     {
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
@@ -290,6 +295,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     {
         this.handler = new Handler(this.getMainLooper())
         {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void handleMessage(@NonNull Message message)
             {
@@ -320,6 +326,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Gère le message reçu pour détecter une mauvaise trame
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void gererMessage(String message)
     {
         // format général : $PLUG;{TYPE};{DONNEES;}\r\n
@@ -466,6 +473,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Méthode appelée à la fin d'une manche afin de commencer une nouvelle manche ou bien de finir la rencontre
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void terminerRencontre()
     {
         Log.d(TAG, "terminerRencontre()");

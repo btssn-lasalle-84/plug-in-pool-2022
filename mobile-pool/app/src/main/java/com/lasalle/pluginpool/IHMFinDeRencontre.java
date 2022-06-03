@@ -33,6 +33,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
      * Variables
      */
     private Rencontre rencontre;
+    private BaseDeDonnees baseDeDonnees = null;
 
     /**
      * Ressources IHM
@@ -138,12 +139,15 @@ public class IHMFinDeRencontre extends AppCompatActivity
         nbfautesJoueur1 = (TextView)findViewById(R.id.nbFautes1);
         nbfautesJoueur2 = (TextView)findViewById(R.id.nbFautes2);
 
+        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
+        ouvrirBaseDeDonnees();
+
         boutonEnregistrerRencontre.setOnClickListener(
             new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    /*Enregistrer la rencontre*/
+                    enregistrerRencontre();
                 }
             });
 
@@ -159,13 +163,21 @@ public class IHMFinDeRencontre extends AppCompatActivity
     }
 
     /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
+    }
+
+    /**
      * @brief Méthode pour afficher le nom du joueur Gagnant sur l'IHM
      */
     @SuppressLint("SetTextI18n")
     private void initialiserGagnantIHMFinDeRencontre()
     {
         Log.d(TAG, "initialiserScoresIHMFinDeRencontre()");
-        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
 
         if(rencontre.getJoueurs().get(0).getNbManchesGagnees() > rencontre.getJoueurs().get(1).getNbManchesGagnees())
         {
@@ -232,5 +244,28 @@ public class IHMFinDeRencontre extends AppCompatActivity
         nbfautesJoueur2.setText(String.valueOf(joueur2.getNbFautes()));
         precisionJoueur1.setText(String.format("%.2f", joueur1.getPrecision()) + "%");
         precisionJoueur2.setText(String.format("%.2f", joueur2.getPrecision()) + "%");
+    }
+
+    /**
+     * @brief Méthode appelée au début de la rencontre pour l'enregistrer dans la base de données
+     */
+    private void enregistrerRencontre()
+    {
+        Log.d(TAG, "enregistrerRencontre()");
+        baseDeDonnees.enregistrerRencontre(rencontre);
+        while(rencontre.getManches().size() > 0)
+        {
+            enregistrerManche();
+        }
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche pour l'enregistrer dans la base de données
+     */
+    private void enregistrerManche()
+    {
+        Log.d(TAG, "enregistrerManche() : nbManches : " + rencontre.getManches().size());
+        baseDeDonnees.enregistrerManche(rencontre.getManches().lastElement());
+        rencontre.getManches().remove(rencontre.getManches().lastElement());
     }
 }

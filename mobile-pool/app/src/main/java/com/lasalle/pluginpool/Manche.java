@@ -7,11 +7,13 @@ package com.lasalle.pluginpool;
  */
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
 import java.time.*;
+import java.util.Date;
 
 /**
  * @class Manche
@@ -20,24 +22,29 @@ import java.time.*;
 
 public class Manche implements Serializable
 {
+    private static final String TAG = "_Manche_";
     /**
      * Variables
      */
     private int pointsJoueur1;
     private int pointsJoueur2;
-    private LocalDateTime debut;
-    private LocalDateTime fin;
+    private double precisionJoueur1;
+    private double precisionJoueur2;
+    private Date debut;
+    private Date fin;
 
     /**
      * @brief Constructeur
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public Manche(int pointsJoueur1, int pointsJoueur2)
+    public Manche(int pointsJoueur1, int pointsJoueur2, double precisionJoueur1, double precisionJoueur2, Date debut, Date fin)
     {
         this.pointsJoueur1 = pointsJoueur1;
         this.pointsJoueur2 = pointsJoueur2;
-        this.debut = LocalDateTime.now(ZoneId.systemDefault());
-        this.fin = null;
+        this.precisionJoueur1 = precisionJoueur1;
+        this.precisionJoueur2 = precisionJoueur2;
+        this.debut = debut;
+        this.fin = fin;
     }
 
     /**
@@ -53,12 +60,22 @@ public class Manche implements Serializable
         return this.pointsJoueur2;
     }
 
-    public LocalDateTime getDebut()
+    public double getPrecisionJoueur1()
+    {
+        return precisionJoueur1;
+    }
+
+    public double getPrecisionJoueur2()
+    {
+        return precisionJoueur2;
+    }
+
+    public Date getDebut()
     {
         return this.debut;
     }
 
-    public LocalDateTime getFin()
+    public Date getFin()
     {
         return this.fin;
     }
@@ -76,13 +93,24 @@ public class Manche implements Serializable
         this.pointsJoueur2 = pointsJoueur2;
     }
 
-    public void setDebut(LocalDateTime debut)
+    public void setPrecisionJoueur1(double precisionJoueur1)
     {
-        this.debut = debut;
+        this.precisionJoueur1 = precisionJoueur1;
     }
 
-    public void setFin(LocalDateTime fin)
+    public void setPrecisionJoueur2(double precisionJoueur2)
     {
-        this.fin = fin;
+        this.precisionJoueur2 = precisionJoueur2;
+    }
+
+    public void setHorodatageFin()
+    {
+        this.fin = new Date();
+        Log.d(TAG, "setHorodatageFin() : " + fin + " ms");
+    }
+
+    public void setHorodatageDebut()
+    {
+        this.debut = new Date();
     }
 }
