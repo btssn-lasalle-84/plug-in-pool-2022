@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FFFF0000</color>
     <color name="green">#FF00FF00</color>
+    <color name="yellow">#FF9800</color>
+    <color name="darkyellow">#FF7722</color>
+    <color name="darkred">#880000</color>
+    <color name="lightgrey">#AAAAAA</color>
+    <color name="lightblack">#121212</color>
 </resources>
