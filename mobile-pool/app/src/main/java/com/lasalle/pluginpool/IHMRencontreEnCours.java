@@ -22,6 +22,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
 import java.util.Vector;
 
 /**
@@ -67,6 +70,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private TextView curseur2;
     private TextView texteDernierCoup1;
     private TextView texteDernierCoup2;
+    private TextView nbManchesGagneesJ1;
+    private TextView nbManchesGagneesJ2;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -179,6 +184,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         joueurs.get(0).setCouleur("");
         joueurs.get(1).setCouleur("");
         reinitialiserScoreJoueurs();
+        afficherManchesGagnees();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -226,6 +232,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
         curseur2 = (TextView)findViewById(R.id.curseur2);
         texteDernierCoup1 = (TextView)findViewById(R.id.texteDernierCoup1);
         texteDernierCoup2 = (TextView)findViewById(R.id.texteDernierCoup2);
+        nbManchesGagneesJ1 = (TextView)findViewById(R.id.nbManchesGagneesJ1);
+        nbManchesGagneesJ2 = (TextView)findViewById(R.id.nbManchesGagneesJ2);
 
         initialiserScoreJoueurs();
         listerRessourcesRencontre();
@@ -271,6 +279,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
         texteJoueur2.setText(rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
         curseur1.setVisibility(View.INVISIBLE);
         curseur2 .setVisibility(View.INVISIBLE);
+        nbManchesGagneesJ1.setVisibility(View.INVISIBLE);
+        nbManchesGagneesJ2.setVisibility(View.INVISIBLE);
         texteDernierCoup1.setText("");
         texteDernierCoup2.setText("");
     }
@@ -557,6 +567,25 @@ public class IHMRencontreEnCours extends AppCompatActivity
             Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);
+        }
+    }
+
+    /**
+     * @brief Permet d'afficher le nombre de manches gagnées par les joueurs
+     */
+    private void afficherManchesGagnees()
+    {
+        Log.d(TAG, "afficherManchesGagnees()");
+        if(joueurs.get(0).getNbManchesGagnees() > 0)
+        {
+            nbManchesGagneesJ1.setText(joueurs.get(0).getNbManchesGagnees() + " manche(s) gagnée(s) sur " + rencontre.getNbManchesGagnantes() + " !");
+            nbManchesGagneesJ1.setVisibility(View.VISIBLE);
+        }
+
+        if(joueurs.get(1).getNbManchesGagnees() > 0)
+        {
+            nbManchesGagneesJ2.setText(joueurs.get(1).getNbManchesGagnees() + " manche(s) gagnée(s) sur " + rencontre.getNbManchesGagnantes() + " !");
+            nbManchesGagneesJ2.setVisibility(View.VISIBLE);
         }
     }
 }
