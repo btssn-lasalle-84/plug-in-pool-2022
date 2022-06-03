@@ -4,19 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.34" />
+        <entry key="app/src/main/res/drawable/bille_blanche.xml" value="0.342" />
+        <entry key="app/src/main/res/drawable/bille_jaune.xml" value="0.342" />
+        <entry key="app/src/main/res/drawable/bille_noire.xml" value="0.342" />
+        <entry key="app/src/main/res/drawable/bille_rouge.xml" value="0.342" />
         <entry key="app/src/main/res/drawable/bord_arrondis.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/bords_arrondis.xml" value="0.2955" />
         <entry key="app/src/main/res/drawable/bords_ronds.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/bords_ronds_verts.xml" value="0.211" />
+        <entry key="app/src/main/res/drawable/bouton_acceuil.xml" value="0.3565" />
         <entry key="app/src/main/res/drawable/boutons_arrondis.xml" value="0.334" />
         <entry key="app/src/main/res/drawable/boutons_ronds.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/degrade_fond_ecran.xml" value="0.34" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.34" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/activity_ihm_creer_joueur.xml" value="0.25" />
+=======
+        <entry key="app/src/main/res/layout/activity_ihm_creer_joueur.xml" value="0.32053291536050155" />
+>>>>>>> f5282aff42fac51c1bb800745355a251ab41d93d
         <entry key="app/src/main/res/layout/activity_ihm_fin_de_rencontre.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_ihm_historique_des_rencontres.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ihm_nouvelle_rencontre.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_ihm_rencontre_en_cours.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_ihm_rencontre_en_cours.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
       </map>
     </option>
