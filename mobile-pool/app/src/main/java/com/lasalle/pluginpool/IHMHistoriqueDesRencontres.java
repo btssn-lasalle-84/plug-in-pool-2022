@@ -55,6 +55,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
      * @brief Méthode appelée à la création de l'activité
      */
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -129,6 +130,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     /**
      * @brief Méthode permettant d'initialiser les ressources de l'IHM
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initialiserRessourcesIHMHistoriqueDesRencontres()
     {
         Log.d(TAG, "initialiserRessourcesIHMHistoriqueDesRencontres()");
@@ -138,14 +140,26 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
         listerRencontres();
 
         boutonPurgerHistorique.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    baseDeDonnees.purgerRencontres();
-                    listerRencontres();
-                }
-            });
+                new AlertDialog.Builder(IHMHistoriqueDesRencontres.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                    .setIcon(android.R.drawable.ic_delete)
+                    .setTitle("Suppression")
+                    .setMessage("Êtes-vous sûr de vouloir supprimer toutes les rencontres ?")
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int j)
+                        {
+                            baseDeDonnees.purgerRencontres();
+                            listerRencontres();
+                            Log.d(TAG, "Rencontre supprimées");
+                        }
+                    }).setNegativeButton("Retour", null).show();
+            }
+        });
     }
 
     /**
@@ -195,10 +209,21 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int j)
                         {
-                            rencontres.remove(itemSelection);
-                            baseDeDonnees.supprimerRencontre(listeRencontre.get(itemSelection));
-                            adapter.notifyDataSetChanged();
-                            Log.d(TAG, "Rencontre supprimée");
+                            new AlertDialog.Builder(IHMHistoriqueDesRencontres.this, R.style.Theme_PlugInPool_BoiteDialogue)
+                                .setIcon(android.R.drawable.ic_delete)
+                                .setTitle("Suppression")
+                                .setMessage("Êtes-vous sûr de vouloir supprimer cette rencontre ?")
+                                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+                                {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int j)
+                                    {
+                                        rencontres.remove(itemSelection);
+                                        baseDeDonnees.supprimerRencontre(listeRencontre.get(itemSelection));
+                                        adapter.notifyDataSetChanged();
+                                        Log.d(TAG, "Rencontre supprimée");
+                                    }
+                                }).setNegativeButton("Retour", null).show();
                         }
                     })
                     .setNegativeButton("Retour", null)
