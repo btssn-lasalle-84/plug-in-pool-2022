@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.text.DecimalFormat;
@@ -115,10 +113,6 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     }
 
     /**
-     * @brief Initialise les ressources graphiques de l'activité
-     */
-
-    /**
      * @brief Méthode permettant d'obtenir un accès à la base de données
      */
     private void ouvrirBaseDeDonnees()
@@ -174,26 +168,13 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
 
         for(int i = 0; i < listeRencontre.size(); ++i)
         {
-            Rencontre rencontre = new Rencontre(listeRencontre.get(i));
-            int scoreJoueur1 = compterManchesGagnees(rencontre);
-            DecimalFormat format = new DecimalFormat("00.00");
-            Log.d(TAG, "nom = " + rencontre.getJoueurs().get(0).getNom() + " prenom = " + rencontre.getJoueurs().get(0).getPrenom());
-            Log.d(TAG, "nom = " + rencontre.getJoueurs().get(1).getNom() + " prenom = " + rencontre.getJoueurs().get(1).getPrenom());
-            rencontres.add(
-                rencontre.getJoueurs().get(0).getNom() + " " +
-                rencontre.getJoueurs().get(0).getPrenom() +  " | " +
-                scoreJoueur1 + " - " +
-                (rencontre.getManches().size() - scoreJoueur1) + " | " +
-                rencontre.getJoueurs().get(1).getNom() + " " +
-                rencontre.getJoueurs().get(1).getPrenom() + " | " +
-                format.format(rencontre.calculerPrecisionMoyenneJoueur1()) + " % - " +
-                format.format(rencontre.calculerPrecisionMoyenneJoueur2()) + " %"
-            );
+            ajouterRencontreListe(listeRencontre, rencontres, i);
         }
 
         ArrayAdapter adapter = new ArrayAdapter(IHMHistoriqueDesRencontres.this, android.R.layout.simple_list_item_1, rencontres);
         listeHistoriqueRencontres.setAdapter(adapter);
 
+        //Détails de la rencontre (les manches)
         listeHistoriqueRencontres.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
         {
             @Override
@@ -209,21 +190,8 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int j)
                         {
-                            new AlertDialog.Builder(IHMHistoriqueDesRencontres.this, R.style.Theme_PlugInPool_BoiteDialogue)
-                                .setIcon(android.R.drawable.ic_delete)
-                                .setTitle("Suppression")
-                                .setMessage("Êtes-vous sûr de vouloir supprimer cette rencontre ?")
-                                .setPositiveButton("Oui", new DialogInterface.OnClickListener()
-                                {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int j)
-                                    {
-                                        rencontres.remove(itemSelection);
-                                        baseDeDonnees.supprimerRencontre(listeRencontre.get(itemSelection));
-                                        adapter.notifyDataSetChanged();
-                                        Log.d(TAG, "Rencontre supprimée");
-                                    }
-                                }).setNegativeButton("Retour", null).show();
+                            //Validation de la suppression d'une rencontre
+                            confirmerSuppressionRencontre(rencontres, itemSelection, listeRencontre, adapter);
                         }
                     })
                     .setNegativeButton("Retour", null)
@@ -232,6 +200,58 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
                 return true;
             }
         });
+    }
+
+    /**
+     * @brief Méthode pour confirmer la suppression d'une rencontre dans la base de données
+     * @param rencontres
+     * @param itemSelection
+     * @param listeRencontre
+     * @param adapter
+     */
+    private void confirmerSuppressionRencontre(List<String> rencontres, int itemSelection, Vector<Rencontre> listeRencontre, ArrayAdapter adapter)
+    {
+        new AlertDialog.Builder(IHMHistoriqueDesRencontres.this, R.style.Theme_PlugInPool_BoiteDialogue)
+            .setIcon(android.R.drawable.ic_delete)
+            .setTitle("Suppression")
+            .setMessage("Êtes-vous sûr de vouloir supprimer cette rencontre ?")
+            .setPositiveButton("Oui", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int j)
+                {
+                    rencontres.remove(itemSelection);
+                    baseDeDonnees.supprimerRencontre(listeRencontre.get(itemSelection));
+                    adapter.notifyDataSetChanged();
+                    Log.d(TAG, "Rencontre supprimée");
+                }
+            }).setNegativeButton("Retour", null).show();
+    }
+
+    /**
+     * @brief Ajoute les rencontres sur l'affichage dans l'historique
+     * @param listeRencontre
+     * @param rencontres
+     * @param i
+     */
+    private void ajouterRencontreListe(Vector<Rencontre> listeRencontre, List<String> rencontres, int i)
+    {
+        Log.d(TAG, "ajouterRencontreListe()");
+        Rencontre rencontre = new Rencontre(listeRencontre.get(i));
+        int scoreJoueur1 = compterManchesGagnees(rencontre);
+        DecimalFormat format = new DecimalFormat("00.00");
+        Log.d(TAG, "nom = " + rencontre.getJoueurs().get(0).getNom() + " prenom = " + rencontre.getJoueurs().get(0).getPrenom());
+        Log.d(TAG, "nom = " + rencontre.getJoueurs().get(1).getNom() + " prenom = " + rencontre.getJoueurs().get(1).getPrenom());
+        rencontres.add(
+            rencontre.getJoueurs().get(0).getNom() + " " +
+            rencontre.getJoueurs().get(0).getPrenom() +  " | " +
+            scoreJoueur1 + " - " +
+            (rencontre.getManches().size() - scoreJoueur1) + " | " +
+            rencontre.getJoueurs().get(1).getNom() + " " +
+            rencontre.getJoueurs().get(1).getPrenom() + " | " +
+            format.format(rencontre.calculerPrecisionMoyenneJoueur1()) + " % - " +
+            format.format(rencontre.calculerPrecisionMoyenneJoueur2()) + " %"
+        );
     }
 
     /**
