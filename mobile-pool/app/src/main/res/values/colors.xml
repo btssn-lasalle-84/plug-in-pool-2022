@@ -14,4 +14,5 @@
     <color name="darkred">#880000</color>
     <color name="lightgrey">#AAAAAA</color>
     <color name="lightblack">#121212</color>
+    <color name="grey">#383838</color>
 </resources>
