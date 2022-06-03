@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.text.DecimalFormat;
@@ -48,6 +50,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
      * Ressources IHM
      */
     private Button boutonPurgerHistorique;
+    private ImageButton boutonAccueil;
 
     /**
      * @brief Méthode appelée à la création de l'activité
@@ -128,6 +131,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
     private void initialiserRessourcesIHMHistoriqueDesRencontres()
     {
         Log.d(TAG, "initialiserRessourcesIHMHistoriqueDesRencontres()");
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         listeHistoriqueRencontres = (ListView)findViewById(R.id.listeHistoriqueRencontres);
         boutonPurgerHistorique = (Button)findViewById(R.id.boutonPurgerHistorique);
         ouvrirBaseDeDonnees();
@@ -152,6 +156,16 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
                             Log.d(TAG, "Rencontre supprimées");
                         }
                     }).setNegativeButton("Retour", null).show();
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMHistoriqueDesRencontres.this, IHMPlugInPool.class);
+                startActivity(intent);
             }
         });
     }

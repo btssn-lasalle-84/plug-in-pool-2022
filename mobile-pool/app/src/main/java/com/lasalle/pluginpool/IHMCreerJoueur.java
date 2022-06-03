@@ -9,6 +9,7 @@ package com.lasalle.pluginpool;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +49,7 @@ public class IHMCreerJoueur extends AppCompatActivity
      * Ressources IHM
      */
     private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
+    private ImageButton boutonAccueil;
     private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
     private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
     private ListView listeJoueurs;//!< La liste permettant l'affichage des joueurs
@@ -132,6 +135,7 @@ public class IHMCreerJoueur extends AppCompatActivity
     {
         Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
+        boutonAccueil = (ImageButton) findViewById(R.id.boutonAcceuil);
         editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
         exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueurs);
@@ -146,6 +150,16 @@ public class IHMCreerJoueur extends AppCompatActivity
                 boutonValiderCreationJoueur.requestFocus();
                 cacherClavier(getActivity());
                 creerJoueur();
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMCreerJoueur.this, IHMPlugInPool.class);
+                startActivity(intent);
             }
         });
     }

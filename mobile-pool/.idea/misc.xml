@@ -8,11 +8,12 @@
         <entry key="app/src/main/res/drawable/bords_arrondis.xml" value="0.2955" />
         <entry key="app/src/main/res/drawable/bords_ronds.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/bords_ronds_verts.xml" value="0.211" />
+        <entry key="app/src/main/res/drawable/bouton_acceuil.xml" value="0.3565" />
         <entry key="app/src/main/res/drawable/boutons_arrondis.xml" value="0.334" />
         <entry key="app/src/main/res/drawable/boutons_ronds.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/degrade_fond_ecran.xml" value="0.34" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.34" />
-        <entry key="app/src/main/res/layout/activity_ihm_creer_joueur.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_ihm_creer_joueur.xml" value="0.32053291536050155" />
         <entry key="app/src/main/res/layout/activity_ihm_fin_de_rencontre.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_ihm_historique_des_rencontres.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_ihm_nouvelle_rencontre.xml" value="0.25" />
