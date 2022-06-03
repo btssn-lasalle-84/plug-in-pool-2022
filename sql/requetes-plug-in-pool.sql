@@ -1,81 +1,50 @@
 --- Exemples de requêtes SQL
 
---- Liste des clubs
-
-
---- Nombre de clubs
-
 
 --- Liste des joueurs
 
+SELECT * FROM Joueur;
 
 --- Nombre de joueurs
 
+SELECT COUNT(*) FROM Joueur;
 
 --- Liste des noms de joueur
 
 SELECT nom || ' ' || prenom AS NomJoueur FROM Joueur ORDER BY NomJoueur;
 
---- Liste des joueurs d'un club
-
-SELECT * FROM Joueur 
-INNER JOIN Club ON Joueur.idClub=Club.idClub;
-
-SELECT Joueur.numeroLicence, Joueur.nom, Joueur.prenom, Club.nomClub FROM Joueur 
-INNER JOIN Club ON Joueur.idClub=Club.idClub 
-ORDER BY Club.nomClub ASC;
-
---- Liste des joueurs pour un club
-
-
-
---- Liste des joueurs triés par nom pour un club
-
-
-
 --- Liste des rencontres
 
+SELECT * FROM Rencontre;
 
---- Liste des rencontres avec les informations de club
+--- Terminer une manche
 
+UPDATE Manche SET fin=DATETIME('now') WHERE idManche='1';
 
+--- Liste des manches
+
+SELECT * FROM Manche;
+
+--- Liste de toutes manches pour une rencontre
+
+SELECT * FROM Manche WHERE idRencontre='2';
+
+--- Liste de toutes manches pour une rencontre avec les noms des joueurs
+
+SELECT * FROM Manche 
+INNER JOIN Rencontre ON Manche.idRencontre=Rencontre.idRencontre
+INNER JOIN Joueur a ON (a.idJoueur = Rencontre.idJoueur1) 
+INNER JOIN Joueur b ON (b.idJoueur = Rencontre.idJoueur2);
+
+--- Score d'une manche d'une rencontre
+
+SELECT pointsJoueur1, pointJoueur2 FROM Manche
+INNER JOIN Rencontre ON Manche.idRencontre=Rencontre.idRencontre;
+
+--- Enregistrer une rencontre
+
+INSERT INTO Rencontre(idJoueur1, idJoueur2, nbManchesGagnantes, fini, horodatage) VALUES (7,8,2,0,DATETIME('now'));
 
 --- Terminer une rencontre
 
-
-
---- Liste des parties
-
-
-
---- Liste de toutes parties pour une rencontre
-
-
-
---- Liste de toutes parties SIMPLE pour une rencontre
-
-
-
---- Liste de toutes parties DOUBLE pour une rencontre
-
-
-
---- Liste de toutes parties SIMPLE pour une rencontre avec les noms des joueurs
-
-
-
---- Score d'une partie d'une rencontre
-
-
-
----- Commencer un set
-
-
-
----- Finir un set et enregistrer le score
-
-
-
---- Terminer une partie
-
-
+UPDATE Rencontre SET fini=1 WHERE idRencontre='1';

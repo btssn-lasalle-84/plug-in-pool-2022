@@ -8,33 +8,33 @@ SELECT COUNT(*) AS NbJoueurs FROM Joueur;
 
 SELECT nom || ' ' || prenom AS NomJoueur FROM Joueur ORDER BY NomJoueur;
 
---- Liste des Matchs
+--- Liste des Rencontres
 
-SELECT * FROM Match;
+SELECT * FROM Rencontre;
 
-SELECT * FROM Match 
-INNER JOIN Joueur a ON (a.idJoueur = Match.idJoueur1) 
-INNER JOIN Joueur b ON (b.idJoueur = Match.idJoueur2);
+SELECT * FROM Rencontre 
+INNER JOIN Joueur a ON (a.idJoueur = Rencontre.idJoueur1) 
+INNER JOIN Joueur b ON (b.idJoueur = Rencontre.idJoueur2);
 
 
---- Terminer une Match
+--- Terminer une Rencontre
 
-UPDATE Match SET fini=1 WHERE idMatch='1';
+UPDATE Rencontre SET fini=1 WHERE idRencontre='1';
 
 --- Liste des Manches
 
 SELECT * FROM Manche;
 
---- Liste de toutes les manches pour un match
+--- Liste de toutes les manches pour un Rencontre
 
 SELECT * FROM Manche 
-INNER JOIN Match ON Manche.idMatch = Match.idMatch 
-INNER JOIN Joueur a ON (a.idJoueur = Match.idJoueur1) 
-INNER JOIN Joueur b ON (b.idJoueur = Match.idJoueur2);
+INNER JOIN Rencontre ON Manche.idRencontre = Rencontre.idRencontre 
+INNER JOIN Joueur a ON (a.idJoueur = Rencontre.idJoueur1) 
+INNER JOIN Joueur b ON (b.idJoueur = Rencontre.idJoueur2);
 
 ---- Commencer une manche
 
-INSERT INTO Manche(idMatch, pointsJoueur1, pointsJoueur2, debut) VALUES (1,1,0,DATETIME('now'));
+INSERT INTO Manche(idRencontre, pointsJoueur1, pointsJoueur2, debut) VALUES (1,1,0,DATETIME('now'));
 
 --- Terminer une manche
 
