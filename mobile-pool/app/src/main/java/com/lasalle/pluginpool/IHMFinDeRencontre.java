@@ -7,12 +7,16 @@ package com.lasalle.pluginpool;
  */
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -40,6 +44,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
      */
     private Button boutonEnregistrerRencontre;//!< Le bouton permettant l'enregistrement des données de la rencontre'
     private Button boutonRejouer;//!< Le bouton permettant de rejouer une rencontre avec les mêmes paramètres'
+    private ImageButton boutonAccueil;
     private Joueur joueurGagnant;
     private TextView texteJoueurGagnant;
     private TextView texteGagnant;
@@ -128,6 +133,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
     {
         boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         texteJoueurGagnant = (TextView)findViewById(R.id.texteJoueurGagnant);
         texteGagnant = (TextView)findViewById(R.id.texteGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
@@ -143,23 +149,34 @@ public class IHMFinDeRencontre extends AppCompatActivity
         ouvrirBaseDeDonnees();
 
         boutonEnregistrerRencontre.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    enregistrerRencontre();
-                }
-            });
+                enregistrerRencontre();
+            }
+        });
 
         boutonRejouer.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                    startActivity(intent);*/
-                }
-            });
+                /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
+                startActivity(intent);*/
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMFinDeRencontre.this, IHMPlugInPool.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
