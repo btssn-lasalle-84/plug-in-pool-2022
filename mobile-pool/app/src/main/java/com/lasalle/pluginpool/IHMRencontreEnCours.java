@@ -6,38 +6,23 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
-<<<<<<< HEAD
-=======
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
->>>>>>> f5282aff42fac51c1bb800745355a251ab41d93d
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-<<<<<<< HEAD
-=======
-import android.opengl.Visibility;
->>>>>>> f5282aff42fac51c1bb800745355a251ab41d93d
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -388,6 +373,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
                     afficherListePremierJoueur(champs);
                 }
                 rencontre.jouerCoup();
+                actualiserScoresBilles();
                 actualiserScores(champs);
                 terminerRencontre();
                 break;
@@ -462,18 +448,32 @@ public class IHMRencontreEnCours extends AppCompatActivity
             Log.d(TAG, "actualiserScoresBilles()");
             for(int i = 0; i < joueurs.get(premierJoueur).getNbBillesEmpochees(); ++i)
             {
-                if(joueurs.get(premierJoueur).getCouleur().equals("R"))
+                Log.d(TAG, "premierJoueur : " + premierJoueur);
+                if(joueurs.get(0).getCouleur().equals("R"))
+                {
+                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Rouge");
                     scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
-                else
+                }
+                else if(joueurs.get(0).getCouleur().equals("J"))
+                {
+                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Jaune");
                     scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                }
             }
 
             for(int i = 0; i < joueurs.get(deuxiemeJoueur).getNbBillesEmpochees(); ++i)
             {
-                if(joueurs.get(deuxiemeJoueur).getCouleur().equals("R"))
+                Log.d(TAG, "deuxiemeJoueur : " + deuxiemeJoueur);
+                if(joueurs.get(0).getCouleur().equals("J"))
+                {
+                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Rouge");
                     scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
-                else
+                }
+                else if(joueurs.get(0).getCouleur().equals("R"))
+                {
+                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Jaune");
                     scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                }
             }
 
             if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
