@@ -14,7 +14,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -179,6 +178,17 @@ public class IHMRencontreEnCours extends AppCompatActivity
         estPremierJoueurChoisi = false;
         joueurs.get(0).setCouleur("");
         joueurs.get(1).setCouleur("");
+        reinitialiserScoreJoueurs();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void reinitialiserScoreJoueurs()
+    {
+        for(int i = 0; i < Rencontre.NB_BILLES_COULEUR; ++i)
+        {
+            scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+            scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+        }
     }
 
     private void initialiserScoreJoueurs()
