@@ -30,7 +30,7 @@ public class Rencontre implements Serializable
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
     private static boolean NOUVELLE_MANCHE = false;
-    private static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
+    public static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
     private static final int NB_POCHES = 6;
     private static final String TAG = "_Rencontre_";
 
