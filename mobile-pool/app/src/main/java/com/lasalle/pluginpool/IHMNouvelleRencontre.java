@@ -41,7 +41,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
-    public static final String ID_INTENT_RENCONTRE = "Rencontre"; //!< Identifiant de données dans l'Intent
+    public static final String ID_INTENT_RENCONTRE = "RENCONTRE"; //!< Identifiant de données dans l'Intent
     public static final int NB_JOUEURS = 2; //!< Le nombre de joueurs pour une rencontre
     public static final int NB_MANCHES_GAGNANTES = 5; //!< Le nombre de manches gagnantes par défaut
 

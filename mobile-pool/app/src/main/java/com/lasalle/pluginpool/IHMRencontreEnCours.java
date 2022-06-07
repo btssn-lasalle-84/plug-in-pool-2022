@@ -43,6 +43,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
     private static final String RENCONTRE = "RENCONTRE";
+    private static final String REJOUER = "REJOUER";
+    private static final String JOUEURS = "JOUEURS";
 
     /**
      * Attributs
@@ -183,6 +185,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
         estPremierJoueurChoisi = false;
         joueurs.get(0).setCouleur("");
         joueurs.get(1).setCouleur("");
+        curseur1.setVisibility(View.INVISIBLE);
+        curseur2.setVisibility(View.INVISIBLE);
         reinitialiserScoreJoueurs();
         afficherManchesGagnees();
     }
@@ -305,6 +309,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
     * @brief Change le curseur du joueur en cours sur l'IHM
     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("SetTextI18n")
     private void changerJoueurIHM()
     {
@@ -315,12 +320,18 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 curseur1.setVisibility(View.VISIBLE);
                 curseur2.setVisibility(View.INVISIBLE);
                 joueurs.get(0).tirerBille(); //Si on change de joueur, alors il a forcément loupé son tir sinon il aurait rejoué
+                scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
+                    scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
             }
             else if(curseur1.getVisibility() == View.VISIBLE)
             {
                 curseur1.setVisibility(View.INVISIBLE);
                 curseur2.setVisibility(View.VISIBLE);
                 joueurs.get(1).tirerBille();
+                scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
+                    scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
             }
         }
     }
@@ -436,11 +447,21 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 {
                     Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                    }
                 }
                 else if(curseur2.getVisibility() == View.VISIBLE)
                 {
                     Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                    }
                 }
                 break;
             case Protocole.FAUTE:
@@ -449,11 +470,21 @@ public class IHMRencontreEnCours extends AppCompatActivity
                 {
                     Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                    }
                 }
                 else if(curseur2.getVisibility() == View.VISIBLE)
                 {
                     Log.d(TAG, "actualiserScores() joueur 2 : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                    }
                 }
                 break;
         }
@@ -469,37 +500,38 @@ public class IHMRencontreEnCours extends AppCompatActivity
             for(int i = 0; i < joueurs.get(premierJoueur).getNbBillesEmpochees(); ++i)
             {
                 Log.d(TAG, "premierJoueur : " + premierJoueur);
-                if(joueurs.get(0).getCouleur().equals("R"))
+                if (joueurs.get(premierJoueur).getNbBillesEmpochees() < 8)
                 {
-                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Rouge");
-                    scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
-                }
-                else if(joueurs.get(0).getCouleur().equals("J"))
-                {
-                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Jaune");
-                    scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                    if(joueurs.get(0).getCouleur().equals("R"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Rouge");
+                        scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
+                    }
+                    else if(joueurs.get(0).getCouleur().equals("J"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Jaune");
+                        scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                    }
                 }
             }
 
             for(int i = 0; i < joueurs.get(deuxiemeJoueur).getNbBillesEmpochees(); ++i)
             {
                 Log.d(TAG, "deuxiemeJoueur : " + deuxiemeJoueur);
-                if(joueurs.get(0).getCouleur().equals("J"))
+                if (joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() < 8)
                 {
-                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Rouge");
-                    scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
-                }
-                else if(joueurs.get(0).getCouleur().equals("R"))
-                {
-                    Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Jaune");
-                    scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                    if(joueurs.get(0).getCouleur().equals("J"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Rouge");
+                        scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
+                    }
+                    else if(joueurs.get(0).getCouleur().equals("R"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Jaune");
+                        scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                    }
                 }
             }
-
-            if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
-                scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
-            else if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
-                scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
         }
     }
 
@@ -567,6 +599,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
             Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);
+            finish();
         }
     }
 

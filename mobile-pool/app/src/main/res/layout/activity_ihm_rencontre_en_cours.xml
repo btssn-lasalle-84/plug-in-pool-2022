@@ -138,24 +138,22 @@
                     android:id="@+id/layoutScoreJoueur1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="50dp"
                     android:layout_marginBottom="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.505"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/layoutDernierCoup1">
 
 
                     <Button
                         android:id="@+id/bille1Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille2Joueur1"
                         app:layout_constraintStart_toStartOf="parent"
@@ -163,12 +161,12 @@
 
                     <Button
                         android:id="@+id/bille2Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginStart="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille3Joueur1"
                         app:layout_constraintStart_toEndOf="@+id/bille1Joueur1"
@@ -176,12 +174,12 @@
 
                     <Button
                         android:id="@+id/bille3Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille4Joueur1"
                         app:layout_constraintStart_toEndOf="@id/bille2Joueur1"
@@ -189,12 +187,12 @@
 
                     <Button
                         android:id="@+id/bille4Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille5Joueur1"
                         app:layout_constraintStart_toEndOf="@id/bille3Joueur1"
@@ -202,12 +200,12 @@
 
                     <Button
                         android:id="@+id/bille5Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille6Joueur1"
                         app:layout_constraintStart_toEndOf="@id/bille4Joueur1"
@@ -215,12 +213,12 @@
 
                     <Button
                         android:id="@+id/bille6Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille7Joueur1"
                         app:layout_constraintStart_toEndOf="@id/bille5Joueur1"
@@ -228,12 +226,12 @@
 
                     <Button
                         android:id="@+id/bille7Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille8Joueur1"
                         app:layout_constraintStart_toEndOf="@id/bille6Joueur1"
@@ -241,13 +239,14 @@
 
                     <Button
                         android:id="@+id/bille8Joueur1"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="25dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/bille7Joueur1"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -337,9 +336,7 @@
                     android:id="@+id/layoutScoreJoueur2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="50dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginEnd="50dp"
                     android:layout_marginBottom="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -348,11 +345,11 @@
 
                     <Button
                         android:id="@+id/bille1Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille2Joueur2"
                         app:layout_constraintStart_toStartOf="parent"
@@ -360,12 +357,12 @@
 
                     <Button
                         android:id="@+id/bille2Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginStart="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille3Joueur2"
                         app:layout_constraintStart_toEndOf="@+id/bille1Joueur2"
@@ -373,12 +370,12 @@
 
                     <Button
                         android:id="@+id/bille3Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille4Joueur2"
                         app:layout_constraintStart_toEndOf="@id/bille2Joueur2"
@@ -386,12 +383,12 @@
 
                     <Button
                         android:id="@+id/bille4Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille5Joueur2"
                         app:layout_constraintStart_toEndOf="@id/bille3Joueur2"
@@ -399,12 +396,12 @@
 
                     <Button
                         android:id="@+id/bille5Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille6Joueur2"
                         app:layout_constraintStart_toEndOf="@id/bille4Joueur2"
@@ -412,12 +409,12 @@
 
                     <Button
                         android:id="@+id/bille6Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille7Joueur2"
                         app:layout_constraintStart_toEndOf="@id/bille5Joueur2"
@@ -425,12 +422,12 @@
 
                     <Button
                         android:id="@+id/bille7Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginTop="0dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/bille8Joueur2"
                         app:layout_constraintStart_toEndOf="@id/bille6Joueur2"
@@ -438,13 +435,14 @@
 
                     <Button
                         android:id="@+id/bille8Joueur2"
+                        style="?android:attr/borderlessButtonStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="25dp"
                         android:background="@drawable/bille_blanche"
                         android:foreground="@drawable/bille_blanche"
-                        style="?android:attr/borderlessButtonStyle"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/bille7Joueur2"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
