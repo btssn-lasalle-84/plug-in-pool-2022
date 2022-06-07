@@ -6,12 +6,14 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import java.io.Serializable;
+
 /**
  * @class Coup
  * @brief Classe pour un Coup
  */
 
-public class Coup
+public class Coup implements Serializable
 {
     /**
      * Attributs

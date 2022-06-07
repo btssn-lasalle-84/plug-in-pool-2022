@@ -32,6 +32,8 @@ public class BaseDeDonnees
     /**
      * Constantes
      */
+    public static final int ID_RENCONTRE_DEFAUT = -1;
+
     private static final int INDEX_ID_JOUEUR = 0;
     private static final int INDEX_NOM_JOUEUR = 1;
     private static final int INDEX_PRENOM_JOUEUR = 2;

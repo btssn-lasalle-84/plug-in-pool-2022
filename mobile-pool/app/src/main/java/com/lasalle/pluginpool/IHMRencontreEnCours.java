@@ -43,6 +43,8 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
     private static final String RENCONTRE = "RENCONTRE";
+    private static final String REJOUER = "REJOUER";
+    private static final String JOUEURS = "JOUEURS";
 
     /**
      * Attributs
@@ -567,6 +569,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
             Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);
+            finish();
         }
     }
 

@@ -19,6 +19,8 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Vector;
+
 /**
  * @class IHMFinDeRencontre
  * @brief L'activité de fin de rencontre
@@ -111,7 +113,8 @@ public class IHMFinDeRencontre extends AppCompatActivity
     @Override
     protected void onStop()
     {
-        super.onStop();        joueur1 = rencontre.getJoueurs().get(0);
+        super.onStop();
+        joueur1 = rencontre.getJoueurs().get(0);
         joueur2 = rencontre.getJoueurs().get(1);
         Log.d(TAG, "onStop()");
     }
@@ -162,8 +165,13 @@ public class IHMFinDeRencontre extends AppCompatActivity
         {
             public void onClick(View v)
             {
-                /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                startActivity(intent);*/
+                Vector<Joueur> joueurs = new Vector<>();
+                joueurs.add(new Joueur(rencontre.getJoueurs().get(0).getNom(), rencontre.getJoueurs().get(0).getPrenom()));
+                joueurs.add(new Joueur(rencontre.getJoueurs().get(1).getNom(), rencontre.getJoueurs().get(1).getPrenom()));
+                Rencontre nouvelleRencontre = new Rencontre(BaseDeDonnees.ID_RENCONTRE_DEFAUT, joueurs, new Vector<Manche>(), rencontre.getNbManchesGagnantes());
+                Intent intent = new Intent(IHMFinDeRencontre.this, IHMRencontreEnCours.class);
+                intent.putExtra(RENCONTRE, nouvelleRencontre);
+                startActivity(intent);
             }
         });
 
