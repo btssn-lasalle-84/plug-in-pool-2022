@@ -254,6 +254,7 @@ public class IHMHistoriqueDesRencontres extends AppCompatActivity
         Rencontre rencontre = new Rencontre(listeRencontre.get(i));
         int scoreJoueur1 = compterManchesGagnees(rencontre);
         DecimalFormat format = new DecimalFormat("00.00");
+        Log.d(TAG, "ajouterRencontreListe() : " + listeRencontre.size());
         Log.d(TAG, "nom = " + rencontre.getJoueurs().get(0).getNom() + " prenom = " + rencontre.getJoueurs().get(0).getPrenom());
         Log.d(TAG, "nom = " + rencontre.getJoueurs().get(1).getNom() + " prenom = " + rencontre.getJoueurs().get(1).getPrenom());
         rencontres.add(

@@ -62,7 +62,7 @@ public class BaseDeDonnees
     private static final String REQUETE_PURGE_RENCONTRES = "DELETE FROM Rencontre;";
     private static final String REQUETE_MANCHES = "SELECT * FROM Manche WHERE idRencontre=";
     private static final String DEBUT_REQUETE_INSERTION_JOUEUR = "INSERT INTO Joueur(nom, prenom) VALUES ('";
-    private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE nom='";
+    private static final String DEBUT_REQUETE_SUPPRESSION_JOUEUR = "DELETE FROM Joueur WHERE idJoueur='";
     private static final String DEBUT_REQUETE_SELECTION_ID_JOUEUR = "SELECT idJoueur FROM Joueur WHERE nom='";
     private static final String DEBUT_REQUETE_SELECTION_JOUEUR = "SELECT * FROM Joueur WHERE Joueur.idJoueur=";
 
@@ -83,6 +83,7 @@ public class BaseDeDonnees
         Log.d(TAG, "ouvrir()");
         if (bdd == null)
             bdd = sqlite.getWritableDatabase();
+        bdd.execSQL("PRAGMA foreign_keys = ON;");
     }
 
     /**
@@ -140,7 +141,9 @@ public class BaseDeDonnees
     public void insererJoueur(Joueur joueur)
     {
         ouvrir();
-        bdd.execSQL(DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')");
+        String requete = DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')";
+        Log.d(TAG,"insererJoueur() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
     }
     /**
      * @brief Permet d'effectuer une requete pour supprimer un joueur
@@ -149,7 +152,9 @@ public class BaseDeDonnees
     public void supprimerJoueur(Joueur joueur)
     {
         ouvrir();
-        bdd.execSQL(DEBUT_REQUETE_SUPPRESSION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "'");
+        String requete = DEBUT_REQUETE_SUPPRESSION_JOUEUR + chercherIDJoueur(joueur) + "';";
+        Log.d(TAG,"supprimerJoueur() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
     }
 
     /**
