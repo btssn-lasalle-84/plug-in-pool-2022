@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,10 +24,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * @class IHMCreerJoueur
@@ -156,6 +159,7 @@ public class IHMCreerJoueur extends AppCompatActivity
         boutonAccueil.setOnClickListener(
         new View.OnClickListener()
         {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v)
             {
                 Intent intent = new Intent(IHMCreerJoueur.this, IHMPlugInPool.class);
@@ -173,6 +177,16 @@ public class IHMCreerJoueur extends AppCompatActivity
         String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
         String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
+        for(int i = 0; i < joueurs.size() ; ++i)
+        {
+            if(joueurs.get(i).getNom().equals(nomJoueur) || joueurs.get(i).getPrenom().equals(prenomJoueur))
+            {
+                Toast.makeText(IHMCreerJoueur.this, "Le joueur existe déjà !", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
         {
             Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();
