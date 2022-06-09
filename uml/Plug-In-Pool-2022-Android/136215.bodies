@@ -31,7 +31,3 @@ class Manche
         Log.d(TAG, "setHorodatageFin() : " + fin + " ms");
 !!!149762.java!!!	setHorodatageDebut() : void
         this.debut = new Date();
-!!!144535.java!!!	setDebut(inout debut : LocalDateTime) : void
-        this.debut = debut;
-!!!144663.java!!!	setFin(inout fin : LocalDateTime) : void
-        this.fin = fin;

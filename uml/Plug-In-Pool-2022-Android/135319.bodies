@@ -24,6 +24,7 @@ class IHMHistoriqueDesRencontres
         baseDeDonnees.ouvrir();
 !!!138903.java!!!	initialiserRessourcesIHMHistoriqueDesRencontres() : void
         Log.d(TAG, "initialiserRessourcesIHMHistoriqueDesRencontres()");
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         listeHistoriqueRencontres = (ListView)findViewById(R.id.listeHistoriqueRencontres);
         boutonPurgerHistorique = (Button)findViewById(R.id.boutonPurgerHistorique);
         ouvrirBaseDeDonnees();
@@ -48,6 +49,16 @@ class IHMHistoriqueDesRencontres
                             Log.d(TAG, "Rencontre supprimées");
                         }
                     }).setNegativeButton("Retour", null).show();
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMHistoriqueDesRencontres.this, IHMPlugInPool.class);
+                startActivity(intent);
             }
         });
 !!!148098.java!!!	listerRencontres() : void
@@ -110,6 +121,7 @@ class IHMHistoriqueDesRencontres
         Rencontre rencontre = new Rencontre(listeRencontre.get(i));
         int scoreJoueur1 = compterManchesGagnees(rencontre);
         DecimalFormat format = new DecimalFormat("00.00");
+        Log.d(TAG, "ajouterRencontreListe() : " + listeRencontre.size());
         Log.d(TAG, "nom = " + rencontre.getJoueurs().get(0).getNom() + " prenom = " + rencontre.getJoueurs().get(0).getPrenom());
         Log.d(TAG, "nom = " + rencontre.getJoueurs().get(1).getNom() + " prenom = " + rencontre.getJoueurs().get(1).getPrenom());
         rencontres.add(

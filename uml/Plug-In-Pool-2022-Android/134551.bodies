@@ -5,6 +5,7 @@ class BaseDeDonnees
         Log.d(TAG, "ouvrir()");
         if (bdd == null)
             bdd = sqlite.getWritableDatabase();
+        bdd.execSQL("PRAGMA foreign_keys = ON;");
 !!!134807.java!!!	fermer() : void
         Log.d(TAG, "fermer()");
         if (bdd != null)
@@ -34,10 +35,14 @@ class BaseDeDonnees
         return joueurs;
 !!!135191.java!!!	insererJoueur(inout joueur : Joueur) : void
         ouvrir();
-        bdd.execSQL(DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')");
+        String requete = DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')";
+        Log.d(TAG,"insererJoueur() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
 !!!135319.java!!!	supprimerJoueur(inout joueur : Joueur) : void
         ouvrir();
-        bdd.execSQL(DEBUT_REQUETE_SUPPRESSION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "'");
+        String requete = DEBUT_REQUETE_SUPPRESSION_JOUEUR + chercherIDJoueur(joueur) + "';";
+        Log.d(TAG,"supprimerJoueur() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
 !!!135447.java!!!	terminerManche(in idManche : int) : void
         ouvrir();
         String requete = DEBUT_REQUETE_TERMINER_MANCHE + Integer.toString(idManche);

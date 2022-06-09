@@ -24,6 +24,7 @@ class IHMNouvelleRencontre
 !!!139799.java!!!	initialiserRessourcesIHMNouvelleRencontre() : void
         Log.d(TAG, "initialiserRessourcesIHMNouvelleRencontre()");
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         nbManches = (EditText)findViewById(R.id.editTextNombreManches);
         nbManches.setText(Integer.toString(NB_MANCHES_GAGNANTES));
         // Il faut être connecté à la table et avoir deux joueurs sélectionnés
@@ -44,6 +45,16 @@ class IHMNouvelleRencontre
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités
                 intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
+                startActivity(intent);
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMNouvelleRencontre.this, IHMPlugInPool.class);
                 startActivity(intent);
             }
         });
