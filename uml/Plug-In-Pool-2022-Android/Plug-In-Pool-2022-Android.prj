@@ -932,17 +932,6 @@ CREATE TABLE ${name} ${definition};
 	MysqlColumn autoincr_btree notnull_hash
       end
 
-      attribute 164482 "nom"
-	default explicit_type "VARCHAR"
-	cpp_decl ""
-	java_decl ""
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
-	MysqlColumn
-      end
-
       attribute 164610 "prenom"
 	default explicit_type "VARCHAR"
 	cpp_decl ""
@@ -964,7 +953,6 @@ CREATE TABLE ${name} ${definition};
 	mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
 	MysqlUniqueKey
 	columns
-	  attribute_ref 164482 // nom
 	  attribute_ref 164610 // prenom
 	end
       end

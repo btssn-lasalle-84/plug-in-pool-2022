@@ -2,15 +2,15 @@ format 224
 
 classcanvas 128002 class_ref 135810 // Joueur
   classdiagramsettings member_max_width 0 end
-  xyz 122 254 2000
+  xyz 36 62 2000
 end
 classcanvas 128130 class_ref 135938 // Rencontre
   classdiagramsettings member_max_width 0 end
-  xyz 470 220 2006
+  xyz 384 28 2006
 end
 classcanvas 128514 class_ref 136066 // Manche
   classdiagramsettings member_max_width 0 end
-  xyz 913 211 2012
+  xyz 827 19 2012
 end
 relationcanvas 128258 relation_ref 157826 // <unidirectional association>
   from ref 128130 z 2007 to ref 128002
