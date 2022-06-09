@@ -610,6 +610,16 @@ format 224
       sequencediagramsettings end
       overlapping_bars size A0
     end
+
+    sequencediagram 147970 "ds Enregistrer une rencontre"
+      sequencediagramsettings end
+      overlapping_bars size A0
+    end
+
+    sequencediagram 148098 "ds Gérer les rencontres enregistrées"
+      sequencediagramsettings end
+      overlapping_bars size A0
+    end
   end
 
   classview 134588 "Digramme de classes d'analyse"
@@ -877,4 +887,5 @@ format 224
   package_ref 134551 // pluginpool
 
   package_ref 134679 // unknown
+
 end
