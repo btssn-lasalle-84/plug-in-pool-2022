@@ -1,0 +1,25 @@
+format 224
+
+classcanvas 128002 class_ref 135810 // Joueur
+  classdiagramsettings member_max_width 0 end
+  xyz 122 254 2000
+end
+classcanvas 128130 class_ref 135938 // Rencontre
+  classdiagramsettings member_max_width 0 end
+  xyz 470 220 2006
+end
+classcanvas 128514 class_ref 136066 // Manche
+  classdiagramsettings member_max_width 0 end
+  xyz 913 211 2012
+end
+relationcanvas 128258 relation_ref 157826 // <unidirectional association>
+  from ref 128130 z 2007 to ref 128002
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 128642 relation_ref 158082 // <unidirectional association>
+  from ref 128514 z 2013 to ref 128130
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+end

@@ -65,7 +65,7 @@ relationcanvas 128002 relation_ref 128130 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 128130 relation_ref 128258 // <unidirectional association>
-  from ref 129943 z 2025 to point 1386.4 1319.8
+  from ref 129943 z 2025 to point 1386.6 1319.2
   line 128898 z 2025 stereotype "<<Vector>>" xyz 1236 1446.5 3000 to ref 128663
   role_a_pos 1191 1558 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -86,7 +86,7 @@ relationcanvas 128642 relation_ref 128386 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 129047 relation_ref 135703 // <unidirectional association>
-  from ref 128791 z 2013 stereotype "<<List>>" xyz 902 1281 2013 to point 886.4 1331.4
+  from ref 128791 z 2013 stereotype "<<List>>" xyz 902 1281 2013 to point 886.6 1331.6
   line 131351 z 2013 to ref 128663
   role_a_pos 951 1461 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -136,7 +136,7 @@ relationcanvas 130327 relation_ref 137495 // <unidirectional association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130434 relation_ref 149506 // <unidirectional association>
-  from ref 128791 z 3012 to point 733 1285.6
+  from ref 128791 z 3012 to point 733 1285.4
   line 130562 z 3012 stereotype "<<Vector>>" xyz 706 1726 3000 to ref 131095
   role_a_pos 776 2146 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
@@ -173,7 +173,7 @@ relationcanvas 131735 relation_ref 138007 // <dependency>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 131863 relation_ref 138135 // <dependency>
-  from ref 128023 z 2025 to point 2182.2 416.4
+  from ref 128023 z 2025 to point 2182.8 416.6
   line 131991 z 2025 to ref 129943
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
