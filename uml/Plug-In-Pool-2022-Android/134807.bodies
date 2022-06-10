@@ -39,5 +39,3 @@ class Joueur
         this.nbBillesEmpochees = 0;
 !!!139266.java!!!	augmenterNbManchesGagnees() : void
         this.nbManchesGagnees++;
-!!!130946.java!!!	resetNbBillesEmpochees() : void
-        this.nbBillesEmpochees = 0;

@@ -18,7 +18,8 @@ class IHMFinDeRencontre
         super.onPause();
         Log.d(TAG, "onPause()");
 !!!137751.java!!!	onStop() : void
-        super.onStop();        joueur1 = rencontre.getJoueurs().get(0);
+        super.onStop();
+        joueur1 = rencontre.getJoueurs().get(0);
         joueur2 = rencontre.getJoueurs().get(1);
         Log.d(TAG, "onStop()");
 !!!137879.java!!!	onDestroy() : void
@@ -27,6 +28,7 @@ class IHMFinDeRencontre
 !!!138007.java!!!	initialiserRessourcesIHMFinDeRencontre() : void
         boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         texteJoueurGagnant = (TextView)findViewById(R.id.texteJoueurGagnant);
         texteGagnant = (TextView)findViewById(R.id.texteGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
@@ -42,23 +44,39 @@ class IHMFinDeRencontre
         ouvrirBaseDeDonnees();
 
         boutonEnregistrerRencontre.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    enregistrerRencontre();
-                }
-            });
+                enregistrerRencontre();
+            }
+        });
 
         boutonRejouer.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                    startActivity(intent);*/
-                }
-            });
+                Vector<Joueur> joueurs = new Vector<>();
+                joueurs.add(new Joueur(rencontre.getJoueurs().get(0).getNom(), rencontre.getJoueurs().get(0).getPrenom()));
+                joueurs.add(new Joueur(rencontre.getJoueurs().get(1).getNom(), rencontre.getJoueurs().get(1).getPrenom()));
+                Rencontre nouvelleRencontre = new Rencontre(BaseDeDonnees.ID_RENCONTRE_DEFAUT, joueurs, new Vector<Manche>(), rencontre.getNbManchesGagnantes());
+                Intent intent = new Intent(IHMFinDeRencontre.this, IHMRencontreEnCours.class);
+                intent.putExtra(RENCONTRE, nouvelleRencontre);
+                startActivity(intent);
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMFinDeRencontre.this, IHMPlugInPool.class);
+                startActivity(intent);
+            }
+        });
 !!!147586.java!!!	ouvrirBaseDeDonnees() : void
         baseDeDonnees = new BaseDeDonnees(this);
         baseDeDonnees.ouvrir();
