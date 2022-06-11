@@ -9,6 +9,8 @@ package com.lasalle.pluginpool;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,14 +19,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * @class IHMCreerJoueur
@@ -47,6 +52,7 @@ public class IHMCreerJoueur extends AppCompatActivity
      * Ressources IHM
      */
     private Button boutonValiderCreationJoueur;//!< Le bouton permettant la validation de la création d'un joueur
+    private ImageButton boutonAccueil;
     private TextView editTextNomJoueur;//!< Le champ permettant la saisie du nom d'un joueur
     private TextView exitTextPrenomJoueur;//!< Le champ permettant la saisie du prénom d'un joueur
     private ListView listeJoueurs;//!< La liste permettant l'affichage des joueurs
@@ -132,6 +138,7 @@ public class IHMCreerJoueur extends AppCompatActivity
     {
         Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
+        boutonAccueil = (ImageButton) findViewById(R.id.boutonAcceuil);
         editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
         exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueurs);
@@ -148,6 +155,17 @@ public class IHMCreerJoueur extends AppCompatActivity
                 creerJoueur();
             }
         });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMCreerJoueur.this, IHMPlugInPool.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -159,6 +177,16 @@ public class IHMCreerJoueur extends AppCompatActivity
         String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
         String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
+        for(int i = 0; i < joueurs.size() ; ++i)
+        {
+            if(joueurs.get(i).getNom().equals(nomJoueur) || joueurs.get(i).getPrenom().equals(prenomJoueur))
+            {
+                Toast.makeText(IHMCreerJoueur.this, "Le joueur existe déjà !", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
         {
             Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();

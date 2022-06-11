@@ -49,6 +49,34 @@ class IHMRencontreEnCours
         estPremierJoueurChoisi = false;
         joueurs.get(0).setCouleur("");
         joueurs.get(1).setCouleur("");
+        curseur1.setVisibility(View.INVISIBLE);
+        curseur2.setVisibility(View.INVISIBLE);
+        reinitialiserScoreJoueurs();
+        afficherManchesGagnees();
+!!!157314.java!!!	reinitialiserScoreJoueurs() : void
+        for(int i = 0; i < Rencontre.NB_BILLES_COULEUR; ++i)
+        {
+            scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+            scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+        }
+!!!157442.java!!!	initialiserScoreJoueurs() : void
+        scoreJoueur1.add((Button)findViewById(R.id.bille1Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille2Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille3Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille4Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille5Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille6Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille7Joueur1));
+        scoreJoueur1.add((Button)findViewById(R.id.bille8Joueur1));
+
+        scoreJoueur2.add((Button)findViewById(R.id.bille1Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille2Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille3Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille4Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille5Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille6Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille7Joueur2));
+        scoreJoueur2.add((Button)findViewById(R.id.bille8Joueur2));
 !!!142615.java!!!	initialiserRessourcesIHMRencontreEnCours() : void
         boutonQuitterRencontre = (Button)findViewById(R.id.boutonQuitterRencontre);
         boutonFaute = (Button)findViewById(R.id.boutonFaute);
@@ -59,9 +87,10 @@ class IHMRencontreEnCours
         curseur2 = (TextView)findViewById(R.id.curseur2);
         texteDernierCoup1 = (TextView)findViewById(R.id.texteDernierCoup1);
         texteDernierCoup2 = (TextView)findViewById(R.id.texteDernierCoup2);
-        texteScoreJoueur1 = (TextView)findViewById(R.id.texteScoreJoueur1);
-        texteScoreJoueur2 = (TextView)findViewById(R.id.texteScoreJoueur2);
+        nbManchesGagneesJ1 = (TextView)findViewById(R.id.nbManchesGagneesJ1);
+        nbManchesGagneesJ2 = (TextView)findViewById(R.id.nbManchesGagneesJ2);
 
+        initialiserScoreJoueurs();
         listerRessourcesRencontre();
 
         boutonQuitterRencontre.setOnClickListener(
@@ -98,10 +127,10 @@ class IHMRencontreEnCours
         texteJoueur2.setText(rencontre.getJoueurs().get(JOUEUR_2).getNom() + " " + rencontre.getJoueurs().get(JOUEUR_2).getPrenom());
         curseur1.setVisibility(View.INVISIBLE);
         curseur2 .setVisibility(View.INVISIBLE);
+        nbManchesGagneesJ1.setVisibility(View.INVISIBLE);
+        nbManchesGagneesJ2.setVisibility(View.INVISIBLE);
         texteDernierCoup1.setText("");
         texteDernierCoup2.setText("");
-        texteScoreJoueur1.setText("Nombre billes empochees : 0 / " + rencontre.getNbBillesCouleur());
-        texteScoreJoueur2.setText("Nombre billes empochees : 0 / " + rencontre.getNbBillesCouleur());
 !!!129026.java!!!	initialiserScores() : void
         if(premierJoueur == JOUEUR_1)
         {
@@ -121,17 +150,24 @@ class IHMRencontreEnCours
                 curseur1.setVisibility(View.VISIBLE);
                 curseur2.setVisibility(View.INVISIBLE);
                 joueurs.get(0).tirerBille(); //Si on change de joueur, alors il a forcément loupé son tir sinon il aurait rejoué
+                scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
+                    scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
             }
             else if(curseur1.getVisibility() == View.VISIBLE)
             {
                 curseur1.setVisibility(View.INVISIBLE);
                 curseur2.setVisibility(View.VISIBLE);
                 joueurs.get(1).tirerBille();
+                scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
+                    scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
             }
         }
 !!!142743.java!!!	gererHandler() : void
         this.handler = new Handler(this.getMainLooper())
         {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void handleMessage(@NonNull Message message)
             {
@@ -185,6 +221,7 @@ class IHMRencontreEnCours
                     afficherListePremierJoueur(champs);
                 }
                 rencontre.jouerCoup();
+                actualiserScoresBilles();
                 actualiserScores(champs);
                 terminerRencontre();
                 break;
@@ -219,11 +256,21 @@ class IHMRencontreEnCours
                 {
                     Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                    }
                 }
                 else if(curseur2.getVisibility() == View.VISIBLE)
                 {
                     Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.EMPOCHE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Empochée ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                    }
                 }
                 break;
             case Protocole.FAUTE:
@@ -232,16 +279,65 @@ class IHMRencontreEnCours
                 {
                     Log.d(TAG, "actualiserScores() joueur 1 : " + Protocole.FAUTE + " - " + joueurs.get(premierJoueur).getCouleur());
                     texteDernierCoup1.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(premierJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                    }
                 }
                 else if(curseur2.getVisibility() == View.VISIBLE)
                 {
                     Log.d(TAG, "actualiserScores() joueur 2 : " + Protocole.FAUTE + " - " + joueurs.get(deuxiemeJoueur).getCouleur());
                     texteDernierCoup2.setText("Faute ! - Blouse : " + champs[Protocole.CHAMP_BLOUSE]);
+                    if(joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() >= 7)
+                    {
+                        scoreJoueur1.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_blanche));
+                        scoreJoueur2.lastElement().setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_noire));
+                    }
                 }
                 break;
         }
-        texteScoreJoueur1.setText("Nombre billes empochées : " + joueurs.get(premierJoueur).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
-        texteScoreJoueur2.setText("Nombre billes empochées : " + joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() + " / " + rencontre.getNbBillesCouleur());
+        actualiserScoresBilles();
+!!!157570.java!!!	actualiserScoresBilles() : void
+        if(estPremierJoueurChoisi)
+        {
+            Log.d(TAG, "actualiserScoresBilles()");
+            for(int i = 0; i < joueurs.get(premierJoueur).getNbBillesEmpochees(); ++i)
+            {
+                Log.d(TAG, "premierJoueur : " + premierJoueur);
+                if (joueurs.get(premierJoueur).getNbBillesEmpochees() < 8)
+                {
+                    if(joueurs.get(0).getCouleur().equals("R"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Rouge");
+                        scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
+                    }
+                    else if(joueurs.get(0).getCouleur().equals("J"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(0).getCouleur() + " J1 Jaune");
+                        scoreJoueur1.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                    }
+                }
+            }
+
+            for(int i = 0; i < joueurs.get(deuxiemeJoueur).getNbBillesEmpochees(); ++i)
+            {
+                Log.d(TAG, "deuxiemeJoueur : " + deuxiemeJoueur);
+                if (joueurs.get(deuxiemeJoueur).getNbBillesEmpochees() < 8)
+                {
+                    if(joueurs.get(0).getCouleur().equals("J"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Rouge");
+                        scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_rouge));
+                    }
+                    else if(joueurs.get(0).getCouleur().equals("R"))
+                    {
+                        Log.d(TAG, "actualiserScoresBilles() : " + joueurs.get(1).getCouleur() + " J2 Jaune");
+                        scoreJoueur2.get(i).setForeground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.bille_jaune));
+                    }
+                }
+            }
+        }
 !!!129410.java!!!	afficherListePremierJoueur(inout champs : String [[]]) : void
         Log.d(TAG, "afficherListePremierJoueur()");
         if(joueurs.get(JOUEUR_1).getNbBillesEmpochees() == 0 && joueurs.get(JOUEUR_2).getNbBillesEmpochees() == 0)
@@ -294,4 +390,18 @@ class IHMRencontreEnCours
             Intent intent = new Intent(IHMRencontreEnCours.this, IHMFinDeRencontre.class);
             intent.putExtra(RENCONTRE, rencontre);
             startActivity(intent);
+            finish();
+        }
+!!!157698.java!!!	afficherManchesGagnees() : void
+        Log.d(TAG, "afficherManchesGagnees()");
+        if(joueurs.get(0).getNbManchesGagnees() > 0)
+        {
+            nbManchesGagneesJ1.setText(joueurs.get(0).getNbManchesGagnees() + " manche(s) gagnée(s) sur " + rencontre.getNbManchesGagnantes() + " !");
+            nbManchesGagneesJ1.setVisibility(View.VISIBLE);
+        }
+
+        if(joueurs.get(1).getNbManchesGagnees() > 0)
+        {
+            nbManchesGagneesJ2.setText(joueurs.get(1).getNbManchesGagnees() + " manche(s) gagnée(s) sur " + rencontre.getNbManchesGagnantes() + " !");
+            nbManchesGagneesJ2.setVisibility(View.VISIBLE);
         }

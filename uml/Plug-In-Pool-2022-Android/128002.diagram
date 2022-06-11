@@ -33,12 +33,12 @@ fragment 140546 "alt"
   xyzwh 156.5 582.5 1995 609 69
 end
 textcanvas 140674 "[2 joueurs sélectionnés ET table connecté] "
-  xyzwh 194.5 587.5 2025 281 15
+  xyzwh 194 587 2025 281 15
 fragment 141570 "alt"
   xyzwh 105.5 868.5 1995 609 69
 end
 textcanvas 141698 "[2 joueurs sélectionnés ET table connecté] "
-  xyzwh 142.5 732.5 2025 281 15
+  xyzwh 142 732 2025 281 15
 durationcanvas 128258 classinstance_ref 128002 // :Joueur
   xyzwh 40 73 2010 11 40
 end
@@ -70,10 +70,10 @@ durationcanvas 130050 classinstance_ref 129410 // :BaseDeDonnees
   xyzwh 714 228 2010 11 25
 end
 durationcanvas 131458 classinstance_ref 131074 // :PeripheriqueBluetooth
-  xyzwh 977 395 2010 11 25
+  xyzwh 989 395 2010 11 25
 end
 durationcanvas 131970 classinstance_ref 131074 // :PeripheriqueBluetooth
-  xyzwh 977 454 2010 11 96
+  xyzwh 989 454 2010 11 96
 end
 durationcanvas 132226 classinstance_ref 128002 // :Joueur
   xyzwh 40 690 2010 11 40

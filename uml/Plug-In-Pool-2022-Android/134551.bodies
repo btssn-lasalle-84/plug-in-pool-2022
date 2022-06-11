@@ -5,6 +5,7 @@ class BaseDeDonnees
         Log.d(TAG, "ouvrir()");
         if (bdd == null)
             bdd = sqlite.getWritableDatabase();
+        bdd.execSQL("PRAGMA foreign_keys = ON;");
 !!!134807.java!!!	fermer() : void
         Log.d(TAG, "fermer()");
         if (bdd != null)
@@ -34,10 +35,14 @@ class BaseDeDonnees
         return joueurs;
 !!!135191.java!!!	insererJoueur(inout joueur : Joueur) : void
         ouvrir();
-        bdd.execSQL(DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')");
+        String requete = DEBUT_REQUETE_INSERTION_JOUEUR + joueur.getNom() + "','" + joueur.getPrenom() + "')";
+        Log.d(TAG,"insererJoueur() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
 !!!135319.java!!!	supprimerJoueur(inout joueur : Joueur) : void
         ouvrir();
-        bdd.execSQL(DEBUT_REQUETE_SUPPRESSION_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "'");
+        String requete = DEBUT_REQUETE_SUPPRESSION_JOUEUR + chercherIDJoueur(joueur) + "';";
+        Log.d(TAG,"supprimerJoueur() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
 !!!135447.java!!!	terminerManche(in idManche : int) : void
         ouvrir();
         String requete = DEBUT_REQUETE_TERMINER_MANCHE + Integer.toString(idManche);
@@ -45,3 +50,86 @@ class BaseDeDonnees
 !!!135575.java!!!	executerRequete(in requete : String) : void
         ouvrir();
         bdd.execSQL(requete);
+!!!146562.java!!!	enregistrerRencontre(inout rencontre : Rencontre) : void
+        ouvrir();
+        String requete = DEBUT_REQUETE_INSERTION_RENCONTRE + chercherIDJoueur(rencontre.getJoueurs().get(0)) + "," + chercherIDJoueur(rencontre.getJoueurs().get(1)) + "," + rencontre.getNbManchesGagnantes() + "," + FIN_REQUETE_INSERTION_RENCONTRE;
+        Log.d(TAG,"enregistrerRencontre() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
+!!!146690.java!!!	supprimerRencontre(inout rencontre : Rencontre) : void
+        ouvrir();
+        String requete = DEBUT_REQUETE_SUPPRESSION_RENCONTRE + rencontre.getIdRencontre() + ";";
+        Log.d(TAG,"supprimerRencontre() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
+!!!146818.java!!!	purgerRencontres() : void
+        ouvrir();
+        String requete = REQUETE_PURGE_RENCONTRES;
+        Log.d(TAG,"enregistrerRencontre() : Exécution de la requete : " + requete);
+        bdd.execSQL(requete);
+!!!146946.java!!!	enregistrerManche(inout manche : Manche) : void
+        ouvrir();
+        DecimalFormat format = new DecimalFormat("00.0");
+        String requete = DEBUT_REQUETE_INSERTION_MANCHE + chercherIDRencontre() + "," +
+            manche.getPointsJoueur1() + "," +
+            manche.getPointsJoueur2() + "," +
+            format.format(manche.getPrecisionJoueur1()).replace(',','.') + "," +
+            format.format(manche.getPrecisionJoueur2()).replace(',','.') + "," +
+            new java.sql.Date(manche.getDebut().getTime()) + "," +
+            new java.sql.Date(manche.getFin().getTime()) + ");";
+        Log.d(TAG, "enregistrerManche() : requete = " + requete);
+        Log.d(TAG, "enregistrerManche() : Précision joueur 1 = " + manche.getPrecisionJoueur1());
+        Log.d(TAG, "enregistrerManche() : Précision joueur 2 = " + manche.getPrecisionJoueur2());
+        bdd.execSQL(requete);
+!!!147074.java!!!	chercherIDRencontre() : int
+        ouvrir();
+        Cursor curseurResultat = bdd.rawQuery(REQUETE_ID_RENCONTRE,null);
+        curseurResultat.moveToNext();
+        return curseurResultat.getInt(INDEX_ID_RENCONTRE);
+!!!147202.java!!!	chercherIDJoueur(inout joueur : Joueur) : int
+        ouvrir();
+        String requete = DEBUT_REQUETE_SELECTION_ID_JOUEUR + joueur.getNom() + "' AND prenom='" + joueur.getPrenom() + "';";
+        Cursor curseurResultat = bdd.rawQuery(requete,null);
+        curseurResultat.moveToNext();
+        return curseurResultat.getInt(INDEX_ID_JOUEUR);
+!!!147330.java!!!	getRencontres() : Rencontre
+        Log.d(TAG, "getRencontres()");
+        Vector<Rencontre> rencontres = new Vector<Rencontre>();
+        String requeteRencontres = REQUETE_RENCONTRES;
+        Cursor curseurRencontres = effectuerRequete(requeteRencontres);
+
+        for (int i = 0; i < curseurRencontres.getCount(); i++)
+        {
+            curseurRencontres.moveToNext();
+            Vector<Joueur> joueurs = new Vector<Joueur>();
+            String requeteJoueurs = DEBUT_REQUETE_SELECTION_JOUEUR + curseurRencontres.getString(INDEX_ID_JOUEUR_1) + " OR Joueur.idJoueur=" + curseurRencontres.getString(INDEX_ID_JOUEUR_2) + ";";
+            Cursor curseurJoueurs = effectuerRequete(requeteJoueurs);
+
+            for(int j = 0; j < curseurJoueurs.getCount(); j++)
+            {
+                curseurJoueurs.moveToNext();
+                joueurs.add(new Joueur(curseurJoueurs.getString(INDEX_NOM_JOUEUR), curseurJoueurs.getString(INDEX_PRENOM_JOUEUR)));
+                Log.d(TAG, "nom = " + curseurJoueurs.getString(INDEX_NOM_JOUEUR) + " - " + "prenom = " + curseurJoueurs.getString(INDEX_PRENOM_JOUEUR));
+            }
+            Vector<Manche> manches = getManches(curseurRencontres.getInt(INDEX_ID_RENCONTRE));
+            rencontres.add(new Rencontre(curseurRencontres.getInt(INDEX_ID_RENCONTRE), joueurs, manches, curseurRencontres.getInt(INDEX_NB_MANCHES_GAGNANTES)));
+        }
+        return rencontres;
+!!!147458.java!!!	getManches(in idRencontre : int) : Manche
+        Log.d(TAG, "getManches()");
+        Vector<Manche> manches = new Vector<Manche>();
+        String requeteManches = REQUETE_MANCHES + idRencontre + ";";
+        Cursor curseurManches = effectuerRequete(requeteManches);
+
+        for(int i = 0; i < curseurManches.getCount(); ++i)
+        {
+            curseurManches.moveToNext();
+            manches.add(new Manche(
+                curseurManches.getInt(INDEX_POINTS_JOUEUR_1),
+                curseurManches.getInt(INDEX_POINTS_JOUEUR_2),
+                curseurManches.getDouble(INDEX_PRECISION_JOUEUR_1),
+                curseurManches.getDouble(INDEX_PRECISION_JOUEUR_2),
+                new Date(curseurManches.getLong(INDEX_FINI)*1000),
+                new Date(curseurManches.getLong(INDEX_HORODATAGE)*1000))
+            );
+            Log.d(TAG, "Joueur 1 : " + manches.get(i).getPointsJoueur1() + " Joueur 2 : " + manches.get(i).getPointsJoueur2() + " Début : " + manches.get(i).getDebut() + " Fin : " + manches.get(i).getFin());
+        }
+        return manches;

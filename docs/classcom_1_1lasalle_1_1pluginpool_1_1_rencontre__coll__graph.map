@@ -1,5 +1,5 @@
 <map id="com.lasalle.pluginpool.Rencontre" name="com.lasalle.pluginpool.Rencontre">
-<area shape="rect" id="node1" title="Classe pour une rencontre." alt="" coords="19,940,234,1443"/>
+<area shape="rect" id="node1" title="Classe pour une rencontre." alt="" coords="19,940,234,1516"/>
 <area shape="rect" id="node2" href="$classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html" title="Classe permettant de créer des périphériques bluetooth." alt="" coords="5,404,248,877"/>
 <area shape="rect" id="node3" href="$class_thread.html" title=" " alt="" coords="90,5,153,83"/>
 <area shape="rect" id="node4" href="$classcom_1_1lasalle_1_1pluginpool_1_1_t_reception.html" title="Classe permettant de gérer la reception bluetooth." alt="" coords="143,132,364,341"/>

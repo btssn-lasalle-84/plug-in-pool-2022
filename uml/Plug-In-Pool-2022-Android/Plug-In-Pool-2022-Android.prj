@@ -1,6 +1,6 @@
 format 224
 "Plug-In-Pool-2022-Android"
-  revision 14
+  revision 16
   modified_by 2 "btssn2"
   java_root_dir "../../mobile-pool/app/src/main/java/com/lasalle/pluginpool/"
   mysql_root_dir "../../sql/"
@@ -610,6 +610,16 @@ format 224
       sequencediagramsettings end
       overlapping_bars size A0
     end
+
+    sequencediagram 147970 "ds Enregistrer une rencontre"
+      sequencediagramsettings end
+      overlapping_bars size A0
+    end
+
+    sequencediagram 148098 "ds Gérer les rencontres enregistrées"
+      sequencediagramsettings end
+      overlapping_bars size A0
+    end
   end
 
   classview 134588 "Digramme de classes d'analyse"
@@ -877,4 +887,358 @@ format 224
   package_ref 134551 // pluginpool
 
   package_ref 134679 // unknown
+
+  classview 128514 "db___"
+    
+    classdiagramsettings member_max_width 0 end
+    
+    classcompositediagramsettings end
+    
+    collaborationdiagramsettings end
+    
+    objectdiagramsettings end
+    
+    objectcompositediagramsettings end
+    
+    sequencediagramsettings end
+    
+    statediagramsettings
+     end
+    
+    
+    activitydiagramsettings
+     end
+    class 135810 "Joueur"
+      visibility package stereotype "table"
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl "DROP TABLE IF EXISTS ${name};
+CREATE TABLE ${name} ${definition};
+"
+      
+      attribute 164354 "idJoueur"
+	default explicit_type "INT"
+	multiplicity "10"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn autoincr_btree notnull_hash
+      end
+
+      attribute 164610 "prenom"
+	default explicit_type "VARCHAR"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn
+      end
+
+      attribute 164738 "key1"
+	default explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	MysqlUniqueKey
+	columns
+	  attribute_ref 164610 // prenom
+	end
+      end
+
+      attribute 164866 "key2"
+	default explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	MysqlPrimaryKey
+	columns
+	  attribute_ref 164354 // idJoueur
+	end
+      end
+    end
+
+    class 135938 "Rencontre"
+      visibility package stereotype "table"
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl "DROP TABLE IF EXISTS ${name};
+CREATE TABLE ${name} ${definition};
+"
+      
+      attribute 164994 "idRencontre"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn autoincr_btree notnull_hash
+      end
+
+      attribute 165122 "idJoueur1"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 165250 "idJoueur2"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 165378 "nbManchesGagnantes"
+	default explicit_type "INTEGER"
+	init_value "0"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn
+      end
+
+      attribute 165506 "fini"
+	default explicit_type "INTEGER"
+	init_value "0"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn
+      end
+
+      attribute 165634 "horodatage"
+	default explicit_type "DATETIME"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      classrelation 157826 // <unidirectional association>
+	relation 157826 --->
+	  a role_name "" public
+	    classrelation_ref 157826 // <unidirectional association>
+	  b parent class_ref 135810 // Joueur
+	  mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	  mysql_constraint "fk_idJoueur_A"
+	  ref_key attribute_ref 164866 // key2
+	  columns
+	    attribute_ref 165122 // idJoueur1
+	  end
+      end
+
+      classrelation 157954 // <unidirectional association>
+	relation 157954 --->
+	  a role_name "" public
+	    classrelation_ref 157954 // <unidirectional association>
+	  b parent class_ref 135810 // Joueur
+	  mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	  mysql_constraint "fk_idJoueur_B"
+	  ref_key attribute_ref 164866 // key2
+	  columns
+	    attribute_ref 165250 // idJoueur2
+	  end
+      end
+
+      attribute 165762 "key3"
+	default explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	MysqlPrimaryKey
+	columns
+	  attribute_ref 164994 // idRencontre
+	end
+      end
+    end
+
+    class 136066 "Manche"
+      visibility package stereotype "table"
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      mysql_decl "DROP TABLE IF EXISTS ${name};
+CREATE TABLE ${name} ${definition};
+"
+      
+      attribute 165890 "idManche"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn autoincr_btree notnull_hash
+      end
+
+      attribute 166018 "idRencontre"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 166146 "pointsJoueur1"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 166274 "pointsJoueur2"
+	default explicit_type "INTEGER"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 166402 "precisionJoueur1"
+	default explicit_type "REAL"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 166530 "precisionJoueur2"
+	default explicit_type "REAL"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 166658 "debut"
+	default explicit_type "DATETIME"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn notnull_hash
+      end
+
+      attribute 166786 "fin"
+	default explicit_type "DATETIME"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${name} ${type}${notnull}${default}${autoincr}"
+	MysqlColumn
+      end
+
+      classrelation 158082 // <unidirectional association>
+	relation 158082 --->
+	  a role_name "" public
+	    classrelation_ref 158082 // <unidirectional association>
+	  b parent class_ref 135938 // Rencontre
+	  mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	  mysql_constraint "fk_idRencontre_1"
+	  ref_key attribute_ref 165762 // key3
+	  columns
+	    attribute_ref 166018 // idRencontre
+	  end
+      end
+
+      attribute 166914 "key2"
+	default explicit_type ""
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	mysql_decl "  ${constraint}${modifier}KEY${name}${type} (${columns})${ref}"
+	MysqlPrimaryKey
+	columns
+	  attribute_ref 165890 // idManche
+	end
+      end
+    end
+
+    classdiagram 148354 "dfgs"
+      classdiagramsettings draw_all_relations no show_members_full_definition yes member_max_width 0 end
+      size A0
+    end
+  end
+
+  deploymentview 128386 "db___"
+    //deployment diagram settings
+    deploymentdiagramsettings
+     end
+    artifact 134914 "db___"
+      stereotype "database"
+      mysql_src "${definition}"
+      associated_elems
+	class_ref 135810 // Joueur
+	class_ref 135938 // Rencontre
+	class_ref 136066 // Manche
+      end
+    end
+  end
 end

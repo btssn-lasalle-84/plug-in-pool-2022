@@ -6,8 +6,12 @@ package com.lasalle.pluginpool;
  * @author MERAS Pierre
  */
 
+import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,16 +30,18 @@ public class Rencontre implements Serializable
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
     private static boolean NOUVELLE_MANCHE = false;
-    private static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
+    public static final int NB_BILLES_COULEUR = 8; // 7 billes rouges ou jaunes et 1 bille noire
     private static final int NB_POCHES = 6;
     private static final String TAG = "_Rencontre_";
 
     /**
      * Attributs
      */
+    private int idRencontre;
     private int nbManchesGagnantes;
     private int nbManches;
     private int etatRencontre;
+    private Date debutManche;
     private Date horodatageDebut;
     private Date horodatage;
     private int dureeRencontreSecondes;
@@ -44,18 +50,32 @@ public class Rencontre implements Serializable
     private Vector<Coup> coups;
     private int premierJoueur;
     private int deuxiemeJoueur;
+    private boolean premierCoup = true;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private Handler handler = null;
 
     /**
-     * @brief Constructeur
+     * @brief Constructeurs
      */
-    public Rencontre(Vector<Joueur> joueurs, int nbManchesGagnantes)
+    public Rencontre(int idRencontre, Vector<Joueur> joueurs, Vector<Manche> manches, int nbManchesGagnantes)
     {
+        this.idRencontre = idRencontre;
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
         this.joueurs = joueurs;
+        this.manches = manches;
+        this.coups = new Vector<>();
+    }
+
+    public Rencontre(Rencontre rencontre)
+    {
+        this.idRencontre = rencontre.getIdRencontre();
+        this.nbManchesGagnantes = rencontre.getNbManchesGagnantes();
+        this.nbManches = rencontre.getNbManches();
+        this.etatRencontre = rencontre.getEtatRencontre();
+        this.joueurs = rencontre.getJoueurs();
+        this.manches = rencontre.getManches();
         this.coups = new Vector<>();
     }
 
@@ -75,8 +95,14 @@ public class Rencontre implements Serializable
     /**
      * @brief Gère le déroulement de la rencontre
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void jouerCoup()
     {
+        if(premierCoup)
+        {
+            this.debutManche = new Date();
+            premierCoup = !premierCoup;
+        }
         Log.d(TAG, "jouerCoup()");
         String couleur = "";
         String blouse = "";
@@ -139,18 +165,22 @@ public class Rencontre implements Serializable
     /**
      * @brief Méthode appelée à la fin d'une manche
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void terminerManche()
     {
         Log.d(TAG, "terminerManche()");
         nbManches++;
+        ajouterManche();
+        setHorodatageFinManche();
         Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
         Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
         if(nbManches < nbManchesGagnantes)
         {
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
             NOUVELLE_MANCHE = true;
-            joueurs.get(0).resetNbBillesEmpochees();
-            joueurs.get(1).resetNbBillesEmpochees();
+            setScoresFinManches();
+            joueurs.get(0).resetStatistiques();
+            joueurs.get(1).resetStatistiques();
         }
         else
         {
@@ -179,6 +209,10 @@ public class Rencontre implements Serializable
     /**
      * @brief Accesseurs
      */
+    public int getIdRencontre()
+    {
+        return this.idRencontre;
+    }
     public int getEtatRencontre()
     {
         return this.etatRencontre;
@@ -202,6 +236,11 @@ public class Rencontre implements Serializable
     public Vector<Joueur> getJoueurs()
     {
         return joueurs;
+    }
+
+    public Vector<Manche> getManches()
+    {
+        return manches;
     }
 
     public void setJoueurs(Vector<Joueur> joueurs)
@@ -238,13 +277,25 @@ public class Rencontre implements Serializable
         this.horodatageDebut = new Date();
     }
 
+    public void setHorodatageFinManche()
+    {
+        Log.d(TAG, "setHorodatageDebutManche()");
+        manches.lastElement().setHorodatageFin();
+    }
+
+    public void setScoresFinManches()
+    {
+        Log.d(TAG, "setScoresFinManches()");
+        manches.lastElement().setPointsJoueur1(joueurs.get(0).getNbBillesEmpochees());
+        manches.lastElement().setPointsJoueur2(joueurs.get(1).getNbBillesEmpochees());
+    }
+
     /**
      * @brief Méthode pour calculer la durée d'une rencontre
      */
     public void calculerDureeRencontre()
     {
-        Date now = new Date();
-        long h = now.getTime() - this.horodatageDebut.getTime();
+        long h = manches.lastElement().getFin().getTime() - manches.firstElement().getDebut().getTime() ;
         Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
         dureeRencontreSecondes = (int)(h / 1000);
     }
@@ -256,4 +307,55 @@ public class Rencontre implements Serializable
     {
         NOUVELLE_MANCHE = !NOUVELLE_MANCHE;
     }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche pour enregistrer une manche
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ajouterManche()
+    {
+        Log.d(TAG, "ajouterManche() Billes J1 : " +
+            this.getJoueurs().get(0).getNbBillesEmpochees() + " Billes J2 : " +
+            this.getJoueurs().get(1).getNbBillesEmpochees() + " Precision J1 : " +
+            this.getJoueurs().get(0).getPrecision() + " Precision J2 : " +
+            this.getJoueurs().get(1).getPrecision()
+        );
+
+        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), this.getJoueurs().get(0).getPrecision(), this.getJoueurs().get(1).getPrecision(), debutManche, null);
+        manches.add(manche);
+    }
+
+    /**
+     * @brief Permet le calcul de la précision du joueur 1 sur l'ensemble des manches d'une rencontre
+     * @return Précision du joueur 1
+     */
+    public double calculerPrecisionMoyenneJoueur1()
+    {
+        Log.d(TAG, "calculerPrecisionMoyenneJoueur1()");
+        double precision = 0;
+        for(int i = 0; i < this.getManches().size(); ++i)
+        {
+            precision += this.getManches().get(i).getPrecisionJoueur1();
+        }
+        precision /= this.getManches().size();
+        return precision;
+    }
+
+    /**
+     * @brief Permet le calcul de la précision du joueur 2 sur l'ensemble des manches d'une rencontre
+     * @return Précision du joueur 2
+     */
+    @SuppressLint("DefaultLocale")
+    public double calculerPrecisionMoyenneJoueur2()
+    {
+        Log.d(TAG, "calculerPrecisionMoyenneJoueur2()");
+        double precision = 0;
+        for(int i = 0; i < this.getManches().size(); ++i)
+        {
+            precision += this.getManches().get(i).getPrecisionJoueur2();
+        }
+        precision /= this.getManches().size();
+        return precision;
+    }
 }
+

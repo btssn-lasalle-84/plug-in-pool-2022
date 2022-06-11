@@ -18,28 +18,38 @@
         <activity
             android:name=".IHMHistoriqueDesRencontres"
             android:exported="false"
+            android:noHistory="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar" />
         <activity
             android:name=".IHMFinDeRencontre"
             android:exported="false"
+            android:noHistory="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar" />
         <activity
             android:name=".IHMRencontreEnCours"
             android:exported="false"
+            android:noHistory="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar" />
         <activity
             android:name=".IHMCreerJoueur"
             android:exported="false"
+            android:noHistory="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".IHMNouvelleRencontre"
             android:exported="false"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".IHMPlugInPool"
             android:exported="true"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

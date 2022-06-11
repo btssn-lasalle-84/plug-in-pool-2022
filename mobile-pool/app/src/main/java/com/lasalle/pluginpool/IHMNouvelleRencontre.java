@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,24 +41,27 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      * Constantes
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
-    public static final String ID_INTENT_RENCONTRE = "Rencontre"; //!< Identifiant de données dans l'Intent
+    public static final String ID_INTENT_RENCONTRE = "RENCONTRE"; //!< Identifiant de données dans l'Intent
     public static final int NB_JOUEURS = 2; //!< Le nombre de joueurs pour une rencontre
     public static final int NB_MANCHES_GAGNANTES = 5; //!< Le nombre de manches gagnantes par défaut
 
     /**
      * Attributs
      */
+    private int idRencontre = -1;
     private PeripheriqueBluetooth peripheriqueBluetooth = null;
     private BaseDeDonnees baseDeDonnees = null;
     private Handler handler = null;
     private Rencontre rencontre = null;
     private Vector<Joueur> joueursRencontre;
+    private Vector<Manche> manchesRencontre;
     private int nbManchesGagnantes;
 
     /**
      * Ressources IHM
      */
     private Button boutonLancerRencontre;//!< Le bouton de lancement
+    private ImageButton boutonAccueil;
     private EditText nbManches;
     private ListView listeJoueurs;
     private List<Joueur> joueurs;
@@ -135,6 +139,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     {
         Log.d(TAG, "initialiserRessourcesIHMNouvelleRencontre()");
         boutonLancerRencontre = (Button)findViewById(R.id.boutonLancerRencontre);
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         nbManches = (EditText)findViewById(R.id.editTextNombreManches);
         nbManches.setText(Integer.toString(NB_MANCHES_GAGNANTES));
         // Il faut être connecté à la table et avoir deux joueurs sélectionnés
@@ -155,6 +160,16 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités
                 intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
+                startActivity(intent);
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMNouvelleRencontre.this, IHMPlugInPool.class);
                 startActivity(intent);
             }
         });
@@ -199,7 +214,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void initialiserRencontre()
     {
         joueursRencontre = new Vector<Joueur>();
-        rencontre = new Rencontre(joueursRencontre, NB_MANCHES_GAGNANTES);
+        manchesRencontre = new Vector<Manche>();
+        rencontre = new Rencontre(idRencontre, joueursRencontre, manchesRencontre, NB_MANCHES_GAGNANTES);
     }
 
     /**

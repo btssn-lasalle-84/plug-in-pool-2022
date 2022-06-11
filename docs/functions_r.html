@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="plug-in-pool.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">plug-in-pool
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.1</span>
    </div>
    <div id="projectbrief">BTS SNIR LaSalle Avignon 2022</div>
   </td>
@@ -94,6 +94,12 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <li>rechercherTable()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a265fbf99a1e4aead4a380dd79d5cab59">com.lasalle.pluginpool.PeripheriqueBluetooth</a>
 </li>
+<li>reinitialiserScoreJoueurs()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#aabbb60476fcd1c2a1d012291e4bdfa4f">com.lasalle.pluginpool.IHMRencontreEnCours</a>
+</li>
+<li>REJOUER
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#a155d0bee34d39553f39b9117eb44727e">com.lasalle.pluginpool.IHMRencontreEnCours</a>
+</li>
 <li>rencontre
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a462e9dc56065413a8cddcdab93f2a2d9">com.lasalle.pluginpool.IHMFinDeRencontre</a>
 </li>
@@ -102,15 +108,13 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 </li>
 <li>rencontre
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#abae8194597564c66bda06338f33fc2cd">com.lasalle.pluginpool.IHMNouvelleRencontre</a>
+, <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#a5c4c9f59caf873254b282f0e33134a69">com.lasalle.pluginpool.IHMRencontreEnCours</a>
 </li>
 <li>RENCONTRE
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#ab147c89ebd311e27d4521cf2b613b9a8">com.lasalle.pluginpool.IHMRencontreEnCours</a>
 </li>
-<li>rencontre
-: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#a5c4c9f59caf873254b282f0e33134a69">com.lasalle.pluginpool.IHMRencontreEnCours</a>
-</li>
 <li>Rencontre()
-: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#ae32db2bb8c27cd1529a386ace8785072">com.lasalle.pluginpool.Rencontre</a>
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#a3f6ef8bceccc3f5cbbbb91236aa5a0e6">com.lasalle.pluginpool.Rencontre</a>
 </li>
 <li>RENCONTRE_ENCOURS
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#a869f9afe0252e9e0bef1a87b834e2f57">com.lasalle.pluginpool.IHMRencontreEnCours</a>
@@ -123,8 +127,17 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <li>REQUETE_ID_RENCONTRE
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#a415f876fd0df721eaecd2eb37d7c2880">com.lasalle.pluginpool.BaseDeDonnees</a>
 </li>
-<li>resetNbBillesEmpochees()
-: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#accf148a1b5833d7c7c70e1f8ef159a49">com.lasalle.pluginpool.Joueur</a>
+<li>REQUETE_MANCHES
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#a87c80457c2b266053284c693a5670309">com.lasalle.pluginpool.BaseDeDonnees</a>
+</li>
+<li>REQUETE_PURGE_RENCONTRES
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#a8f441b7b7f20efdd004c660e0f0f45aa">com.lasalle.pluginpool.BaseDeDonnees</a>
+</li>
+<li>REQUETE_RENCONTRES
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#af9a41e36285665c7d1c1e3fa7ba26d96">com.lasalle.pluginpool.BaseDeDonnees</a>
+</li>
+<li>resetStatistiques()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#ae38d5a0135586d21b0e5f2ae8a9f32b6">com.lasalle.pluginpool.Joueur</a>
 </li>
 <li>Resume
 : <a class="el" href="class_ecran_pool.html#a6be804b1a55f637c2aa72e0ed81f891da4b85e22b3ddd004b79999f31fdc70ca8">EcranPool</a>
@@ -139,7 +152,7 @@ $(document).ready(function(){initNavTree('functions_r.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Jeudi 26 Mai 2022 09:38:34 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Samedi 11 Juin 2022 06:41:38 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
   </ul>
 </div>
 </body>

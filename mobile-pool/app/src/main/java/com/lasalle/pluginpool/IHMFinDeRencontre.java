@@ -7,13 +7,19 @@ package com.lasalle.pluginpool;
  */
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Vector;
 
 /**
  * @class IHMFinDeRencontre
@@ -33,12 +39,14 @@ public class IHMFinDeRencontre extends AppCompatActivity
      * Variables
      */
     private Rencontre rencontre;
+    private BaseDeDonnees baseDeDonnees = null;
 
     /**
      * Ressources IHM
      */
     private Button boutonEnregistrerRencontre;//!< Le bouton permettant l'enregistrement des données de la rencontre'
     private Button boutonRejouer;//!< Le bouton permettant de rejouer une rencontre avec les mêmes paramètres'
+    private ImageButton boutonAccueil;
     private Joueur joueurGagnant;
     private TextView texteJoueurGagnant;
     private TextView texteGagnant;
@@ -105,7 +113,8 @@ public class IHMFinDeRencontre extends AppCompatActivity
     @Override
     protected void onStop()
     {
-        super.onStop();        joueur1 = rencontre.getJoueurs().get(0);
+        super.onStop();
+        joueur1 = rencontre.getJoueurs().get(0);
         joueur2 = rencontre.getJoueurs().get(1);
         Log.d(TAG, "onStop()");
     }
@@ -127,6 +136,7 @@ public class IHMFinDeRencontre extends AppCompatActivity
     {
         boutonEnregistrerRencontre = (Button)findViewById(R.id.boutonEnregistrerRencontre);
         boutonRejouer = (Button)findViewById(R.id.boutonRejouer);
+        boutonAccueil = (ImageButton)findViewById(R.id.boutonAcceuil);
         texteJoueurGagnant = (TextView)findViewById(R.id.texteJoueurGagnant);
         texteGagnant = (TextView)findViewById(R.id.texteGagnant);
         nbManchesGagnantes = (TextView)findViewById(R.id.texteNbManches);
@@ -138,24 +148,52 @@ public class IHMFinDeRencontre extends AppCompatActivity
         nbfautesJoueur1 = (TextView)findViewById(R.id.nbFautes1);
         nbfautesJoueur2 = (TextView)findViewById(R.id.nbFautes2);
 
+        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
+        ouvrirBaseDeDonnees();
+
         boutonEnregistrerRencontre.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    /*Enregistrer la rencontre*/
-                }
-            });
+                enregistrerRencontre();
+            }
+        });
 
         boutonRejouer.setOnClickListener(
-            new View.OnClickListener()
+        new View.OnClickListener()
+        {
+            public void onClick(View v)
             {
-                public void onClick(View v)
-                {
-                    /*Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
-                    startActivity(intent);*/
-                }
-            });
+                Vector<Joueur> joueurs = new Vector<>();
+                joueurs.add(new Joueur(rencontre.getJoueurs().get(0).getNom(), rencontre.getJoueurs().get(0).getPrenom()));
+                joueurs.add(new Joueur(rencontre.getJoueurs().get(1).getNom(), rencontre.getJoueurs().get(1).getPrenom()));
+                Rencontre nouvelleRencontre = new Rencontre(BaseDeDonnees.ID_RENCONTRE_DEFAUT, joueurs, new Vector<Manche>(), rencontre.getNbManchesGagnantes());
+                Intent intent = new Intent(IHMFinDeRencontre.this, IHMRencontreEnCours.class);
+                intent.putExtra(RENCONTRE, nouvelleRencontre);
+                startActivity(intent);
+            }
+        });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMFinDeRencontre.this, IHMPlugInPool.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * @brief Méthode permettant d'obtenir un accès à la base de données
+     */
+    private void ouvrirBaseDeDonnees()
+    {
+        baseDeDonnees = new BaseDeDonnees(this);
+        baseDeDonnees.ouvrir();
     }
 
     /**
@@ -165,7 +203,6 @@ public class IHMFinDeRencontre extends AppCompatActivity
     private void initialiserGagnantIHMFinDeRencontre()
     {
         Log.d(TAG, "initialiserScoresIHMFinDeRencontre()");
-        rencontre = (Rencontre)getIntent().getSerializableExtra(RENCONTRE);
 
         if(rencontre.getJoueurs().get(0).getNbManchesGagnees() > rencontre.getJoueurs().get(1).getNbManchesGagnees())
         {
@@ -232,5 +269,28 @@ public class IHMFinDeRencontre extends AppCompatActivity
         nbfautesJoueur2.setText(String.valueOf(joueur2.getNbFautes()));
         precisionJoueur1.setText(String.format("%.2f", joueur1.getPrecision()) + "%");
         precisionJoueur2.setText(String.format("%.2f", joueur2.getPrecision()) + "%");
+    }
+
+    /**
+     * @brief Méthode appelée au début de la rencontre pour l'enregistrer dans la base de données
+     */
+    private void enregistrerRencontre()
+    {
+        Log.d(TAG, "enregistrerRencontre()");
+        baseDeDonnees.enregistrerRencontre(rencontre);
+        while(rencontre.getManches().size() > 0)
+        {
+            enregistrerManche();
+        }
+    }
+
+    /**
+     * @brief Méthode appelée à la fin d'une manche pour l'enregistrer dans la base de données
+     */
+    private void enregistrerManche()
+    {
+        Log.d(TAG, "enregistrerManche() : nbManches : " + rencontre.getManches().size());
+        baseDeDonnees.enregistrerManche(rencontre.getManches().lastElement());
+        rencontre.getManches().remove(rencontre.getManches().lastElement());
     }
 }

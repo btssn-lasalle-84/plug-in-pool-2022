@@ -1,9 +1,19 @@
 class Rencontre
-!!!146711.java!!!	Rencontre(inout joueurs : Vector<Joueur>, in nbManchesGagnantes : int)
+!!!146711.java!!!	Rencontre(in idRencontre : int, in joueurs : Vector<Joueur>, inout manches : Vector<Manche>, in nbManchesGagnantes : int)
+        this.idRencontre = idRencontre;
         this.nbManchesGagnantes = nbManchesGagnantes;
         this.nbManches = 0;
         this.etatRencontre = RENCONTRE_ENCOURS;
         this.joueurs = joueurs;
+        this.manches = manches;
+        this.coups = new Vector<>();
+!!!149890.java!!!	Rencontre(inout rencontre : Rencontre)
+        this.idRencontre = rencontre.getIdRencontre();
+        this.nbManchesGagnantes = rencontre.getNbManchesGagnantes();
+        this.nbManches = rencontre.getNbManches();
+        this.etatRencontre = rencontre.getEtatRencontre();
+        this.joueurs = rencontre.getJoueurs();
+        this.manches = rencontre.getManches();
         this.coups = new Vector<>();
 !!!131074.java!!!	initialiserJoueurs(in premierJoueur : int) : void
         this.premierJoueur = premierJoueur;
@@ -13,6 +23,11 @@ class Rencontre
         coups.add(coup);
         Log.d(TAG, "stockerCoup() : couleur " + couleur + " blouse : " + blouse);
 !!!131330.java!!!	jouerCoup() : void
+        if(premierCoup)
+        {
+            this.debutManche = new Date();
+            premierCoup = !premierCoup;
+        }
         Log.d(TAG, "jouerCoup()");
         String couleur = "";
         String blouse = "";
@@ -67,14 +82,17 @@ class Rencontre
 !!!131586.java!!!	terminerManche() : void
         Log.d(TAG, "terminerManche()");
         nbManches++;
+        ajouterManche();
+        setHorodatageFinManche();
         Log.d(TAG, "terminerManche() : nombre manches : " + nbManches);
         Log.d(TAG, "terminerManche() : nombre manches gagnantes: " + nbManchesGagnantes);
         if(nbManches < nbManchesGagnantes)
         {
             Log.d(TAG, "terminerManche() : resetNbBillesEmpochees()");
             NOUVELLE_MANCHE = true;
-            joueurs.get(0).resetNbBillesEmpochees();
-            joueurs.get(1).resetNbBillesEmpochees();
+            setScoresFinManches();
+            joueurs.get(0).resetStatistiques();
+            joueurs.get(1).resetStatistiques();
         }
         else
         {
@@ -92,6 +110,8 @@ class Rencontre
             joueurs.get(1).tirerBille();
             joueurs.get(1).augmenterFautes();
         }
+!!!150018.java!!!	getIdRencontre() : int
+        return this.idRencontre;
 !!!147095.java!!!	getEtatRencontre() : int
         return this.etatRencontre;
 !!!147223.java!!!	getNbManchesGagnantes() : int
@@ -102,6 +122,8 @@ class Rencontre
         return String.format("%sm%ss", dureeRencontreSecondes/60, dureeRencontreSecondes%60);
 !!!147351.java!!!	getJoueurs() : Joueur
         return joueurs;
+!!!150146.java!!!	getManches() : Manche
+        return manches;
 !!!147479.java!!!	setJoueurs(inout joueurs : Vector<Joueur>) : void
         this.joueurs = joueurs;
 !!!131842.java!!!	getNbBillesCouleur() : int
@@ -115,10 +137,44 @@ class Rencontre
 !!!139778.java!!!	setHorodatageDebut() : void
         Log.d(TAG, "setHorodatageDebut()");
         this.horodatageDebut = new Date();
+!!!150274.java!!!	setHorodatageFinManche() : void
+        Log.d(TAG, "setHorodatageDebutManche()");
+        manches.lastElement().setHorodatageFin();
+!!!150402.java!!!	setScoresFinManches() : void
+        Log.d(TAG, "setScoresFinManches()");
+        manches.lastElement().setPointsJoueur1(joueurs.get(0).getNbBillesEmpochees());
+        manches.lastElement().setPointsJoueur2(joueurs.get(1).getNbBillesEmpochees());
 !!!139906.java!!!	calculerDureeRencontre() : void
-        Date now = new Date();
-        long h = now.getTime() - this.horodatageDebut.getTime();
+        long h = manches.lastElement().getFin().getTime() - manches.firstElement().getDebut().getTime() ;
         Log.d(TAG, "calculerDureeRencontre() : " + h + " ms");
         dureeRencontreSecondes = (int)(h / 1000);
 !!!140034.java!!!	changerNouvelleManche() : void
         NOUVELLE_MANCHE = !NOUVELLE_MANCHE;
+!!!150530.java!!!	ajouterManche() : void
+        Log.d(TAG, "ajouterManche() Billes J1 : " +
+            this.getJoueurs().get(0).getNbBillesEmpochees() + " Billes J2 : " +
+            this.getJoueurs().get(1).getNbBillesEmpochees() + " Precision J1 : " +
+            this.getJoueurs().get(0).getPrecision() + " Precision J2 : " +
+            this.getJoueurs().get(1).getPrecision()
+        );
+
+        Manche manche = new Manche(this.getJoueurs().get(0).getNbBillesEmpochees(), this.getJoueurs().get(1).getNbBillesEmpochees(), this.getJoueurs().get(0).getPrecision(), this.getJoueurs().get(1).getPrecision(), debutManche, null);
+        manches.add(manche);
+!!!150658.java!!!	calculerPrecisionMoyenneJoueur1() : double
+        Log.d(TAG, "calculerPrecisionMoyenneJoueur1()");
+        double precision = 0;
+        for(int i = 0; i < this.getManches().size(); ++i)
+        {
+            precision += this.getManches().get(i).getPrecisionJoueur1();
+        }
+        precision /= this.getManches().size();
+        return precision;
+!!!150786.java!!!	calculerPrecisionMoyenneJoueur2() : double
+        Log.d(TAG, "calculerPrecisionMoyenneJoueur2()");
+        double precision = 0;
+        for(int i = 0; i < this.getManches().size(); ++i)
+        {
+            precision += this.getManches().get(i).getPrecisionJoueur2();
+        }
+        precision /= this.getManches().size();
+        return precision;

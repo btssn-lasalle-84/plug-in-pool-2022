@@ -28,6 +28,7 @@ class IHMCreerJoueur
 !!!136599.java!!!	initialiserRessourcesIHMCreerJoueur() : void
         Log.d(TAG, "initialiserRessourcesIHMCreerJoueur()");
         boutonValiderCreationJoueur = (Button)findViewById(R.id.boutonValiderCreationJoueur);
+        boutonAccueil = (ImageButton) findViewById(R.id.boutonAcceuil);
         editTextNomJoueur = (EditText)findViewById(R.id.editTextNomJoueur);
         exitTextPrenomJoueur = (EditText)findViewById(R.id.editTextPrenomJoueur);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueurs);
@@ -44,11 +45,32 @@ class IHMCreerJoueur
                 creerJoueur();
             }
         });
+
+        boutonAccueil.setOnClickListener(
+        new View.OnClickListener()
+        {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(IHMCreerJoueur.this, IHMPlugInPool.class);
+                startActivity(intent);
+            }
+        });
 !!!136727.java!!!	creerJoueur() : void
         Log.d(TAG, "creerJoueur()");
         String nomJoueur = editTextNomJoueur.getText().toString().toUpperCase().trim();
         String prenomJoueur = exitTextPrenomJoueur.getText().toString().trim();
         Joueur nouveauJoueur = new Joueur(nomJoueur, prenomJoueur);
+        Vector<Joueur> joueurs = baseDeDonnees.getJoueurs();
+
+        for(int i = 0; i < joueurs.size() ; ++i)
+        {
+            if(joueurs.get(i).getNom().equals(nomJoueur) || joueurs.get(i).getPrenom().equals(prenomJoueur))
+            {
+                Toast.makeText(IHMCreerJoueur.this, "Le joueur existe déjà !", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         if(nouveauJoueur.getPrenom().equals("") || nouveauJoueur.getNom().equals(""))
         {
             Toast.makeText(IHMCreerJoueur.this, "Impossible de créer le joueur !", Toast.LENGTH_SHORT).show();

@@ -1,0 +1,208 @@
+format 224
+
+classinstance 128002 class_ref 134972 // Joueur
+  drawing_mode actor  name ""   xyz 54 4 2000 life_line_z 2000
+classinstance 128130 class_ref 135319 // IHMHistoriqueDesRencontres
+  name ""   xyz 362 4 2000 life_line_z 2000
+classinstance 129666 class_ref 134551 // BaseDeDonnees
+  name ""   xyz 832 4 2000 life_line_z 2000
+fragment 130306 "loop"
+  xyzwh 410 251 1995 264 82
+end
+textcanvas 130434 "[Pour chaque rencontre]"
+  xyzwh 459 255 3005 158 15
+note 130818 "Crée et exécute l'activité IHMHistoriqueDesRencontres
+"
+  xyzwh 162.5 118.5 2000 215 53
+fragment 132482 "loop"
+  xyzwh 400 524 1995 264 82
+end
+textcanvas 132610 "[Pour chaque rencontre]"
+  xyzwh 450 528 3005 158 15
+fragment 133378 "loop"
+  xyzwh 400 700 1995 271 91
+end
+textcanvas 133506 "[Pour chaque manche]"
+  xyzwh 453 706.5 3005 158 15
+textcanvas 133890 "[boutonSupprimer]"
+  xyzwh 445 817 2025 125 21
+fragment 134018 "alt"
+  xyzwh 407 810 1975 553 153
+end
+fragment 134402 "alt"
+  xyzwh 418 863 1980 532 93
+end
+textcanvas 134530 "[boutonOui]"
+  xyzwh 450.5 867 2040 79 22
+durationcanvas 128258 classinstance_ref 128002 // :Joueur
+  xyzwh 75 67 2010 11 41
+end
+durationcanvas 128386 classinstance_ref 128130 // :IHMHistoriqueDesRencontres
+  xyzwh 461 67 2010 11 290
+  overlappingdurationcanvas 128642
+    xyzwh 467 78 2020 11 273
+    overlappingdurationcanvas 128898
+      xyzwh 473 119 2030 11 227
+      overlappingdurationcanvas 129154
+	xyzwh 479 148 2040 11 34
+      end
+      overlappingdurationcanvas 129410
+	xyzwh 479 210 2040 11 108
+	overlappingdurationcanvas 130050
+	  xyzwh 485 288 2050 11 25
+	end
+      end
+    end
+  end
+end
+durationcanvas 129794 classinstance_ref 129666 // :BaseDeDonnees
+  xyzwh 890 171 2010 11 26
+end
+durationcanvas 130562 classinstance_ref 129666 // :BaseDeDonnees
+  xyzwh 890 235 2010 11 25
+end
+durationcanvas 131074 classinstance_ref 128002 // :Joueur
+  xyzwh 75 402 2010 11 40
+end
+durationcanvas 131202 classinstance_ref 128130 // :IHMHistoriqueDesRencontres
+  xyzwh 461 403 2010 11 216
+  overlappingdurationcanvas 131714
+    xyzwh 467 491 2020 11 123
+    overlappingdurationcanvas 132226
+      xyzwh 473 561 2030 11 25
+    end
+  end
+end
+durationcanvas 131458 classinstance_ref 129666 // :BaseDeDonnees
+  xyzwh 890 435 2010 11 25
+end
+durationcanvas 131970 classinstance_ref 129666 // :BaseDeDonnees
+  xyzwh 890 505 2010 11 105
+end
+durationcanvas 132738 classinstance_ref 128002 // :Joueur
+  xyzwh 75 658 2010 11 41
+end
+durationcanvas 132866 classinstance_ref 128130 // :IHMHistoriqueDesRencontres
+  xyzwh 461 659 2000 11 318
+  overlappingdurationcanvas 133122
+    xyzwh 467 675 2020 11 297
+    overlappingdurationcanvas 133634
+      xyzwh 473 741 2030 11 25
+    end
+    overlappingdurationcanvas 134146
+      xyzwh 473 852 2030 11 100
+      overlappingdurationcanvas 134914
+	xyzwh 479 921 2040 11 25
+      end
+    end
+  end
+end
+durationcanvas 134658 classinstance_ref 129666 // :BaseDeDonnees
+  xyzwh 890 892 2010 11 25
+end
+msg 128514 synchronous
+  from durationcanvas_ref 128258
+  to durationcanvas_ref 128386
+  yz 67 2015 explicitmsg "Clic sur le bouton \"HISTORIQUE\""
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 164 52
+reflexivemsg 128770 synchronous
+  to durationcanvas_ref 128642
+  yz 78 2025 msg operation_ref 138135 // "onCreate(inout savedInstanceState : Bundle) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 480 64
+reflexivemsg 129026 synchronous
+  to durationcanvas_ref 128898
+  yz 119 2035 msg operation_ref 138903 // "initialiserRessourcesIHMHistoriqueDesRencontres() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 483 101
+reflexivemsg 129282 synchronous
+  to durationcanvas_ref 129154
+  yz 148 2045 msg operation_ref 147970 // "ouvrirBaseDeDonnees() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 492 132
+reflexivemsg 129538 synchronous
+  to durationcanvas_ref 129410
+  yz 210 2045 msg operation_ref 148098 // "listerRencontres() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 493 195
+msg 129922 synchronous
+  from durationcanvas_ref 129154
+  to durationcanvas_ref 129794
+  yz 171 3005 msg operation_ref 134679 // "ouvrir() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 667 156
+reflexivemsg 130178 synchronous
+  to durationcanvas_ref 130050
+  yz 288 2055 msg operation_ref 148354 // "ajouterRencontreListe(inout listeRencontre : Vector<Rencontre>, inout rencontres : List<String>, in i : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 500 274
+msg 130690 synchronous
+  from durationcanvas_ref 129410
+  to durationcanvas_ref 130562
+  yz 235 3010 msg operation_ref 147330 // "getRencontres() : Rencontre"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 637 220
+msg 131330 synchronous
+  from durationcanvas_ref 131074
+  to durationcanvas_ref 131202
+  yz 403 2015 explicitmsg "Clic sur le bouton \"PURGER L'HISTORIQUE\""
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 126 388
+msg 131586 synchronous
+  from durationcanvas_ref 131202
+  to durationcanvas_ref 131458
+  yz 435 2015 msg operation_ref 146818 // "purgerRencontres() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 617 420
+reflexivemsg 131842 synchronous
+  to durationcanvas_ref 131714
+  yz 491 2025 msg operation_ref 148098 // "listerRencontres() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 481 476
+msg 132098 synchronous
+  from durationcanvas_ref 131714
+  to durationcanvas_ref 131970
+  yz 505 2030 msg operation_ref 147330 // "getRencontres() : Rencontre"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 631 490
+reflexivemsg 132354 synchronous
+  to durationcanvas_ref 132226
+  yz 561 2035 msg operation_ref 148354 // "ajouterRencontreListe(inout listeRencontre : Vector<Rencontre>, inout rencontres : List<String>, in i : int) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 482 545
+msg 132994 synchronous
+  from durationcanvas_ref 132738
+  to durationcanvas_ref 132866
+  yz 659 2015 explicitmsg "Clic long sur une Rencontre"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 182 644
+reflexivemsg 133250 synchronous
+  to durationcanvas_ref 133122
+  yz 675 2025 msg operation_ref 148482 // "listerManches(inout rencontre : Rencontre) : ArrayAdapter<String>"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 479 659
+reflexivemsg 133762 synchronous
+  to durationcanvas_ref 133634
+  yz 741 2035 explicitmsg "ajouterMancheListe()"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 487 725
+reflexivemsg 134274 synchronous
+  to durationcanvas_ref 134146
+  yz 852 2035 msg operation_ref 148226 // "confirmerSuppressionRencontre(inout rencontres : List<String>, in itemSelection : int, inout listeRencontre : Vector<Rencontre>, inout adapter : ArrayAdapter) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 485 836
+msg 134786 synchronous
+  from durationcanvas_ref 134146
+  to durationcanvas_ref 134658
+  yz 892 2045 msg operation_ref 146690 // "supprimerRencontre(inout rencontre : Rencontre) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 616 877
+reflexivemsg 135042 synchronous
+  to durationcanvas_ref 134914
+  yz 921 2045 msg operation_ref 148098 // "listerRencontres() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 489 904
+line 130946 -_-_
+  from ref 130818 z 2016 to ref 128514
+end
