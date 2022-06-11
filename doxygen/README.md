@@ -12,7 +12,7 @@
 \author Version Mobile Android : Pierre Meras <<pierremeras@hotmail.fr>>
 \author Version Desktop Qt : Christopher PHILIPPE <<christopher.philippe84@gmail.com>>
 \date 2022
-\version 1.0
+\version 1.1
 \see https://github.com/btssn-lasalle-84/plug-in-pool-2022
 
 
@@ -37,7 +37,7 @@ Le système Plug-in-Pool est décomposé en trois modules :
 \author Version Mobile Android : Pierre Meras <<pierremeras@hotmail.fr>>
 \author Version Desktop Qt : Christopher PHILIPPE <<christopher.philippe84@gmail.com>>
 \date 2022
-\version 1.0
+\version 1.1
 \see https://github.com/btssn-lasalle-84/plug-in-pool-2022
 
 
@@ -46,7 +46,7 @@ Le système Plug-in-Pool est décomposé en trois modules :
 \author Version Mobile Android : Pierre Meras <<pierremeras@hotmail.fr>>
 \author Version Desktop Qt : Christopher PHILIPPE <<christopher.philippe84@gmail.com>>
 \date 2022
-\version 1.0
+\version 1.1
 \see https://github.com/btssn-lasalle-84/plug-in-pool-2022
 
 
