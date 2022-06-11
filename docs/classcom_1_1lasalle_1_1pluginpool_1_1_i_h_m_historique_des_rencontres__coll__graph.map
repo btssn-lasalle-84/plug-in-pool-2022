@@ -1,3 +1,4 @@
 <map id="com.lasalle.pluginpool.IHMHistoriqueDesRencontres" name="com.lasalle.pluginpool.IHMHistoriqueDesRencontres">
-<area shape="rect" id="node1" title="L&#39;activité pour créer un joueur." alt="" coords="5,5,244,200"/>
+<area shape="rect" id="node1" title="L&#39;activité pour créer un joueur." alt="" coords="13,717,251,1073"/>
+<area shape="rect" id="node2" href="$classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html" title="Classe permettant de manipuler la base de données." alt="" coords="5,5,259,655"/>
 </map>

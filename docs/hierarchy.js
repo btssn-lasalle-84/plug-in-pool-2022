@@ -1,7 +1,6 @@
 var hierarchy =
 [
     [ "com.lasalle.pluginpool.BaseDeDonnees", "classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html", null ],
-    [ "com.lasalle.pluginpool.Coup", "classcom_1_1lasalle_1_1pluginpool_1_1_coup.html", null ],
     [ "com.lasalle.pluginpool.Protocole", "classcom_1_1lasalle_1_1pluginpool_1_1_protocole.html", null ],
     [ "QMainWindow", "class_q_main_window.html", [
       [ "EcranPool", "class_ecran_pool.html", null ]
@@ -19,6 +18,7 @@ var hierarchy =
       [ "com.lasalle.pluginpool.IHMRencontreEnCours", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html", null ]
     ] ],
     [ "Serializable", null, [
+      [ "com.lasalle.pluginpool.Coup", "classcom_1_1lasalle_1_1pluginpool_1_1_coup.html", null ],
       [ "com.lasalle.pluginpool.Joueur", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html", null ],
       [ "com.lasalle.pluginpool.Manche", "classcom_1_1lasalle_1_1pluginpool_1_1_manche.html", null ],
       [ "com.lasalle.pluginpool.Rencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html", null ]

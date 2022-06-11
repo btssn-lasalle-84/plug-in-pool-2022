@@ -1,5 +1,7 @@
 var classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre =
 [
+    [ "enregistrerManche", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#abc60e4517c5f94757ef777e2fc936072", null ],
+    [ "enregistrerRencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#afd98fe1359b45caa1975acfd50bbd3e0", null ],
     [ "initialiserDureeIHMFinDeRencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a946aa2885b9c8fb3b537283a9bf9051c", null ],
     [ "initialiserGagnantIHMFinDeRencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a657398df9a0d5700d59eae08178a2b8a", null ],
     [ "initialiserNbManchesIHMFinDeRencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a288001c1dd1b3ce77548e84c74115171", null ],
@@ -11,6 +13,9 @@ var classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre =
     [ "onResume", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a0df9efc09eb40331579865837000f27d", null ],
     [ "onStart", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#ad60c78e80ce6a5c9624f13d12fe77333", null ],
     [ "onStop", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#af58358e4d478d27894cf6e111adfabaf", null ],
+    [ "ouvrirBaseDeDonnees", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a5612122aeb2352644a00a00b1b607892", null ],
+    [ "baseDeDonnees", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a8c44db017a863d97b6be3cf741ae2d0a", null ],
+    [ "boutonAccueil", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a60822bfeb1d0573dbccfc701cd9d7791", null ],
     [ "boutonEnregistrerRencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#aad5728eb854b79248db1dfbc4d4f4a35", null ],
     [ "boutonRejouer", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a19b2e80b92c4473b1622a2f22247b00b", null ],
     [ "dureeRencontre", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_fin_de_rencontre.html#a399b71e6c547f7e5307c526e14c50c92", null ],

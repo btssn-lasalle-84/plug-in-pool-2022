@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="plug-in-pool.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">plug-in-pool
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.1</span>
    </div>
    <div id="projectbrief">BTS SNIR LaSalle Avignon 2022</div>
   </td>
@@ -93,27 +93,27 @@ $(document).ready(function(){initNavTree('md__home_tv__documents_git_projets-202
 <li><a href="#présentation">Présentation</a></li>
 <li><a href="#fonctionnalités-mobile-pool">Fonctionnalités Mobile-POOL</a></li>
 <li><a href="#documentation-du-code">Documentation du code</a></li>
-<li><a href="#captures-mobile-pool">Captures Mobile-POOL</a></li>
-<li><a href="#todos-mobile-pool">TODOs Mobile-POOL</a></li>
-<li><a href="#fonctionnalités-écran-pool">Fonctionnalités Écran-POOL</a></li>
 <li><a href="#historique-des-versions">Historique des versions</a></li>
-<li><a href="#auteurs">Auteurs</a></li>
+<li><a href="#auteur">Auteur</a></li>
 <li><a href="#kanban">Kanban</a></li>
 </ul>
 </li>
 </ul>
 <h1>Présentation</h1>
-<p>Système numérique permettant de jouer au billard BlackBall</p>
+<p>Système numérique permettant de jouer au billard BlackBall :</p>
 <ul>
 <li>Automatisation du déroulement d’une partie</li>
 <li>Affichage du nombre de billes empochées et/ou restantes</li>
 <li>Enregistrement des données d’une partie finie</li>
 </ul>
-<p>Le système Plug-in-Pool est décomposé en trois modules :</p>
+<div class="image">
+<img src="billard.jpg" alt=""/>
+</div>
+   <p>Le système Plug-in-Pool est décomposé en trois modules :</p>
 <ul>
 <li>Module de gestion de partie (<b>Mobile-POOL</b> IR)​ : les joueurs paramètrent et lancent la partie à partir d’une application sur un terminal mobile (sous Android) ;</li>
 <li>Module de détection des billes (Détection-POOL EC)​: le billard est équipé de capteurs permettant de détecter l’empochage et la couleur d’une bille.</li>
-<li>Module de visualisation de partie (<b>Écran-POOL</b> IR) ​ : le déroulement de la partie est affiché sur un écran de télévision.</li>
+<li>Module de visualisation de partie (Écran-POOL IR) ​ : le déroulement de la partie est affiché sur un écran de télévision.</li>
 </ul>
 <h1>Fonctionnalités Mobile-POOL</h1>
 <p>Application mobile qui gère le déroulement des rencontres</p>
@@ -125,58 +125,36 @@ $(document).ready(function(){initNavTree('md__home_tv__documents_git_projets-202
 <li>Sélectionner deux joueurs pour une partie</li>
 <li>Paramétrer le nombre de manches gagnantes pour une partie</li>
 <li>Démarrer une partie</li>
-<li>Gérer la partie et Afficher le score d’une partie</li>
+<li>Gérer la partie</li>
 <li>Afficher le joueur courant</li>
 <li>Afficher les billes empochées/à empocher de chaque joueur</li>
 <li>Terminer une partie</li>
+<li>Enregistrer une partie</li>
+<li>Afficher l’historique des parties</li>
 <li>Afficher les statistiques d'une partie</li>
 </ul>
-<h1>Documentation du code</h1>
-<p><a href="https://btssn-lasalle-84.github.io/plug-in-pool-2022/">https://btssn-lasalle-84.github.io/plug-in-pool-2022/</a></p>
-<h1>Captures Mobile-POOL</h1>
 <div class="image">
-<img src="Screenshot_Accueil.png" alt=""/>
+<img src="plug-in-pool.gif" alt=""/>
 </div>
-   <div class="image">
-<img src="Screenshot_Enregistrement_Joueur.png" alt=""/>
-</div>
-   <div class="image">
-<img src="Screenshot_Demarrage_Partie.png" alt=""/>
-</div>
-   <div class="image">
-<img src="Screenshot_Deroulement_Partie.png" alt=""/>
-</div>
-   <div class="image">
-<img src="Screenshot_Fin_Partie.png" alt=""/>
-</div>
-   <h1>TODOs Mobile-POOL</h1>
-<ul>
-<li>[ ] Enregistrer une partie</li>
-<li>[ ] Afficher l’historique des parties</li>
-<li>[ ] Améliorer l'affichage graphique du déroulement d'une partie et du score</li>
-</ul>
-<h1>Fonctionnalités Écran-POOL</h1>
-<p>Ce module correspond à la partie “affichage” du système. Il a pour objectifs de réaliser la ​récupération d’informations​ envoyées par le terminal mobile et l’affichage de la rencontre actuelle. Il communique en Bluetooth uniquement avec le terminal mobile Android.</p>
-<p>Sur l'écran, les joueurs pourront visualiser en continu :</p>
-<ul>
-<li>le nom des joueurs (si existant), la durée écoulée de la partie ;</li>
-<li>les billes empochées et restantes,</li>
-<li>le nombre de manches gagnées par chaque joueur</li>
-<li>des statistiques</li>
-</ul>
-<p>L’application Qt s’exécutera en mode “Kiosque” sur le Raspberry Pi.</p>
+   <h1>Documentation du code</h1>
+<p><a href="https://btssn-lasalle-84.github.io/plug-in-pool-2022/">https://btssn-lasalle-84.github.io/plug-in-pool-2022/</a></p>
 <h1>Historique des versions</h1>
 <ul>
+<li>version 1.1 : 25/05/2022</li>
+<li>version 1.0 : 27/05/2022</li>
 <li>version 0.2 : 25/05/2022</li>
 <li>Version 0.1 : 02/04/2022</li>
 </ul>
-<h1>Auteurs</h1>
+<div class="image">
+<img src="jira-versions-plug-in-pool.png" alt=""/>
+</div>
+   <h1>Auteur</h1>
 <ul>
 <li>Version Mobile Android : Pierre Meras &lt;<a href="#" onclick="location.href='mai'+'lto:'+'pie'+'rr'+'eme'+'ra'+'s@h'+'ot'+'mai'+'l.'+'fr'; return false;">pierr<span style="display: none;">.nosp@m.</span>emer<span style="display: none;">.nosp@m.</span>as@ho<span style="display: none;">.nosp@m.</span>tmai<span style="display: none;">.nosp@m.</span>l.fr</a>&gt;</li>
-<li>Version Desktop Qt : Christopher PHILIPPE &lt;<a href="#" onclick="location.href='mai'+'lto:'+'chr'+'is'+'top'+'he'+'r.p'+'hi'+'lip'+'pe'+'84@'+'gm'+'ail'+'.c'+'om'; return false;">chris<span style="display: none;">.nosp@m.</span>toph<span style="display: none;">.nosp@m.</span>er.ph<span style="display: none;">.nosp@m.</span>ilip<span style="display: none;">.nosp@m.</span>pe84@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a>&gt;</li>
 </ul>
 <h1>Kanban</h1>
-<p><a href="https://github.com/btssn-lasalle-84/plug-in-pool-2022/projects/1">plug-in-pool-2022</a> </p>
+<p><a href="https://github.com/btssn-lasalle-84/plug-in-pool-2022/projects/1">plug-in-pool-2022</a></p>
+<p>©️ LaSalle Avignon </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
@@ -184,7 +162,7 @@ $(document).ready(function(){initNavTree('md__home_tv__documents_git_projets-202
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Jeudi 26 Mai 2022 09:38:34 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Samedi 11 Juin 2022 06:41:38 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
   </ul>
 </div>
 </body>
