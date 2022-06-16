@@ -3,6 +3,8 @@
 - [Le projet plug-in-pool-2022](#le-projet-plug-in-pool-2022)
   - [Présentation](#présentation)
   - [Fonctionnalités Mobile-POOL](#fonctionnalités-mobile-pool)
+  - [Protocole](#protocole)
+  - [Diaporama](#diaporama)
   - [Documentation du code](#documentation-du-code)
   - [Historique des versions](#historique-des-versions)
   - [Auteur](#auteur)
@@ -45,10 +47,17 @@ Application mobile qui gère le déroulement des rencontres
 
 ![](captures/plug-in-pool.gif)
 
+## Protocole
+
+- [Protocole PlugInPool.pdf](docs/Protocole%20PlugInPool.pdf)
+
+## Diaporama
+
+- [Diaporama Plug In Pool Revue Finale - Pierre MERAS.pptx](docs/Diaporama%20Plug%20In%20Pool%20Revue%20Finale%20-%20Pierre%20MERAS.pptx)
+
 ## Documentation du code
 
 https://btssn-lasalle-84.github.io/plug-in-pool-2022/
-
 
 ## Historique des versions
 
