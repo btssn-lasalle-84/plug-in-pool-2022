@@ -13,6 +13,7 @@ var classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur =
     [ "onStop", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#a4a3dda2c0186653909fc1df6b91afd3c", null ],
     [ "ouvrirBaseDeDonnees", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#a61e248ebcd210eff68e32b0f1104e794", null ],
     [ "baseDeDonnees", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#af5280e1081d0802b8ef32b5c4091f97e", null ],
+    [ "boutonAccueil", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#ad7dda1367d7e2241778f60c6139bf6cd", null ],
     [ "boutonValiderCreationJoueur", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#ab289254245975942bcc09dfb0a6f133f", null ],
     [ "editTextNomJoueur", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#ab1e1ddeca0d3e50062de8e6b9e8d1446", null ],
     [ "exitTextPrenomJoueur", "classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_creer_joueur.html#ad6767114f966f009eb239c6f30ad8c91", null ],

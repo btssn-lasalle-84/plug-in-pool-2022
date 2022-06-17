@@ -27,7 +27,7 @@
   <td id="projectlogo"><img alt="Logo" src="plug-in-pool.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">plug-in-pool
-   &#160;<span id="projectnumber">1.0</span>
+   &#160;<span id="projectnumber">1.1</span>
    </div>
    <div id="projectbrief">BTS SNIR LaSalle Avignon 2022</div>
   </td>
@@ -108,16 +108,19 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 , <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a53c2d80a0db2df65716a43d3a788c870">com.lasalle.pluginpool.Joueur</a>
 </li>
 <li>getDebut()
-: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_manche.html#a60e26eedbd245c95de86f02d01a87e78">com.lasalle.pluginpool.Manche</a>
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_manche.html#a33f751d78e36095e2a0a6d896b35cf61">com.lasalle.pluginpool.Manche</a>
 </li>
 <li>getEtatRencontre()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#a616949fd9b4db5ee935bee8ae839b5f4">com.lasalle.pluginpool.Rencontre</a>
 </li>
 <li>getFin()
-: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_manche.html#ad1032c86bcde92bccb327d42a0bc3d4b">com.lasalle.pluginpool.Manche</a>
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_manche.html#ade98176f3e243dee58fad7a0a8a1575e">com.lasalle.pluginpool.Manche</a>
 </li>
 <li>getHorodatage()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#abc1e48da7f7cf2e25f21662dc6b3cd68">com.lasalle.pluginpool.Rencontre</a>
+</li>
+<li>getIdRencontre()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#a6ccbcb4ba10f717511cc3045a7fe26a3">com.lasalle.pluginpool.Rencontre</a>
 </li>
 <li>getInstance()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a71160bb777fb9212aee2b5c7f86c8984">com.lasalle.pluginpool.PeripheriqueBluetooth</a>
@@ -125,6 +128,10 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getJoueurs()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#a3a04ef2b6cfefc8cf3293ecf7121668d">com.lasalle.pluginpool.BaseDeDonnees</a>
 , <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#a23740f48e651b5519ca96525fc89dff0">com.lasalle.pluginpool.Rencontre</a>
+</li>
+<li>getManches()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#ae1e1dcb3974f1bf8dd6036d4a1cbd35f">com.lasalle.pluginpool.BaseDeDonnees</a>
+, <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#ad93a709f8b4e92e367a9746ea771e39d">com.lasalle.pluginpool.Rencontre</a>
 </li>
 <li>getNbBillesCouleur()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_rencontre.html#ac373b6f5c46585462f97256e3e6bc045">com.lasalle.pluginpool.Rencontre</a>
@@ -163,8 +170,17 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <li>getPrecision()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a58e6c09ddf17fe14d4a1a22b5d320157">com.lasalle.pluginpool.Joueur</a>
 </li>
+<li>getPrecisionJoueur1()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_manche.html#a1baa27e89849070db781d89863c16e5f">com.lasalle.pluginpool.Manche</a>
+</li>
+<li>getPrecisionJoueur2()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_manche.html#a7f1f87055d7d9f6ff2d65c28abca945b">com.lasalle.pluginpool.Manche</a>
+</li>
 <li>getPrenom()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#ab5b9cfe3ce12fbd146d4176b31fcfb44">com.lasalle.pluginpool.Joueur</a>
+</li>
+<li>getRencontres()
+: <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_base_de_donnees.html#aefaae97d99b4b608d24ab37396273fb9">com.lasalle.pluginpool.BaseDeDonnees</a>
 </li>
 <li>getSocket()
 : <a class="el" href="classcom_1_1lasalle_1_1pluginpool_1_1_peripherique_bluetooth.html#a8705e16830345ff4f105727117bdef0f">com.lasalle.pluginpool.PeripheriqueBluetooth</a>
@@ -176,7 +192,7 @@ $(document).ready(function(){initNavTree('functions_g.html',''); initResizable()
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Jeudi 26 Mai 2022 09:38:34 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
+    <li class="footer"><img class="footer" src="lasalle-logo.png" height="31" alt="La Salle Avignon"/>&nbsp;<b>Campus La Salle Avignon</b>&nbsp;-&nbsp;9 Rue Notre Dame des 7 douleurs&nbsp;-&nbsp;BP 50165&nbsp;-&nbsp;84008 Avignon&nbsp;-&nbsp;Généré le Samedi 11 Juin 2022 06:41:38 pour plug-in-pool par&nbsp;<a href="https://www.doxygen.org/index.html">doxygen</a>&nbsp;1.8.17&nbsp;</li>
   </ul>
 </div>
 </body>

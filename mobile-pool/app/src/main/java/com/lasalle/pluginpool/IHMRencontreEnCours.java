@@ -78,6 +78,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     /**
      * @brief Méthode appelée à la création de l'activité
      */
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -191,6 +192,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
         afficherManchesGagnees();
     }
 
+    /**
+     * @brief Réinitialise les scores des joueurs
+     */
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void reinitialiserScoreJoueurs()
     {
@@ -201,6 +205,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
         }
     }
 
+    /**
+     * @brief Initialise les scores des joueurs
+     */
     private void initialiserScoreJoueurs()
     {
         scoreJoueur1.add((Button)findViewById(R.id.bille1Joueur1));
@@ -491,6 +498,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
         actualiserScoresBilles();
     }
 
+    /**
+     * @brief Actualise les score des joueurs en fonctions de leurs couleurs
+     */
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void actualiserScoresBilles()
     {

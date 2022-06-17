@@ -7,9 +7,6 @@ class SQLite
         insererDonneesInitiales(db);
 !!!148119.java!!!	onUpgrade(inout db : SQLiteDatabase, in oldVersion : int, in newVersion : int) : void
         Log.d(TAG, "onUpgrade()");
-        db.execSQL("DROP TABLE IF EXISTS Manche;");
-        db.execSQL("DROP TABLE IF EXISTS Rencontre;");
-        db.execSQL("DROP TABLE IF EXISTS Joueur;");
         onCreate(db);
 !!!148247.java!!!	creerTables(inout db : SQLiteDatabase) : void
         Log.d(TAG, "creerTables()");

@@ -1,0 +1,61 @@
+format 224
+
+classinstancecanvas 128386 classinstance_ref 128316 // 
+  drawing_mode actor  xyz 44 18 2000 life_line_z 2000
+end
+classinstance 128514 class_ref 135191 // IHMFinDeRencontre
+  name ""   xyz 416 15 2000 life_line_z 2000
+classinstance 129282 class_ref 134551 // BaseDeDonnees
+  name ""   xyz 763 9 2000 life_line_z 2000
+fragment 129666 "loop"
+  xyzwh 417 165 1995 431 108
+end
+textcanvas 129794 "[Pour chaque manche]"
+  xyzwh 468 173 2025 148 15
+durationcanvas 128642 classinstance_ref 128386 // :Joueur
+  xyzwh 65 99 2010 11 41
+end
+durationcanvas 128770 classinstance_ref 128514 // :IHMFinDeRencontre
+  xyzwh 485 99 2010 11 163
+  overlappingdurationcanvas 129026
+    xyzwh 491 104 2020 11 152
+    overlappingdurationcanvas 130434
+      xyzwh 497 218 2030 11 32
+    end
+  end
+end
+durationcanvas 129410 classinstance_ref 129282 // :BaseDeDonnees
+  xyzwh 821 134 2010 11 26
+end
+durationcanvas 130690 classinstance_ref 129282 // :BaseDeDonnees
+  xyzwh 821 239 2010 11 25
+end
+msg 128898 synchronous
+  from durationcanvas_ref 128642
+  to durationcanvas_ref 128770
+  yz 99 2015 explicitmsg "Clic sur le bouton \"ENREGISTRER LA RENCONTRE\""
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 93 86
+reflexivemsg 129154 synchronous
+  to durationcanvas_ref 129026
+  yz 104 2025 msg operation_ref 147714 // "enregistrerRencontre() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 505 90
+msg 129538 synchronous
+  from durationcanvas_ref 129026
+  to durationcanvas_ref 129410
+  yz 134 2025 msg operation_ref 146562 // "enregistrerRencontre(inout rencontre : Rencontre) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 591 117
+reflexivemsg 130562 synchronous
+  to durationcanvas_ref 130434
+  yz 218 2035 msg operation_ref 147842 // "enregistrerManche() : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 507 204
+msg 130818 synchronous
+  from durationcanvas_ref 130434
+  to durationcanvas_ref 130690
+  yz 239 2040 msg operation_ref 146946 // "enregistrerManche(inout manche : Manche) : void"
+  show_full_operations_definition default show_class_of_operation default drawing_language default show_context_mode default
+  label_xy 603 226
+end

@@ -13,7 +13,7 @@ var classcom_1_1lasalle_1_1pluginpool_1_1_joueur =
     [ "getNom", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a2cc77b0fae0fc6ab8efb8037dd8aa781", null ],
     [ "getPrecision", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a58e6c09ddf17fe14d4a1a22b5d320157", null ],
     [ "getPrenom", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#ab5b9cfe3ce12fbd146d4176b31fcfb44", null ],
-    [ "resetNbBillesEmpochees", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#accf148a1b5833d7c7c70e1f8ef159a49", null ],
+    [ "resetStatistiques", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#ae38d5a0135586d21b0e5f2ae8a9f32b6", null ],
     [ "setCouleur", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a70a4a0527d3ff8a5733c0a6c49a23f15", null ],
     [ "setNom", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a2b4ff817c39a6e85519b1ac766517296", null ],
     [ "setPrenom", "classcom_1_1lasalle_1_1pluginpool_1_1_joueur.html#a7bb4d8e6ff70eae8f45c07e7fe5aeb82", null ],

@@ -42,7 +42,7 @@ var NAVTREE =
       [ "Membres de classe", "functions.html", [
         [ "Tout", "functions.html", "functions_dup" ],
         [ "Fonctions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
+        [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Énumérations", "functions_enum.html", null ],
         [ "Valeurs énumérées", "functions_eval.html", null ]
       ] ]
@@ -61,8 +61,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_android_manifest_8xml.html",
-"classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_rencontre_en_cours.html#ab41b2b27a6658f8bc2fbdf1ed90769ff",
-"pages.html"
+"classcom_1_1lasalle_1_1pluginpool_1_1_i_h_m_nouvelle_rencontre.html#ad2ac84e373fa0b4b321511089a62c36c",
+"dir_78803d70724b28afd5e95e891f14b1c7.html"
 ];
 
 var SYNCONMSG = 'cliquez pour désactiver la synchronisation du panel';
