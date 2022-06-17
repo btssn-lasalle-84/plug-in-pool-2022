@@ -61,12 +61,25 @@ https://btssn-lasalle-84.github.io/plug-in-pool-2022/
 
 ## Historique des versions
 
-- [version 1.1](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/1.1) : 11/06/2022
-- [version 1.0](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/1.0) : 27/05/2022
-- [version 0.2](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/0.2) : 25/05/2022
-- [version 0.1](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/0.1) : 02/04/2022
+Le projet a été géré avec [Jira Software](https://btssn-avignon.atlassian.net/) et la méthode Kanban.
 
 ![](captures/jira-versions-plug-in-pool.png)
+
+- [version 1.1](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/1.1) : 11/06/2022
+
+![](captures/version-1.1.png)
+
+- [version 1.0](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/1.0) : 27/05/2022
+
+![](captures/version-1.0.png)
+
+- [version 0.2](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/0.2) : 25/05/2022
+
+![](captures/version-0.2.png)
+
+- [version 0.1](https://github.com/btssn-lasalle-84/plug-in-pool-2022/releases/tag/0.1) : 02/04/2022
+
+![](captures/version-0.1.png)
 
 ## Auteur
 
