@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
+import java.util.Vector;
 
 /**
  * @class PeripheriqueBluetooth
@@ -60,6 +61,14 @@ public class PeripheriqueBluetooth extends Thread
         this.device = null;
         this.nom = "";
         this.adresse = "";
+        this.handler = handler;
+    }
+
+    public PeripheriqueBluetooth(BluetoothDevice device, String nom, String adresse, Handler handler)
+    {
+        this.device = device;
+        this.nom = nom;
+        this.adresse = adresse;
         this.handler = handler;
     }
 
@@ -110,29 +119,28 @@ public class PeripheriqueBluetooth extends Thread
 
     /**
      * Méthode pour rechercher une table en particulier
-     * @param idTable
+     * @param nomTable
      * @return
      */
     @SuppressLint("MissingPermission")
-    public boolean rechercherTable(String idTable)
+    public Vector<PeripheriqueBluetooth> rechercherTables(String nomTable)
     {
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
+        Vector<PeripheriqueBluetooth> tables = new Vector<>();
 
-        Log.d(TAG,"Recherche bluetooth : " + idTable);
+        Log.d(TAG,"Recherche bluetooth : " + nomTable);
         for (BluetoothDevice appareil : appareilsAppaires)
         {
             Log.d(TAG,"Nom : " + appareil.getName() + " | Adresse : " + appareil.getAddress());
-            if (appareil.getName().equals(idTable) || appareil.getAddress().equals(idTable))
+            if (appareil.getName().contains(nomTable))
             {
                 device = appareil;
                 this.nom = device.getName();
                 this.adresse = device.getAddress();
-                creerSocket();
-                return true; // trouvé !
+                tables.add(new PeripheriqueBluetooth(device, nom, adresse, handler));
             }
         }
-
-        return false;
+        return tables;
     }
 
     /**
