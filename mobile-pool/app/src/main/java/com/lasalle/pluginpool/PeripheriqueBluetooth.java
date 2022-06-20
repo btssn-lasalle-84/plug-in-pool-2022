@@ -64,12 +64,11 @@ public class PeripheriqueBluetooth extends Thread
         this.handler = handler;
     }
 
-    public PeripheriqueBluetooth(BluetoothDevice device, String nom, String adresse, Handler handler)
+    public PeripheriqueBluetooth(BluetoothDevice device, String nom, String adresse)
     {
         this.device = device;
         this.nom = nom;
         this.adresse = adresse;
-        this.handler = handler;
     }
 
     /**
@@ -137,7 +136,7 @@ public class PeripheriqueBluetooth extends Thread
                 device = appareil;
                 this.nom = device.getName();
                 this.adresse = device.getAddress();
-                tables.add(new PeripheriqueBluetooth(device, nom, adresse, handler));
+                tables.add(new PeripheriqueBluetooth(device, nom, adresse));
             }
         }
         return tables;

@@ -77,9 +77,8 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ihm_nouvelle_rencontre);
         Log.d(TAG, "onCreate()");
-        initialiserRessourcesIHMNouvelleRencontre();
         gererHandler();
-        //initialiserRessourcesBluetooth();
+        initialiserRessourcesIHMNouvelleRencontre();
     }
 
     /**
@@ -376,6 +375,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 }
                 peripheriqueBluetooth = tables.get(i);
                 Log.d(TAG, "Table sélectionnée : " + peripheriqueBluetooth.getNom() + " - " + peripheriqueBluetooth.getAdresse());
+                PeripheriqueBluetooth.getInstance(handler);
                 peripheriqueBluetooth.connecter();
                 peripheriqueBluetooth.creerSocket();
                 activerBoutonLancerRencontre();
