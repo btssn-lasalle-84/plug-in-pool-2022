@@ -147,7 +147,7 @@ public class PeripheriqueBluetooth extends Thread
      * @brief Méthode pour la création d'un socket
      */
     @SuppressLint("MissingPermission")
-    private void creerSocket()
+    public void creerSocket()
     {
         if (device == null)
             return;
