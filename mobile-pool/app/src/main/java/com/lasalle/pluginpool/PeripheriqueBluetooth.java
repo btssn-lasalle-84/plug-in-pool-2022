@@ -39,12 +39,13 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * Variables
      */
+    private static Vector<PeripheriqueBluetooth> tables = new Vector<>();
     private static PeripheriqueBluetooth peripheriqueBluetooth = null;
-    private String nom;
-    private String adresse;
+    private static String nom;
+    private static String adresse;
     private Handler handler = null;
     private static BluetoothAdapter bluetoothAdapter = null;
-    private BluetoothDevice device = null;
+    private static BluetoothDevice device = null;
     private BluetoothSocket socket = null;
     private InputStream receiveStream = null;
     private OutputStream sendStream = null;
@@ -57,7 +58,6 @@ public class PeripheriqueBluetooth extends Thread
     private PeripheriqueBluetooth(android.os.Handler handler)
     {
         activerBluetooth();
-
         this.device = null;
         this.nom = "";
         this.adresse = "";
@@ -76,19 +76,25 @@ public class PeripheriqueBluetooth extends Thread
      * @param handler
      * @return
      */
-    public static PeripheriqueBluetooth getInstance(Handler handler)
+    public static PeripheriqueBluetooth getInstance(int indice, Handler handler)
     {
-        if (peripheriqueBluetooth == null)
+        if (tables.isEmpty())
         {
-            Log.d(TAG,"Création PeripheriqueBluetooth");
-            peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
+            Log.d(TAG, "Aucun périphérique !");
+            rechercherTables("pool-");
         }
-        else
+        if(tables.isEmpty())
+            return null;
+
+        if (indice > tables.size())
         {
-            Log.d(TAG,"Change le handler");
-            peripheriqueBluetooth.setHandler(handler);
+            Log.d(TAG,"Ajout d'un périphérique");
+            PeripheriqueBluetooth p = tables.get(indice);
+            p.setHandler(handler);
+            tables.add(new PeripheriqueBluetooth(handler));
         }
-        return peripheriqueBluetooth;
+        Log.d(TAG,"Récupération PeripheriqueBluetooth id : " + indice);
+        return tables.get(indice);
     }
 
     /**
@@ -106,7 +112,7 @@ public class PeripheriqueBluetooth extends Thread
      * @brief Méthode pour forcer l'activation du bluetooth
      */
     @SuppressLint("MissingPermission")
-    private void activerBluetooth()
+    private static void activerBluetooth()
     {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!bluetoothAdapter.isEnabled())
@@ -118,24 +124,25 @@ public class PeripheriqueBluetooth extends Thread
 
     /**
      * Méthode pour rechercher une table en particulier
-     * @param nomTable
+     * @param prefixeTable
      * @return
      */
     @SuppressLint("MissingPermission")
-    public Vector<PeripheriqueBluetooth> rechercherTables(String nomTable)
+    public static Vector<PeripheriqueBluetooth> rechercherTables(String prefixeTable)
     {
+        activerBluetooth();
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
-        Vector<PeripheriqueBluetooth> tables = new Vector<>();
 
-        Log.d(TAG,"Recherche bluetooth : " + nomTable);
+        tables.clear();
+        Log.d(TAG,"Recherche bluetooth : " + prefixeTable);
         for (BluetoothDevice appareil : appareilsAppaires)
         {
             Log.d(TAG,"Nom : " + appareil.getName() + " | Adresse : " + appareil.getAddress());
-            if (appareil.getName().contains(nomTable))
+            if (appareil.getName().contains(prefixeTable))
             {
                 device = appareil;
-                this.nom = device.getName();
-                this.adresse = device.getAddress();
+                nom = device.getName();
+                adresse = device.getAddress();
                 tables.add(new PeripheriqueBluetooth(device, nom, adresse));
             }
         }
@@ -249,6 +256,8 @@ public class PeripheriqueBluetooth extends Thread
      */
     public void connecter()
     {
+        if (socket == null)
+            creerSocket();
         if (socket == null)
             return;
         new Thread()

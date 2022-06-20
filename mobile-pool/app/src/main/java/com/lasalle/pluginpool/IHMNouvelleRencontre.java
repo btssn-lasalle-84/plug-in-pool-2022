@@ -42,6 +42,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
     public static final String ID_INTENT_RENCONTRE = "RENCONTRE"; //!< Identifiant de données dans l'Intent
+    public static final String ID_INTENT_TABLE = "TABLE"; //!< Identifiant de données dans l'Intent
     public static final int NB_JOUEURS = 2; //!< Le nombre de joueurs pour une rencontre
     public static final int NB_MANCHES_GAGNANTES = 5; //!< Le nombre de manches gagnantes par défaut
 
@@ -56,6 +57,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private Vector<Joueur> joueursRencontre;
     private Vector<Manche> manchesRencontre;
     private int nbManchesGagnantes;
+    private int idTable;
 
     /**
      * Ressources IHM
@@ -161,6 +163,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 Log.d(TAG, "nbManches : " + rencontre.getNbManchesGagnantes());
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités
+                intent.putExtra(ID_INTENT_TABLE, idTable);
                 intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
                 startActivity(intent);
             }
@@ -353,8 +356,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void listerTables()
     {
         Log.d(TAG, "ListerTables()");
-        PeripheriqueBluetooth peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
-        afficherTables(peripheriqueBluetooth.rechercherTables("pool-"));
+        afficherTables(PeripheriqueBluetooth.rechercherTables("pool-"));
     }
 
     private void afficherTables(Vector<PeripheriqueBluetooth> tables)
@@ -373,11 +375,10 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 {
                     peripheriqueBluetooth.deconnecter();
                 }
-                peripheriqueBluetooth = tables.get(i);
+                peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(i, handler);
+                idTable = i;
                 Log.d(TAG, "Table sélectionnée : " + peripheriqueBluetooth.getNom() + " - " + peripheriqueBluetooth.getAdresse());
-                PeripheriqueBluetooth.getInstance(handler);
                 peripheriqueBluetooth.connecter();
-                peripheriqueBluetooth.creerSocket();
                 activerBoutonLancerRencontre();
             }
         });

@@ -23,8 +23,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.Vector;
 
 /**
@@ -43,6 +41,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private static final int RENCONTRE_ENCOURS = 0;
     private static final int RENCONTRE_FINIE = 1;
     private static final String RENCONTRE = "RENCONTRE";
+    private static final String ID_INTENT_TABLE = "TABLE";
     private static final String REJOUER = "REJOUER";
     private static final String JOUEURS = "JOUEURS";
 
@@ -54,6 +53,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private Handler handler = null;
     private Rencontre rencontre = null;
     Vector<Joueur> joueurs;
+    private int table;
     private int premierJoueur;
     private int deuxiemeJoueur;
     private boolean estPremierJoueurChoisi = false;
@@ -87,6 +87,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         Log.d(TAG, "onCreate()");
 
         // Récupération de données
+        table = (int)getIntent().getSerializableExtra(IHMNouvelleRencontre.ID_INTENT_TABLE);
         rencontre = (Rencontre) getIntent().getSerializableExtra(IHMNouvelleRencontre.ID_INTENT_RENCONTRE);
         // Exemple : les joueurs de cette rencontre
         joueurs = rencontre.getJoueurs();
@@ -117,7 +118,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     private void initialiserRessourcesBluetooth()
     {
         Log.d(TAG,"initialiserRessourcesBluetooth()");
-        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
+        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(table, handler);
         Log.d(TAG,"[initialiserRessourcesBluetooth] connecte = " + peripheriqueBluetooth.estConnecte());
         if(!peripheriqueBluetooth.estConnecte())
             peripheriqueBluetooth.connecter();
