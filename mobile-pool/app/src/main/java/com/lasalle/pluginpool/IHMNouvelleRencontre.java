@@ -356,12 +356,13 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void listerTables()
     {
         Log.d(TAG, "ListerTables()");
-        afficherTables(PeripheriqueBluetooth.rechercherTables("pool-"));
+        Vector<PeripheriqueBluetooth> tables = new Vector<>(PeripheriqueBluetooth.rechercherTables("pool-").values());
+        afficherTables(tables);
     }
 
     private void afficherTables(Vector<PeripheriqueBluetooth> tables)
     {
-        Log.d(TAG, "afficherTables()");
+        //Log.d(TAG, "afficherTables() tables : " + tables);
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, tables);
         listeTables.setAdapter(adapter);
         this.listeTables.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

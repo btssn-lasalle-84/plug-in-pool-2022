@@ -14,9 +14,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.Vector;
@@ -39,9 +46,9 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * Variables
      */
-    private static Vector<PeripheriqueBluetooth> tables = new Vector<>();
-    private static PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private static Map<String, PeripheriqueBluetooth> tables = new HashMap<String, PeripheriqueBluetooth>();
     private static String nom;
+    private static String nomTable;
     private static String adresse;
     private Handler handler = null;
     private static BluetoothAdapter bluetoothAdapter = null;
@@ -54,35 +61,28 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * @brief Constructeurs
      */
-    @SuppressLint("MissingPermission")
-    private PeripheriqueBluetooth(android.os.Handler handler)
-    {
-        activerBluetooth();
-        this.device = null;
-        this.nom = "";
-        this.adresse = "";
-        this.handler = handler;
-    }
-
-    public PeripheriqueBluetooth(BluetoothDevice device, String nom, String adresse)
+    private PeripheriqueBluetooth(BluetoothDevice device, String nom, String adresse)
     {
         this.device = device;
         this.nom = nom;
         this.adresse = adresse;
+        Log.d(TAG, "PeripheriqueBluetooth() table : " + this.device + " " + this.nom + " " + this.adresse);
     }
 
     /**
-     * Méthode pour empêcher l'instanciation de plusieurs objets de cette classe (singleton)
+     * Méthode pour permettre l'instanciation de plusieurs objets de cette classe (multiton)
      * @param handler
      * @return
      */
     public static PeripheriqueBluetooth getInstance(int indice, Handler handler)
     {
+        Log.d(TAG, "getInstance()");
+        tables = rechercherTables("pool-");
         if (tables.isEmpty())
         {
             Log.d(TAG, "Aucun périphérique !");
-            rechercherTables("pool-");
         }
+        tables = rechercherTables("pool-");
         if(tables.isEmpty())
             return null;
 
@@ -91,7 +91,7 @@ public class PeripheriqueBluetooth extends Thread
             Log.d(TAG,"Ajout d'un périphérique");
             PeripheriqueBluetooth p = tables.get(indice);
             p.setHandler(handler);
-            tables.add(new PeripheriqueBluetooth(handler));
+            tables.put(PeripheriqueBluetooth.nomTable, p);
         }
         Log.d(TAG,"Récupération PeripheriqueBluetooth id : " + indice);
         return tables.get(indice);
@@ -128,24 +128,35 @@ public class PeripheriqueBluetooth extends Thread
      * @return
      */
     @SuppressLint("MissingPermission")
-    public static Vector<PeripheriqueBluetooth> rechercherTables(String prefixeTable)
+    public static Map<String, PeripheriqueBluetooth> rechercherTables(String prefixeTable)
     {
         activerBluetooth();
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
 
-        tables.clear();
         Log.d(TAG,"Recherche bluetooth : " + prefixeTable);
+        tables.clear();
         for (BluetoothDevice appareil : appareilsAppaires)
         {
-            Log.d(TAG,"Nom : " + appareil.getName() + " | Adresse : " + appareil.getAddress());
             if (appareil.getName().contains(prefixeTable))
             {
                 device = appareil;
                 nom = device.getName();
                 adresse = device.getAddress();
-                tables.add(new PeripheriqueBluetooth(device, nom, adresse));
+                //PeripheriqueBluetooth p = new PeripheriqueBluetooth(device, nom, adresse);
+                //Log.d(TAG, "rechercherTables() table : " + device + " " + nom + " " + adresse);
+                //tables.put(nom, p);
             }
         }
+
+        PeripheriqueBluetooth p1 = new PeripheriqueBluetooth(null, "aa", "aa:aa");
+        tables.put("a", p1);
+        Log.d(TAG, "rechercherTables() tables : " + tables.values());
+        PeripheriqueBluetooth p2 = new PeripheriqueBluetooth(null, "bb", "bb:bb");
+        tables.put("b", p2);
+        Log.d(TAG, "rechercherTables() tables : " + tables.values());
+        PeripheriqueBluetooth p3 = new PeripheriqueBluetooth(null, "cc", "cc:cc");
+        tables.put("c", p3);
+        Log.d(TAG, "rechercherTables() tables : " + tables.values());
         return tables;
     }
 
