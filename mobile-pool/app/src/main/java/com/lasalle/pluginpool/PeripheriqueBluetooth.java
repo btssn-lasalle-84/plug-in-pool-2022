@@ -47,12 +47,12 @@ public class PeripheriqueBluetooth extends Thread
      * Variables
      */
     private static Map<String, PeripheriqueBluetooth> tables = new HashMap<String, PeripheriqueBluetooth>();
-    private static String nom;
+    private String nom;
     private static String nomTable;
-    private static String adresse;
+    private String adresse;
     private Handler handler = null;
     private static BluetoothAdapter bluetoothAdapter = null;
-    private static BluetoothDevice device = null;
+    private BluetoothDevice device = null;
     private BluetoothSocket socket = null;
     private InputStream receiveStream = null;
     private OutputStream sendStream = null;
@@ -132,32 +132,21 @@ public class PeripheriqueBluetooth extends Thread
     {
         activerBluetooth();
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
+        Map<String, PeripheriqueBluetooth> tmp;
 
         Log.d(TAG,"Recherche bluetooth : " + prefixeTable);
-        tables.clear();
+        tmp = new HashMap<>(); // "clear()"
         for (BluetoothDevice appareil : appareilsAppaires)
         {
             if (appareil.getName().contains(prefixeTable))
             {
-                device = appareil;
-                nom = device.getName();
-                adresse = device.getAddress();
-                //PeripheriqueBluetooth p = new PeripheriqueBluetooth(device, nom, adresse);
+                PeripheriqueBluetooth p = new PeripheriqueBluetooth(appareil, appareil.getName(), appareil.getAddress());
                 //Log.d(TAG, "rechercherTables() table : " + device + " " + nom + " " + adresse);
-                //tables.put(nom, p);
+                Log.d(TAG, "rechercherTables() tables : " + tmp);
+                tmp.put(appareil.getName(), p);
             }
         }
-
-        PeripheriqueBluetooth p1 = new PeripheriqueBluetooth(null, "aa", "aa:aa");
-        tables.put("a", p1);
-        Log.d(TAG, "rechercherTables() tables : " + tables.values());
-        PeripheriqueBluetooth p2 = new PeripheriqueBluetooth(null, "bb", "bb:bb");
-        tables.put("b", p2);
-        Log.d(TAG, "rechercherTables() tables : " + tables.values());
-        PeripheriqueBluetooth p3 = new PeripheriqueBluetooth(null, "cc", "cc:cc");
-        tables.put("c", p3);
-        Log.d(TAG, "rechercherTables() tables : " + tables.values());
-        return tables;
+        return tmp;
     }
 
     /**
