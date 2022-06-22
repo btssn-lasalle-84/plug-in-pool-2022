@@ -48,7 +48,6 @@ public class PeripheriqueBluetooth extends Thread
      */
     private static Map<String, PeripheriqueBluetooth> tables = new HashMap<String, PeripheriqueBluetooth>();
     private String nom;
-    private static String nomTable;
     private String adresse;
     private Handler handler = null;
     private static BluetoothAdapter bluetoothAdapter = null;
@@ -74,7 +73,7 @@ public class PeripheriqueBluetooth extends Thread
      * @param handler
      * @return
      */
-    public static PeripheriqueBluetooth getInstance(int indice, Handler handler)
+    public static PeripheriqueBluetooth getInstance(String nomTable, Handler handler)
     {
         Log.d(TAG, "getInstance()");
         tables = rechercherTables("pool-");
@@ -86,15 +85,15 @@ public class PeripheriqueBluetooth extends Thread
         if(tables.isEmpty())
             return null;
 
-        if (indice > tables.size())
+        if (!tables.containsKey(nomTable))
         {
             Log.d(TAG,"Ajout d'un périphérique");
-            PeripheriqueBluetooth p = tables.get(indice);
+            PeripheriqueBluetooth p = tables.get(nomTable);
             p.setHandler(handler);
-            tables.put(PeripheriqueBluetooth.nomTable, p);
+            tables.put(nomTable, p);
         }
-        Log.d(TAG,"Récupération PeripheriqueBluetooth id : " + indice);
-        return tables.get(indice);
+        Log.d(TAG,"Récupération PeripheriqueBluetooth id : " + nomTable);
+        return tables.get(nomTable);
     }
 
     /**
@@ -270,6 +269,7 @@ public class PeripheriqueBluetooth extends Thread
                     Log.d(TAG, "Connexion bluetooth");
                     socket.connect();
 
+                    Log.d(TAG, "connecter() : etat Handler" + handler);
                     if(handler != null)
                     {
                         Message message = new Message();

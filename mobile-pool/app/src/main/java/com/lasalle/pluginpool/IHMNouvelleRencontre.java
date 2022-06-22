@@ -163,7 +163,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 Log.d(TAG, "nbManches : " + rencontre.getNbManchesGagnantes());
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités
-                intent.putExtra(ID_INTENT_TABLE, idTable);
+                intent.putExtra(ID_INTENT_TABLE, peripheriqueBluetooth.getNom());
                 intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
                 startActivity(intent);
             }
@@ -222,19 +222,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         manchesRencontre = new Vector<Manche>();
         rencontre = new Rencontre(idRencontre, joueursRencontre, manchesRencontre, NB_MANCHES_GAGNANTES);
     }
-
-    /**
-     * @brief Initialise les ressources bluetooth
-     */
-    /*private void initialiserRessourcesBluetooth()
-    {
-        Log.d(TAG,"initialiserRessourcesBluetooth()");
-        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
-        if(peripheriqueBluetooth.rechercherTable(Protocole.nomTable))
-        {
-            peripheriqueBluetooth.connecter();
-        }
-    }*/
 
     /**
      * @brief Méthode permettant d'obtenir un accès à la base de données
@@ -363,7 +350,12 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void afficherTables(Vector<PeripheriqueBluetooth> tables)
     {
         //Log.d(TAG, "afficherTables() tables : " + tables);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, tables);
+        List<String> l = new ArrayList<>();
+        for(int i = 0; i < tables.size(); i++)
+        {
+            l.add(tables.get(i).getNom());
+        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, l);
         listeTables.setAdapter(adapter);
         this.listeTables.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -376,9 +368,9 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 {
                     peripheriqueBluetooth.deconnecter();
                 }
-                peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(i, handler);
+                peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(tables.get(i).getNom(), handler);
                 idTable = i;
-                Log.d(TAG, "Table sélectionnée : " + peripheriqueBluetooth.getNom() + " - " + peripheriqueBluetooth.getAdresse());
+                Log.d(TAG, "Table sélectionnée : " + tables.get(i).getNom() + " - " + tables.get(i).getAdresse());
                 peripheriqueBluetooth.connecter();
                 activerBoutonLancerRencontre();
             }
