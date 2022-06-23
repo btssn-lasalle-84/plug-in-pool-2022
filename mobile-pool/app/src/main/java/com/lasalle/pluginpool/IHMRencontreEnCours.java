@@ -121,7 +121,9 @@ public class IHMRencontreEnCours extends AppCompatActivity
         peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(nomTable, handler);
         Log.d(TAG,"[initialiserRessourcesBluetooth] connecte = " + peripheriqueBluetooth.estConnecte());
         if(!peripheriqueBluetooth.estConnecte())
+        {
             peripheriqueBluetooth.connecter();
+        }
         else
             demarrerNouvellePartie();
     }
@@ -182,6 +184,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void demarrerNouvellePartie()
     {
+        Log.d(TAG, "demarrerNouvellePartie()");
         peripheriqueBluetooth.envoyer(Protocole.trameAnnuler);
         peripheriqueBluetooth.envoyer(Protocole.trameCommencer);
         estPremierJoueurChoisi = false;

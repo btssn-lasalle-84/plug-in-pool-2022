@@ -85,7 +85,7 @@ public class PeripheriqueBluetooth extends Thread
         if(tables.isEmpty())
             return null;
 
-        if (!tables.containsKey(nomTable))
+        if (!tables.containsKey(nomTable) || tables.get(nomTable).getHandler() == null)
         {
             Log.d(TAG,"Ajout d'un périphérique");
             PeripheriqueBluetooth p = tables.get(nomTable);
@@ -105,6 +105,11 @@ public class PeripheriqueBluetooth extends Thread
         this.handler = handler;
         if(tReception != null)
             tReception.setHandlerUI(handler);
+    }
+
+    private Handler getHandler()
+    {
+        return this.handler;
     }
 
     /**
@@ -155,7 +160,10 @@ public class PeripheriqueBluetooth extends Thread
     public void creerSocket()
     {
         if (device == null)
+        {
+            Log.d(TAG, "device null");
             return;
+        }
         try
         {
             Log.d(TAG, "Création socket");
@@ -226,7 +234,10 @@ public class PeripheriqueBluetooth extends Thread
     public void envoyer(String data)
     {
         if(socket == null)
+        {
+            Log.d(TAG, "envoyer() socket null");
             return;
+        }
 
         new Thread()
         {
@@ -234,7 +245,11 @@ public class PeripheriqueBluetooth extends Thread
             {
                 try
                 {
-                    if(socket.isConnected())
+                    if(!socket.isConnected())
+                    {
+                        Log.d(TAG, "envoyer() socket non connecté !");
+                    }
+                    else
                     {
                         Log.d(TAG, "envoyer() : " + data);
                         sendStream.write(data.getBytes());
@@ -256,7 +271,10 @@ public class PeripheriqueBluetooth extends Thread
     public void connecter()
     {
         if (socket == null)
+        {
+            Log.d(TAG, "connecter() : socket null");
             creerSocket();
+        }
         if (socket == null)
             return;
         new Thread()
