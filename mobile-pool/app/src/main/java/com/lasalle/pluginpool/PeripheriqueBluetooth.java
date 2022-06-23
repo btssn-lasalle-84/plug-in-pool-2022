@@ -284,7 +284,7 @@ public class PeripheriqueBluetooth extends Thread
             {
                 try
                 {
-                    Log.d(TAG, "Connexion bluetooth");
+                    Log.d(TAG, "Connexion bluetooth socket : " + socket);
                     socket.connect();
 
                     Log.d(TAG, "connecter() : etat Handler" + handler);

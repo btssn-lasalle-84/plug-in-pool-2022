@@ -124,8 +124,7 @@ public class IHMRencontreEnCours extends AppCompatActivity
         {
             peripheriqueBluetooth.connecter();
         }
-        else
-            demarrerNouvellePartie();
+        demarrerNouvellePartie();
     }
 
     /**

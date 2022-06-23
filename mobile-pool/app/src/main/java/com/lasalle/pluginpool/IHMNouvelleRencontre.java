@@ -319,11 +319,14 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private void activerBoutonLancerRencontre()
     {
         Log.d(TAG, "Nb Joueurs : " + listeJoueurs.getCheckedItemCount() + " Table : " + peripheriqueBluetooth);
-        if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth != null)
-            if(peripheriqueBluetooth.estConnecte())
-                boutonLancerRencontre.setEnabled(true);
+        if (listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth != null)
+        {
+            boutonLancerRencontre.setEnabled(true);
+        }
         else
+        {
             boutonLancerRencontre.setEnabled(false);
+        }
     }
 
     /**
@@ -373,7 +376,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 peripheriqueBluetooth.setHandler(handler);
                 idTable = i;
                 Log.d(TAG, "Table sélectionnée : " + tables.get(i).getNom() + " - " + tables.get(i).getAdresse());
-                peripheriqueBluetooth.connecter();
                 activerBoutonLancerRencontre();
             }
         });
