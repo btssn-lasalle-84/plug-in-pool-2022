@@ -345,14 +345,15 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      */
     private void listerTables()
     {
-        Log.d(TAG, "ListerTables()");
-        Vector<PeripheriqueBluetooth> tables = new Vector<>(PeripheriqueBluetooth.rechercherTables("pool-").values());
+        Log.d(TAG, "listerTables()");
+        PeripheriqueBluetooth.rechercherTables(PeripheriqueBluetooth.PREFIXE_NOM_TABLE);
+        Vector<PeripheriqueBluetooth> tables = new Vector<>(PeripheriqueBluetooth.getTables().values());
         afficherTables(tables);
     }
 
     private void afficherTables(Vector<PeripheriqueBluetooth> tables)
     {
-        //Log.d(TAG, "afficherTables() tables : " + tables);
+        Log.d(TAG, "afficherTables() tables : " + tables);
         List<String> l = new ArrayList<>();
         for(int i = 0; i < tables.size(); i++)
         {

@@ -14,19 +14,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Vector;
 
 /**
  * @class PeripheriqueBluetooth
@@ -42,6 +36,7 @@ public class PeripheriqueBluetooth extends Thread
     public final static int CODE_CONNEXION_SOCKET = 1;
     public final static int CODE_RECEPTION_TRAME = 2;
     public final static int CODE_DECONNEXION_SOCKET = 3;
+    public static final String PREFIXE_NOM_TABLE = "pool-";  //!< préfixe par défaut des tables plug-in-pool
 
     /**
      * Variables
@@ -65,7 +60,7 @@ public class PeripheriqueBluetooth extends Thread
         this.device = device;
         this.nom = nom;
         this.adresse = adresse;
-        Log.d(TAG, "PeripheriqueBluetooth() table : " + this.device + " " + this.nom + " " + this.adresse);
+        Log.d(TAG, "PeripheriqueBluetooth() table : " + this.nom + " " + this.adresse);
     }
 
     /**
@@ -75,25 +70,34 @@ public class PeripheriqueBluetooth extends Thread
      */
     public static PeripheriqueBluetooth getInstance(String nomTable, Handler handler)
     {
-        Log.d(TAG, "getInstance()");
-        tables = rechercherTables("pool-");
+        Log.d(TAG, "getInstance() nomTable : " + nomTable);
         if (tables.isEmpty())
         {
-            Log.d(TAG, "Aucun périphérique !");
+            Log.d(TAG, "Aucune table !");
+            // nouvelle recherche
+            rechercherTables(PREFIXE_NOM_TABLE);
+            if(tables.isEmpty())
+                return null;
         }
-        tables = rechercherTables("pool-");
-        if(tables.isEmpty())
-            return null;
 
-        if (!tables.containsKey(nomTable) || tables.get(nomTable).getHandler() == null)
+        if (tables.containsKey(nomTable))
         {
-            Log.d(TAG,"Ajout d'un périphérique");
             PeripheriqueBluetooth p = tables.get(nomTable);
-            p.setHandler(handler);
-            tables.put(nomTable, p);
+            Log.d(TAG,"Récupération table " + p.getNom() + " " + p.getAdresse());
+            if (handler != null)
+            {
+                Log.d(TAG,"Affectation nouvel handler");
+                p.setHandler(handler);
+            }
+            return tables.get(nomTable);
         }
-        Log.d(TAG,"Récupération PeripheriqueBluetooth id : " + nomTable);
-        return tables.get(nomTable);
+        Log.d(TAG, "Table non trouvée !");
+        return null;
+    }
+
+    public static Map<String, PeripheriqueBluetooth> getTables()
+    {
+        return tables;
     }
 
     /**
@@ -132,25 +136,28 @@ public class PeripheriqueBluetooth extends Thread
      * @return
      */
     @SuppressLint("MissingPermission")
-    public static Map<String, PeripheriqueBluetooth> rechercherTables(String prefixeTable)
+    public static void rechercherTables(String prefixeTable)
     {
         activerBluetooth();
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
-        Map<String, PeripheriqueBluetooth> tmp;
 
-        Log.d(TAG,"Recherche bluetooth : " + prefixeTable);
-        tmp = new HashMap<>(); // "clear()"
+        Log.d(TAG,"rechercherTables() préfixe : " + prefixeTable);
+        // "clear()"
         for (BluetoothDevice appareil : appareilsAppaires)
         {
             if (appareil.getName().contains(prefixeTable))
             {
-                PeripheriqueBluetooth p = new PeripheriqueBluetooth(appareil, appareil.getName(), appareil.getAddress());
-                //Log.d(TAG, "rechercherTables() table : " + device + " " + nom + " " + adresse);
-                Log.d(TAG, "rechercherTables() tables : " + tmp);
-                tmp.put(appareil.getName(), p);
+                Log.d(TAG, "rechercherTables() nouvelle table : " + appareil.getName() + " " + appareil.getAddress());
+                // nouvelle table ?
+                if (!tables.containsKey(appareil.getName()))
+                {
+                    Log.d(TAG, "rechercherTables() instancie PeripheriqueBluetooth");
+                    PeripheriqueBluetooth p = new PeripheriqueBluetooth(appareil, appareil.getName(), appareil.getAddress());
+                    tables.put(appareil.getName(), p);
+                }
             }
         }
-        return tmp;
+        Log.d(TAG, "rechercherTables() tables : " + tables);
     }
 
     /**
