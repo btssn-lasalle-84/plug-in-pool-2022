@@ -17,6 +17,8 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,11 +36,12 @@ public class PeripheriqueBluetooth extends Thread
     public final static int CODE_CONNEXION_SOCKET = 1;
     public final static int CODE_RECEPTION_TRAME = 2;
     public final static int CODE_DECONNEXION_SOCKET = 3;
+    public static final String PREFIXE_NOM_TABLE = "pool-";  //!< préfixe par défaut des tables plug-in-pool
 
     /**
      * Variables
      */
-    private static PeripheriqueBluetooth peripheriqueBluetooth = null;
+    private static Map<String, PeripheriqueBluetooth> tables = new HashMap<String, PeripheriqueBluetooth>();
     private String nom;
     private String adresse;
     private Handler handler = null;
@@ -52,35 +55,49 @@ public class PeripheriqueBluetooth extends Thread
     /**
      * @brief Constructeurs
      */
-    @SuppressLint("MissingPermission")
-    private PeripheriqueBluetooth(android.os.Handler handler)
+    private PeripheriqueBluetooth(BluetoothDevice device, String nom, String adresse)
     {
-        activerBluetooth();
-
-        this.device = null;
-        this.nom = "";
-        this.adresse = "";
-        this.handler = handler;
+        this.device = device;
+        this.nom = nom;
+        this.adresse = adresse;
+        Log.d(TAG, "PeripheriqueBluetooth() table : " + this.nom + " " + this.adresse);
     }
 
     /**
-     * Méthode pour empêcher l'instanciation de plusieurs objets de cette classe (singleton)
+     * Méthode pour permettre l'instanciation de plusieurs objets de cette classe (multiton)
      * @param handler
      * @return
      */
-    public static PeripheriqueBluetooth getInstance(Handler handler)
+    public static PeripheriqueBluetooth getInstance(String nomTable, Handler handler)
     {
-        if (peripheriqueBluetooth == null)
+        Log.d(TAG, "getInstance() nomTable : " + nomTable);
+        if (tables.isEmpty())
         {
-            Log.d(TAG,"Création PeripheriqueBluetooth");
-            peripheriqueBluetooth = new PeripheriqueBluetooth(handler);
+            Log.d(TAG, "Aucune table !");
+            // nouvelle recherche
+            rechercherTables(PREFIXE_NOM_TABLE);
+            if(tables.isEmpty())
+                return null;
         }
-        else
+
+        if (tables.containsKey(nomTable))
         {
-            Log.d(TAG,"Change le handler");
-            peripheriqueBluetooth.setHandler(handler);
+            PeripheriqueBluetooth p = tables.get(nomTable);
+            Log.d(TAG,"Récupération table " + p.getNom() + " " + p.getAdresse());
+            if (handler != null)
+            {
+                Log.d(TAG,"Affectation nouvel handler");
+                p.setHandler(handler);
+            }
+            return tables.get(nomTable);
         }
-        return peripheriqueBluetooth;
+        Log.d(TAG, "Table non trouvée !");
+        return null;
+    }
+
+    public static Map<String, PeripheriqueBluetooth> getTables()
+    {
+        return tables;
     }
 
     /**
@@ -94,11 +111,16 @@ public class PeripheriqueBluetooth extends Thread
             tReception.setHandlerUI(handler);
     }
 
+    private Handler getHandler()
+    {
+        return this.handler;
+    }
+
     /**
      * @brief Méthode pour forcer l'activation du bluetooth
      */
     @SuppressLint("MissingPermission")
-    private void activerBluetooth()
+    private static void activerBluetooth()
     {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (!bluetoothAdapter.isEnabled())
@@ -110,39 +132,45 @@ public class PeripheriqueBluetooth extends Thread
 
     /**
      * Méthode pour rechercher une table en particulier
-     * @param idTable
+     * @param prefixeTable
      * @return
      */
     @SuppressLint("MissingPermission")
-    public boolean rechercherTable(String idTable)
+    public static void rechercherTables(String prefixeTable)
     {
+        activerBluetooth();
         Set<BluetoothDevice> appareilsAppaires = bluetoothAdapter.getBondedDevices();
 
-        Log.d(TAG,"Recherche bluetooth : " + idTable);
+        Log.d(TAG,"rechercherTables() préfixe : " + prefixeTable);
+        // "clear()"
         for (BluetoothDevice appareil : appareilsAppaires)
         {
-            Log.d(TAG,"Nom : " + appareil.getName() + " | Adresse : " + appareil.getAddress());
-            if (appareil.getName().equals(idTable) || appareil.getAddress().equals(idTable))
+            if (appareil.getName().contains(prefixeTable))
             {
-                device = appareil;
-                this.nom = device.getName();
-                this.adresse = device.getAddress();
-                creerSocket();
-                return true; // trouvé !
+                Log.d(TAG, "rechercherTables() nouvelle table : " + appareil.getName() + " " + appareil.getAddress());
+                // nouvelle table ?
+                if (!tables.containsKey(appareil.getName()))
+                {
+                    Log.d(TAG, "rechercherTables() instancie PeripheriqueBluetooth");
+                    PeripheriqueBluetooth p = new PeripheriqueBluetooth(appareil, appareil.getName(), appareil.getAddress());
+                    tables.put(appareil.getName(), p);
+                }
             }
         }
-
-        return false;
+        Log.d(TAG, "rechercherTables() tables : " + tables);
     }
 
     /**
      * @brief Méthode pour la création d'un socket
      */
     @SuppressLint("MissingPermission")
-    private void creerSocket()
+    public void creerSocket()
     {
         if (device == null)
+        {
+            Log.d(TAG, "device null");
             return;
+        }
         try
         {
             Log.d(TAG, "Création socket");
@@ -213,7 +241,10 @@ public class PeripheriqueBluetooth extends Thread
     public void envoyer(String data)
     {
         if(socket == null)
+        {
+            Log.d(TAG, "envoyer() socket null");
             return;
+        }
 
         new Thread()
         {
@@ -221,7 +252,11 @@ public class PeripheriqueBluetooth extends Thread
             {
                 try
                 {
-                    if(socket.isConnected())
+                    if(!socket.isConnected())
+                    {
+                        Log.d(TAG, "envoyer() socket non connecté !");
+                    }
+                    else
                     {
                         Log.d(TAG, "envoyer() : " + data);
                         sendStream.write(data.getBytes());
@@ -243,6 +278,11 @@ public class PeripheriqueBluetooth extends Thread
     public void connecter()
     {
         if (socket == null)
+        {
+            Log.d(TAG, "connecter() : socket null");
+            creerSocket();
+        }
+        if (socket == null)
             return;
         new Thread()
         {
@@ -251,9 +291,10 @@ public class PeripheriqueBluetooth extends Thread
             {
                 try
                 {
-                    Log.d(TAG, "Connexion bluetooth");
+                    Log.d(TAG, "Connexion bluetooth socket : " + socket);
                     socket.connect();
 
+                    Log.d(TAG, "connecter() : etat Handler" + handler);
                     if(handler != null)
                     {
                         Message message = new Message();

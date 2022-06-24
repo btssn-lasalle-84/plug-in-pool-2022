@@ -42,6 +42,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
      */
     private static final String TAG = "_IHMNouvelleRencontre_";  //!< TAG pour les logs
     public static final String ID_INTENT_RENCONTRE = "RENCONTRE"; //!< Identifiant de données dans l'Intent
+    public static final String ID_INTENT_TABLE = "TABLE"; //!< Identifiant de données dans l'Intent
     public static final int NB_JOUEURS = 2; //!< Le nombre de joueurs pour une rencontre
     public static final int NB_MANCHES_GAGNANTES = 5; //!< Le nombre de manches gagnantes par défaut
 
@@ -56,6 +57,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private Vector<Joueur> joueursRencontre;
     private Vector<Manche> manchesRencontre;
     private int nbManchesGagnantes;
+    private int idTable;
 
     /**
      * Ressources IHM
@@ -64,6 +66,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     private ImageButton boutonAccueil;
     private EditText nbManches;
     private ListView listeJoueurs;
+    private ListView listeTables;
     private List<Joueur> joueurs;
 
     /**
@@ -77,8 +80,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         setContentView(R.layout.activity_ihm_nouvelle_rencontre);
         Log.d(TAG, "onCreate()");
         initialiserRessourcesIHMNouvelleRencontre();
-        gererHandler();
-        initialiserRessourcesBluetooth();
     }
 
     /**
@@ -145,8 +146,10 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         // Il faut être connecté à la table et avoir deux joueurs sélectionnés
         boutonLancerRencontre.setEnabled(false);
         listeJoueurs = (ListView)findViewById(R.id.listeJoueursParametres);
+        listeTables = (ListView)findViewById(R.id.listeTablesParametres);
         ouvrirBaseDeDonnees();
         listerJoueurs();
+        listerTables();
         boutonLancerRencontre.setOnClickListener(
         new View.OnClickListener()
         {
@@ -159,6 +162,7 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 Log.d(TAG, "nbManches : " + rencontre.getNbManchesGagnantes());
                 final Intent intent = new Intent(IHMNouvelleRencontre.this, IHMRencontreEnCours.class);
                 // passage de données entre activités
+                intent.putExtra(ID_INTENT_TABLE, peripheriqueBluetooth.getNom());
                 intent.putExtra(ID_INTENT_RENCONTRE, rencontre);
                 startActivity(intent);
             }
@@ -219,19 +223,6 @@ public class IHMNouvelleRencontre extends AppCompatActivity
     }
 
     /**
-     * @brief Initialise les ressources bluetooth
-     */
-    private void initialiserRessourcesBluetooth()
-    {
-        Log.d(TAG,"initialiserRessourcesBluetooth()");
-        peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(handler);
-        if(peripheriqueBluetooth.rechercherTable(Protocole.nomTable))
-        {
-            peripheriqueBluetooth.connecter();
-        }
-    }
-
-    /**
      * @brief Méthode permettant d'obtenir un accès à la base de données
      */
     private void ouvrirBaseDeDonnees()
@@ -274,13 +265,13 @@ public class IHMNouvelleRencontre extends AppCompatActivity
                 }
             }
         };
+        Log.d(TAG, "gererHandler() etat handler : " + handler);
     }
 
     /**
      * @brief Liste les joueurs disponibles
      */
-    private void
-    listerJoueurs()
+    private void listerJoueurs()
     {
         Log.d(TAG, "listerJoueurs()");
         joueurs = baseDeDonnees.getJoueurs();
@@ -321,10 +312,20 @@ public class IHMNouvelleRencontre extends AppCompatActivity
             CheckedTextView v = view;
             boolean estCochee = v.isChecked();
             listeJoueurs.setItemChecked(i, estCochee);
-            if(listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth.estConnecte())
-                boutonLancerRencontre.setEnabled(true);
-            else
-                boutonLancerRencontre.setEnabled(false);
+            activerBoutonLancerRencontre();
+        }
+    }
+
+    private void activerBoutonLancerRencontre()
+    {
+        Log.d(TAG, "Nb Joueurs : " + listeJoueurs.getCheckedItemCount() + " Table : " + peripheriqueBluetooth);
+        if (listeJoueurs.getCheckedItemCount() == NB_JOUEURS && peripheriqueBluetooth != null)
+        {
+            boutonLancerRencontre.setEnabled(true);
+        }
+        else
+        {
+            boutonLancerRencontre.setEnabled(false);
         }
     }
 
@@ -337,5 +338,47 @@ public class IHMNouvelleRencontre extends AppCompatActivity
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, nomsJoueurs);
         listeJoueurs.setAdapter(adapter);
         this.listeJoueurs.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+    }
+
+    /**
+     * @brief Liste les tables disponibles pour jouer
+     */
+    private void listerTables()
+    {
+        Log.d(TAG, "listerTables()");
+        PeripheriqueBluetooth.rechercherTables(PeripheriqueBluetooth.PREFIXE_NOM_TABLE);
+        Vector<PeripheriqueBluetooth> tables = new Vector<>(PeripheriqueBluetooth.getTables().values());
+        afficherTables(tables);
+    }
+
+    private void afficherTables(Vector<PeripheriqueBluetooth> tables)
+    {
+        Log.d(TAG, "afficherTables() tables : " + tables);
+        List<String> l = new ArrayList<>();
+        for(int i = 0; i < tables.size(); i++)
+        {
+            l.add(tables.get(i).getNom());
+        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_checked, l);
+        listeTables.setAdapter(adapter);
+        this.listeTables.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        this.listeTables.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                if(peripheriqueBluetooth != null)
+                {
+                    peripheriqueBluetooth.deconnecter();
+                }
+                gererHandler();
+                peripheriqueBluetooth = PeripheriqueBluetooth.getInstance(tables.get(i).getNom(), handler);
+                peripheriqueBluetooth.setHandler(handler);
+                idTable = i;
+                Log.d(TAG, "Table sélectionnée : " + tables.get(i).getNom() + " - " + tables.get(i).getAdresse());
+                activerBoutonLancerRencontre();
+            }
+        });
     }
 }
