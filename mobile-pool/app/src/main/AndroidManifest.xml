@@ -20,43 +20,49 @@
             android:exported="false"
             android:noHistory="true"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.PlugInPool.NoActionBar" />
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IHMFinDeRencontre"
             android:exported="false"
             android:noHistory="true"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.PlugInPool.NoActionBar" />
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IHMRencontreEnCours"
             android:exported="false"
             android:noHistory="true"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.PlugInPool.NoActionBar" />
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IHMCreerJoueur"
             android:exported="false"
             android:noHistory="true"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar"
-            android:windowSoftInputMode="adjustPan|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IHMNouvelleRencontre"
             android:exported="false"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.PlugInPool.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IHMPlugInPool"
             android:exported="true"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.PlugInPool.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".IHMSplashScreen"
             android:exported="true"
             android:noHistory="true"
-            android:theme="@style/Theme.PlugInPool.NoActionBar">
+            android:theme="@style/Theme.PlugInPool.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
